@@ -229,12 +229,45 @@ Key definition:  The \emph{$i$-heavy subtree} of $T$ consists of those nodes $x$
 For each triple of integers $1\le i,t \le k$, $1\le i\le k$, let $f_{k,t}(i)$.
 
 
+
 \section{Applying the Product Structure Theorem}
 \seclabel{products}
 
 
 \section{Conclusions}
 \seclabel{conclusion}
+
+New Stuff:
+
+\begin{lem}\label{path-colour}
+    Let $K$ be a $t$-path, let $\mathcal{P}:=(B_x:x\in V(P))$ be a width-$(t+1)$ path-decomposition of $K$ using the path $P=0,\ldots,m$, let $v_0$ be any vertex in $B_0$, and let $\varphi:B_{0}\setminus\{v_0\}\to\{\alpha\in N:\alpha > 3t\}$ be precolouring of all but one vertex of $B_{0}$.  The $\varphi$ can be extended to a us-colouring of $K$ in which $\varphi(v)\in\{0,\ldots,3t\}$ for each $v\in V(K)\setminus (B_0\setminus v_0)$.
+\end{lem}
+
+\begin{proof}
+    The proof is by induction on $t$. In the base case $t=0$ and $K$ consists of an independent set (TODO: make sure $0$-tree is defined.) and all its uncoloured vertices can be coloured $0$.
+
+    If $t>0$, it is well-known that $K$ contains a ``greedy path'' $w_0,\ldots,w_q$ such that $w_0\in B_0$, $w_q\in B_m$ and with the following property: (*)~there is no pair $1\le i<j-1\le q-1$ such that $w_i$ and $w_j$ are both adjacent to some $v\in V(K)\setminus \{w_0,\ldots,w_q\}$
+
+    For each $i\in\{0,\ldots,q\}$, set $\varphi(w_i)=3t-i\bmod 3$ (unless $i=0$ and $w_0\neq x_0$, in which $\varphi(w_0)$ is already defined.) Now, the graph $K-\{w_0,\ldots,w_q\}$ is a partial $(t-1)$-path which can be augmented to to a $(t-1)$-path $K'$.  Applying induction on $K'$ gives a us-colouring $\varphi:V(K')\to\{0,\ldots,3(t-1)\}$ of $K'$ and it is easy to check that, because of property~(*) this completes $\varphi$ to a us-colouring of $K$.
+\end{proof}
+
+\begin{lem}
+    Let $H$ be a $t$-tree, let $\mathcal{T}:=(B_x:x\in V(T))$ be a canonical path decomposition of $H$ where $T$ has root $r$,  let $T'$ be a subtree of $T$ with root $r'\neq r$ and having at most $\ell$ leaves, let $\kappa = (3t+1)\lceil\log_2(\ell+1)\rceil$, and let $\varphi:B_{r'}\setminus\{r'\}\to \{\alpha\in\N: \alpha > \tau\}$.  Then $\varphi$ can be completed to a us-colouring of the subgraph $H'=H[\bigcup_{x\in V(T')}B_x]$ so that $\varphi(v)\in\{1,\ldots,\tau\}$ for each $v\in V(H')\setminus (B_{r'}\setminus r')$.
+\end{lem}
+
+\begin{proof}
+    The proof is by induction on $\ell$.  When $\ell=1$, $T'$ is a path and $H'$ is therefore a $t$-path.  The result then follows immediately from \cref{path-colouring}.
+
+    Next we consider the case $\ell >1$.
+    Let $T$ be ordered arbitrarily and let $x_1,\ldots,x_\ell$ be the leaves of $T'$ in the order they are encountered by an in in-order traversal.  Consider the path $P$ from the root of $T'$ to $x_{\lceil \ell/2\rceil}$.   Let $H[P]:=H[\bigcup_{x\in V(P)} B_x]$ and apply \cref{path-colouring} to $H[P]$ using the path decomposition $(B_x:x\in V(P))$ to obtain a us-colouring of $H[P]$ in which (after shifting) any newly-coloured vertex is assigned a colour in $\{\kappa - 3t,\ldots,\kappa\}$. Now, $T'-P$ is a forest that can be partitioned into two sets of trees, each of which has at most $\ell/2$ leaves.  We can now apply induction on each tree individually to obtain a us-colouring in which newly coloured nodes are assigned colours in \{1,\ldots,\kappa-3t\}$.  It is easy to check that this gives a us-colouring of $H$.
+
+    TODO: Check constants.
+\end{proof}
+
+\begin{lem}
+    Let $H$ be a $t$-tree, let $\mathcal{T}:=(B_x:x\in V(T))$ be a canonical path decomposition of $H$,  let $T'$ be a subtree of $T$, let $\mathcal{P}=(P_x:x\in P)$ be a width-$p$ path decomposition of $T'$, let $S:=\bigcup_{x\in V(T')} B_x$  and let $Y:=\{x\in V(T): B_x\cap S\neq\emptyset\}$.
+\end{lem}
+
 
 
 \bibliographystyle{plainnat}
