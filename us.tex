@@ -33,7 +33,8 @@
 \DeclareMathOperator{\lhptw}{lhp-tw}
 \DeclareMathOperator{\lhppw}{lhp-pw}
 
-\title{\MakeUppercase{Optimal Unique-Superior Colouring of Planar Graphs}}
+
+\title{\MakeUppercase{Optimal 2-Ranking of Planar Graphs}}
 \author{Working Group}
 
 \newcommand{\uqs}{\chi_2}
@@ -44,7 +45,7 @@
 \maketitle
 
 \begin{abstract}
-  A \emph{unique-superior colouring} is a labelling of the vertices of a graph with integer colours so that the maximum label along any path of length at most 2 is unique.  We show that every $n$-vertex planar graph has a unique-superior colouring using $O(\log n/\log\log n)$ colours.
+  A 2-ranking is a labelling of the vertices of a graph with integer colours so that the maximum label along any path of length at most 2 is unique.  We show that every $n$-vertex planar graph has a unique-superior colouring using $O(\log n/\log\log n)$ colours.
 \end{abstract}
 % \end{titlepage}
 
@@ -57,15 +58,17 @@
 
 % A sequence $s_0,\ldots,s_p$ over some total order $(S,<)$ is \emph{ranked} if $\max\{s_0,\ldots,s_p\}$ occurs exactly once in $s_0,\ldots,s_p$.
 
-A colouring of a graph $G$ is a function $\varphi:V(G)\to \N$.  A colouring $\varphi:V(G)\to S$ is an \emph{$\ell$-ranking} if, for every path $v_0,\ldots,v_k$ of length $k\le\ell$,
+A colouring of a graph $G$ is a function $\varphi:V(G)\to \N$.  A colouring $\varphi$ is an \emph{$\ell$-ranking} if, for every path $v_0,\ldots,v_r$ of length $r\le\ell$, $\max\{\varphi(v_0),\ldots,\varphi(v_r)\}$ appears exactly once in the sequence $\langle \varphi(v_0),\ldots,\varphi(v_r)\rangle$.\footnote{An alternative, but equivalent condition is that for every path $v_0,\ldots,v_r$ of length $r\le\ell$,
 \begin{inparaenum}[(i)]
-   \item $\varphi(v_0)\neq \varphi(v_k)$; or
-   \item $\max\{\varphi(v_0),\ldots,\varphi(v_k)\} > \varphi(v_0)$.
+   \item $\varphi(v_0)\neq \varphi(v_r)$; or
+   \item $\max\{\varphi(v_0),\ldots,\varphi(v_r)\} > \varphi(v_0)$.
 \end{inparaenum}
+}
 The $\ell$-ranking number $\chi_\ell(G)$ is the minimum integer $k$ such that $G$ has a $\ell$-ranking $\varphi:V(G)\to \{1,\ldots,k\}$.
 
-The case $\ell=2$ has received special attention. A $2$-ranking is called a \emph{unique-superior colouring} (abbreviated \emph{us-colouring}) by \citet{karpas.neiman.ea:on} who prove the following result:
+The case $\ell=2$ has received special attention \cite{almeter.demircan.ea:graph,karpas.neiman.ea:on}. A $2$-ranking is called a \emph{unique-superior colouring} (abbreviated \emph{us-colouring}) by \citet{karpas.neiman.ea:on} who prove the following result:
 
+\setcounter{thm}{-1}
 \begin{thm}[\cite{karpas.neiman.ea:on}]\label{trees}
     For every $n$-vertex tree $T$, $\uqs(T)\in O(\log n/\log\log n)$ and this is asymptotically optimal: for every $n\ge 1$ there exists an $n$-vertex tree $T$ with $\uqs(T)\in\Omega(\log n/\log\log n)$.
 \end{thm}
@@ -82,7 +85,9 @@ Our proof of \cref{planar} makes use of a recent \emph{product structure theorem
     For every fixed $t$ and every $n$-vertex $t$-tree, $\uqs(G) \in O(\log n/\log\log n)$.
 \end{thm}
 
-\cref{t-trees} can then be applied to the graph $H$ along with a simple product colouring which shows that $\uqs(H\boxtimes P)\le 3\uqs(H)$.  The remainder of this paper is organized as follows: \cref{sec:trees} reviews the proof of \cref{trees}. \cref{sec:t-trees} proves \cref{t-trees}.  \cref{sec:products} proves \cref{planar} as well as several generalizations, including graphs of bounded genus, apex-minor-free graphs, bounded-degree graphs from minor-closed families, and $k$-planar graphs.
+\cref{t-trees} is then applied to the graph $H$ along with a simple product colouring which shows that $\uqs(H\boxtimes P)\le 3\uqs(H)$.
+
+The remainder of this paper is organized as follows: \Cref{sec:trees} reviews the proof of \cref{trees}. \Cref{sec:t-trees} proves \Cref{t-trees}.  \Cref{sec:products} proves \Cref{planar} as well its generalization to several other graph classes, including graphs of bounded genus, apex-minor-free graphs, bounded-degree graphs from minor-closed families, and $k$-planar graphs.
 
 
 
@@ -137,18 +142,16 @@ For integers $0\le i\le k$, let $f_k(i)$ be the smallest integer such that there
 
 Unravelling the recurrence in \cref{recursion} shows that $f_k(k)\ge 1\cdot2\cdot\cdots k=k!$.  In particular, for any $n < f_k(k)=k!$, every $n$ vertex rooted tree $H$ has a humped unique-superior colouring $\varphi(H)\to\{1,\ldots,k\}$. Combining this with \cref{product} yields:
 
-\begin{thm}[\cite{karpas.neiman.ea:on}]
+\begin{thm}[\cite{karpas.neiman.ea:on}]\label{trees-precise}
     For every tree $H$ with $n<k!$ vertices $\uqs(H)\le 3k$.
 \end{thm}
 
-Using Stirling's Approximation of $k!$ it easy to see that $n < k!$ for some $k\in\Theta(\log n/\log\log n)$, which is established \cref{trees}.
+Using Stirling's Approximation of $k!$ it easy to see that $n < k!$ for some $k\in\Theta(\log n/\log\log n)$, so \cref{trees} is a corollary of \cref{trees-precise}.
 
 \section{Generalization to $t$-Trees}
 \seclabel{t-trees}
 
-
-
-A graph $H$ is a $t$-tree if $H$ is a clique of size $t$ or if it contains a vertex $v$ of degree $t$ whose neighbours form a clique and such that $H-\{t\}$ is a $t$-tree.  This recursive definition of $t$-trees implies that $V(G)$ can be ordered as $v_1,\ldots,v_n$ such that $v_1,\ldots,v_t$ form a clique and, for each $i\in\{t+1,\ldots,n\}$, $v_i$ is adjacent to exactly $t$ vertices among $v_1,\ldots,v_{i-1}$ which themselves form a clique.  We call $v_1,\ldots,v_n$ a \emph{construction order} for $H$.
+A graph $H$ is a $t$-tree if $H$ is a clique of size $t$ or if it contains a vertex $v$ of degree $t$ whose neighbours form a clique and such that $H-\{t\}$ is a $t$-tree.  This recursive definition of $t$-trees implies that there is a permutation $\pi_1,\ldots,\pi_n$ of $V(G)$ such that $\pi_1,\ldots,\pi_t$ form a clique and, for each $i\in\{t+1,\ldots,n\}$, $\pi_i$ is adjacent to exactly $t$ vertices among $\pi_1,\ldots,\pi_{i-1}$ which themselves form a clique, which we call the \emph{parent clique} of $\pi_i$.  We call $\pi_1,\ldots,\pi_n$ a \emph{construction order} for $H$.
 
 A \emph{tree decomposition} of a graph $H$ is a sequence $\mathcal{T}:=(B_x:x\in V(T))$ of subsets of $V(H)$ called \emph{bags} indexed by the nodes of a tree $T$ and such that
 \begin{inparaenum}[(i)]
@@ -157,20 +160,22 @@ A \emph{tree decomposition} of a graph $H$ is a sequence $\mathcal{T}:=(B_x:x\in
 \end{inparaenum}
 The \emph{width} of $\mathcal{T}$ is $\max\{|B_x|:x\in V(T)\}-1$. The \emph{treewidth} of $H$ is the minimum width of any tree decomposition of $H$.
 
-It is not difficult to see that every $t$-tree has treewidth $t$.  For the remainder of this section, $H$ is a $t$-tree on $n\ge t+1$ vertices with construction order $v_1,\ldots,v_n$, $\mathcal{T}:=(B_x:x\in V(T))$ is a tree decomposition of $H$ in which every bag has size exactly $t+1$, $T$ is rooted some node $r$ with $B_r=\{v_1,\ldots,v_{t+1}$, and the decomposition has the following additional property:
-\begin{inparaenum}[(i)]\setcounter{enumi}{2}
-  \item for each node $x$ of $T$ with parent $y$, $|B_x\setminus B_y|=1$.
-\end{inparaenum}
-Note that this property implies that $|V(T)|=n-t$.
+It is not difficult to see that every $t$-tree $H$ has treewidth $t$ and a tree-decomposition of $H$ can be constructed incrementally from a construction order $\pi_1,\ldots,\pi_n$ of $H$: Start with a tree $T$ that consists of a single node $r$ with bag $B_r:=\{\pi_1,\ldots,\pi_{t+1}\}$ and, for $i\gets t+2,\ldots,n$, find a bag $B_x$ that contains the parent clique of $\pi_i$ and add a new leaf $\pi_i$ to $T$ adjacent to $x$ whose bag $B_{\pi_i}$ contains $\pi_i$ and its parent clique.
 
-For each $v\in V(T)$ let $x_T(v)$ be the minimum-depth node $x\in V(T)$ such that $v\in B_x$.  A length-$2$ path $uvw$ in $H$ is \emph{vertical} if $x_T(u)$ is a strict $T$-ancestor of $x_T(v)$ which is a strict $T$-ancestor of $x_T(w)$. (This implies, in the construction order $v_1,\ldots,v_n$, that $u=v_i$, $v=v_j$ and $w=v_k$ for some $i<j<k$.) Any length-$2$ path $uvw$ in $H$ that is not vertical is \emph{humped}.  This allows us to define the humped us-chromatic number $\hus(H)=\hus(H,\mathcal{T})$ as in \cref{sec:trees}.
+For the remainder of this section, $H$ is a $t$-tree on $n\ge t+1$ vertices, $\pi_1,\ldots,\pi_n$ is a construction order for $H$, and $\mathcal{T}:=(B_x:x\in V(T))$ is a tree decomposition of $H$ constructed by the procedure described in the preceding paragraph.  It is easy to see that every bag of $\mathcal{T}$ has size exactly $t+1$, $T$ is rooted at $r$, and
+\begin{inparaenum}[(i)]\setcounter{enumi}{2}
+  \item for each node $y$ of $T$ with parent $x$, $|B_y\setminus B_x|=1$.\label{three}
+\end{inparaenum}
+Note that this implies that $|V(T)|=n-t$, since $B_r$ contains $t+1$ vertices of $H$ and, by (\ref{three}), each $x\in V(T)\setminus\{r\}$ includes exactly one vertex of $H$ that is not in its parent.
+
+For each $v\in V(T)$ let $x_T(v)$ be the minimum-depth node $x\in V(T)$ such that $v\in B_x$.  A path $v_i,\ldots,v_r$ in $H$ is \emph{vertical} if $x_T(v_{i-1})$ is a strict $T$-ancestor of $x_T(v_i)$, for each $i\in\{1,\ldots,r\}$. (Equivalently, $v_0,\ldots,v_r$ is a subsequence of $\pi_1,\ldots,\pi_n$.) Any path in $H$ that is not vertical is \emph{humped}.  This allows us to define the humped us-chromatic number $\hus(H)=\hus(H,\mathcal{T})$ as in \cref{sec:trees}.
 
 \begin{lem}
     For any $t$-tree $H$, $\uqs(H)\le \binom{t+2}{t}\hus(H)$.
 \end{lem}
 
 \begin{proof}
-    A lemma of \citet{pilipczuk.siebertz:polynomial} (see \cite[Lemma~13]{pilipczuk.siebertz.polynomial-arxiv}) shows that from any vertex $v_k$, the number of paths $v_i,v_j,v_k$ with $i<j<k$ is at most $\binom{t+2}{t}-1$.  This means that we can greedily colouring $v_1,\ldots,v_n$ with $\binom{t+2}{t}$ colours so that the endpoints of any vertical path are assigned different colours.
+    A lemma of \citet{pilipczuk.siebertz:polynomial} (see \cite[Lemma~13]{pilipczuk.siebertz:polynomial-arxiv}) shows that from any vertex $v\in V(H)$, the number of vertical paths of length at most $p$ that end at $v$ is at most $\binom{t+p}{t}$.  Applying this with $p=2$ implies that we can greedily colour $v_1,\ldots,v_n$ to obtain a colouring $\psi:V(H)\to \{1,\ldots,\binom{t+2}{t}\}$ so that the endpoints of any non-trivial vertical path\footnote{A path is non-trivial if its length is at least 1.} of length at most $2$ are assigned different colours.  Let $\varphi:V(H)\to\{1,\ldots,k\}$ be a humped us-colouring of $H$.  As in \cref{product}, the colouring $\varphi':V(H)\to\{1,\ldots,k\}\times \{1,2,3\}$ defined by $\varphi'(v)=(\varphi(v),\varphi(v))$ proves the result.
 \end{proof}
 
 Key definition:  The \emph{$i$-heavy subtree} of $T$ consists of those nodes $x$ such that the subtree $T_x$ rooted at $x$ has at least $f(i-1)$ nodes.  A heavy subtree will have at most $\alpha(k-i)$ leaves.
