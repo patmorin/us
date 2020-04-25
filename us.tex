@@ -37,7 +37,8 @@
 \author{Working Group}
 
 \newcommand{\uqs}{\chi_2}
-\newcommand{\hus}{\tilde{\chi}_2}
+\newcommand{\hus}{\hat{\chi}_2}
+
 \begin{document}
 % \begin{titlepage}
 \maketitle
@@ -54,7 +55,14 @@
 
 \section{Introduction}
 
-A sequence $s_0,\ldots,s_p$ over some total order $(S,<)$ is \emph{ranked} if $\max\{s_0,\ldots,s_p\}$ occurs exactly once in $s_0,\ldots,s_p$.  A colouring of a graph $G$ is a function $\varphi:V(G)\to S$.  A colouring $\varphi:V(G)\to S$ is an \emph{$\ell$-ranking} if, for every path $v_0,\ldots,v_k$ of length $k\le\ell$, $\varphi(v_0),\ldots,\varphi(v_k)$ is ranked. The $\ell$-ranking number $\chi_\ell(G)$ is the minimum integer $k$ such that $G$ has a $\ell$-ranking $\varphi:V(G)\to S$ with $|S|=k$.
+% A sequence $s_0,\ldots,s_p$ over some total order $(S,<)$ is \emph{ranked} if $\max\{s_0,\ldots,s_p\}$ occurs exactly once in $s_0,\ldots,s_p$.
+
+A colouring of a graph $G$ is a function $\varphi:V(G)\to \N$.  A colouring $\varphi:V(G)\to S$ is an \emph{$\ell$-ranking} if, for every path $v_0,\ldots,v_k$ of length $k\le\ell$,
+\begin{inparaenum}[(i)]
+   \item $\varphi(v_0)\neq \varphi(v_k)$; or
+   \item $\max\{\varphi(v_0),\ldots,\varphi(v_k)\} > \varphi(v_0)$.
+\end{inparaenum}
+The $\ell$-ranking number $\chi_\ell(G)$ is the minimum integer $k$ such that $G$ has a $\ell$-ranking $\varphi:V(G)\to \{1,\ldots,k\}$.
 
 The case $\ell=2$ has received special attention. A $2$-ranking is called a \emph{unique-superior colouring} (abbreviated \emph{us-colouring}) by \citet{karpas.neiman.ea:on} who prove the following result:
 
@@ -82,19 +90,21 @@ Our proof of \cref{planar} makes use of a recent \emph{product structure theorem
 \section{A Restatement of the Proof for Trees}
 \seclabel{trees}
 
-Let $H$ be a rooted tree.  The \emph{depth} $d_H(V)$ of a node $v\in H$ is the length of the path $P_T(v)$ from the root $r$ of $H$ to $v$.  A path $P$ in $H$ is \emph{vertical} if no two nodes in $P$ have the same depth, otherwise the path is \emph{humped}.  A node $a\in V(T)$ is a $T$-ancestor of $w\in V(T)$ if $a\in V(P_T(w))$.  A $T$-ancestor $a$ of $w$ is \emph{strict} if $a\neq w$.  If $a$ is a (strict) $T$-ancestor of $w$ then $w$ is a (strict) $T$-descendant of $a$.
+In this section we review a slight variant of the proof of \cref{trees} by \citet{karpas.neiman.ea:on}. This presentation modifies the proof slightly so that it separates the treatment of the two different types length-$2$ paths in trees. This will simplify the arguments in \cref{sec:t-trees}.
 
-A \emph{humped} us-colouring of $H$ is a proper colouring of $H$ in which, for every humped length-$2$ path $uvw$ in $H$, at least one of $\varphi(u)$ or $\varphi(w)$ is not equal to $\max\{\varphi(u),\varphi(v),\varphi(w)\}$.
+Let $H$ be a rooted tree.  The \emph{depth} $d_H(V)$ of a node $v\in H$ is the length of the path $P_T(v)$ from the root $r$ of $H$ to $v$.  A node $a\in V(T)$ is a $T$-ancestor of $w\in V(T)$ if $a\in V(P_T(w))$.  A $T$-ancestor $a$ of $w$ is \emph{strict} if $a\neq w$.  If $a$ is a (strict) $T$-ancestor of $w$ then $w$ is a (strict) $T$-descendant of $a$.  A path $P$ in $H$ is \emph{vertical} if no two nodes in $P$ have the same depth, otherwise the path is \emph{humped}.  A \emph{humped} us-colouring of $H$ is a proper colouring of $H$ in which, for every humped length-$2$ path $uvw$ in $H$, at least one of $\varphi(u)$ or $\varphi(w)$ is not equal to $\max\{\varphi(u),\varphi(v),\varphi(w)\}$.  For a rooted tree $H$, we let $\hus(H)$ denote the \emph{humped us-chromatic number} of $H$; the smallest integer $k$ such that $H$ has a humped us-colouring $\varphi:V(H)\to\{1,\ldots,k\}$.
 
 \begin{lem}\label{product}
-    If a rooted tree $H$ has a humped unique-superior colouring $\varphi:V(H)\to S$, then $H$ has a unique-superior colouring $\varphi':V(H)\to S\times\{0,1,2\}$.
+    For any rooted tree $H$, $\uqs(H)\le 3\hus(H)$.
 \end{lem}
 
 \begin{proof}
-   For each $v\in V(H)$, let $\varphi'(v):=(\varphi(v), d_H(v)\bmod 3)$ and let $<$ denote lexicograph order over the set $S\times\{0,1,2\}$.  Since $\varphi$ is a humped us-colouring of $H$ we need only consider vertical paths of $H$.  But this is trivial since for every vertical path $uvw$ in $H$, $\varphi'(u)$, $\varphi'(v)$, and $\varphi'(w)$ are distinct.
+    It is slightly more convenient to show the equivalent statement: If has a humped unique-superior colouring $\varphi:V(H)\to S$, then $H$ has a unique-superior colouring $\varphi':V(H)\to S\times\{0,1,2\}$, where the elements of $S\times\{0,1,2\}$ are ordered lexicographically.
+
+    For each $v\in V(H)$, let $\varphi'(v):=(\varphi(v), d_H(v)\bmod 3)$. Since $\varphi$ is a humped us-colouring of $H$ we need only consider vertical paths of $H$.  But this is trivial since for every vertical path $uvw$ in $H$, $\{\varphi'(u),\varphi'(v),\varphi'(w)\}=\{0,1,2\}$, so $\varphi'(u)$, $\varphi'(v)$, and $\varphi'(w)$ are distinct.
 \end{proof}
 
-For integers $0\le i\le k$, let $f_k(i)$ be the smallest integer such that there exists an $f_k(i)$-node tree $H$ with root $r$ and some value $\ell \in\{i,\ldots,k\}$ such that $H$ does not have a humped unique-superior colouring $c:V(G)\to \{1,\ldots,k\}$.
+For integers $0\le i\le k$, let $f_k(i)$ be the smallest integer such that there exists an $f_k(i)$-node tree $H$ with root $r$ and some value $\ell \in\{i,\ldots,k\}$ such that $H$ does not have a humped unique-superior colouring $c:V(G)\to \{1,\ldots,k\}$ (in which the root of $H$ happens to be coloured $k$).
 
 \begin{lem}\label{recursion}
     For any integers $1\le  i\le k$, $f_k(i) \ge (k-i+1)\cdot f_k(i-1)$
@@ -128,7 +138,7 @@ For integers $0\le i\le k$, let $f_k(i)$ be the smallest integer such that there
 Unravelling the recurrence in \cref{recursion} shows that $f_k(k)\ge 1\cdot2\cdot\cdots k=k!$.  In particular, for any $n < f_k(k)=k!$, every $n$ vertex rooted tree $H$ has a humped unique-superior colouring $\varphi(H)\to\{1,\ldots,k\}$. Combining this with \cref{product} yields:
 
 \begin{thm}[\cite{karpas.neiman.ea:on}]
-    Every tree $H$ with $n<k!$ vertices has a unique-superior colouring $\varphi:V(H)\to\{1,\ldots,3k\}$.
+    For every tree $H$ with $n<k!$ vertices $\uqs(H)\le 3k$.
 \end{thm}
 
 Using Stirling's Approximation of $k!$ it easy to see that $n < k!$ for some $k\in\Theta(\log n/\log\log n)$, which is established \cref{trees}.
@@ -203,12 +213,20 @@ It is not difficult to see that every $t$-tree has treewidth $t$.  For the remai
 \end{inparaenum}
 Note that this property implies that $|V(T)|=n-t$.
 
-For each $v\in V(T)$ let $x_T(v)$ be the minimum-depth node $x\in V(T)$ such that $v\in B_x$.  A path $uvw$ in $H$ is \emph{vertical} if $x_T(u)$ is a strict $T$-ancestor of $x_T(v)$ which is a strict $T$-ancestor of $x_T(w)$.
+For each $v\in V(T)$ let $x_T(v)$ be the minimum-depth node $x\in V(T)$ such that $v\in B_x$.  A length-$2$ path $uvw$ in $H$ is \emph{vertical} if $x_T(u)$ is a strict $T$-ancestor of $x_T(v)$ which is a strict $T$-ancestor of $x_T(w)$. (This implies, in the construction order $v_1,\ldots,v_n$, that $u=v_i$, $v=v_j$ and $w=v_k$ for some $i<j<k$.) Any length-$2$ path $uvw$ in $H$ that is not vertical is \emph{humped}.  This allows us to define the humped us-chromatic number $\hus(H)=\hus(H,\mathcal{T})$ as in \cref{sec:trees}.
+
+\begin{lem}
+    For any $t$-tree $H$, $\uqs(H)\le \binom{t+2}{t}\hus(H)$.
+\end{lem}
+
+\begin{proof}
+    A lemma of \citet{pilipczuk.siebertz:polynomial} (see \cite[Lemma~13]{pilipczuk.siebertz.polynomial-arxiv}) shows that from any vertex $v_k$, the number of paths $v_i,v_j,v_k$ with $i<j<k$ is at most $\binom{t+2}{t}-1$.  This means that we can greedily colouring $v_1,\ldots,v_n$ with $\binom{t+2}{t}$ colours so that the endpoints of any vertical path are assigned different colours.
+\end{proof}
+
+Key definition:  The \emph{$i$-heavy subtree} of $T$ consists of those nodes $x$ such that the subtree $T_x$ rooted at $x$ has at least $f(i-1)$ nodes.  A heavy subtree will have at most $\alpha(k-i)$ leaves.
 
 
-
-
-% For each triple of integers $1\le i,t \le k$, $1\le i\le k$, let $f_{k,t}}(i)$.
+For each triple of integers $1\le i,t \le k$, $1\le i\le k$, let $f_{k,t}(i)$.
 
 
 \section{Applying the Product Structure Theorem}
