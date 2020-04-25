@@ -148,6 +148,56 @@ Unravelling the recurrence in \cref{recursion} shows that $f_k(k)\ge 1\cdot2\cdo
 
 Using Stirling's Approximation of $k!$ it easy to see that $n < k!$ for some $k\in\Theta(\log n/\log\log n)$, so \cref{trees} is a corollary of \cref{trees-precise}.
 
+\section{A Less Obvious Restatement of the Proof for Trees}
+\seclabel{trees}
+
+\begin{lem}\label{tree-separator}
+    For every integer $c\ge 1$ and for every $n$-vertex rooted tree $H$, there exists $S\subseteq V(H)$ such that
+    \begin{inparaenum}[(i)]
+        \item $H[S]$ is a tree that contains the root of $H$; \label{has-root}
+        \item $H[S]$ has at most $c$ leaves; and \label{c-1-leaves}
+        \item $H-S$ has no component larger than $n/(c+1)$. \label{max-component}
+    \end{inparaenum}
+\end{lem}
+
+\begin{proof}
+    Let $r$ be the root of $H$ and let $v_1,\ldots,v_n$ be the vertices of $H$ in the order they are encountered in a preorder traveral.  Let $L=\{v_{\lceil in/c\rceil}: i\in\{1,\ldots,c\}\}$.  Let $S:=\bigcup_{\ell\in L} V(P_H(\ell))$ so that $H[S]$ is the minimum spanning tree of $L\cup\{r\}$.  Clearly $S$ satisfies (\ref{has-root}).  Every leaf of $H[S]$ is contained in $L$, so $S$ satisifies (\ref{c-1-leaves}).  That $S$ satisfies (\ref{max-component}) follows from the fact that, for any $i\in\{1,\ldots,n\}$, $P_H(v_i)$ separates $v_1,\ldots,v_{i-1}$ from $v_{i+1},\ldots,v_n$ in the sense that, for every $1\le a\le b\le n$ the path from $a$ to $b$ in $H$ contains at least one vertex of $P_T(v_i)$.
+\end{proof}
+
+\begin{lem}\label{skinny-tree-colour}
+    Let $1\le \ell \le n$ be integers, let $C$ be an $(\ell+1)$-element set of integers, let $\alpha\in C$, and let $H$ be an $n$-node tree rooted at $r\in v(H)$ having at most $\ell$ leaves.  Then $H$ has a humped us-colouring $\varphi:V(H)\to C$ in which $\varphi(r)=\alpha$.
+\end{lem}
+
+\begin{proof}
+    The proof is by induction on $|V(H)|$. If $|V(H)|=1$ then $H$ has one node $r$ and the result is trivial.  Otherwise, let $r_1,\ldots,r_m$ be the children of $r$ and observe that $1\le m\le \ell$.  Set $\varphi(r):=\alpha$, as required and, for each $i\in\{1,\ldots,m\}$, set $\varphi(r_i)$ to the $i$th largest value in $C\setminus\{\alpha\}$, so that each child of $r$ is assigned a unique colour distinct from $r$. It is easy to check that this is a humped us-colouring of the star $H[\{r,r_1,\ldots,r_m\}]$ rooted at $r$ so all that remains is to colour the subtree $H_{r_i}$ rooted at $r_i$ for each $i\in\{1,\ldots,m\}$.  Applying induction to $H_{r_i}$ with $\alpha=\varphi(r_i)$ for each $i\in\{1,\ldots,m\}$ completes the proof.
+\end{proof}
+
+
+\begin{lem}\label{tree-algorithm}
+    Let $1\le c\le k$ be integers and let $H$ be an $n$-vertex tree with $n\le k!/c!$, rooted at $r\in V(H)$. Then $H$ has a humped us-colouring $\varphi:V(H)\to\{0,\ldots,k\}$ with $\varphi(r)=k-c$.
+\end{lem}
+
+\begin{proof}
+    The proof is by induction on $k-c$.  The base case, when $c=k$, occurs when $n\le k!/c!=1$ simply states that setting $\varphi(r)=0$ is gives a us-colouring of the 1-node tree whose only node is $r$.
+
+
+    % The base case, when $c=k$ occurs when $n= k!/(k-1)!=k$.  In this case, $H$ has at most $k$ nodes and therefore, at most $k-1$ leaves.  The result then follows by applying \cref{skinny-tree-colour} with $C=\{1,\ldots,k\}$ and $\alpha=1$.
+
+    For $1\le c<k$, let $S$ be the set described in \cref{tree-separator}.  Then $H[S]$ has at most $c$ leaves so, by \cref{skinny-tree-colour} with $\alpha=k-c$, $\varphi$ can be extended into a us-colouring $\varphi:S\to C$ of $H[S]$ using only the $c+1$ colours in $C:=\{k-c,\ldots,k\}$.  Now $H-S$ is a forest consisting of trees $H_{r_1},\ldots,H_{r_m}$ each having size at most $n/(c+1) \le k!/(c+1)!$ with roots $r_1,\ldots,r_m$, respectively.  For each $i\in\{1,\ldots,m\}$, apply induction on $H_{r_i}$ to extend $\varphi$ into a humped us-colouring $\varphi:V(H_{r_i})\to\{1,\ldots,k\}$ of $H_{r_i}$ in which $\varphi(r_i)=k-c$.  It is now straightforward to check that (because $\alpha(r_i)=k-c < k-c+1$ for each $i\in\{1,\ldots,m\}$) $\varphi$ is a humped us-colouring of $H$.
+\end{proof}
+
+Applying \cref{tree-algorithm} with $c=1$ and shifting $0,\ldots,k$ onto $1,\ldots,k+1$ gives:
+
+\begin{cor}\label{tree-algorithm-ii}
+    For every rooted tree $H$ with $n\le k!$ nodes, $\hus(H)\le k+1$.
+\end{cor}
+
+Combining \cref{tree-algorithm-ii} with \cref{product} gives the following
+\begin{thm}[\cite{karpas.neiman.ea:on}]
+    For every tree $H$ with $n\le k!$ vertices, $\uqs(H)\le 3(k+1)$.
+\end{thm}
+
+
 \section{Generalization to $t$-Trees}
 \seclabel{t-trees}
 
@@ -184,12 +234,45 @@ Key definition:  The \emph{$i$-heavy subtree} of $T$ consists of those nodes $x$
 For each triple of integers $1\le i,t \le k$, $1\le i\le k$, let $f_{k,t}(i)$.
 
 
+
 \section{Applying the Product Structure Theorem}
 \seclabel{products}
 
 
 \section{Conclusions}
 \seclabel{conclusion}
+
+New Stuff:
+
+\begin{lem}\label{path-colour}
+    Let $K$ be a $t$-path, let $\mathcal{P}:=(B_x:x\in V(P))$ be a width-$(t+1)$ path-decomposition of $K$ using the path $P=0,\ldots,m$, let $v_0$ be any vertex in $B_0$, and let $\varphi:B_{0}\setminus\{v_0\}\to\{\alpha\in N:\alpha > 3t\}$ be precolouring of all but one vertex of $B_{0}$.  The $\varphi$ can be extended to a us-colouring of $K$ in which $\varphi(v)\in\{0,\ldots,3t\}$ for each $v\in V(K)\setminus (B_0\setminus v_0)$.
+\end{lem}
+
+\begin{proof}
+    The proof is by induction on $t$. In the base case $t=0$ and $K$ consists of an independent set (TODO: make sure $0$-tree is defined.) and all its uncoloured vertices can be coloured $0$.
+
+    If $t>0$, it is well-known that $K$ contains a ``greedy path'' $w_0,\ldots,w_q$ such that $w_0\in B_0$, $w_q\in B_m$ and with the following property: (*)~there is no pair $1\le i<j-1\le q-1$ such that $w_i$ and $w_j$ are both adjacent to some $v\in V(K)\setminus \{w_0,\ldots,w_q\}$
+
+    For each $i\in\{0,\ldots,q\}$, set $\varphi(w_i)=3t-i\bmod 3$ (unless $i=0$ and $w_0\neq x_0$, in which $\varphi(w_0)$ is already defined.) Now, the graph $K-\{w_0,\ldots,w_q\}$ is a partial $(t-1)$-path which can be augmented to to a $(t-1)$-path $K'$.  Applying induction on $K'$ gives a us-colouring $\varphi:V(K')\to\{0,\ldots,3(t-1)\}$ of $K'$ and it is easy to check that, because of property~(*) this completes $\varphi$ to a us-colouring of $K$.
+\end{proof}
+
+\begin{lem}
+    Let $H$ be a $t$-tree, let $\mathcal{T}:=(B_x:x\in V(T))$ be a canonical path decomposition of $H$ where $T$ has root $r$,  let $T'$ be a subtree of $T$ with root $r'\neq r$ and having at most $\ell$ leaves, let $\kappa = (3t+1)\lceil\log_2(\ell+1)\rceil$, and let $\varphi:B_{r'}\setminus\{r'\}\to \{\alpha\in\N: \alpha > \tau\}$.  Then $\varphi$ can be completed to a us-colouring of the subgraph $H'=H[\bigcup_{x\in V(T')}B_x]$ so that $\varphi(v)\in\{1,\ldots,\tau\}$ for each $v\in V(H')\setminus (B_{r'}\setminus r')$.
+\end{lem}
+
+\begin{proof}
+    The proof is by induction on $\ell$.  When $\ell=1$, $T'$ is a path and $H'$ is therefore a $t$-path.  The result then follows immediately from \cref{path-colouring}.
+
+    Next we consider the case $\ell >1$.
+    Let $T$ be ordered arbitrarily and let $x_1,\ldots,x_\ell$ be the leaves of $T'$ in the order they are encountered by an in in-order traversal.  Consider the path $P$ from the root of $T'$ to $x_{\lceil \ell/2\rceil}$.   Let $H[P]:=H[\bigcup_{x\in V(P)} B_x]$ and apply \cref{path-colouring} to $H[P]$ using the path decomposition $(B_x:x\in V(P))$ to obtain a us-colouring of $H[P]$ in which (after shifting) any newly-coloured vertex is assigned a colour in $\{\kappa - 3t,\ldots,\kappa\}$. Now, $T'-P$ is a forest that can be partitioned into two sets of trees, each of which has at most $\ell/2$ leaves.  We can now apply induction on each tree individually to obtain a us-colouring in which newly coloured nodes are assigned colours in \{1,\ldots,\kappa-3t\}$.  It is easy to check that this gives a us-colouring of $H$.
+
+    TODO: Check constants.
+\end{proof}
+
+\begin{lem}
+    Let $H$ be a $t$-tree, let $\mathcal{T}:=(B_x:x\in V(T))$ be a canonical path decomposition of $H$,  let $T'$ be a subtree of $T$, let $\mathcal{P}=(P_x:x\in P)$ be a width-$p$ path decomposition of $T'$, let $S:=\bigcup_{x\in V(T')} B_x$  and let $Y:=\{x\in V(T): B_x\cap S\neq\emptyset\}$.
+\end{lem}
+
 
 
 \bibliographystyle{plainnat}
