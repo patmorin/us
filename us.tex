@@ -210,9 +210,9 @@ A \emph{tree decomposition} of a graph $H$ is a sequence $\mathcal{T}:=(B_x:x\in
 \end{inparaenum}
 The \emph{width} of $\mathcal{T}$ is $\max\{|B_x|:x\in V(T)\}-1$. The \emph{treewidth} of $H$ is the minimum width of any tree decomposition of $H$.
 
-It is not difficult to see that every $t$-tree $H$ has treewidth $t$ and a tree-decomposition of $H$ can be constructed incrementally from a construction order $\pi_1,\ldots,\pi_n$ of $H$: Start with a tree $T$ that consists of a single node $r$ with bag $B_r:=\{\pi_1,\ldots,\pi_{t+1}\}$ and, for $i\gets t+2,\ldots,n$, find a bag $B_x$ that contains the parent clique of $\pi_i$ and add a new leaf $\pi_i$ to $T$ adjacent to $x$ whose bag $B_{\pi_i}$ contains $\pi_i$ and its parent clique.
+It is not difficult to see that every $t$-tree $H$ has treewidth $t$ and a tree-decomposition of $H$ can be constructed incrementally from a construction order $\pi_1,\ldots,\pi_n$ of $H$: Start with a tree $T$ that consists of a single node $r$ with bag $B_r:=\{\pi_1,\ldots,\pi_{t+1}\}$ and, for $i\gets t+2,\ldots,n$, let $x$ be the minimum-depth node of $T$ such that $\pi_i\in B_x$, and add a new leaf $\pi_i$ to $T$ adjacent to $x$ whose bag $B_{\pi_i}$ contains $\pi_i$ and its parent clique.  We call tree-decomposition constructed this way a \emph{canonical} tree decomposition of $H$.
 
-For the remainder of this section, $H$ is a $t$-tree on $n\ge t+1$ vertices, $\pi_1,\ldots,\pi_n$ is a construction order for $H$, and $\mathcal{T}:=(B_x:x\in V(T))$ is a tree decomposition of $H$ constructed by the procedure described in the preceding paragraph.  It is easy to see that every bag of $\mathcal{T}$ has size exactly $t+1$, $T$ is rooted at $r$, and
+For the remainder of this section, $H$ is a $t$-tree on $n\ge t+1$ vertices, $\pi_1,\ldots,\pi_n$ is a construction order for $H$, and $\mathcal{T}:=(B_x:x\in V(T))$ is a canonical tree decomposition of $H$.  It is easy to see that every bag of $\mathcal{T}$ has size exactly $t+1$, $T$ is rooted at $r$, and
 \begin{inparaenum}[(i)]\setcounter{enumi}{2}
   \item for each node $y$ of $T$ with parent $x$, $|B_y\setminus B_x|=1$.\label{three}
 \end{inparaenum}
@@ -227,6 +227,66 @@ For each $v\in V(T)$ let $x_T(v)$ be the minimum-depth node $x\in V(T)$ such tha
 \begin{proof}
     A lemma of \citet{pilipczuk.siebertz:polynomial} (see \cite[Lemma~13]{pilipczuk.siebertz:polynomial-arxiv}) shows that from any vertex $v\in V(H)$, the number of vertical paths of length at most $p$ that end at $v$ is at most $\binom{t+p}{t}$.  Applying this with $p=2$ implies that we can greedily colour $v_1,\ldots,v_n$ to obtain a colouring $\psi:V(H)\to \{1,\ldots,\binom{t+2}{t}\}$ so that the endpoints of any non-trivial vertical path\footnote{A path is non-trivial if its length is at least 1.} of length at most $2$ are assigned different colours.  Let $\varphi:V(H)\to\{1,\ldots,k\}$ be a humped us-colouring of $H$.  As in \cref{product}, the colouring $\varphi':V(H)\to\{1,\ldots,k\}\times \{1,2,3\}$ defined by $\varphi'(v)=(\varphi(v),\varphi(v))$ proves the result.
 \end{proof}
+
+\begin{lem}
+    For any graph $G$, $\uqs(G)\le 3\pw(G)+1$.
+\end{lem}
+
+\begin{proof}[Proof sketch]
+    By induction on $\pw(G)$ starts by showing that, in the base case $\pw(G)=1$ (a caterpillar) the feet can all be coloured 1 and the the spine can be coloured with a repeating sequence $2,3,4,2,3,4\ldots$.
+\end{proof}
+
+
+\begin{obs}\label{colour-partition}
+    Let $G$ be a graph, $X\subset V(G)$ and $\varphi:V(G)\to\N$ be such that
+    \begin{compactenum}
+        \item $\varphi:X\to\N$ is one-to-one;
+        \item $\varphi$ is a us-colouring of $G-X$; and
+        \item $\{\varphi(v):x\in X\} \cap \{\varphi(v):x\in V(G)\setminus X\} =\emptyset$.
+    \end{compactenum}
+    Then $\varphi$ is a us-colouring of $G$.
+\end{obs}
+
+For a node $x\in V(T)$, $T_x$ denotes the subtree of $T$ induced by all $T$-descendants of $x$, including $x$. Let $k$ be an integer such that $n:=|V(H)|\le \sqrt[4]{k!}$. The \emph{rank} of $x$, denoted $\rho_T(x)$ is the largest integer $c$ such that $|T_x| \le \sqrt[4]{k!/c!}$.  Since $\sigma_T(x) \le n \le \sqrt[4]{k!}$, $\rho_T(x)$ is well defined and $\rho_T(x)\in\{1,\ldots,k\}$ for every $x\in V(T)$.
+
+For each $c\in\{1,\ldots,k\}$ let $L_c=\{x\in V(T):\rho_T(x) = c\}$ and let $X_c=\bigcup_{x\in L_c} B_x$.  For each $c\in\{1,\ldots,k\}$, $T[L_c]$ is a forest. Each root node of $T[L_c]$ is called a \emph{$c$-critical node}.  A node that is \emph{critical} if it is $c$-critical for some $c\in\{1,\ldots,k\}$.
+
+\begin{lem}\label{descendant-count}
+    For any node $x\in V(T)$ with $\rho_T(x)=c$, the number of $(c+1)$-critical $T$-descendants of $x$ is $O(\sqrt{c})$.
+\end{lem}
+
+\begin{proof}
+    Since $\rho_T(x)=c$, $|T_x|\le \sqrt[4]{k!/c!}$.  Each $(c+1)$-critical node $y$ has $|T_y|> \sqrt[4]{k!/(c+2)!}$.  Letting $b$ denote the number of $(c+1)$-critical $T$-descendants of $x$ and chaining these inequalities gives
+    \[
+        b\sqrt[4]{k!/(c+2)!} < |T_x| \le \sqrt[4]{k!/c!} \enspace ,
+    \]
+    so $b \le \sqrt[4]{(c+1)(c+2)}=O(\sqrt{c})$.
+\end{proof}
+
+The following lemma illustrates our plan for us-colouring $H$.  Namely, it allows us to focus our remaining effort on finding a us-colouring of the subgraph of $H$ induced by critical nodes that has some additional properties.
+
+\begin{lem}
+    Let $C$ denote the set of critical nodes in $T$ and let $X=\bigcup_{x\in C} B_x$. and let $\varphi: X\to\N$ be a humped us-colouring of $H[X]$ such that, for each $c\in\{1,\ldots,k\}$ and each tree $T'$ in the forest $T[L_c]$, the restriction $\varphi: X\cap \bigcup_{x\in V(T')}B_x$ is one-to-one.  Then $\varphi$ can be completed to a humped us-colouring of $H$ such that $\varphi(v)\in\{-at\log k,\ldots,-1\}$ for every $v\in V(H)\setminus X$.
+\end{lem}
+
+\begin{proof}
+    Consider the graph $H-X$.  The tree decomposition $(B_x:x\in T)$ yields a width-$t$ tree decomposition of $H-X$ in which each component $H'$ is mapped to a subtree $T'$ in the forest $T-C$.  By \cref{descendant-count}, (TODO: State this explicitly) each tree $T'$ in the forest $T-C$ has at $O(\sqrt[4]{k})$ leaves and therefore $\pw(T')=O(\log k)$.  It follows that $\pw(H')=O(t\pw(T'))=O(t\log k)$.  Thus $H'$ can be us-coloured using the colour set $\{-at\log k,\ldots,-1\}$.  By \cref{colour-partition}, this extends $\varphi$ to a us-colouring of $H[V(H')\cup N_H(V(H'))]$.  This graph covers every path $uvw$ of $H$ except those with $u$ and $w$ in different components of $H-X$.  But any such path must have $v\in X$, so $\varphi(v)\ge 0$ and $\varphi(u),\varphi(w)<0$.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Key definition:  The \emph{$i$-heavy subtree} of $T$ consists of those nodes $x$ such that the subtree $T_x$ rooted at $x$ has at least $f(i-1)$ nodes.  A heavy subtree will have at most $\alpha(k-i)$ leaves.
 
