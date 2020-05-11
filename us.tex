@@ -198,6 +198,42 @@ Combining \cref{tree-algorithm-ii} with \cref{product} gives the following
 \end{thm}
 
 
+\section{$2$-Trees}
+
+In this section we consider how to solve this problem for 2-trees.
+
+Let $T_{b,h}$ denote a complete $b$-ary tree of height $h$.
+
+\begin{lem}
+    Let $k\ge x\ge 1$ be integers.
+    Let $T$ be an $r$-rooted tree that contains no copy of $T_{k,k}$ and such that $T$ contains no copy of $T_{k,h}$ rooted at $r$.  Then, for each $c\in\{h,\ldots,2k\}$, $T$ has a us-colouring $\varphi:V(T)\to \{1,\ldots,2k\}$ such that $\varphi(r)=c$.
+\end{lem}
+
+\begin{proof}
+    The proof is by induction on $|V(T)|$.  The base case $|V(T)|=1$ is trivial.
+
+    For $|V(T)|>1$, let $r_1,\ldots,r_d$ be the children of $r$ and, for each $i\in\{1,\ldots,d\}$, let $T_i$ be the subtree of $T$ rooted at $r_i$.  The subtrees $T_1,ldots,T_d$ can be partitioned into two sets $T_1,\ldots,T_{d'}$ and $T_{d'+1},\ldots,T_d$ so that $T_i$ contains a copy of $T_{k,h-1}$ that includes $r_i$ if and only if $i\le d'$.  Note that, possibly, $d'=0$.   Certainly, $d' < k$ since, otherwise $T$ contains a copy of $T_{k,h}$ rooted at $r$.
+
+    Now, set $\varphi(r):=c$. For each $i\in\{1,\ldots,d'\}$, set $\varphi(r_i)$ to a distinct value in $\{k+1,\ldots,2k\}\setminus \{c\}$. For each $i\in\{d'+1,\ldots,d\}$, set $\varphi(r_i):=h-1 < c$.  By induction on each tree $T_i$, $\varphi$ can be completed to a humped us-colouring of $T_i$.  It is easy to verify that, such a colouring gives a humped us-colouring of $T$.
+\end{proof}
+
+A colouring $\varphi:V(G)\to\N$ is a \emph{$(>r)$-unique} if there is no colour $r'>r$ such that $\varphi(v)=\varphi(w)=r'$ for two distint vertices $v,w\in V(G)$.
+
+For a tree $T$ and integer $k\ge \hus(T)$, let $\hus(T,k)$ denote the smallest integer $r$ such that $T$ has a humped $(>r)$-unique humped us-colouring $\varphi:V(G)\to\{1,\ldots,k\}$.
+
+\begin{lem}
+    Let $k\ge 2r$ be integers.
+    If $\hus(T,k)\ge 2r$, then $|V(T)|\ge (k-r)\cdot r^r$.
+\end{lem}
+
+\begin{proof}
+    If $\hus(T,k)\ge 2r$, then $\hus(T)\ge 2r$.
+    Select any node maximal$v\in V(T)$ such that $\hus(T_v) \ge 2r$
+\end{proof}
+
+
+
+
 \section{Generalization to $t$-Trees}
 \seclabel{t-trees}
 
