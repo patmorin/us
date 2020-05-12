@@ -198,15 +198,160 @@ Combining \cref{tree-algorithm-ii} with \cref{product} gives the following
 \end{thm}
 
 
+
 \section{Lower Bound for 2-trees}
 
-\begin{lem}
-    Any humped us-colouring of $T_{a,a}$ requires at least $a$ distinct colours.
+Let $T_{b,h}$ denote a complete $b$-ary rooted tree of height $h$ (the rooted tree in which every leaf has depth $h$ and every non-leaf has exactly $b$ children).  The following lemma is due to \citet{karpas.neiman.ea:on}. We include a proof here for the sake of completeness.
+
+\begin{lem}\label{b-h-tree}
+    Let $T=T_{b,h}$ for some $b\ge 1$, $h\ge 0$, let $r$ be the root of $T$, and let $\varphi:V(T)\to \{1,\ldots,b-1\}$ be a us-colouring of $T_{b,h}$.  Then $\varphi(r)\ge h+1$.
 \end{lem}
 
-\begin{lem}
-    Let $G:= (k-a)\times T_{a,a}$ consist of $k-a$ disjoint copies of $T_{a,a}$.
+\begin{proof}
+    The proof is by induction on $h$. The base case $h=0$ is trivial: It simply states that $\varphi(r)\ge 1$.
+
+    For $h>0$, apply the inductive hypothesis to each of the maximal subtrees rooted at the $b$ children $r_1,\ldots,r_{b+1}$ of $r$ to determine $\varphi(r_i)\in\{h,\ldots,b-1\}$.  Since $|\{h,\ldots,b-1\}|=b-h< b$, there are two distinct $i,j\in\{1,\ldots,b\}$ such that $\varphi(r_i)=\varphi(r_j)$.  Since $r_irr_j$ is a path in $T$ and $\varphi$ is a us-colouring, this implies that $\varphi(r)\ge \varphi(r_i)+1\ge h+1$.
+\end{proof}
+
+\begin{lem}\label{apex-graph}
+    Let $A$ be the graph consisting of $k$ disjoint copies of $T_{h+1,h}$ plus an apex vertex $a$, and let $\varphi:V(A)\to \{1,\ldots,k\}$ be a us-colouring of $A$.  Then $\varphi(a)\ge h+2$.
 \end{lem}
+
+\begin{proof}
+    Let $T_1,\ldots,T_{k}$ denote the copies of $T_{h+1,h}$ in $A$.
+    By \cref{b-h-tree} any us-colouring of $T_i$ uses at least $b=h+1$ distinct colours or uses a colour greater than or equal to $h+1$.  In either case, $T_i$ contains a node $v_i$ with $\varphi(v_i)\in \{h+1,\ldots,k\}$, for each $i\in\{1,\ldots,k-h+1\}$.  Since $|\{h+1,\ldots,k\}|=k-h<k$, this implies that there exists distinct $i,j\in\{1,\ldots,k-h+1\}$ with $\varphi(v_i)=\varphi(v_j)$.  Since $v_iav_j$ is a path in $A$, this implies that $\varphi(a)\ge \varphi(v_i)+1\ge h+2$.
+\end{proof}
+
+Define a graph $G_{\ell,h}$ whose vertex set is the disjoint untion of $L_0,\ldots,L_\ell$, defined as follows.  $L_0=\{r\}$ is a single vertex.  For each $i\in\{1,\ldots,\ell\}$ and each vertex $a\in L_{i-1}$, create $k$ copies of $T_{h+1,h}$ that are dominated by $a$.  Add all of these newly created vertices to $L_i$.
+
+\begin{lem}
+    For any us-colouring $\varphi:V(G_{\ell,h})\to\{1,\ldots,k\}$ of $G_{\ell,h}$, any $i\in\{0,\ldots,\ell\}$ and any $v\in L_i$, $\varphi(v)\ge (\ell-i)(h+1) + 1$.
+\end{lem}
+
+\begin{proof}
+    The proof is by induction on $\ell-i$.  The base case $i=\ell$ (so $\ell-i=0$) is trivial, it simply states that node $v\in L_\ell$ receives a colour $\varphi(v)\ge 1$.
+
+    For $i < \ell$, consider the set $S_v$ consisting of neighbours of $v$ in $L_{i+1}$.  By induction, each $w\in S_v$ receives a colour $\varphi(w)\in \{(\ell-i-1)(h+1)+1,\ldots,k\}$.  Now applying \cref{apex-graph} to the induced graph $G_{\ell,h}[\{v\}\cup S_v]$ shows that $\varphi(v)\ge (\ell-i-1)(h+1)+h+2=(\ell-i)(h+1)+1$.
+\end{proof}
+
+
+\begin{thm}
+    For infinitely many values of $n$ there exists an $n$-vertex $2$-tree $G$ such that $\uqs(G)\in \Omega(\log n)$.
+\end{thm}
+
+\begin{proof}
+    Use the graph $G_{\ell,h}$ with $h=\alpha\log\log n-1$, and $\ell=\beta\log n/\log\log n$.  The graph has size
+    \[  (k(h+1)^{h+1})^\ell = n^{O(\alpha+\beta)} \enspace  \]
+    and requires $\ell(h+1) = \Omega(\alpha\beta\log n)$ colours.
+\end{proof}
+
+\section{Other Ideas}
+
+Approximation algorithm for trees.  Using characterization in terms of $T_{h+1,h}$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%
+%
+%
+%
+%
+% A \emph{factorial tree} $F_h$ of height $h$ is a rooted tree in which, for each $d\in\{0,\ldots,h-1\}$, each node of depth $d$ has $d+2$ children and each node of depth $h$ is a leaf.  A \emph{partial factorial tree} $F_{d,h}$ is a maximal subtree of $F_h$ rooted at a node of depth $d$. The following lower bound is due to \citet{karpas.ea:}.  We present a proof here for the sake of completeness.
+%
+%
+% \begin{lem}\label{factorial-tree}
+%     Let $T=F_{d,h}$ be a partial factorial tree rooted at some node $r$.
+%     For any us-colouring $\varphi:V(T_{d,h})\to\{1,\ldots,h\}$,
+%     $\varphi(r)\ge h-d+1$.
+% \end{lem}
+%
+% \begin{proof}
+%     The proof is by induction on $h-d$.    The base case $h-d=0$ is trivial: It simply states that $\varphi(r)\ge 1$.
+%
+%     For the inductive step, we apply the inductive hypothesis to each of the subtrees rooted at the children $r_1,\ldots,r_{d+2}$ of $r$ to determine that $\varphi(r_i)\in \{h-d,\ldots,h\}$ for each $i\in\{1,\ldots,d+2\}$.  Since $|\{h-d,\ldots,h\}|=d+1 < d+2$, $\varphi(r_i)=\varphi(r_j)\ge h-d$ for some distinct pair $i,j\{1,\ldots,d+2\}$.  Therefore $\varphi(r) \ge \varphi(r_i)+1 = h-d+1$.
+% \end{proof}
+%
+% By applying \cref{factorial-tree} with $d=0$, we obtain
+% \begin{cor}\label{factorial-tree-2}
+%     Any us-colouring $\varphi:V(F_h)\to\N$ of $F_h$ uses at least $h+1$ distinct colours, i.e, $|\{\varphi(v):v\in V(F_h)\}|\ge h+1$.
+% \end{cor}
+%
+%
+% \begin{lem}\label{tree-plus-apex}
+%     Let $k,h\in\N$ with $k > h+1$, let $G$ be the graph consisting of $k-h+1$ disjoint copies of $F_h$ plus an apex vertex $r_0$, and let $\varphi:V(G)\to\{1,\ldots,k\}$ be a us-colouring of $G$.  Then $\varphi(r_0) \ge h+2$.
+% \end{lem}
+%
+% \begin{proof}
+%     Let $T_1,\ldots,T_{k-h+1}$ denote the copies of $F_h$ in $G$.
+%     By \cref{factorial-tree-2}, each copy of $T_i$ requires at least $h+1$ distinct colours and therefore $\varphi(v_i)\in\{h+1,\ldots,k\}$ for at least one node $v_i\in V(T_i)$. Since $|\{h+1,\ldots,k\}|=k-h< k-h+1$ there exists distinct $i,j\in\{1,\ldots,k-h+1\}$ such that $\varphi(v_i)=\varphi(v_j)\ge h+1$.  Since $v_ir_0v_j$ is a path in $G$, this implies that $\varphi(r_0)\ge \varphi(r_i)+1 \ge h+2$.
+% \end{proof}
+%
+% Let $k=\ell(h+1)$ be a multiple of $h+1$ and define a graph $G_{k,h}$ as follows: $G_{k,h}$ has a set $L_{\ell}=\{r\}$ consisting of exactly one node.
+% For each $i\in\{0,\ldots,\ell-1\}$, and each vertex $v\in L_{i+1}$, we create $k-(\ell-i)(h+1)$ disjoint copies of $F_h$ that are each dominated by $v$. These newly created vertices are added to the set $L_i$.
+%
+% \begin{lem}
+%     For any us-colouring $\varphi:V(G_{k,h})\to \{1,\ldots,k\}$, any $i\in\{1,\ldots,\ell\}$, and any $v\in L_i$, $\varphi(v)\ge i(h+1)+1$.
+% \end{lem}
+%
+% \begin{proof}
+%     The proof is by induction on $\ell$.  In the base case $\ell=1$, $v\in L_1$ and its neighbours in $L_2$ induce the graph $G$ described in \cref{tree-plus-apex} and
+% \end{proof}
+%
+%
+% }
+% \begin{clm}
+%   For each $i\in\{0,\ldots,\ell\}$, $|S_i|=i!((h+1)(h+1)!)^i$.
+% \end{clm}
+%
+% \begin{proof}
+%   The proof is by induction on $i$.  By definition, $|S_0|=1=0!((h+1)(h+1)!)^0$, so this establishes the base case $i=0$. For each $i\in\{1,\ldots,\ell\}$,
+%   \[
+%      |S_i|=|S_{i-1}|\cdot i(h+1)(h+1)! = i!((h+1)(h+1)!)^i.
+%   \]
+% \end{proof}
+%
+% \begin{clm}
+%     $|V(G_{k,h})| \le \ell^\ell (h+1)^\ell (h+1)^k
+%     (1+o_h(1))\ell!((h+1)(h+1)!)
+%
+% \end{clm}
+%
+%
+%
+%
+%
+%
+%
+%
+% For $h,\ell\in \N$, let $G_{\ell,h}$ be a rooted graph defined as follows: $G_{1,h}$ is the graph $G$ described in \cref{tree-plus-apex} rooted at the apex vertex $r_0$.  For $\ell>1$, $G_{\ell,h}$ is obtained by taking $(h+1)!$ copies of $G_{\ell-1,h}$ with apex vertices $r_1,\ldots,r_{(h+1)!}$, taking one copy of $G_{1,h}$ with non-apex vertices $v_1,\ldots,v_{(h+1)!}$
+%
+%
+%
+% \begin{lem}
+%     Let $G$ be
+% \end{lem}
+
+
+
+% \begin{lem}
+%     Any humped us-colouring of $T_{a,a}$ requires at least $a$ distinct colours.
+% \end{lem}
+%
+% \begin{lem}
+%     Let $G:= (k-a)\times T_{a,a}$ consist of $k-a$ disjoint copies of $T_{a,a}$.
+% \end{lem}
 
 \section{$2$-Trees}
 
