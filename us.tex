@@ -198,13 +198,23 @@ Combining \cref{tree-algorithm-ii} with \cref{product} gives the following
 \end{thm}
 
 
+\section{Lower Bound for 2-trees}
+
+\begin{lem}
+    Any humped us-colouring of $T_{a,a}$ requires at least $a$ distinct colours.
+\end{lem}
+
+\begin{lem}
+    Let $G:= (k-a)\times T_{a,a}$ consist of $k-a$ disjoint copies of $T_{a,a}$.
+\end{lem}
+
 \section{$2$-Trees}
 
 In this section we consider how to solve this problem for 2-trees.
 
-Let $T_{b,h}$ denote a complete $b$-ary tree of height $h$.
+Let $T_{b,h}$ denote a complete $b$-ary tree of height $h$ (the rooted tree in which every leaf has depth $h$ and every non-leaf has exactly $b$ children).
 
-\begin{lem}
+\begin{lem}\label{big-complete-tree}
     Let $k\ge x\ge 1$ be integers.
     Let $T$ be an $r$-rooted tree that contains no copy of $T_{k,k}$ and such that $T$ contains no copy of $T_{k,h}$ rooted at $r$.  Then, for each $c\in\{h,\ldots,2k\}$, $T$ has a us-colouring $\varphi:V(T)\to \{1,\ldots,2k\}$ such that $\varphi(r)=c$.
 \end{lem}
@@ -221,15 +231,36 @@ A colouring $\varphi:V(G)\to\N$ is a \emph{$(>r)$-unique} if there is no colour 
 
 For a tree $T$ and integer $k\ge \hus(T)$, let $\hus(T,k)$ denote the smallest integer $r$ such that $T$ has a humped $(>r)$-unique humped us-colouring $\varphi:V(G)\to\{1,\ldots,k\}$.
 
-\begin{lem}
-    Let $k\ge 2r$ be integers.
-    If $\hus(T,k)\ge 2r$, then $|V(T)|\ge (k-r)\cdot r^r$.
+\begin{lem}\label{big-repeats}
+    Let $k$ and $x$ be integers with $k\ge 2x+1$.
+    If $\hus(T,k)> 2x+1$, then $|V(T)|\ge (k-2x+2)\cdot x^x$.
 \end{lem}
 
 \begin{proof}
-    If $\hus(T,k)\ge 2r$, then $\hus(T)\ge 2r$.
-    Select any node maximal$v\in V(T)$ such that $\hus(T_v) \ge 2r$
+    Let $T_1:= T$, let $i:=1$ and while $T_i$ contains a copy of $T_{x,x}$,
+    select any maximum-depth node $r_i\in V(T_i)$ such that the subtree $T_{r_i}$ of $T_i$ rooted at $r_i$ contains a copy of $T_{x,x}$.  Set $T_{i+1}=T_i-T_{r_i}$ and set $i:=i+1$.  Note that choosing each $r_i$ to be of maximal depth ensures that $T_{r_i}$ does not contain a copy of $T_{x+1,x+1}$.
+
+    This yields a sequence of trees $T_1,\ldots,T_m$ where, for each $i\in\{1,\ldots,m-1\}$, $|V(T_i)|\ge x^x$ and, by \cref{big-complete-tree} $\hus(T_i) \le 2x+1$.  We claim that $m-1 > k-2x$, so $m\ge k-2x+2$ and therefore $|V(T)|\ge (k-2x+2)\cdot x^x$, thus completing the proof.
+
+    To see why this claim is true observe that, otherwise, we could obtain a $(>2x+1)$-unique humped us-colouring $\varphi:V(T)\to\{1,\ldots,k\}$ as follows: For each $i\in\{1,\ldots,m-1\}$ take a humped us-colouring of $T_i$ using $\{1,\ldots,2x+1\}$ so that $\varphi(r_i)=2x+1$.  Take a humped us-colouring of $T_m$ using $\{1,\ldots,2x\}$.   Finally, for each $i\in\{1,\ldots,m-1\}$, replace $\varphi(r_i)$ with a distinct colour in $\{2x+1,\ldots,k\}$.  This certainly produces a $(>2x+1)$-unique colouring and it is easy to verify that this colouring is indeed a humped us-colouring.
 \end{proof}
+
+For a function $f:V(G)\to\R^+$, a colouring $\varphi:V(G)\to\N$ is $f$-lower-bounded if $\varphi(v)\ge f(v)$ for each $v\in V(G)$.  For a tree $T$ and $f:V(G)\to\N$, we let $T^f$ denote the tree obtained by replacing each leaf $v$ of $T$ with $T_{\lceil f(v)/2\rceil,\lceil f(v)/2\rceil
+}$.  \cref{big-complete-tree,big-repeats} generalize naturally to the following.
+
+\begin{lem}\label{big-complete-tree}
+    Let $k\ge x\ge 1$ be integers, let $T$ be a tree and let $f:V(T)\to\R$.  Then $T$ has an $f$-lower bounded humped us-colouring $\varphi:V(T)\to\{1,\ldots,2k\}$ or $T$ contains a subtree $S$ such that $S^f$ contains $T_{k,k}$.
+\end{lem}
+
+\begin{lem}\label{big-repeats}
+    Let $k$ and $x$ be integers with $k\ge 2x+1$.
+    If $\hus(T,k)> 2x+1$, then $|V(T)|\ge (k-2x+2)\cdot x^x$.
+\end{lem}
+
+
+
+
+a \emph{weight-constrained}
 
 
 
