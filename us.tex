@@ -361,7 +361,7 @@ Then $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,a(k-c)\}$ such tha
         W(v) > \frac{2}{3c(c-1)\log^2 e}\times \frac{(\log k)^k}{(\log c)^c}
     \]
 
-    Let $T'$ be the subtree of $T$ induced by the set of heavy nodes.  Since no leaf of $T'$ is a $T$-ancestor of any other leaf, it follows that the number of leaves of $T'$ is at most $(3c(c-1)\log^2 e)/2= O(c^2)$.  Therefore $T'$ has a us-colouring $\varphi:V(T')\to \{a(k-c)-r,\ldots,a(k-c)\}\setminus\{\phi\}$ for some $r\in O(\log c/\log\log c)$.  For each $v\in V(T')\setminus\{r\}$ we set $\varphi(v)$ to the colour of 
+    Let $T'$ be the subtree of $T$ induced by the set of heavy nodes.  Since no leaf of $T'$ is a $T$-ancestor of any other leaf, it follows that the number of leaves of $T'$ is at most $(3c(c-1)\log^2 e)/2= O(c^2)$.  Therefore $T'$ has a us-colouring $\varphi':V(T')\to \{a(k-c)-r,\ldots,a(k-c)\}\setminus\{\phi\}$ for some $r\in O(\log c/\log\log c)$.  We then set $\varphi(r)=\phi$ and, for each $v\in V(T')\setminus\{r\}$ we set $\varphi(v):=\varphi'(v)$.  This gives a us-colour of $T'$$ to the colour of
 
 
     .  We therefore compute a colouring of $T$, and we do so by first colouring $r$ with $\varphi(r):=\phi$ and colouring the remaining nodes of $T'$ with the colours in $\{a(k-c)-\beta\log c/\log\log c,\ldots,a(k-c)\}\setminus\{\phi\}$.  Note that this partial colouring satisifies requirements (P1) and (P2). In particular, for each $v\in V(T)$,
