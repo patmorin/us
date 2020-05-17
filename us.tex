@@ -332,60 +332,148 @@ Since every graph of treewidth at most 2 is planar, we obtain the following coro
 \subsection{The Upper Bound for $t$-Trees}
 
 
-Let's start with $2$-trees.
+\subsection{2-Trees}
+
+As a warm-up, let's start with $2$-trees.
+
+First, we start with an easy result on trees.
+
+\begin{lem}
+Let $c,k$ be integers $2\le c< k$, let $T$ be a non-empty tree with root $r$, let $\phi\in\{a(k-c-\tfrac{\log c}{\log\log c})+1,\ldots,a(k-c)\}$, let $\gamma:V(T)\to\N$ be an assignment of positive weights to the vertices of $T$ such that
+\begin{compactenum}[(R1)]
+    \item $\Gamma(r):=\sum_{v\in V(T)} (\log k)^k/(\log \gamma(v))^{\gamma(v)} \le (\log k)^k/(\log c+\tfrac{\log c}{\log\log c})^{c+\tfrac{\log c}{\log\log c}}$. \label{total-weight-i}
+\end{compactenum}
+Then $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,a(k-c)\}$ such that
+\begin{compactenum}[(P1)]
+    \item $\varphi(r)=\phi$;
+    \item for each $v\in V(T)$, $\varphi(v)\ge a\cdot(k-\gamma(v)-1)+1$.
+\end{compactenum}
+\end{lem}
+
+
+\begin{proof}
+    We say that node $v$ of $T$ is \emph{heavy} if
+    \[
+        W(v)> \frac{(\log k)^k}{(\log(c+1+\tfrac{\log (c+1)}{\log\log (c+1)}))^{c+1+\tfrac{\log (c+1)}{\log\log(c+1)}}} \enspace .
+    \]
+    With a bit of work, we can show that this implies that
+    \[
+        W(v) > \frac{2}{3c(c-1)\log^2 e}\times \frac{(\log k)^k}{(\log c)^c}
+    \]
+
+    Let $T'$ be the subtree of $T$ induced by the set of heavy nodes.  Since no leaf of $T'$ is a $T$-ancestor of any other leaf, it follows that the number of leaves of $T'$ is at most $(3c(c-1)\log^2 e)/2= O(c^2)$.  Therefore $T'$ has a us-colouring $\varphi:V(T')\to \{a(k-c)-r,\ldots,a(k-c)\}\setminus\{\phi\}$ for some $r\in O(\log c/\log\log c)$.  For each $v\in V(T')\setminus\{r\}$ we set $\varphi(v)$ to the colour of 
+
+
+    .  We therefore compute a colouring of $T$, and we do so by first colouring $r$ with $\varphi(r):=\phi$ and colouring the remaining nodes of $T'$ with the colours in $\{a(k-c)-\beta\log c/\log\log c,\ldots,a(k-c)\}\setminus\{\phi\}$.  Note that this partial colouring satisifies requirements (P1) and (P2). In particular, for each $v\in V(T)$,
+    \[
+       \frac{(\log k)^k}{\gamma(v)^{\gamma(v)}} \le W(r) \le \frac{(\log k)^k}{\left(\log c+\tfrac{\log c}{\log\log c}\right)^{c+\tfrac{\log c}{\log\log c}}}
+   \]
+   so $\gamma(v) \ge c+\log c/\log\log c$ and therefore $\varphi(v) \ge a(k-c-\tfrac{\log c}{\log\log c})+1 \ge a(k-\gamma(v)-1)+1$, as required by (P2).
+
+   Now, $T-T'$ is a forest of trees $T_1,\ldots,T_d$ rooted at nodes $r_1,\ldots,r_d$, respectively.  For each $i\in\{1,\ldots,d\}$ and each $v\in V(T_i)$,
+   \[
+       W(r_i) \le \frac{(\log k)^k}{(\log(c+1+\tfrac{\log (c+1)}{\log\log (c+1)}))^{c+1+\tfrac{\log (c+1)}{\log\log(c+1)}}} \enspace .
+   \]
+   Therefore, we can apply induction on each tree $T_i$ using the colour $\phi_i=a(k-c-)
+
+
+
+   \[
+        \frac{(\log k)^k}{\gamma(v)^{\gamma(v)}}\le W(r_i) < \frac{(\log k)^k}{\left(\log c+\tfrac{\log c}{\log\log c}\right)^{c+\tfrac{\log c}{\log\log c}}}
+   \]
+   Therefore $\gamma(v) > \gamma(r)$. Since $\gamma(r)$ and $\gamma(r_i)$ are integers, this implies that
+   \[  \gamma(r_i) \ge \gamma(r)+1 \ge c + \frac{\log c}{\log\log c} + 1 \]
+   Therefore, we may choose $\phi_i = a(k-c)-\beta\log c/\log\log c-1\ge$
+
+
+\hrule
+
+    The proof is by induction the number of vertices of $T$. If $T$ consists of a single node $r$ then we set $\varphi(r):=\phi$ and we are done.
+
+    For a tree $T$ with more than one node, let $r_1,\ldots,r_b$ denote the children of $r$ and, for each $i\in\{1,\ldots,b\}$, let $T_i$ be the subtree of $T$ containing $r_i$ and all its descendants.  We say that $T_i$ is \emph{heavy} if $W(r_i)\ge (\log k)^k/(\log (c+1))^{c+1}$.
+
+    First, a couple of manipulations
+    \begin{equation}
+        \log\log(c+1) \le \log\left(\log c + \tfrac{\log e}{c}\right)
+        \le \log\log c + \tfrac{\log^2 e}{c\log c} \enspace .
+    \end{equation}
+    Using this, we get
+    \begin{align*}
+        (\log(c+1))^{c+1}
+        & = (\log c)^{(c+1)\cdot\tfrac{\log\log(c+1)}{\log\log c}} \\
+        & \le (\log c)^{(c+1)\cdot\left(1+\tfrac{\log^2 e}{c\log c\log\log c}\right)} \\
+        & = (\log c)^{c + 1 + \tfrac{\log^2 e}{\log c\log\log c} + \tfrac{\log^2 e}{c\log c\log\log c}} \\
+        & = \left(\tfrac{\log^2 e}{\log c}\right)\left(\tfrac{\log^2 e}{c\log c} \right)(\log c)^{c+1} \\
+        & \le \left(\tfrac{3\log^2 e}{2}\right)(\log c)^{c+1} \enspace .
+    \end{align*}
+    Therefore, the number of heavy subtrees is at most
+    \[  x\frac{(\log c+1)^{c+1}}{(\log c)^c} \le \left(\tfrac{3\log^2 e}{2}\right)(\log c) \enspace . \]
+    For each heavy subtree, $T_i$ we colour $r_i$ with a unique colour in
+\end{proof}
+
+
+
+
+
 
 \begin{lem}
 Let $c,k$ be integers $0\le c< k$, let $T$ be a non-empty tree with root $r$, let $\phi\in\{a(k-c-1)+1,\ldots,ak\}$, let $\gamma:V(T)\to\N$ be an assignment of positive weights to the vertices of $T$ such that
 \begin{compactenum}[(R1)]
     % \item $\gamma(v)\le k-c$ for each $v\in V(T)$; and \label{min-weight}
-    \item $\Gamma(r):=\sum_{v\in V(T)} (\log \gamma(v))^{\gamma(v)} \le (\log k)^k/(\log c)^c$. \label{total-weight}
+    \item $\Gamma(r):=\sum_{v\in V(T)} (\log k)^k/(\log \gamma(v))^{\gamma(v)} \le (\log k)^k/(\log c)^c$. \label{total-weight}
 \end{compactenum}
 Then $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,ak\}$ such that
 \begin{compactenum}[(P1)]
     \item $\varphi(r)=\phi$;
     \item for each $i\in\{a(k-c-1)+1,\ldots,ak\}$, there is at most one $v\in V(T)$ with $\varphi(v)=i$.
-    \item for each $v\in V(T)$, $\varphi(v)\ge a\cdot(\gamma(v)-1)+1$.
+    \item for each $v\in V(T)$, $\varphi(v)\ge a\cdot(k-\gamma(v)-1)+1$.
 \end{compactenum}
 \end{lem}
 
 \begin{proof}
-    We say that a node $v$ of $T$ is \emph{dangerous} if
+    % We say that a node $v$ of $T$ is \emph{dangerous} if
+    % \[
+    %     (\log \gamma(v))^{\gamma(v)} > \frac{(\log k)^k}{\log\left(c+\frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}}
+    % \]
+    % With a bit of work, we can show that this implies that
+    % \[
+    %     (\log \gamma(v))^{\gamma(v)} > \left(\frac{\alpha}{c}\right)\cdot
+    %         \frac{(\log k)^k}{(\log c)^c} \enspace .
+    % \]
+    % for some constant $\alpha > 0$.  Therefore, the set $D$ of dangerous nodes has size $|D|\le c/\alpha$.
+
+    For each node $v$ of $T$, let $\Gamma(v):=\sum_{u\in V(T_v)}(\log k)^k/(\log(\gamma(u)))^{\gamma(u)}$ where $T_v$ denotes the subtree of $T$ induced by $v$ and all its descendants.  We say that a node $v$ of $T$ is \emph{heavy} if
     \[
-        (\log \gamma(v))^{\gamma(v)} > \frac{(\log k)^k}{\log\left(c+\frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}}
+        \Gamma(v)> \frac{(\log k)^k}{\log\left(c+\frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}} \enspace .
     \]
-    With a bit of work, we can show that this implies that
+    By fighting a little with this equation we can show that, for any heavy node $v$,
     \[
-        (\log \gamma(v))^{\gamma(v)} > \left(\frac{\alpha}{c}\right)\cdot
+        \Gamma(v) > \left(\frac{\alpha}{c}\right)\cdot
             \frac{(\log k)^k}{(\log c)^c} \enspace .
     \]
-    for some constant $\alpha > 0$.  Therefore, the set $D$ of dangerous nodes has size $|D|\le c/\alpha$.
-
-    For each node $v$ of $T$, let $\Gamma(v):=\sum_{u\in V(T_v)}\gamma(u)$ where $T_v$ denotes the subtree of $T$ induced by $v$ and all its descendants.  We say that a node $v$ of $T$ is \emph{heavy} if $\Gamma(v)> (\beta/c) \Gamma(r)$ for some constant $\beta>0$.   A node $v$ is \emph{critical} if it is heavy, but none of its $T$-descendants is heavy.  Since no critical node is a $T$-descendant of any other critical node, it follows that the set $C$ of critical nodes has size $|C|\le c/\beta$.
+    A node $v$ is \emph{critical} if it is heavy, but none of its $T$-descendants is heavy.  Since no critical node is a $T$-descendant of any other critical node, it follows that the set $C$ of critical nodes has size $|C|\le c/\alpha$.
 
     A node that is not heavy is \emph{light}.  Note that, for a light node $v$,
     \[
-        \Gamma(v) \le (\beta/c) \Gamma(r) \le \frac{\beta(\log k)^k}{c(\log c)^c} \le \frac{(\log k)^k}{\left(c+\frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}}
-    \]
-    Furthermore, for a light node $v$,
-    \[
-        (\log(\gamma(v)))^{\gamma(v)} \le \Gamma(v)  (\beta/c)\Gamma(r)
-    \]
-    and taking the logarithm gives:
-    \[
-        \gamma(v)\log\log\gamma(v) \le \log(\Gamma(r)) +\log\beta -\log c
+        \gamma(v)\le \Gamma(v) \le \frac{(\log k)^k}{\left(c+\frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}}
     \]
 
-    Let $T'$ be the minimal subtree of $T$ that spans $\{r\}\cup D\cup C$.  The number of leaves of $T'$ is at most $|D\cup C|\le (\alpha+\beta)c/(\alpha\beta)$.
+    Let $T'$ be the minimal subtree of $T$ that spans the set of heavy nodes. We say that a node of $T'$ is \emph{special} if it is $v$, or it is a leaf or it has at least two children.  Each leaf of $T'$ is a critical node, so the number of leaves of $T'$ is at most $|C|\le c/\alpha$.  In any tree with $\ell$ leaves, the number of nodes with at least two children is at most $\ell-1$.  Therefore the number of special nodes is at most most $2c/\alpha$.
 
-    Therefore, for $a>(\alpha+\beta)/(\alpha\beta)$, one can obtain a humped us-colouring of $T'$ as follows:  First colour each node of $D\cup C$ with a distinct colour in $\{a(k-c-1)+1,\ldots,ak\}$.  The uncoloured graph $T'-(D\cup C)$ consists of a set of disjoint paths.  These can be coloured with the three colours in $\{a(k-c-1)-2,a(k-c-1)-1,a(k-c-1)\}$.  These conditions ensure that the partial colouring $\varphi$ satisifies the Conditions 1--3 in the statement of the lemma.
+    Therefore, for $a\ge 2/\alpha$, one can obtain a humped us-colouring of $T'$ as follows:  First colour each critical node $C$ with a distinct colour in $\{a(k-c-1)+1,\ldots,ak\}$, using $\varphi(r):=\phi$.  Now the uncoloured graph $T'-(D\cup C)$ consists of a set of disjoint paths.  These can be coloured with the three colours in $\{a(k-c-1)-2,a(k-c-1)-1,a(k-c-1)\}$.  These conditions ensure that the partial colouring $\varphi$ satisifies the Conditions 1--3 in the statement of the lemma.  In particular, each colour in $\{a(k-c-1)+1,\ldots,a_k\}$ is used at most once and each heavy node receives a colour $c$ larger than $XXXXXX$ TODO: Careful here!
 
-    We are left with the problem of extending the colouring $\varphi$ of $T'$ to a colouring of $T$.  The forest $T-T'$ contains trees $T_1,\ldots,T_m$ with roots $r_1,\ldots,r_m$, respectively.  For each $i\in\{1,\ldots,m\}$,
-    \begin{compactenum}
-        \item $\gamma(v)\le (\log k)^k/(\log(c+r))^{c+r}$.
-        \item $\Gamma(r_i) \le 100\Gamma(r)/(ac) \le \frac{100}{ac}(\log k)^k/(\log c)^c$
-    \end{compactenum}
-    % In order to apply induction, What remains is to argue that these satisfy the preconditions 1 and 2 of the lemma.
-    We will extend $\varphi$ to a us-colouring of $T_i$ using colours $\{1,\ldots,a(k-c)\}$.  This will automatically satisfy Conditions~1 and 2 of the lemma, but we must take care to ensure that Condition~3 is also satisfied.
+    We are left with the problem of extending the colouring $\varphi$ of $T'$ to a colouring of $T$.  The forest $T-T'$ contains trees $T_1,\ldots,T_m$ with roots $r_1,\ldots,r_m$, respectively.  For each $i\in\{1,\ldots,m\}$, $r_i$ is a light node.
+
+    Therefore we can inductively colour each $T_i$ using colours in $\{1,\ldots,(a-....)$.  Finish.....
+
+    %
+    %
+    % \begin{compactenum}
+    %     \item $\gamma(v)\le (\log k)^k/(\log(c+r))^{c+r}$.
+    %     \item $\Gamma(r_i) \le 100\Gamma(r)/(ac) \le \frac{100}{ac}(\log k)^k/(\log c)^c$
+    % \end{compactenum}
+    % % In order to apply induction, What remains is to argue that these satisfy the preconditions 1 and 2 of the lemma.
+    % We will extend $\varphi$ to a us-colouring of $T_i$ using colours $\{1,\ldots,a(k-c)\}$.  This will automatically satisfy Conditions~1 and 2 of the lemma, but we must take care to ensure that Condition~3 is also satisfied.
 
     %
     %
