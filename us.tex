@@ -223,6 +223,7 @@ Definition of $\boxtimes$.  Statement of the product structure theorem.
 
 In this section we prove asymptotically tight bounds for the worst-case number of colours needed to us-colour $n$-vertex $t$-trees.
 
+
 \subsection{The Lower Bound for $t$-Trees}
 
 Iterated logarithms play a prominent role in the proofs in this section.  Let $\log x:=\log_2 x$ denote the binary logarithm of $x$, let $\log^{(0)} x := x$ and, for integers $i>0$, $\log^{(i)} x := \log(\log^{(i-1)} x)$.
@@ -330,6 +331,25 @@ Since every graph of treewidth at most 2 is planar, we obtain the following coro
 \end{cor}
 
 \subsection{The Upper Bound for $t$-Trees}
+
+
+\begin{lem}\label{pathwidth}
+    For any graph $H$, $\uqs(H)\le 3\pw(H) + 1$
+\end{lem}
+
+\begin{proof}
+    Easy to
+\end{proof}
+
+A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$. For a graph $H$ with a rooted tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$, we define the $\mathcal{T}$-skeleton of $H$ as $H[\bigcup_{x\in \Lambda(T)} B_x]$.
+
+\begin{lem}\label{skeleton}
+    Let $H$ be a graph having a width-$t$ tree decomposition $\mathcal{T}$, and let $\hat{H}$ be the $\mathcal{T}$-skeleton of $H$.  Then $\uqs(H)\le \uqs(\hat{H}) + 3t+1$.
+\end{lem}
+
+\begin{proof}
+    Colour the vertices of $\hat{H}$ using the colours $3t+2,\ldots,\uqs(\hat{H})+3t+1$.  Next, observe that the graph $H-\hat{H}$ has pathwidth at most $t$ so, by \cref{pathwidth}, it can be us-coloured using colours $1,\ldots,3t+1$.  This gives the desired colouring of $H$ using colours $\{1,\ldots,\uqs(\hat{H})+3t+1\}$.
+\end{proof}
 
 
 \subsection{2-Trees}
