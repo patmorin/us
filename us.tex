@@ -263,7 +263,7 @@ Note that this implies that $|V(T)|=n-t$, since $B_r$ contains $t+1$ vertices of
 
 For each $v\in V(T)$ let $x_T(v)$ be the minimum-depth node $x\in V(T)$ such that $v\in B_x$.  A path $v_i,\ldots,v_r$ in $H$ is \emph{vertical} if $x_T(v_{i-1})$ is a strict $T$-ancestor of $x_T(v_i)$, for each $i\in\{1,\ldots,r\}$. (Equivalently, $v_0,\ldots,v_r$ is a subsequence of $\pi_1,\ldots,\pi_n$.) Any path in $H$ that is not vertical is \emph{humped}.  This allows us to define the humped us-chromatic number $\hus(H)=\hus(H,\mathcal{T})$ as the minimum number of colours needed in a humped us-colouring of $H$.
 
-\begin{lem}
+\begin{lem}\label{humped}
     For any $t$-tree $H$, $\uqs(H)\le \binom{t+2}{t}\hus(H)$.
 \end{lem}
 
@@ -301,13 +301,9 @@ A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least t
 
 \subsection{2-Trees}
 
-As a warm-up, let's start with $2$-trees.
+As a warm-up, let's start with $2$-trees.  For now, we ignore floors and ceilings.
 
-First, we start with an easy result on trees.
-
-For now, we ignore floors and ceilings:
-
-\begin{lem}
+\begin{lem}\label{tree-slack}
 Let $c,k$ be integers $2\le c< k$, let $T$ be a non-empty tree with root $r$,  let $\gamma:V(T)\to\N$ be an assignment of positive weights to the vertices of $T$ and define
 \[
     \Gamma(r):=\sum_{v\in V(T)} \frac{(\log k)^k}{(\log \gamma(v))^{\gamma(v)}} \enspace .
@@ -319,9 +315,9 @@ if
 \end{equation}
 and
 \begin{equation}
-    \phi\in\left\{a\left(k-c-\tfrac{\log c}{\log\log c}\right)+1,\ldots,a(k-c)\right\} \label{phi-bound}
+    \phi\in\left\{a\left(k-c-\tfrac{\log c}{\log\log c}\right)+1,\ldots,a(k-c-1)\right\} \label{phi-bound}
 \end{equation}
-then $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,a(k-c)\}$ such that
+then $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,a(k-c-1)\}$ such that
 \begin{compactenum}[(P1)]
     \item $\varphi(r)=\phi$;
     \item for each $v\in V(T)$, $\varphi(v)\ge a\cdot(k-\gamma(v)-1)+1$.
@@ -345,9 +341,9 @@ then $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,a(k-c)\}$ such tha
 
     Let $T'$ be the subtree of $T$ induced by the set of heavy nodes.  Since no leaf of $T'$ is a $T$-descendant of any other leaf, it follows from \cref{total-weight-i} that the number of leaves of $T'$ is at most $(3c(c-1)\log^2 e)/2= O(c^2)$.
 
-    Therefore the skeleton $\hat{T}'$ of $T'$ has $O(c^2)$ nodes so, by \cref{trees}, $\uqs(\hat{T}')\in O(\log c/\log\log c)$. Therefore, by \cref{skeleton-colour}, $T'$ has a us-colouring $\varphi':V(T')\to \{a(k-c)-r,\ldots,a(k-c)\}\setminus\{\phi\}$ for some $r\in O(\log c/\log\log c)$.  We use $\varphi'$ to obtain a colouring $\varphi$ of $T'$:  We set $\varphi(r):=\phi$ and, for each $v\in V(T')\setminus\{r\}$ we set $\varphi(v):=\varphi'(v)$.  This produces a us-colouring of $T'$, which is a partial colouring of $T$.
+    Therefore the skeleton $\hat{T}'$ of $T'$ has $O(c^2)$ nodes so, by \cref{trees}, $\uqs(\hat{T}')\in O(\log c/\log\log c)$. Therefore, by \cref{skeleton-colour}, $T'$ has a us-colouring $\varphi':V(T')\to \{a(k-c-1)-r,\ldots,a(k-c-1)\}\setminus\{\phi\}$ for some $r\in O(\log c/\log\log c)$.  We use $\varphi'$ to obtain a colouring $\varphi$ of $T'$:  We set $\varphi(r):=\phi$ and, for each $v\in V(T')\setminus\{r\}$ we set $\varphi(v):=\varphi'(v)$.  This produces a us-colouring of $T'$.
 
-    For a sufficiently large constant $a$, $a(k-c)-r > a(k-c-\log c/\log\log c)$, so each node in $T'$ receives a colour larger than $a(k-c-\log c/\log\log c)$.  Therefore, this partial colouring satisifies requirements (P1) and (P2). In particular, for each $v\in V(T')$,
+    For a sufficiently large constant $a$, $a(k-c-1)-r > a(k-c-\log c/\log\log c)$, so each node in $T'$ receives a colour larger than $a(k-c-\log c/\log\log c)$.  Therefore, this partial colouring satisifies requirements (P1) and (P2). In particular, for each $v\in V(T')$,
     \[
        \frac{(\log k)^k}{\gamma(v)^{\gamma(v)}} \le \Gamma(r) \le \frac{(\log k)^k}{\left(\log c+\tfrac{\log c}{\log\log c}\right)^{c+\tfrac{\log c}{\log\log c}}}
    \]
@@ -358,7 +354,7 @@ then $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,a(k-c)\}$ such tha
        \Gamma(r_i) \le \frac{(\log k)^k}{\left(\log\left(c+1+\tfrac{\log (c+1)}{\log\log (c+1)}\right)\right)^{c+1+\tfrac{\log (c+1)}{\log\log(c+1)}}} \enspace .
    \]
    Therefore, we can apply induction on each tree $T_i$ with the value $c'=c+1$ and using the colour
-   $\phi':=a(k-c-r-1)$.  This choice of $\phi'$ ensures that
+   $\phi':=a(k-c)-r-1$.  This choice of $\phi'$ ensures that
    \[
        \phi' \ge a\left(k-c-\tfrac{\log c}{\log\log c}\right) >  a\left(k-c'\tfrac{\log c'}{\log\log c'}\right)
    \]
@@ -388,18 +384,6 @@ then  $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,ak\}$ such that
 \begin{proof}
     The proof is by induction on $|V(T)|$. In the base case, $|V(T)|=1$, there is no choice but to set $\varphi(r)=\phi$.  This certainly satisifed (P1) and (P2).  Furthermore, \cref{total-weight-ii} implies that $\gamma(r)\ge c$.  Therefore \cref{phi-bound-ii} ensures that (P3) is satisfied.
 
-
-    % We say that a node $v$ of $T$ is \emph{dangerous} if
-    % \[
-    %     (\log \gamma(v))^{\gamma(v)} > \frac{(\log k)^k}{\log\left(c+\frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}}
-    % \]
-    % With a bit of work, we can show that this implies that
-    % \[
-    %     (\log \gamma(v))^{\gamma(v)} > \left(\frac{\alpha}{c}\right)\cdot
-    %         \frac{(\log k)^k}{(\log c)^c} \enspace .
-    % \]
-    % for some constant $\alpha > 0$.  Therefore, the set $D$ of dangerous nodes has size $|D|\le c/\alpha$.
-
     Now we may assume that $|V(T)|\ge 2$.  For each node $v$ of $T$, let $\Gamma(v):=\sum_{u\in V(T_v)}(\log k)^k/(\log(\gamma(u)))^{\gamma(u)}$ where $T_v$ denotes the subtree of $T$ induced by $v$ and all its descendants.  We say that a node $v$ of $T$ is \emph{heavy} if
     \[
         \Gamma(v)> \frac{(\log k)^k}{\log\left(c+\frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}} \enspace .
@@ -409,12 +393,6 @@ then  $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,ak\}$ such that
         \Gamma(v) > \left(\frac{\alpha}{c}\right)\cdot
             \frac{(\log k)^k}{(\log c)^c} \enspace . \label{heavy-size}
     \end{equation}
-    % A node $v$ is \emph{critical} if it is heavy, but none of its $T$-descendants is heavy.  Since no critical node is a $T$-descendant of any other critical node, it follows that the set $C$ of critical nodes has size $|C|\le c/\alpha$.
-
-    % A node that is not heavy is \emph{light}.  Note that, for a light node $v$,
-    % \[
-    %     \gamma(v)\le \Gamma(v) \le \frac{(\log k)^k}{\left(c+\frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}}
-    % \]
 
     Let $T'$ be the subtree of $T$ induced by its heavy nodes.  We say that a node of $T'$ is \emph{special} if it is $v$, or it is a leaf or it has at least two children and we let $S$ denote the set of special nodes.  Together, \cref{heavy-size} and \cref{total-weight-ii} imply that the number of leaves of $T'$ is at most $c/\alpha$.  In any tree with $\ell$ leaves, the number of nodes with at least two children is at most $\ell-1$.  Therefore the number of special nodes of $T'$ is at most $2c/\alpha$.
 
@@ -426,56 +404,102 @@ then  $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,ak\}$ such that
     \[
         \Gamma(r_i) \le \frac{(\log k)^k}{\left(\log c + \frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}}
     \]
-    Now can now apply \lemref{tree-slack} with the value $\phi = a(k-c-1)-3$ to obtain a us-colouring $\varphi:V(T_i)\to\{1,\ldots,a(k-c-1)\}$ of $T_i$.
+    Now can now apply \cref{tree-slack} with the value $\phi = a(k-c-1)-3$ to obtain a us-colouring $\varphi:V(T_i)\to\{1,\ldots,a(k-c-1)\}$ of $T_i$.  It is straightforward to verify that this is indeed a humped us-colouring of $T$.
+\end{proof}
+
+
+\begin{lem}\label{two-tree-technical}
+    There exists a constant $a>0$ such that, for every integer $k\ge 2$, every $n\le (\log k)^k$, and every $n$-vertex 2-tree $H$, $\uqs(H)\le k$.
+\end{lem}
+
+%     eve For every $n$-vertex 2-tree
+%     Let $c, k,n$ be integers with $c\ge 2$ and $n\le (\log k)^k$.
+%     Let $L_0,\ldots,L_m$ be a BFS layering of some 2-tree $H$ beginning at some edge $v_1v_2$ (so that $L_0=\{v_1,v_2\}$).  For each $i\in\{0,\ldots,m\}$ and each vertex $v$ in $H[L_i]$, let $H_{v}$ be the component of $H[\{v\}\cup\bigcup_{j=i+1}^m L_i]$ that contains $v$ and let $\gamma(v)$ be the maximum integer such that $(\log k)^k/(\log\gamma(vw))^{\gamma(vw)} \ge |H_{vw}|$.
+%
+%     Fix some connected component $H'$ of $H_{\ge i}:=H[\bigcup_{j=i}^m L_i]$.
+%     There exists a constant $a>0$ such that, if
+%     \[
+%         \sum_{v\in V(H')\cap L_i} \frac{(\log k)^k}{\gamma(v)^{\gamma(v)}} \le \frac{(\log k)}{(\log c)^c} \enspace ,
+%     \]
+%     then $H'$ has a humped us-colouring $\varphi:V(H')\to\{1,\ldots,ak\}$ such that, for each $\iota\in\{a(k-c-1)+1,\ldots,k\}$, there is at most one vertex $v\in H'\cap L_i$ such that $\varphi(v)=\iota$.
+% \end{lem}
+
+\begin{proof}
+    Let $v_1,\ldots,v_n$ be a construction order for $H$ and let $(B_x:x\in V(T))$ be a canonical decomposition of $H$ obtained using this order.  We will use $\prec$ to denote the total order on $V(H)$ imposed by the construction order, so that $v_i\prec v_j$ if and only if $i<j$.
+
+    Let $L_0,\ldots,L_m$ be a BFS layering of $H$ beginning at $L_0=\{v_1,v_2\}$.  For each $i\in\{1,\ldots,m\}$, $F_i:=H[L_i]$ is a rooted forest where we use the convention that, for an edge $vw\in E(F_i)$, $v$ is the parent of $w$ if $v\prec w$.
+
+    Let $H_{\ge i}:=H[\bigcup_{j=i}^m L_j]$.  For each edge $vw\in F_i$, let  $H_{vw}$ be the connected component of $H_{\ge i}$ that contains $vw$.  For each vertex $v\in L_i$, let $N_v=\sum_{w\in N_H(v)\cap L_i}|H_{vw}|$.  Our proof is based on the following claim:
+
+    \begin{clm}\label{main-claim}
+        Let $H'$ be some connected component of $H_{\ge i}$.  If $\sum_{v\in V(H')} N_v\le (\log k)^k/(\log c)^c$ then $H_{\ge i}$ has a humped us-colouring $\varphi:V(H')\to\{1,\ldots,ak\}$ such that, for each $\iota\in\{a(k-c-1)+1,\ldots,ak\}$ there is at most one vertex $v$ in $V(H')\cap L_i$ with $\varphi(v)=\iota$.
+    \end{clm}
+
+    \begin{proof}[Proof of \cref{main-claim}]
+        The proof is by induction on $m-i$.  In the base case $m-i=0$ and $H'$ is a tree.  For this case, we can easily use \cref{tree-ii} by setting $\gamma(v)=1$ for each $v\in V(H')$, setting $\phi=k$ and then applying \cref{tree-ii}.
+
+        In the general case, we set $\gamma(v):=\max\{c\in\N:(\log k)^k/c^c \ge N_v\}$ for each $v\in V(H)$. Then By \cref{tree-ii}, we can find a us-colouring $\varphi$ of the tree $H'[L_i]$ with the desired properties and such taht $\varphi(v)\ge a(k-c-\gamma(v)-1)+1$ for all $v\in V(H'[L_i])$.  It remains to show that we can extend this to a colouring of $V(H')\cap L_{i+1}\cap\cdots\cap L_m$.  This extension requires some care.
+
+        For the root $r$ of the tree $H'[L_i]$, we define $D_r=\{x\in L_{i+1}:rx\in E(H)\}$.  For each node $w$ with parent $v$ in $H'[L_i]$, we define $D_w=\{x\in L_{i+1}:wx\in E(H)\}\setminus D_{v}$.  Fix any $w\in V(H')\cap L_i$ and consider the graph $H'':=H'[D_w\cup \bigcup_{j=2}^m L_j]$.  Now, $H''[L_{i+1}]$ is a rooted forest with roots $w_1,\ldots,w_d$.  We add a node $w'$ to $H''$ to obtain a graph on which we can apply induction.  This induction yields a humped us-colouring of $H'$
 
 
 
-    %
-    %
-    % \begin{compactenum}
-    %     \item $\gamma(v)\le (\log k)^k/(\log(c+r))^{c+r}$.
-    %     \item $\Gamma(r_i) \le 100\Gamma(r)/(ac) \le \frac{100}{ac}(\log k)^k/(\log c)^c$
-    % \end{compactenum}
-    % % In order to apply induction, What remains is to argue that these satisfy the preconditions 1 and 2 of the lemma.
-    % We will extend $\varphi$ to a us-colouring of $T_i$ using colours $\{1,\ldots,a(k-c)\}$.  This will automatically satisfy Conditions~1 and 2 of the lemma, but we must take care to ensure that Condition~3 is also satisfied.
+        This completes the proof of \cref{main-claim}.
+    \end{proof}
 
+    Consider some tree $T'$ in $F_i$. The root $r$ of $T'$ has two parents $a_0$ and $a_1$ in $L_{i-1}$, $a_0a_1$ is an edge of $F_{i-1}$ and, without loss of generality, $a_0\prec a_1$ (so $a_0$ is the parent of $a_1$ in $F_{i-1}$).  We call $a_0$ the \emph{caretaker} of $r$.  We cover the tree $T'$ with two trees $T'_0=T'[\{v\in L_i:va_0\in E(H)]$ and $T'_1=T'[\{v\in L_i:va_1\in E(H)]$.  Note that the only node these two trees have in common is $r$.  The nodes in $V(T'_0)$ are called \emph{tended} nodes.  The nodes in $V(T_1')\setminus \{r\}$ are called \emph{neglected} nodes.
+
+    For a node $a\in L_{i-1}$, let $Q_a:=\{x\in L_{i}:ax\in E(H)\}$.
+    If $w$ is a root of $F_i$, then $R_w:=Q_w$.  Otherwise, $w$ has some parent $v\in L_i$, in which case $R_w=Q_w\setminus Q_v$.
     %
     %
     %
     %
     %
     %
-    % The proof is by induction on $|T|$.  In the base case, $T$ consists of a single node $r$ and $w(r)\le k-c$. Therefore $\phi \ge a(k-c-1) \ge a(w(r)-1)$.    Setting $\varphi(r):= a(k-w(r)) \le a(k-c)$ gives the required colouring.
     %
-    % For $|T|>1$, consider the root $r$ of $T$, let $r_1,\ldots,r_d$ be the children of $r$ and, for each $i\in\{1,\ldots,d\}$, let $T_i$ be the subtree of $T$ induced by $r_i$ and all its $T$-descendants.  We say that $T_i$ is \emph{heavy} if $\sum_{v\in V(T_i)} (\log w(v))^{w(v)} \ge (\log k)^k/(\log (c+1))^{c+1}$.  LOOKOUT: Deal with $c=0$ separately. By \cref{total-weight}, the number of heavy subtrees is at most
-    % \begin{align*}
-    %     d' & \le \frac{(\log k)^k}{(\log c)^c} \bigg/ \frac{(\log k)^k}{(\log(c+1))^{c+1}} \\
-    %     &= \frac{(\log(c+1))^{c+1}}{(\log c)^c} \\
-    %     &= \left(\frac{\log(c+1)}{\log c}\right)^c\times \log(c+1) \\
-    %     &\le \left(\frac{\log(c+1)}{\log (c+1)-(\log e)/c}\right)^c\times \log(c+1) \\
-    %     &\le \left(1+\frac{2\log e}{c}\right)^c\times \log(c+1)
-    %         & \text{when $c\log(c+1)\ge 2\log e$ } \\
-    %     &\le \left(e^{(2\log e)/c}\right)^c\times \log(c+1) \\
-    %     &\le e^{2\log e}\times \log(c+1) \\
-    % \end{align*}
     %
-    % We say that a subtree $T_i$ is \emph{heavy} if $W(T_i)> W(T)/(ac+1)$ and is light otherwise.  Observe that there are at most $ac$ heavy subtrees.  For each light subtree $T_i$, we have
-    % \begin{align*}
-    %     W(T_i) & \le W(T)/c \\
-    %     & \le \frac{(\log k)^k}{c(\log c)^c} \\
-    %     & = \frac{(\log k)^k}{(\log(c+r))^{\tfrac{\log (ac+1)}{\log\log(c+r)}}(\log c)^c} \\
-    %     & = \frac{(\log k)^k}{(\log(c+r))^{\tfrac{\log (ac+1) + c\log\log c}{\log\log(c+r)}}} \\
-    %     & = \frac{(\log k)^k}{(\log(c+r))^{c+\tfrac{\log (ac+1)}{\log\log(c+r)} - O(r/\log c)}}  &\text{(this step is explained below)}\\
-    %     & \le \frac{(\log k)^k}{(\log(c+r))^{c+\tfrac{\log c}{\log\log(c+r)} + \log(a)/\log\log(c+r) - O(r/\log c)}} \\
-    %     & \le \frac{(\log k)^k}{(\log(c+r))^{c+\tfrac{\log c}{\log\log(c+r)}}}
-    %     & \text{(for large $a$ and $r\in O(\log c/\log\log c))$} \\
-    %     % & = \frac{(\log k)^k}{(\log(c+r))^{\log (ac+1)/\log\log(c+r) + c\log\log(c)} \\
-    %     & = \frac{(\log k)^k}{(\log(c+\alpha\log c/\log^{(3)} c))^{c+\tfrac{\alpha \log c}{\log^{(3)}c}}}
-    % \end{align*}
-    % where the last step comes from solving $r=\log c/\log\log (c+r)$, who solution is $\alpha\log c/\log^{(3)}c$ for some $\alpha\in[??]$.
     %
+    %
+    % Turning things around, a node $a_0\in L_{i-1}$ with children $a_1,\ldots,a_d$ in $F_{i-1}$ is the caretaker of one or more roots $r_1,\ldots,r_m$, each of which defines a tree $T'_i$ and $T_i$  in $F_i$.
+    %
+    %
+    %
+    %
+    %
+    % Each non-root in $F_i$ has exactly one parent in $L_{i-1}$ and one parent in $L_i$.
+    %
+    %
+    %
+    %
+    %
+    %
+    % Let $L_0,\ldots,L_m$ be a BFS layering of $H$ beginning at some edge $v_1v_2$ (so that $L_0=\{v_1,v_2\}$).  For each $i\in\{0,\ldots,m\}$ and each vertex $v$ in $H[L_i]$, let $H_{v}$ be the component of $H[\{v\}\cup\bigcup_{j=i+1}^m L_i]$ that contains $v$ and let $\gamma(v)$ be the maximum integer such that $(\log k)^k/(\log\gamma(vw))^{\gamma(vw)} \ge |H_{vw}|$.
+    %
+    % Consider the rooted tree $T:=H[L_i]$.  For each vertex $v\in V(T)$ with children $v_1,\ldots,v_d$, consider the subgraph $H_v$ consisting of the union $H_{vv_1}\cup\cdots H_{vv_d}$.
+    % For each edge $vw$ in $H[L_i]$
+    %
+    %
+    %
+    %   apply induction on the graph labelled
 
 \end{proof}
+
+\cref{two-tree-technical} gives our main result for 2-trees:
+
+\begin{thm}
+    For any integer $k>1$, any $n\le \tfrac{1}{2}(\log k)^k$, and any $n$-vertex 2-tree $H$, $\uqs(H)\le k = O(\log n/\log^{(3)} n)$.
+\end{thm}
+
+\begin{proof}
+    Apply \cref{two-tree-technical} with $i=0$ and $c=2$.  This shows that $\hus(H)\le k$ and requires that $n = |H_{a_1a_2}| \le (\log k)^k$, which is satisfied for $k \in O(\log n/\log^{(3)} n)$.  Applying \cref{humped} then shows that $\uqs(H)\le\hus(H) \in O(\log n/\log^{(3)} n)$.
+\end{proof}
+
+
+
+
+
+
 
 
 
@@ -649,7 +673,9 @@ Since every graph of treewidth at most 2 is planar, we obtain the following coro
 
 \section{Other Ideas}
 
-Approximation algorithm for trees.  Using characterization in terms of $T_{h+1,h}$
+Approximation algorithm for trees.  Using characterization in terms of $T_{h+1,h}$.
+
+Extension to $\chi_\ell(G)$ for constant values of $\ell$.
 
 
 
