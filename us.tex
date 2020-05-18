@@ -4,6 +4,7 @@
 \usepackage{paralist}
 \usepackage{dsfont}  % for \mathds{A}
 \usepackage[utf8x]{inputenc}
+\usepackage{skull}
 
 \usepackage{graphicx}
 \usepackage[noend]{algorithmic}
@@ -211,22 +212,281 @@ Our proof of \cref{planar} makes use of a recent \emph{product structure theorem
 
 \subsection{Treewidth}
 
-Tree-decompositions, treewidth, and $t$-trees.
+A graph $H$ is a $t$-tree if $H$ is a clique of size $t$ or if it contains a vertex $v$ of degree $t$ whose neighbours form a clique and such that $H-\{t\}$ is a $t$-tree.  This recursive definition of $t$-trees implies that there is a permutation $\pi_1,\ldots,\pi_n$ of $V(G)$ such that $\pi_1,\ldots,\pi_t$ form a clique and, for each $i\in\{t+1,\ldots,n\}$, $\pi_i$ is adjacent to exactly $t$ vertices among $\pi_1,\ldots,\pi_{i-1}$ which themselves form a clique, which we call the \emph{parent clique} of $\pi_i$.  We call $\pi_1,\ldots,\pi_n$ a \emph{construction order} for $H$.
+
+A \emph{tree decomposition} of a graph $H$ is a sequence $\mathcal{T}:=(B_x:x\in V(T))$ of subsets of $V(H)$ called \emph{bags} indexed by the nodes of a tree $T$ and such that
+ \begin{inparaenum}[(i)]
+     \item for each $v\in V(H)$, $T[\{x\in V(T):v\in B_x\}]$ is connected; and
+     \item for each $vw\in E(H)$, there exists some $x\in v(T)$ such that $\{v,w\}\subseteq B_x$.
+\end{inparaenum}
+The \emph{width} of $\mathcal{T}$ is $\max\{|B_x|:x\in V(T)\}-1$. The \emph{treewidth} of $H$ is the minimum width of any tree decomposition of $H$.
+
+A \emph{tree decomposition }$\mathcal{P}:=(B_x:x\in V(P))$ us called a \emph{path decomposition} if $P$ is a path. The \emph{pathwidth} $\pw(H)$ of a graph $H$ is the minimum width of any path decomposition of $H$.
+
+It is not difficult to see that every $t$-tree $H$ has treewidth $t$ and a tree-decomposition of $H$ can be constructed incrementally from a construction order $\pi_1,\ldots,\pi_n$ of $H$: Start with a tree $T$ that consists of a single node $r$ with bag $B_r:=\{\pi_1,\ldots,\pi_{t+1}\}$ and, for $i\gets t+2,\ldots,n$, let $x$ be the minimum-depth node of $T$ such that $\pi_i\in B_x$, and add a new leaf $\pi_i$ to $T$ adjacent to $x$ whose bag $B_{\pi_i}$ contains $\pi_i$ and its parent clique.  We call a tree-decomposition constructed this way a \emph{canonical} tree decomposition of $H$.
 
 \subsection{The Strong Graph Product}
 
 Definition of $\boxtimes$.  Statement of the product structure theorem.
 
 
+\subsection{Inequalities for Iterated Logarithms}
+
+For $x\ge 1$, $a\ge 0$, we have the ineqality,
+\begin{equation}
+    \log (x+a) = \log (x(1+a/x)) = \log x + \log(1+a/x) \le \log x + \log e^{a/x} = \log x + \frac{a\log e}{x} \enspace , \label{log-x-plus-a}
+\end{equation}
+where the inequality follows from the inequality $e^z \le 1+z$, valid for all $z\in\R$.
+
+Let $\tau(0):=1$ and, for integers $i>0$, $\tau(i):=2^{\tau(i-1)}$. For any integer $i>0$ and any $x\ge \tau(i)$, \cref{log-x-plus-a} generalizes as follows (by induction on $i$):
+\begin{equation}
+    \log^{(i)}(x+a) \le \log^{(i)} x + \frac{a\log^i e}{\prod_{j=0}^{i-1}\log^{(j)} x} \label{logi-x-plus-a}
+\end{equation}
+
+In several places we have ratios involving iterated logarithms, in which case we make use of the following consequence of \cref{logi-x-plus-a}
+\begin{equation}
+    \frac{\log^{(i)} x+a}{\log^{(i)} x} \le 1 + \frac{a\log^i e}{\prod_{j=0}^{i}\log^{(j)} x} \enspace, \label{logi-ratio}
+\end{equation}
+which is again valid for all $x\ge \tau(i)$.
 
 \section{Colouring $t$-Trees}
 
 In this section we prove asymptotically tight bounds for the worst-case number of colours needed to us-colour $n$-vertex $t$-trees.
 
+\subsection{The Upper Bound for $t$-Trees}
+
+For the remainder of this section, $H$ is a $t$-tree on $n\ge t+1$ vertices, $\pi_1,\ldots,\pi_n$ is a construction order for $H$, and $\mathcal{T}:=(B_x:x\in V(T))$ is a canonical tree decomposition of $H$.  It is easy to see that every bag of $\mathcal{T}$ has size exactly $t+1$, $T$ is rooted at $r$, and
+\begin{inparaenum}[(i)]\setcounter{enumi}{2}
+  \item for each node $y$ of $T$ with parent $x$, $|B_y\setminus B_x|=1$.\label{three}
+\end{inparaenum}
+Note that this implies that $|V(T)|=n-t$, since $B_r$ contains $t+1$ vertices of $H$ and, by (\ref{three}), each $x\in V(T)\setminus\{r\}$ includes exactly one vertex of $H$ that is not in its parent.
+
+For each $v\in V(T)$ let $x_T(v)$ be the minimum-depth node $x\in V(T)$ such that $v\in B_x$.  A path $v_i,\ldots,v_r$ in $H$ is \emph{vertical} if $x_T(v_{i-1})$ is a strict $T$-ancestor of $x_T(v_i)$, for each $i\in\{1,\ldots,r\}$. (Equivalently, $v_0,\ldots,v_r$ is a subsequence of $\pi_1,\ldots,\pi_n$.) Any path in $H$ that is not vertical is \emph{humped}.  This allows us to define the humped us-chromatic number $\hus(H)=\hus(H,\mathcal{T})$ as the minimum number of colours needed in a humped us-colouring of $H$.
+
+\begin{lem}
+    For any $t$-tree $H$, $\uqs(H)\le \binom{t+2}{t}\hus(H)$.
+\end{lem}
+
+\begin{proof}
+    A lemma of \citet{pilipczuk.siebertz:polynomial} (see \cite[Lemma~13]{pilipczuk.siebertz:polynomial-arxiv}) shows that from any vertex $v\in V(H)$, the number of vertical paths of length at most $p$ that end at $v$ is at most $\binom{t+p}{t}$.  Applying this with $p=2$ implies that we can greedily colour $v_1,\ldots,v_n$ to obtain a colouring $\psi:V(H)\to \{1,\ldots,\binom{t+2}{t}\}$ so that the endpoints of any non-trivial vertical path\footnote{A path is non-trivial if its length is at least 1.} of length at most $2$ are assigned different colours.  Let $\varphi:V(H)\to\{1,\ldots,k\}$ be a humped us-colouring of $H$.  As in \cref{product}, the colouring $\varphi':V(H)\to\{1,\ldots,k\}\times \{1,2,3\}$ defined by $\varphi'(v)=(\varphi(v),\varphi(v))$ proves the result.
+\end{proof}
+
+
+\begin{lem}\label{pathwidth}
+    For any graph $H$, $\uqs(H)\le 3\pw(H) + 1$
+\end{lem}
+
+\begin{proof}
+    The proof is by induction on $\pw(H)$.  The base case $\pw(H)=0$ is trivial: In this case, $H$ contains no edges and can be coloured with $1 = 3\pw(H)+1$ colour.
+
+    For $\pw(H)>1$, it is well known that $H$ contains a sequence of vertices $v_1,\ldots,v_m$  such that
+    \begin{inparaenum}
+        \item $H$ contains no edge $v_iv_j$ with $|i-j|>1$;
+        \item $H$ contains no path $v_iw v_j$ with $|i-j|>1$; and
+        \item $\pw(H-\{v_1,\ldots,v_m\})\le \pw(H)-1$.
+    \end{inparaenum}
+    We can therefore inductively colour $H-\{v_1,\ldots,v_m\}$ using colours $\{1,\ldots,3\pw(H)-2\}$ and then colour each $v_i$ with colour $3\pw(H)-1+i\bmod 3$.
+\end{proof}
+
+A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$. For a graph $H$ with a rooted tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$, we define the $\mathcal{T}$-skeleton of $H$ as $H[\bigcup_{x\in \Lambda(T)} B_x]$.
+
+\begin{lem}\label{skeleton-colour}
+    Let $H$ be a graph having a width-$t$ tree decomposition $\mathcal{T}$, and let $\hat{H}$ be the $\mathcal{T}$-skeleton of $H$.  Then $\uqs(H)\le \uqs(\hat{H}) + 3t+1$.
+\end{lem}
+
+\begin{proof}
+    Colour the vertices of $\hat{H}$ using the colours $3t+2,\ldots,\uqs(\hat{H})+3t+1$.  Next, observe that the graph $H-\hat{H}$ has pathwidth at most $t$ so, by \cref{pathwidth}, it can be us-coloured using colours $1,\ldots,3t+1$.  This gives the desired colouring of $H$ using colours $\{1,\ldots,\uqs(\hat{H})+3t+1\}$.
+\end{proof}
+
+
+\subsection{2-Trees}
+
+As a warm-up, let's start with $2$-trees.
+
+First, we start with an easy result on trees.
+
+For now, we ignore floors and ceilings:
+
+\begin{lem}
+Let $c,k$ be integers $2\le c< k$, let $T$ be a non-empty tree with root $r$,  let $\gamma:V(T)\to\N$ be an assignment of positive weights to the vertices of $T$ and define
+\[
+    \Gamma(r):=\sum_{v\in V(T)} \frac{(\log k)^k}{(\log \gamma(v))^{\gamma(v)}} \enspace .
+\]
+There exists a constant $a>0$ such that,
+if
+\begin{equation}
+     \Gamma(r) \le \frac{(\log k)^k}{\left(\log \left(c+\tfrac{\log c}{\log\log c}\right)\right)^{c+\tfrac{\log c}{\log\log c}}} \enspace , \label{total-weight-i}
+\end{equation}
+and
+\begin{equation}
+    \phi\in\left\{a\left(k-c-\tfrac{\log c}{\log\log c}\right)+1,\ldots,a(k-c)\right\} \label{phi-bound}
+\end{equation}
+then $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,a(k-c)\}$ such that
+\begin{compactenum}[(P1)]
+    \item $\varphi(r)=\phi$;
+    \item for each $v\in V(T)$, $\varphi(v)\ge a\cdot(k-\gamma(v)-1)+1$.
+\end{compactenum}
+\end{lem}
+
+\begin{proof}
+    The proof is by induction on $|V(T)|$.  In the base case, $|V(T)|=1$, so we set $\varphi(r):=\phi$, as required by (P1). The only thing to check is that this satisfies (P2). To check this, observe that
+    \[ \frac{(\log k)^k}{(\log\gamma(r))^{\gamma(r)}}\le \Gamma(r) \le \frac{(\log k)^k}{\left(\log \left(c+\tfrac{\log c}{\log\log c}\right)\right)^{c+\tfrac{\log c}{\log\log c}}}
+    \]
+    so $\gamma(r) \ge c+\tfrac{\log c}{\log\log c}$. Therefore, \cref{phi-bound} ensures that (P2) is satisfied.
+
+    Now assume $|V(T)|\ge 2$.  For each node $v\in V(T)$, let $\Gamma(v):=\sum_{w\in D_T(v)} (\log k)^k/(\log\gamma(v))^\gamma(v)$.  We say that node $v$ of $T$ is \emph{heavy} if
+    \[
+        \Gamma(v)> \frac{(\log k)^k}{\left(\log\left(c+1+\tfrac{\log (c+1)}{\log\log (c+1)}\right)\right)^{c+1+\tfrac{\log (c+1)}{\log\log(c+1)}}} \enspace .
+    \]
+    With a bit of work, we can show that this implies that
+    \[
+        W(v) > \frac{2}{3c(c-1)\log^2 e}\times \frac{(\log k)^k}{(\log c)^c}
+    \]
+
+    Let $T'$ be the subtree of $T$ induced by the set of heavy nodes.  Since no leaf of $T'$ is a $T$-descendant of any other leaf, it follows from \cref{total-weight-i} that the number of leaves of $T'$ is at most $(3c(c-1)\log^2 e)/2= O(c^2)$.
+
+    Therefore the skeleton $\hat{T}'$ of $T'$ has $O(c^2)$ nodes so, by \cref{trees}, $\uqs(\hat{T}')\in O(\log c/\log\log c)$. Therefore, by \cref{skeleton-colour}, $T'$ has a us-colouring $\varphi':V(T')\to \{a(k-c)-r,\ldots,a(k-c)\}\setminus\{\phi\}$ for some $r\in O(\log c/\log\log c)$.  We use $\varphi'$ to obtain a colouring $\varphi$ of $T'$:  We set $\varphi(r):=\phi$ and, for each $v\in V(T')\setminus\{r\}$ we set $\varphi(v):=\varphi'(v)$.  This produces a us-colouring of $T'$, which is a partial colouring of $T$.
+
+    For a sufficiently large constant $a$, $a(k-c)-r > a(k-c-\log c/\log\log c)$, so each node in $T'$ receives a colour larger than $a(k-c-\log c/\log\log c)$.  Therefore, this partial colouring satisifies requirements (P1) and (P2). In particular, for each $v\in V(T')$,
+    \[
+       \frac{(\log k)^k}{\gamma(v)^{\gamma(v)}} \le \Gamma(r) \le \frac{(\log k)^k}{\left(\log c+\tfrac{\log c}{\log\log c}\right)^{c+\tfrac{\log c}{\log\log c}}}
+   \]
+   so $\gamma(v) \ge c+\log c/\log\log c$ and therefore $\varphi(v) \ge a(k-c-\tfrac{\log c}{\log\log c})+1 \ge a(k-\gamma(v)-1)+1$, as required by (P2).
+
+   Now, $T-T'$ is a forest of trees $T_1,\ldots,T_d$ rooted at nodes $r_1,\ldots,r_d$, respectively.  For each $i\in\{1,\ldots,d\}$ and each $v\in V(T_i)$,
+   \[
+       \Gamma(r_i) \le \frac{(\log k)^k}{\left(\log\left(c+1+\tfrac{\log (c+1)}{\log\log (c+1)}\right)\right)^{c+1+\tfrac{\log (c+1)}{\log\log(c+1)}}} \enspace .
+   \]
+   Therefore, we can apply induction on each tree $T_i$ with the value $c'=c+1$ and using the colour
+   $\phi':=a(k-c-r-1)$.  This choice of $\phi'$ ensures that
+   \[
+       \phi' \ge a\left(k-c-\tfrac{\log c}{\log\log c}\right) >  a\left(k-c'\tfrac{\log c'}{\log\log c'}\right)
+   \]
+   so that requirements \cref{total-weight-i} and \cref{phi-bound} are satisified with $c=c'$ and $\phi=\phi'$.
+\end{proof}
+
+
+
+\begin{lem}
+Let $c,k$ be integers $0\le c< k$, let $T$ be a non-empty tree with root $r$, let $\gamma:V(T)\to\N$ be an assignment of positive integer weights to the vertices of $T$.  Then there exists a constant $a>0$ such that,
+if
+\begin{equation}
+   \Gamma(r):=\sum_{v\in V(T)} \frac{(\log k)^k}{(\log \gamma(v))^{\gamma(v)}} \le \frac{(\log k)^k}{(\log c)^c} \enspace . \label{total-weight-ii}
+\end{equation}
+and
+\begin{equation}
+    \phi \in \{a(k-c-1)+1,\ldots,ak\} \label{phi-bound-ii}
+\end{equation}
+then  $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,ak\}$ such that
+\begin{compactenum}[(P1)]
+    \item $\varphi(r)=\phi$;
+    \item for each $i\in\{a(k-c-1)+1,\ldots,ak\}$, there is at most one $v\in V(T)$ with $\varphi(v)=i$.
+    \item for each $v\in V(T)$, $\varphi(v)\ge a\cdot(k-\gamma(v)-1)+1$.
+\end{compactenum}
+\end{lem}
+
+\begin{proof}
+    The proof is by induction on $|V(T)|$. In the base case, $|V(T)|=1$, there is no choice but to set $\varphi(r)=\phi$.  This certainly satisifed (P1) and (P2).  Furthermore, \cref{total-weight-ii} implies that $\gamma(r)\ge c$.  Therefore \cref{phi-bound-ii} ensures that (P3) is satisfied.
+
+
+    % We say that a node $v$ of $T$ is \emph{dangerous} if
+    % \[
+    %     (\log \gamma(v))^{\gamma(v)} > \frac{(\log k)^k}{\log\left(c+\frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}}
+    % \]
+    % With a bit of work, we can show that this implies that
+    % \[
+    %     (\log \gamma(v))^{\gamma(v)} > \left(\frac{\alpha}{c}\right)\cdot
+    %         \frac{(\log k)^k}{(\log c)^c} \enspace .
+    % \]
+    % for some constant $\alpha > 0$.  Therefore, the set $D$ of dangerous nodes has size $|D|\le c/\alpha$.
+
+    Now we may assume that $|V(T)|\ge 2$.  For each node $v$ of $T$, let $\Gamma(v):=\sum_{u\in V(T_v)}(\log k)^k/(\log(\gamma(u)))^{\gamma(u)}$ where $T_v$ denotes the subtree of $T$ induced by $v$ and all its descendants.  We say that a node $v$ of $T$ is \emph{heavy} if
+    \[
+        \Gamma(v)> \frac{(\log k)^k}{\log\left(c+\frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}} \enspace .
+    \]
+    By fighting a little with this equation we can show that, for any heavy node $v$,
+    \begin{equation}
+        \Gamma(v) > \left(\frac{\alpha}{c}\right)\cdot
+            \frac{(\log k)^k}{(\log c)^c} \enspace . \label{heavy-size}
+    \end{equation}
+    % A node $v$ is \emph{critical} if it is heavy, but none of its $T$-descendants is heavy.  Since no critical node is a $T$-descendant of any other critical node, it follows that the set $C$ of critical nodes has size $|C|\le c/\alpha$.
+
+    % A node that is not heavy is \emph{light}.  Note that, for a light node $v$,
+    % \[
+    %     \gamma(v)\le \Gamma(v) \le \frac{(\log k)^k}{\left(c+\frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}}
+    % \]
+
+    Let $T'$ be the subtree of $T$ induced by its heavy nodes.  We say that a node of $T'$ is \emph{special} if it is $v$, or it is a leaf or it has at least two children and we let $S$ denote the set of special nodes.  Together, \cref{heavy-size} and \cref{total-weight-ii} imply that the number of leaves of $T'$ is at most $c/\alpha$.  In any tree with $\ell$ leaves, the number of nodes with at least two children is at most $\ell-1$.  Therefore the number of special nodes of $T'$ is at most $2c/\alpha$.
+
+    Therefore, for $a\ge 2/\alpha$, one can obtain a humped us-colouring of $T'$ as follows (this is similar to the proof of \cref{skeleton-colour}):  First colour $r$ with $\varphi(r):=\phi$.  Next, assign each special node $v\in S\setminus\{r\}$ $v$ a distinct colour $\varphi(v)\in\{a(k-c-1)+1,\ldots,ak\}$.  Finally, us-colour the graph $T'-S$ (a collection of paths) using colours $\{a(k-c-1)-2,a(k-c-1)-1,a(k-c-1)\}$.
+
+    This gives a colouring $\varphi$ of $T'$ that certainly satisfies (P1) and (P2).  To see that it also satisfies (P3), observe that, since $|V(T)|\ge 2$, \cref{total-weight-ii} implies that $\gamma(v) > c$ for all $v\in V(T)$. Since $\gamma$ is integer valued, this means that $\gamma(v)\ge c+1$.  Therefore, for each $v\in V(T')$, $\varphi(v)\ge a(k-c-1)-2 \ge a(k-c-2)+1\ge a(k-\gamma(v)-1)+1$ so that $\varphi$ satisfies (P3).
+
+    We are now left with the problem of extending the colouring $\varphi$ of $T'$ to a colouring of $T$.  The forest $T-T'$ contains trees $T_1,\ldots,T_m$ with roots $r_1,\ldots,r_m$, respectively.  For each $i\in\{1,\ldots,m\}$, $r_i$ is a light node, so
+    \[
+        \Gamma(r_i) \le \frac{(\log k)^k}{\left(\log c + \frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}}
+    \]
+    Now can now apply \lemref{tree-slack} with the value $\phi = a(k-c-1)-3$ to obtain a us-colouring $\varphi:V(T_i)\to\{1,\ldots,a(k-c-1)\}$ of $T_i$.
+
+
+
+    %
+    %
+    % \begin{compactenum}
+    %     \item $\gamma(v)\le (\log k)^k/(\log(c+r))^{c+r}$.
+    %     \item $\Gamma(r_i) \le 100\Gamma(r)/(ac) \le \frac{100}{ac}(\log k)^k/(\log c)^c$
+    % \end{compactenum}
+    % % In order to apply induction, What remains is to argue that these satisfy the preconditions 1 and 2 of the lemma.
+    % We will extend $\varphi$ to a us-colouring of $T_i$ using colours $\{1,\ldots,a(k-c)\}$.  This will automatically satisfy Conditions~1 and 2 of the lemma, but we must take care to ensure that Condition~3 is also satisfied.
+
+    %
+    %
+    %
+    %
+    %
+    %
+    % The proof is by induction on $|T|$.  In the base case, $T$ consists of a single node $r$ and $w(r)\le k-c$. Therefore $\phi \ge a(k-c-1) \ge a(w(r)-1)$.    Setting $\varphi(r):= a(k-w(r)) \le a(k-c)$ gives the required colouring.
+    %
+    % For $|T|>1$, consider the root $r$ of $T$, let $r_1,\ldots,r_d$ be the children of $r$ and, for each $i\in\{1,\ldots,d\}$, let $T_i$ be the subtree of $T$ induced by $r_i$ and all its $T$-descendants.  We say that $T_i$ is \emph{heavy} if $\sum_{v\in V(T_i)} (\log w(v))^{w(v)} \ge (\log k)^k/(\log (c+1))^{c+1}$.  LOOKOUT: Deal with $c=0$ separately. By \cref{total-weight}, the number of heavy subtrees is at most
+    % \begin{align*}
+    %     d' & \le \frac{(\log k)^k}{(\log c)^c} \bigg/ \frac{(\log k)^k}{(\log(c+1))^{c+1}} \\
+    %     &= \frac{(\log(c+1))^{c+1}}{(\log c)^c} \\
+    %     &= \left(\frac{\log(c+1)}{\log c}\right)^c\times \log(c+1) \\
+    %     &\le \left(\frac{\log(c+1)}{\log (c+1)-(\log e)/c}\right)^c\times \log(c+1) \\
+    %     &\le \left(1+\frac{2\log e}{c}\right)^c\times \log(c+1)
+    %         & \text{when $c\log(c+1)\ge 2\log e$ } \\
+    %     &\le \left(e^{(2\log e)/c}\right)^c\times \log(c+1) \\
+    %     &\le e^{2\log e}\times \log(c+1) \\
+    % \end{align*}
+    %
+    % We say that a subtree $T_i$ is \emph{heavy} if $W(T_i)> W(T)/(ac+1)$ and is light otherwise.  Observe that there are at most $ac$ heavy subtrees.  For each light subtree $T_i$, we have
+    % \begin{align*}
+    %     W(T_i) & \le W(T)/c \\
+    %     & \le \frac{(\log k)^k}{c(\log c)^c} \\
+    %     & = \frac{(\log k)^k}{(\log(c+r))^{\tfrac{\log (ac+1)}{\log\log(c+r)}}(\log c)^c} \\
+    %     & = \frac{(\log k)^k}{(\log(c+r))^{\tfrac{\log (ac+1) + c\log\log c}{\log\log(c+r)}}} \\
+    %     & = \frac{(\log k)^k}{(\log(c+r))^{c+\tfrac{\log (ac+1)}{\log\log(c+r)} - O(r/\log c)}}  &\text{(this step is explained below)}\\
+    %     & \le \frac{(\log k)^k}{(\log(c+r))^{c+\tfrac{\log c}{\log\log(c+r)} + \log(a)/\log\log(c+r) - O(r/\log c)}} \\
+    %     & \le \frac{(\log k)^k}{(\log(c+r))^{c+\tfrac{\log c}{\log\log(c+r)}}}
+    %     & \text{(for large $a$ and $r\in O(\log c/\log\log c))$} \\
+    %     % & = \frac{(\log k)^k}{(\log(c+r))^{\log (ac+1)/\log\log(c+r) + c\log\log(c)} \\
+    %     & = \frac{(\log k)^k}{(\log(c+\alpha\log c/\log^{(3)} c))^{c+\tfrac{\alpha \log c}{\log^{(3)}c}}}
+    % \end{align*}
+    % where the last step comes from solving $r=\log c/\log\log (c+r)$, who solution is $\alpha\log c/\log^{(3)}c$ for some $\alpha\in[??]$.
+    %
+
+\end{proof}
+
+
+
+
+
+
+
+
+
 
 \subsection{The Lower Bound for $t$-Trees}
-
-Iterated logarithms play a prominent role in the proofs in this section.  Let $\log x:=\log_2 x$ denote the binary logarithm of $x$, let $\log^{(0)} x := x$ and, for integers $i>0$, $\log^{(i)} x := \log(\log^{(i-1)} x)$.
 
 \begin{lem}\label{apex-graph}
     Let $h,k\ge 1$ be integers, let $U$ be a graph with $\uqs(U)\ge h$ and let $G$ be a graph obtained by taking $k+1$ disjoint copies $U_0,\ldots,U_k$ of $U$ and adding an apex vertex $a$ adjacent to each $v\in\bigcup_{i=0}^k V(U_i)$.  Then, for any integer $k_0\in \{1,\ldots,k\}$ and any us-colouring of $\varphi:V(G)\to\{k_0,\ldots,k\}$, $\varphi(a) \ge k_0+1$.
@@ -330,208 +590,6 @@ Since every graph of treewidth at most 2 is planar, we obtain the following coro
     There exists a constant $\alpha>0$ such that, for infinitely many $n\in\N$, there is an $n$-vertex planar graph $G$ with $\uqs(G)\ge \alpha\log n/\log^{(3)} n$.
 \end{cor}
 
-\subsection{The Upper Bound for $t$-Trees}
-
-
-\begin{lem}\label{pathwidth}
-    For any graph $H$, $\uqs(H)\le 3\pw(H) + 1$
-\end{lem}
-
-\begin{proof}
-    Easy to
-\end{proof}
-
-A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$. For a graph $H$ with a rooted tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$, we define the $\mathcal{T}$-skeleton of $H$ as $H[\bigcup_{x\in \Lambda(T)} B_x]$.
-
-\begin{lem}\label{skeleton}
-    Let $H$ be a graph having a width-$t$ tree decomposition $\mathcal{T}$, and let $\hat{H}$ be the $\mathcal{T}$-skeleton of $H$.  Then $\uqs(H)\le \uqs(\hat{H}) + 3t+1$.
-\end{lem}
-
-\begin{proof}
-    Colour the vertices of $\hat{H}$ using the colours $3t+2,\ldots,\uqs(\hat{H})+3t+1$.  Next, observe that the graph $H-\hat{H}$ has pathwidth at most $t$ so, by \cref{pathwidth}, it can be us-coloured using colours $1,\ldots,3t+1$.  This gives the desired colouring of $H$ using colours $\{1,\ldots,\uqs(\hat{H})+3t+1\}$.
-\end{proof}
-
-
-\subsection{2-Trees}
-
-As a warm-up, let's start with $2$-trees.
-
-First, we start with an easy result on trees.
-
-\begin{lem}
-Let $c,k$ be integers $2\le c< k$, let $T$ be a non-empty tree with root $r$, let $\phi\in\{a(k-c-\tfrac{\log c}{\log\log c})+1,\ldots,a(k-c)\}$, let $\gamma:V(T)\to\N$ be an assignment of positive weights to the vertices of $T$ such that
-\begin{compactenum}[(R1)]
-    \item $\Gamma(r):=\sum_{v\in V(T)} (\log k)^k/(\log \gamma(v))^{\gamma(v)} \le (\log k)^k/(\log c+\tfrac{\log c}{\log\log c})^{c+\tfrac{\log c}{\log\log c}}$. \label{total-weight-i}
-\end{compactenum}
-Then $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,a(k-c)\}$ such that
-\begin{compactenum}[(P1)]
-    \item $\varphi(r)=\phi$;
-    \item for each $v\in V(T)$, $\varphi(v)\ge a\cdot(k-\gamma(v)-1)+1$.
-\end{compactenum}
-\end{lem}
-
-
-\begin{proof}
-    We say that node $v$ of $T$ is \emph{heavy} if
-    \[
-        W(v)> \frac{(\log k)^k}{(\log(c+1+\tfrac{\log (c+1)}{\log\log (c+1)}))^{c+1+\tfrac{\log (c+1)}{\log\log(c+1)}}} \enspace .
-    \]
-    With a bit of work, we can show that this implies that
-    \[
-        W(v) > \frac{2}{3c(c-1)\log^2 e}\times \frac{(\log k)^k}{(\log c)^c}
-    \]
-
-    Let $T'$ be the subtree of $T$ induced by the set of heavy nodes.  Since no leaf of $T'$ is a $T$-ancestor of any other leaf, it follows that the number of leaves of $T'$ is at most $(3c(c-1)\log^2 e)/2= O(c^2)$.  Therefore $T'$ has a us-colouring $\varphi':V(T')\to \{a(k-c)-r,\ldots,a(k-c)\}\setminus\{\phi\}$ for some $r\in O(\log c/\log\log c)$.  We then set $\varphi(r)=\phi$ and, for each $v\in V(T')\setminus\{r\}$ we set $\varphi(v):=\varphi'(v)$.  This gives a us-colour of $T'$$ to the colour of
-
-
-    .  We therefore compute a colouring of $T$, and we do so by first colouring $r$ with $\varphi(r):=\phi$ and colouring the remaining nodes of $T'$ with the colours in $\{a(k-c)-\beta\log c/\log\log c,\ldots,a(k-c)\}\setminus\{\phi\}$.  Note that this partial colouring satisifies requirements (P1) and (P2). In particular, for each $v\in V(T)$,
-    \[
-       \frac{(\log k)^k}{\gamma(v)^{\gamma(v)}} \le W(r) \le \frac{(\log k)^k}{\left(\log c+\tfrac{\log c}{\log\log c}\right)^{c+\tfrac{\log c}{\log\log c}}}
-   \]
-   so $\gamma(v) \ge c+\log c/\log\log c$ and therefore $\varphi(v) \ge a(k-c-\tfrac{\log c}{\log\log c})+1 \ge a(k-\gamma(v)-1)+1$, as required by (P2).
-
-   Now, $T-T'$ is a forest of trees $T_1,\ldots,T_d$ rooted at nodes $r_1,\ldots,r_d$, respectively.  For each $i\in\{1,\ldots,d\}$ and each $v\in V(T_i)$,
-   \[
-       W(r_i) \le \frac{(\log k)^k}{(\log(c+1+\tfrac{\log (c+1)}{\log\log (c+1)}))^{c+1+\tfrac{\log (c+1)}{\log\log(c+1)}}} \enspace .
-   \]
-   Therefore, we can apply induction on each tree $T_i$ using the colour $\phi_i=a(k-c-)
-
-
-
-   \[
-        \frac{(\log k)^k}{\gamma(v)^{\gamma(v)}}\le W(r_i) < \frac{(\log k)^k}{\left(\log c+\tfrac{\log c}{\log\log c}\right)^{c+\tfrac{\log c}{\log\log c}}}
-   \]
-   Therefore $\gamma(v) > \gamma(r)$. Since $\gamma(r)$ and $\gamma(r_i)$ are integers, this implies that
-   \[  \gamma(r_i) \ge \gamma(r)+1 \ge c + \frac{\log c}{\log\log c} + 1 \]
-   Therefore, we may choose $\phi_i = a(k-c)-\beta\log c/\log\log c-1\ge$
-
-
-\hrule
-
-    The proof is by induction the number of vertices of $T$. If $T$ consists of a single node $r$ then we set $\varphi(r):=\phi$ and we are done.
-
-    For a tree $T$ with more than one node, let $r_1,\ldots,r_b$ denote the children of $r$ and, for each $i\in\{1,\ldots,b\}$, let $T_i$ be the subtree of $T$ containing $r_i$ and all its descendants.  We say that $T_i$ is \emph{heavy} if $W(r_i)\ge (\log k)^k/(\log (c+1))^{c+1}$.
-
-    First, a couple of manipulations
-    \begin{equation}
-        \log\log(c+1) \le \log\left(\log c + \tfrac{\log e}{c}\right)
-        \le \log\log c + \tfrac{\log^2 e}{c\log c} \enspace .
-    \end{equation}
-    Using this, we get
-    \begin{align*}
-        (\log(c+1))^{c+1}
-        & = (\log c)^{(c+1)\cdot\tfrac{\log\log(c+1)}{\log\log c}} \\
-        & \le (\log c)^{(c+1)\cdot\left(1+\tfrac{\log^2 e}{c\log c\log\log c}\right)} \\
-        & = (\log c)^{c + 1 + \tfrac{\log^2 e}{\log c\log\log c} + \tfrac{\log^2 e}{c\log c\log\log c}} \\
-        & = \left(\tfrac{\log^2 e}{\log c}\right)\left(\tfrac{\log^2 e}{c\log c} \right)(\log c)^{c+1} \\
-        & \le \left(\tfrac{3\log^2 e}{2}\right)(\log c)^{c+1} \enspace .
-    \end{align*}
-    Therefore, the number of heavy subtrees is at most
-    \[  x\frac{(\log c+1)^{c+1}}{(\log c)^c} \le \left(\tfrac{3\log^2 e}{2}\right)(\log c) \enspace . \]
-    For each heavy subtree, $T_i$ we colour $r_i$ with a unique colour in
-\end{proof}
-
-
-
-
-
-
-\begin{lem}
-Let $c,k$ be integers $0\le c< k$, let $T$ be a non-empty tree with root $r$, let $\phi\in\{a(k-c-1)+1,\ldots,ak\}$, let $\gamma:V(T)\to\N$ be an assignment of positive weights to the vertices of $T$ such that
-\begin{compactenum}[(R1)]
-    % \item $\gamma(v)\le k-c$ for each $v\in V(T)$; and \label{min-weight}
-    \item $\Gamma(r):=\sum_{v\in V(T)} (\log k)^k/(\log \gamma(v))^{\gamma(v)} \le (\log k)^k/(\log c)^c$. \label{total-weight}
-\end{compactenum}
-Then $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,ak\}$ such that
-\begin{compactenum}[(P1)]
-    \item $\varphi(r)=\phi$;
-    \item for each $i\in\{a(k-c-1)+1,\ldots,ak\}$, there is at most one $v\in V(T)$ with $\varphi(v)=i$.
-    \item for each $v\in V(T)$, $\varphi(v)\ge a\cdot(k-\gamma(v)-1)+1$.
-\end{compactenum}
-\end{lem}
-
-\begin{proof}
-    % We say that a node $v$ of $T$ is \emph{dangerous} if
-    % \[
-    %     (\log \gamma(v))^{\gamma(v)} > \frac{(\log k)^k}{\log\left(c+\frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}}
-    % \]
-    % With a bit of work, we can show that this implies that
-    % \[
-    %     (\log \gamma(v))^{\gamma(v)} > \left(\frac{\alpha}{c}\right)\cdot
-    %         \frac{(\log k)^k}{(\log c)^c} \enspace .
-    % \]
-    % for some constant $\alpha > 0$.  Therefore, the set $D$ of dangerous nodes has size $|D|\le c/\alpha$.
-
-    For each node $v$ of $T$, let $\Gamma(v):=\sum_{u\in V(T_v)}(\log k)^k/(\log(\gamma(u)))^{\gamma(u)}$ where $T_v$ denotes the subtree of $T$ induced by $v$ and all its descendants.  We say that a node $v$ of $T$ is \emph{heavy} if
-    \[
-        \Gamma(v)> \frac{(\log k)^k}{\log\left(c+\frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}} \enspace .
-    \]
-    By fighting a little with this equation we can show that, for any heavy node $v$,
-    \[
-        \Gamma(v) > \left(\frac{\alpha}{c}\right)\cdot
-            \frac{(\log k)^k}{(\log c)^c} \enspace .
-    \]
-    A node $v$ is \emph{critical} if it is heavy, but none of its $T$-descendants is heavy.  Since no critical node is a $T$-descendant of any other critical node, it follows that the set $C$ of critical nodes has size $|C|\le c/\alpha$.
-
-    A node that is not heavy is \emph{light}.  Note that, for a light node $v$,
-    \[
-        \gamma(v)\le \Gamma(v) \le \frac{(\log k)^k}{\left(c+\frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}}
-    \]
-
-    Let $T'$ be the minimal subtree of $T$ that spans the set of heavy nodes. We say that a node of $T'$ is \emph{special} if it is $v$, or it is a leaf or it has at least two children.  Each leaf of $T'$ is a critical node, so the number of leaves of $T'$ is at most $|C|\le c/\alpha$.  In any tree with $\ell$ leaves, the number of nodes with at least two children is at most $\ell-1$.  Therefore the number of special nodes is at most most $2c/\alpha$.
-
-    Therefore, for $a\ge 2/\alpha$, one can obtain a humped us-colouring of $T'$ as follows:  First colour each critical node $C$ with a distinct colour in $\{a(k-c-1)+1,\ldots,ak\}$, using $\varphi(r):=\phi$.  Now the uncoloured graph $T'-(D\cup C)$ consists of a set of disjoint paths.  These can be coloured with the three colours in $\{a(k-c-1)-2,a(k-c-1)-1,a(k-c-1)\}$.  These conditions ensure that the partial colouring $\varphi$ satisifies the Conditions 1--3 in the statement of the lemma.  In particular, each colour in $\{a(k-c-1)+1,\ldots,a_k\}$ is used at most once and each heavy node receives a colour $c$ larger than $XXXXXX$ TODO: Careful here!
-
-    We are left with the problem of extending the colouring $\varphi$ of $T'$ to a colouring of $T$.  The forest $T-T'$ contains trees $T_1,\ldots,T_m$ with roots $r_1,\ldots,r_m$, respectively.  For each $i\in\{1,\ldots,m\}$, $r_i$ is a light node.
-
-    Therefore we can inductively colour each $T_i$ using colours in $\{1,\ldots,(a-....)$.  Finish.....
-
-    %
-    %
-    % \begin{compactenum}
-    %     \item $\gamma(v)\le (\log k)^k/(\log(c+r))^{c+r}$.
-    %     \item $\Gamma(r_i) \le 100\Gamma(r)/(ac) \le \frac{100}{ac}(\log k)^k/(\log c)^c$
-    % \end{compactenum}
-    % % In order to apply induction, What remains is to argue that these satisfy the preconditions 1 and 2 of the lemma.
-    % We will extend $\varphi$ to a us-colouring of $T_i$ using colours $\{1,\ldots,a(k-c)\}$.  This will automatically satisfy Conditions~1 and 2 of the lemma, but we must take care to ensure that Condition~3 is also satisfied.
-
-    %
-    %
-    %
-    %
-    %
-    %
-    % The proof is by induction on $|T|$.  In the base case, $T$ consists of a single node $r$ and $w(r)\le k-c$. Therefore $\phi \ge a(k-c-1) \ge a(w(r)-1)$.    Setting $\varphi(r):= a(k-w(r)) \le a(k-c)$ gives the required colouring.
-    %
-    % For $|T|>1$, consider the root $r$ of $T$, let $r_1,\ldots,r_d$ be the children of $r$ and, for each $i\in\{1,\ldots,d\}$, let $T_i$ be the subtree of $T$ induced by $r_i$ and all its $T$-descendants.  We say that $T_i$ is \emph{heavy} if $\sum_{v\in V(T_i)} (\log w(v))^{w(v)} \ge (\log k)^k/(\log (c+1))^{c+1}$.  LOOKOUT: Deal with $c=0$ separately. By \cref{total-weight}, the number of heavy subtrees is at most
-    % \begin{align*}
-    %     d' & \le \frac{(\log k)^k}{(\log c)^c} \bigg/ \frac{(\log k)^k}{(\log(c+1))^{c+1}} \\
-    %     &= \frac{(\log(c+1))^{c+1}}{(\log c)^c} \\
-    %     &= \left(\frac{\log(c+1)}{\log c}\right)^c\times \log(c+1) \\
-    %     &\le \left(\frac{\log(c+1)}{\log (c+1)-(\log e)/c}\right)^c\times \log(c+1) \\
-    %     &\le \left(1+\frac{2\log e}{c}\right)^c\times \log(c+1)
-    %         & \text{when $c\log(c+1)\ge 2\log e$ } \\
-    %     &\le \left(e^{(2\log e)/c}\right)^c\times \log(c+1) \\
-    %     &\le e^{2\log e}\times \log(c+1) \\
-    % \end{align*}
-    %
-    % We say that a subtree $T_i$ is \emph{heavy} if $W(T_i)> W(T)/(ac+1)$ and is light otherwise.  Observe that there are at most $ac$ heavy subtrees.  For each light subtree $T_i$, we have
-    % \begin{align*}
-    %     W(T_i) & \le W(T)/c \\
-    %     & \le \frac{(\log k)^k}{c(\log c)^c} \\
-    %     & = \frac{(\log k)^k}{(\log(c+r))^{\tfrac{\log (ac+1)}{\log\log(c+r)}}(\log c)^c} \\
-    %     & = \frac{(\log k)^k}{(\log(c+r))^{\tfrac{\log (ac+1) + c\log\log c}{\log\log(c+r)}}} \\
-    %     & = \frac{(\log k)^k}{(\log(c+r))^{c+\tfrac{\log (ac+1)}{\log\log(c+r)} - O(r/\log c)}}  &\text{(this step is explained below)}\\
-    %     & \le \frac{(\log k)^k}{(\log(c+r))^{c+\tfrac{\log c}{\log\log(c+r)} + \log(a)/\log\log(c+r) - O(r/\log c)}} \\
-    %     & \le \frac{(\log k)^k}{(\log(c+r))^{c+\tfrac{\log c}{\log\log(c+r)}}}
-    %     & \text{(for large $a$ and $r\in O(\log c/\log\log c))$} \\
-    %     % & = \frac{(\log k)^k}{(\log(c+r))^{\log (ac+1)/\log\log(c+r) + c\log\log(c)} \\
-    %     & = \frac{(\log k)^k}{(\log(c+\alpha\log c/\log^{(3)} c))^{c+\tfrac{\alpha \log c}{\log^{(3)}c}}}
-    % \end{align*}
-    % where the last step comes from solving $r=\log c/\log\log (c+r)$, who solution is $\alpha\log c/\log^{(3)}c$ for some $\alpha\in[??]$.
-    %
-
-\end{proof}
 
 % \section{Lower Bound for 2-trees}
 %
@@ -757,16 +815,6 @@ Approximation algorithm for trees.  Using characterization in terms of $T_{h+1,h
 % \section{Generalization to $t$-Trees}
 % \seclabel{t-trees}
 %
-% A graph $H$ is a $t$-tree if $H$ is a clique of size $t$ or if it contains a vertex $v$ of degree $t$ whose neighbours form a clique and such that $H-\{t\}$ is a $t$-tree.  This recursive definition of $t$-trees implies that there is a permutation $\pi_1,\ldots,\pi_n$ of $V(G)$ such that $\pi_1,\ldots,\pi_t$ form a clique and, for each $i\in\{t+1,\ldots,n\}$, $\pi_i$ is adjacent to exactly $t$ vertices among $\pi_1,\ldots,\pi_{i-1}$ which themselves form a clique, which we call the \emph{parent clique} of $\pi_i$.  We call $\pi_1,\ldots,\pi_n$ a \emph{construction order} for $H$.
-%
-% A \emph{tree decomposition} of a graph $H$ is a sequence $\mathcal{T}:=(B_x:x\in V(T))$ of subsets of $V(H)$ called \emph{bags} indexed by the nodes of a tree $T$ and such that
-% \begin{inparaenum}[(i)]
-%     \item for each $v\in V(H)$, $T[\{x\in V(T):v\in B_x\}]$ is connected; and
-%     \item for each $vw\in E(H)$, there exists some $x\in v(T)$ such that $\{v,w\}\subseteq B_x$.
-% \end{inparaenum}
-% The \emph{width} of $\mathcal{T}$ is $\max\{|B_x|:x\in V(T)\}-1$. The \emph{treewidth} of $H$ is the minimum width of any tree decomposition of $H$.
-%
-% It is not difficult to see that every $t$-tree $H$ has treewidth $t$ and a tree-decomposition of $H$ can be constructed incrementally from a construction order $\pi_1,\ldots,\pi_n$ of $H$: Start with a tree $T$ that consists of a single node $r$ with bag $B_r:=\{\pi_1,\ldots,\pi_{t+1}\}$ and, for $i\gets t+2,\ldots,n$, let $x$ be the minimum-depth node of $T$ such that $\pi_i\in B_x$, and add a new leaf $\pi_i$ to $T$ adjacent to $x$ whose bag $B_{\pi_i}$ contains $\pi_i$ and its parent clique.  We call tree-decomposition constructed this way a \emph{canonical} tree decomposition of $H$.
 %
 % For the remainder of this section, $H$ is a $t$-tree on $n\ge t+1$ vertices, $\pi_1,\ldots,\pi_n$ is a construction order for $H$, and $\mathcal{T}:=(B_x:x\in V(T))$ is a canonical tree decomposition of $H$.  It is easy to see that every bag of $\mathcal{T}$ has size exactly $t+1$, $T$ is rooted at $r$, and
 % \begin{inparaenum}[(i)]\setcounter{enumi}{2}
