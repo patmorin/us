@@ -210,9 +210,14 @@ Our proof of \cref{planar} makes use of a recent \emph{product structure theorem
 
 \section{Preliminaries}
 
+\subsection{Basics}
+
+Graphs, $N_G(v)$, $G[L]$.
+Rooted trees, $d_T(v)$, $T$-ancestors and $T$-descendants.
+
 \subsection{Treewidth}
 
-A graph $H$ is a $t$-tree if $H$ is a clique of size $t$ or if it contains a vertex $v$ of degree $t$ whose neighbours form a clique and such that $H-\{t\}$ is a $t$-tree.  This recursive definition of $t$-trees implies that there is a permutation $\pi_1,\ldots,\pi_n$ of $V(G)$ such that $\pi_1,\ldots,\pi_t$ form a clique and, for each $i\in\{t+1,\ldots,n\}$, $\pi_i$ is adjacent to exactly $t$ vertices among $\pi_1,\ldots,\pi_{i-1}$ which themselves form a clique, which we call the \emph{parent clique} of $\pi_i$.  We call $\pi_1,\ldots,\pi_n$ a \emph{construction order} for $H$.
+A graph $H$ is a \emph{$t$-tree} if $H$ is a clique of size at most $t$ or if it contains a vertex $v$ such that $H[N_H(v)]$ is a $t$-clique and $H-\{t\}$ is a $t$-tree.  This recursive definition of $t$-trees implies that there is a permutation $\pi_1,\ldots,\pi_n$ of $V(G)$ such that $\pi_1,\ldots,\pi_t$ form a clique and, for each $i\in\{1,\ldots,n\}$, $\pi_i$ is adjacent to exactly $\min\{i-1,t\}$ vertices among $\pi_1,\ldots,\pi_{i-1}$ which themselves form a clique, which we call the \emph{parent clique} of $\pi_i$.  We call $\pi_1,\ldots,\pi_n$ a \emph{construction order} for $H$.  (Note that the parent clique of any vertex $v_i$, $i\ge t+1$ is determined by the choice of the \emph{root clique} $v_1,\ldots,v_t$, in the same way that the parent of a vertex in a tree is determined by the choice of the root.)
 
 A \emph{tree decomposition} of a graph $H$ is a sequence $\mathcal{T}:=(B_x:x\in V(T))$ of subsets of $V(H)$ called \emph{bags} indexed by the nodes of a tree $T$ and such that
  \begin{inparaenum}[(i)]
@@ -363,7 +368,7 @@ then $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,a(k-c-1)\}$ such t
 
 
 
-\begin{lem}
+\begin{lem}\label{tree-ii}
 Let $c,k$ be integers $0\le c< k$, let $T$ be a non-empty tree with root $r$, let $\gamma:V(T)\to\N$ be an assignment of positive integer weights to the vertices of $T$.  Then there exists a constant $a>0$ such that,
 if
 \begin{equation}
@@ -408,39 +413,98 @@ then  $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,ak\}$ such that
 \end{proof}
 
 
+For any graph $H$, and any two vertices $v,w\in V(H)$, let $d_H(v,w)$ denote the length of the shortest path, in $H$, from $v$ to $w$. For any $v\in V(H)$ and any $W\subseteq V(H)$, let $d_H(v,W)=\min\{w\in W: d_H(v,w)$. A \emph{BFS layering} of $H$ is a partition $L_0,\ldots,L_m$ of $V(H)$ such that, for each $i\in\{1,\ldots,m\}$ and each $v\in L_i$, $d_H(v,L_0)=i$.
+
+When a BFS layering $L_0,\ldots,L_m$ of $H$ is given, we use the notations $H_i=H[L_i]$, and $H_{\ge i}=H[\bigcup_{j=i}^m L_i]$.  When $H$ is a $t$-tree and $L_0=\{v_1,\ldots,v_t\}$ is a $t$-clique in $H$, each component of $H_i$ is a $(t-1)$-tree.  It is helpful to think of $H_{\ge i}$ as a union of overlapping $t$-trees, each of which is rooted at a $t$-clique in $H_i$. In this way, $H_i$ is a $(t-1)$-tree with $t$-trees hanging off its cliques.
+
+For each $t$-clique $C$ in $H_i$, we use $H_C$ to denote the component of $H[C\cup\bigcup_{j=i+1}^m L_j]$ that contains $C$.  If $v_1,\ldots,v_n$ is a construction order for $H$ then for any component $H'$ of $L_i$, the subsequence $v_{i_1},\ldots,v_{i_|H'|}$ of $v_1,\ldots,v_n$ containing only those vertices in $V(H')$ is a construction order for $H'$.  In this way, each vertex $v_{i_j}$, has a naturally defined parent clique in $H'$.
+
+
+
+
 \begin{lem}\label{two-tree-technical}
-    There exists a constant $a>0$ such that, for every integer $k\ge 2$, every $n\le (\log k)^k$, and every $n$-vertex 2-tree $H$, $\uqs(H)\le k$.
+    There exists a constant $a>0$ such that, for every integer $k\ge 2$, every $n\le (\log k)^k$, and every $n$-vertex 2-tree $H$, $\uqs(H)\le ak$.
 \end{lem}
 
-%     eve For every $n$-vertex 2-tree
-%     Let $c, k,n$ be integers with $c\ge 2$ and $n\le (\log k)^k$.
-%     Let $L_0,\ldots,L_m$ be a BFS layering of some 2-tree $H$ beginning at some edge $v_1v_2$ (so that $L_0=\{v_1,v_2\}$).  For each $i\in\{0,\ldots,m\}$ and each vertex $v$ in $H[L_i]$, let $H_{v}$ be the component of $H[\{v\}\cup\bigcup_{j=i+1}^m L_i]$ that contains $v$ and let $\gamma(v)$ be the maximum integer such that $(\log k)^k/(\log\gamma(vw))^{\gamma(vw)} \ge |H_{vw}|$.
-%
-%     Fix some connected component $H'$ of $H_{\ge i}:=H[\bigcup_{j=i}^m L_i]$.
-%     There exists a constant $a>0$ such that, if
-%     \[
-%         \sum_{v\in V(H')\cap L_i} \frac{(\log k)^k}{\gamma(v)^{\gamma(v)}} \le \frac{(\log k)}{(\log c)^c} \enspace ,
-%     \]
-%     then $H'$ has a humped us-colouring $\varphi:V(H')\to\{1,\ldots,ak\}$ such that, for each $\iota\in\{a(k-c-1)+1,\ldots,k\}$, there is at most one vertex $v\in H'\cap L_i$ such that $\varphi(v)=\iota$.
-% \end{lem}
-
 \begin{proof}
-    Let $v_1,\ldots,v_n$ be a construction order for $H$ and let $(B_x:x\in V(T))$ be a canonical decomposition of $H$ obtained using this order.  We will use $\prec$ to denote the total order on $V(H)$ imposed by the construction order, so that $v_i\prec v_j$ if and only if $i<j$.
+    Let $v_1,\ldots,v_n$ be a construction order for $H$ and
+    let $L_0,\ldots,L_m$ be a BFS layering of $H$ beginning at  $L_0=\{v_1,v_2\}$ for some edge $v_2v_2\in E(H)$.  For each edge $vw\in E(H_i)$, recall that $H_{vw}$ is the component of $H[\{v,w\}\cup\bigcup_{j=i+1}^m L_i]$ that contains $vw$.
 
-    Let $L_0,\ldots,L_m$ be a BFS layering of $H$ beginning at $L_0=\{v_1,v_2\}$.  For each $i\in\{1,\ldots,m\}$, $F_i:=H[L_i]$ is a rooted forest where we use the convention that, for an edge $vw\in E(F_i)$, $v$ is the parent of $w$ if $v\prec w$.
+    For each vertex $v\in L_i$, let
+    \begin{equation}
+        n_v=\sum_{w\in N_H(v)\cap L_i}|H_{vw}| \enspace . \label{nv}
+    \end{equation}
 
-    Let $H_{\ge i}:=H[\bigcup_{j=i}^m L_j]$.  For each edge $vw\in F_i$, let  $H_{vw}$ be the connected component of $H_{\ge i}$ that contains $vw$.  For each vertex $v\in L_i$, let $N_v=\sum_{w\in N_H(v)\cap L_i}|H_{vw}|$.  Our proof is based on the following claim:
+    \begin{clm}\label{size-claim}
+        For each $i\in\{1,\ldots,m\}$ and each component $H'$ of $H_{\ge i}$, $\sum_{v\in H'[L_i]} n_v \le 2|H'|$.
+    \end{clm}
+
+    \begin{proof}[Proof of \cref{size-claim}]
+        Very roughly: the sum double counts each vertex of $H'[L_{i+1}\cup\cdots\cup L_{i+m}]$ exactly twice and double counts the edges of $H'[L_i]$.
+        More carefully,
+        \begin{align*} |H'|
+            & = |H'[L_{i}]| + |H'[L_{i+1}\cup\cdots L_{m}] \\
+            & = |H'[L_i]|+\sum_{vw\in E(H'[L_i])} (|H_{vw}|-2) \\
+            & = |H'[L_i]|-2|E(H'[L_i])| + \sum_{vw\in E(H'[L_i])} |H_{vw}| \\
+            & = |H'[L_i]|-2(|H'[L_i]|-1) + \sum_{vw\in E(H'[L_i])} |H_{vw}| \\
+            & = -|H'[L_i]|+2 + \sum_{vw\in E(H'[L_i])} |H_{vw}| \\
+            & \ge \sum_{vw\in E(H'[L_i])} |H_{vw}|
+        \end{align*}
+        On the other hand,
+        \begin{align*}
+            \sum_{v\in H'[L_i]} n_v
+            & = \sum_{v\in H'[L_i]}\sum_{w\in N_H(v)\cap L_i}|H_{vw}| \\
+            & = 2 \sum_{vw\in E(H'[L_i])} |H_{vw}| \enspace . \qedhere
+        \end{align*}
+    \end{proof}
+
+Our proof is based on the following claim:
 
     \begin{clm}\label{main-claim}
-        Let $H'$ be some connected component of $H_{\ge i}$.  If $\sum_{v\in V(H')} N_v\le (\log k)^k/(\log c)^c$ then $H_{\ge i}$ has a humped us-colouring $\varphi:V(H')\to\{1,\ldots,ak\}$ such that, for each $\iota\in\{a(k-c-1)+1,\ldots,ak\}$ there is at most one vertex $v$ in $V(H')\cap L_i$ with $\varphi(v)=\iota$.
+        Let $H'$ be the union of one or more connected component of $H_{\ge i}$.  If $\sum_{v\in V(H')\cap L_i} n_v\le (\log k)^{k-O(1)}/(\log c)^c$ then there exists $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,1\}$ such that
+        \begin{compactenum}[(P1)]
+            \item The function $\theta:V(H')\to\{1,\ldots,2ak\}$ defined by $\theta(v)=2\varphi(v) - \psi(v)$ is a humped us-colouring of $H'$;
+            \item for each $v\in V(H'[L-i])$, $\psi(v)=0$;
+            \item for each $\iota\in\{a(k-c-1)+1,\ldots,ak\}$ there is at most one vertex $v$ in $V(H'[L-i])$ with $\varphi(v)=\iota$.
+        \end{compactenum}
     \end{clm}
 
     \begin{proof}[Proof of \cref{main-claim}]
-        The proof is by induction on $m-i$.  In the base case $m-i=0$ and $H'$ is a tree.  For this case, we can easily use \cref{tree-ii} by setting $\gamma(v)=1$ for each $v\in V(H')$, setting $\phi=k$ and then applying \cref{tree-ii}.
+        In all cases, (P2) requires setting $\psi(v)=0$ for all $v\in V(H'[L_i])$, so we will not mention this again.
 
-        In the general case, we set $\gamma(v):=\max\{c\in\N:(\log k)^k/c^c \ge N_v\}$ for each $v\in V(H)$. Then By \cref{tree-ii}, we can find a us-colouring $\varphi$ of the tree $H'[L_i]$ with the desired properties and such taht $\varphi(v)\ge a(k-c-\gamma(v)-1)+1$ for all $v\in V(H'[L_i])$.  It remains to show that we can extend this to a colouring of $V(H')\cap L_{i+1}\cap\cdots\cap L_m$.  This extension requires some care.
+        The proof is by induction on $m-i$. In the base case $m-i=0$ and $H'$ is a forest.  In this case, $n_v=1$ for each $v\in V(H')$.  Set $\gamma(v):=k$ and observe that $(\log k)^k/(\log(\gamma(v))^{\gamma(v)}=1=n_v$ for each $v\in V(H')$. Therefore,
+        \[
+            \sum_{v\in V(H')\cap L_i} \frac{(\log k)^k}{(\log \gamma(v))^{\gamma(v)}} = \sum_{v\in V(H')\cap L_i} n_v
+            \le \frac{(\log k)^{k-1}}{(\log c)^c}
+            \le \frac{(\log k)^{k}}{(\log c)^c} \enspace .
+        \]
+        Setting $\phi=k$ and then applying \cref{tree-ii} then gives a colouring $\varphi: V(H')\to\{1,\ldots,ak\}$ that satisfies (P1)--(P3).
 
-        For the root $r$ of the tree $H'[L_i]$, we define $D_r=\{x\in L_{i+1}:rx\in E(H)\}$.  For each node $w$ with parent $v$ in $H'[L_i]$, we define $D_w=\{x\in L_{i+1}:wx\in E(H)\}\setminus D_{v}$.  Fix any $w\in V(H')\cap L_i$ and consider the graph $H'':=H'[D_w\cup \bigcup_{j=2}^m L_j]$.  Now, $H''[L_{i+1}]$ is a rooted forest with roots $w_1,\ldots,w_d$.  We add a node $w'$ to $H''$ to obtain a graph on which we can apply induction.  This induction yields a humped us-colouring of $H'$
+        In the general case, we set $\gamma(v):=\max\{c\in\N:(\log k)^k/(\log c)^c \ge n_v\}$ for each $v\in V(H'[L_i])$.  This implies that
+        \[
+            \frac{(\log k)^k}{(\log(\gamma(v)+1))^{\gamma(v)+1}} > n_v
+            \ge \frac{(\log k)^k}{(\log(\gamma(v)))^{\gamma(v)}}  \]
+        so
+        \[
+            \frac{n_v}{(\log k)^{k}} < \log(\gamma(v)+1)^{\gamma(v)+1} \le
+            \log(\gamma(v))^{\gamma(v)+O(1)}  \le
+            \log(\gamma(v))^{\gamma(v)}\cdot(\log k)^{O(1)}
+        \]
+        and
+        \[
+           \sum_{v\in H'[L_i]} \frac{(\log k)^k}{(\log \gamma(v))^{\gamma(v)}} \le \sum_{v\in H'[L_i]} n_v(\log k)^{O(1)} \le \frac{(\log k)^k}{(\log c)^c}
+        \]
+        Then, by \cref{tree-ii}, we can find a us-colouring $\varphi$ of the tree $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. (TODO: Requires that \cref{tree-ii} be stated in terms of a forest.) In addition $\varphi(v)\ge a(k-c-\gamma(v)-1)+1$ for each $v\in V(H'[L_i])$.  It remains to show that we can extend this to a colouring of $V(H')\setminus L_i$.  This extension requires some care.
+
+        For the root $r$ of the tree $H'[L_i]$, we define $D_r=\{x\in L_{i+1}:rx\in E(H)\}$.  For each node $w$ with parent $v$ in $H'[L_i]$, we define $D_w=\{x\in L_{i+1}:wx\in E(H)\}\setminus D_{v}$.  Fix any $w\in V(H'[L_i]$ and consider the graph $H_w:= H'[D_w\cup \bigcup_{j=i+2}^m L_j]$ that contains $w$.  Now, $H_w[L_{i+1}]$ is a rooted forest with roots $w_1,\ldots,w_d$.  We apply the inductive hypothesis to this graph.
+
+
+        We add a node $w'$ to $H_w$ to obtain a graph on which we can apply induction.  Specifically, $H_w[L_{i+1}]$ is a tree $T_w$ and $H_w$ consists of 2-trees hanging off the edges of $T_w$.
+
+
+
+
+        This induction yields a humped us-colouring of $H'$
 
 
 
