@@ -222,7 +222,9 @@ Our proof of \cref{planar} makes use of a recent \emph{product structure theorem
 \subsection{Basics}
 
 In this paper we use standard graph theory terminology as used in the book by \citet{diestel:graph}
-Every graph $G$ we consider is finite simple and undirected with vertex set denoted $V(G)$ and edge set denoted $E(G)$.  We let $N_G(v)=\{w\in V(G): vw\in E(G)\}$.  For some set $L$, the induced subgraph  $G[L]$ is a graph with $V(G[L]):=V(G)\cap L$ and $E(G[L])=\{vw\in E(G): \{v,w\}\subseteq L\}$.
+Every graph $G$ we consider is finite simple and undirected with vertex set denoted $V(G)$ and edge set denoted $E(G)$.  We use the shorthand $|G|:=|V(G)|$.
+We let $N_G(v)=\{w\in V(G): vw\in E(G)\}$.
+For any set $L$, the induced subgraph  $G[L]$ is a graph with $V(G[L]):=V(G)\cap L$ and $E(G[L])=\{vw\in E(G): \{v,w\}\subseteq L\}$.
 
 Rooted trees, $d_T(v)$, $T$-ancestors and $T$-descendants.
 
@@ -353,7 +355,7 @@ A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least t
     Let $\varphi:V(\hat{H})\to \{3t+2,\ldots,\uqs(\hat{H})+3t+1\}$ be a us-colouring of $\hat{H}$. The graph $P:=T-\Lambda(T)$ consists of disjoint paths and, for any edge $vw\in H-V(\hat{H})$ there is a node $x\in V(P)$ such that $\{v,w\}\subseteq B_x$.  Therefore $H-V(\hat{H})$ has pathwidth at most $t$ so, by \cref{pathwidth}, it can be us-coloured using colours $1,\ldots,3t+1$.  This gives the desired colouring of $H$ using colours $\{1,\ldots,\uqs(\hat{H})+3t+1\}$.  To see why this is a us-colouring observe that for any path $uvw$ with $u,w\in V(\hat{H})$ and $v\in V(H)\setminus V(\hat{H})$, the edge $uw\in\hat{H}$, so $\varphi(u)\neq\varphi(w)$.
 \end{proof}
 
-\subsection{The Meat}
+\subsubsection{The Meat}
 
 Recall that we are working on a proof of \weirdref{t-trees}{a} that works by induction on $t$ and the base case $t=1$ is already established by \cref{trees}.
 
@@ -840,6 +842,18 @@ Since every graph of treewidth at most 2 is planar, we obtain the following coro
 
 \cref{product-lemma,product-structure,t-trees} immediately imply that $\uqs(G)\in O(\log n/\log^{(4)} n)$ for every $n$-vertex planar graph $G$.  We now show how this can be improved to give the optimal upper bound
 $\uqs(G)\in O(\log n/\log^{(4)} n)$.
+
+The main idea is to use the fact that the product structure theorem specifies that the graph $H$ is a \emph{planar} 3-tree.  Planar 3-tree behave, in many ways, more like 2-trees than $3$-trees.  We will prove the following:
+
+\begin{thm}\label{three-trees}
+    For every $n$-vertex planar $3$-tree $H$, $\uqs(H)\in O(\log n/\log^{(3)} n)$.
+\end{thm}
+
+The main property used in the proof of \cref{three-trees} is that the BFS layers of a planar 3-tree are outerplanar graphs, which behave more like trees than general 2-trees.  In order to prove \cref{three-trees} we prove (a weighted version) of the following optimal result:
+
+\begin{thm}
+For every $n$-vertex outerplanar graph $H$, $\uqs(H)\in O(\log n/\log^{(2)} n)$.    
+\end{thm}
 
 \subsection{Outerplanar Graphs}
 
