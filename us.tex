@@ -104,7 +104,7 @@ Since every tree is a planar graph and no better lower bound is known for planar
 Our proof of \cref{planar} makes use of a recent \emph{product structure theorem} of \citet{dujmovic.joret.ea:planar} which states that every planar graph $G$ is a subgraph of $H\boxtimes K_3\boxtimes P$ where $H$ is a planar $3$-tree, $K_3$ is a 3-cycle, $P$ is a path, and $\boxtimes$ denotes the strong graph product.\footnote{Definitions of $t$-trees, treewidth and strong graph product appear later.}  To apply this theorem, we generalize \cref{trees} as follows:
 
 \begin{thm}\label{t-trees}
-    [BROKEN: The upper bound doens't work right now.] For every fixed $t$ and every $n$-vertex $t$-tree, $\uqs(G) \in O(\log n/\log^{(t+1)}(n)$ and this is asymptotically optimal: for infinitely many values of $n$, there exists an $n$-vertex $t$-tree $T$ with $\uqs(T)\in\Omega(\log n/\log^{(t+1)} n)$.
+    For every fixed $t$ and every $n$-vertex $t$-tree, $\uqs(G) \in O(\log n/\log^{(t+1)}(n)$ and this is asymptotically optimal: for infinitely many values of $n$, there exists an $n$-vertex $t$-tree $T$ with $\uqs(T)\in\Omega(\log n/\log^{(t+1)} n)$.
 \end{thm}
 
 \cref{t-trees} is then applied to the graph $H$ along with a simple product colouring lemma which shows that, for any two graphs $G_1$ and $G_2$, $\uqs(G_1\boxtimes G_2)\le \uqs(G_1)\cdot\uqs(G_2)$. It is easy to see that $\uqs(K_3)=3$ and $\uqs(P)\le 3$, so this implies that $\uqs(H\boxtimes K_3\boxtimes P)\le 9\uqs(H)$.
@@ -230,14 +230,14 @@ Rooted trees, $d_T(v)$, $T$-ancestors and $T$-descendants.
 
 A graph $H$ is a \emph{$t$-tree} if $H$ is a clique of size at most $t$ or if it contains a vertex $v$ such that $H[N_H(v)]$ is a $t$-clique and $H-\{t\}$ is a $t$-tree.  This recursive definition of $t$-trees implies that there is a permutation $\pi_1,\ldots,\pi_n$ of $V(G)$ such that $\pi_1,\ldots,\pi_t$ form a clique and, for each $i\in\{1,\ldots,n\}$, $\pi_i$ is adjacent to exactly $\min\{i-1,t\}$ vertices among $\pi_1,\ldots,\pi_{i-1}$ which themselves form a clique, which we call the \emph{parent clique} of $\pi_i$.  We call $\pi_1,\ldots,\pi_n$ a \emph{construction order} for $H$.  (Note that the parent clique of any vertex $v_i$, is determined by the choice of the \emph{root clique} $v_1,\ldots,v_t$, in the same way that the parent of a vertex in a tree is determined by the choice of the root.)  A \emph{$t$-forest} is a graph whose connected components are $t$-trees.
 
-A \emph{tree decomposition} of a graph $H$ is a sequence $\mathcal{T}:=(B_x:x\in V(T))$ of subsets of $V(H)$ called \emph{bags} indexed by the nodes of a tree $T$ and such that
+For two graphs $H$ and $X$, an \emph{$X$-decomposition} of $H$ is a sequence $\mathcal{X}:=(B_x:x\in V(X))$ of subsets of $V(H)$ called \emph{bags} indexed by the nodes of $X$ and such that
  \begin{inparaenum}[(i)]
-     \item for each $v\in V(H)$, $T[\{x\in V(T):v\in B_x\}]$ is connected; and
-     \item for each $vw\in E(H)$, there exists some $x\in v(T)$ such that $\{v,w\}\subseteq B_x$.
+     \item for each $v\in V(H)$, $X[\{x\in V(T):v\in B_x\}]$ is connected; and
+     \item for each $vw\in E(H)$, there exists some $x\in V(X)$ such that $\{v,w\}\subseteq B_x$.
 \end{inparaenum}
-The \emph{width} of $\mathcal{T}$ is $\max\{|B_x|:x\in V(T)\}-1$. The \emph{treewidth} of $H$ is the minimum width of any tree decomposition of $H$.
+The \emph{width} of $\mathcal{X}$ is $\max\{|B_x|:x\in V(X)\}-1$.
 
-A \emph{tree decomposition }$\mathcal{P}:=(B_x:x\in V(P))$ us called a \emph{path decomposition} if $P$ is a path. The \emph{pathwidth} $\pw(H)$ of a graph $H$ is the minimum width of any path decomposition of $H$.
+In the special case where $X$ is a tree (or a forest), $\mathcal{X}$ is called a \emph{tree decomposition} of $H$.  In the still more special case where $X$ is a path (or a collection of disjoint paths), $\mathcal{X}$ is called a \emph{path decomposition} of $H$. The \emph{treewidth} of $H$ is the minimum width of any tree decomposition of $H$. The \emph{pathwidth} $\pw(H)$ of a graph $H$ is the minimum width of any path decomposition of $H$.
 
 It is not difficult to see that every $t$-tree $H$ has treewidth $t$ and a tree-decomposition of $H$ can be constructed incrementally from a construction order $\pi_1,\ldots,\pi_n$ of $H$: Start with a tree $T$ that consists of a single node $r$ with bag $B_r:=\{\pi_1,\ldots,\pi_{t+1}\}$ and, for $i\gets t+2,\ldots,n$, let $x$ be the minimum-depth node of $T$ such that $\pi_i\in B_x$, and add a new leaf $\pi_i$ to $T$ adjacent to $x$ whose bag $B_{\pi_i}$ contains $\pi_i$ and its parent clique.  We call a tree-decomposition constructed this way a \emph{canonical} tree decomposition of $H$.
 
@@ -250,7 +250,7 @@ For two graphs $G_1$ and $G_2$, $G_1\boxtimes G_2$ is a graph whose vertex set i
     \item $v_1w_1\in E(G_1)$ and $v_2w_2\in E(G_2)$.
 \end{inparaenum}
 
-\begin{thm}\cite{dujmovic.joret.ea:planar}\label{product}
+\begin{thm}\cite{dujmovic.joret.ea:planar}\label{product-structure}
     For every $n$-vertex planar graph $G$, there exists an at most $n$-vertex planar 3-tree $H$ and a path $P$ such that $G$ is a isomorphic to a subgraph of $H\boxtimes P$.
 \end{thm}
 
@@ -275,10 +275,6 @@ which is again valid for all $x\ge \tau(i)$.
 
 \section{Colouring $t$-Trees}
 
-[I've moved the original section on colouring $2$-trees to \cref{two-trees-appendix}.  This section is currently in the process of changing $2$ to $t$.]
-
-[BROKEN: Right now, this section is broken.  I'm unable to prove the slack lemma for weighted $(t-1)$-trees, for $t\ge 3$.]
-
 In this section we prove asymptotically tight bounds for the worst-case number of colours needed to us-colour $n$-vertex $t$-trees.
 
 \subsection{The Upper Bound for $t$-Trees}
@@ -302,7 +298,7 @@ It turns out to be easier to work with a $(t-1)$-forest $F$ contained in $H[L_i]
 We are able to show that $F$ has a special kind of separator $S$ such that
 \begin{compactenum}
     \item $F[S]$ can be us-coloured using $O(c)$ large colours in $\{a(k-c)+1,\ldots,ak\}$ that are each used only once and $O(t)$ small colours in $\{a(k-c-1)+1,\ldots,a(k-c)\}$ (that are used repeatedly); and
-    \item Each component of $F-S$ can be us-coloured using $O(k-c)$ small colours $\{1,\ldots,a(k-c-1)\}$. [BROKEN: I'm unable to prove this for $t>2$.]
+    \item Each component of $F-S$ can be us-coloured using $O(k-c)$ small colours $\{1,\ldots,a(k-c-1)\}$.
 \end{compactenum}
 Each of these colourings respect the lower bounds given by $\gamma(v)$ for each vertex $v$ of $F$.  The separator $S$ has a \emph{shadow-completeness} property: if $uvw$ is a path with $u,w\in S$ and $v\in V(F-S)$, then $uw\in E(F[S])$.  This ensures that the resulting colouring is a us-colouring of $F$.
 
@@ -376,7 +372,7 @@ if
 \end{equation}
 where
 \[
-    s := \frac{\log^{(t-1)} c}{\log^{(t)} c}
+    s := \frac{\log c}{\log^{(t)} c}
 \]
 then $H$ has a humped us-colouring $\varphi:V(H)\to\N$ such that
 \begin{compactenum}[(P1)]
@@ -396,28 +392,33 @@ then $H$ has a humped us-colouring $\varphi:V(H)\to\N$ such that
 
     Now assume $|H|\ge t+1$, so $|T|=|H|-t+1\ge 2$.  We say that node $x$ of $T$ is \emph{heavy} if
     \[
-        n_v > \frac{(\log^{(t-1)} k)^k}{\left(\log^{(t-1)}\left(c+s+\tfrac{\log^{(t-1)}(c+s)}{\log^{(t)}(c+s)}\right)\right)^{c+s+\tfrac{\log^{(t-1)}(c+s)}{\log^{(t)}(c+s)}}} \enspace ,
+        n_v > \frac{(\log^{(t-1)} k)^k}{\left(\log^{(t-1)}\left(c+s+\tfrac{\log(c+s)}{\log^{(t)}(c+s)}\right)\right)^{c+s+\tfrac{\log(c+s)}{\log^{(t)}(c+s)}}} \enspace ,
     \]
     and $v$ is \emph{light} otherwise.  For a heavy node $v$,
     \begin{align*}
-        (\log^{(t-1)} k)^k/n_v & < \left(\log^{(t-1)}\left(c+s+\tfrac{\log^{(t-1)}(c+s)}{\log^{(t)}(c+s)}\right)\right)^{c+s+\tfrac{\log^{(t-1)}(c+s)}{\log^{(t)}(c+s)}} \\
-        & = \left(\log^{(t-1)}(c+s)\right)^{\left(c+s+\tfrac{\log^{(t-1)}(c+s)}{\log^{(t)}(c+s)}\right)
-            \left(\tfrac{\log^{t}(c+s+\log^{(t-1)}(c+s)/\log^{(t)}(c+s))}{\log^{(t)}(c+s)}\right)} \\
-        & < (\log^{(t-1)}(c+s))^{\left(c+s+\tfrac{\log^{(t-1)}(c+s)}{\log^{(t)}(c+s)}\right)
-            \left(1 + \tfrac{(\log e)^t(\log^{(t-1)}(c+s))/\log^{(t)}(c+s)}{\prod_{j=0}^{t}\log^{(j)}(c+s)}\right)} \\
-        & = (\log^{(t-1)}(c+s))^{\left(c+s+\tfrac{\log^{(t-1)}(c+s)}{\log^{(t)}(c+s)}\right)
-            \left(1 + \tfrac{(\log e)^t}{(c+s)\left(\prod_{j=1}^{t-2}\log^{(j)}(c+s)\right)(\log^{(t)}(c+s))^2}\right)} \\
-        & = (\log^{(t-1)}(c+s))^{c+s+\tfrac{\log^{(t-1)}(c+s)}{\log^{(t)}(c+s)} +
-            \tfrac{(\log e)^t}{(\log^{(t)}(c+s))^2} + \tfrac{(\log e)^t\log^{(t-1)}(c+s)}{(c+s)\left(\prod_{j=1}^{t-2}\log^{(j)}(c+s)\right)(\log^{(t)}(c+s))^3}}  \\
-        & = (\log(c+s))^{c+s}\cdot (\log^{(t-2)}(c+s))\cdot (1+o_c(1)) XXXXXXXXXXXXXXXXXXXXXX \enspace .
+        (\log^{(t-1)} k)^k/n_v & < \left(\log^{(t-1)}\left(c+s+\tfrac{\log(c+s)}{\log^{(t)}(c+s)}\right)\right)^{c+s+\tfrac{\log(c+s)}{\log^{(t)}(c+s)}} \\
+        & = \left(\log^{(t-1)}(c+s)\right)^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t)}(c+s)}\right)
+            \left(\tfrac{\log^{t}(c+s+\log(c+s)/\log^{(t)}(c+s))}{\log^{(t)}(c+s)}\right)} \\
+        & < (\log^{(t-1)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t)}(c+s)}\right)
+            \left(1 + \tfrac{(\log e)^t(\log(c+s))/\log^{(t)}(c+s)}{\prod_{j=0}^{t}\log^{(j)}(c+s)}\right)} \\
+        & = (\log^{(t-1)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t)}(c+s)}\right)
+            \left(1 + \tfrac{(\log e)^t}{(c+s)\cdot\left(\prod_{j=2}^{t-1}\log^{(j)}(c+s)\right)(\log^{(t)}(c+s))^2}\right)} \\
+        & \le (\log^{(t-1)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t)}(c+s)}\right)
+            \left(1 + \tfrac{(\log e)^t}{(c+s)\cdot(\log^{(t)}(c+s))^2}\right)} \\
+        & = (\log^{(t-1)}(c+s))^{c+s+\tfrac{\log(c+s)}{\log^{(t)}(c+s)} +
+            \tfrac{(\log e)^t}{(\log^{(t)}(c+s))^2} + \tfrac{(\log e)^t\log^{(t-1)}(c+s)}{(c+s)(\log^{(t)}(c+s))^3}}  \\
+        & = (\log^{(t-1)}(c+s))^{c+s+\tfrac{\log(c+s)}{\log^{(t)}(c+s)} + o_c\left(\frac{1}{\log^{(t)}(c+s)}\right)}  \\
+        & = (\log(c+s))^{c+s}\cdot (c+s)\cdot (1+o_c(1)) \enspace .
         \numberthis \label{sizer}
     \end{align*}
 
-    Let $T'$ be the subtree of $T$ induced by the set of heavy nodes.  Since no leaf of $T'$ is a $T$-descendant of any other leaf, it follows from \cref{total-weight-i,sizer} that the number of leaves of $T'$ is at most
-    $(\log^{(t-2)}(c+s)\cdot (\log e)^t\cdot (1+o_c(1))\in O(\log^{(t-2)}(c+s))$.
+    Let $T'$ be the subtree of $T$ induced by the set of heavy nodes.  Since no leaf of $T'$ is a $T$-descendant of any other leaf, it follows from \cref{total-weight-i,sizer} that the number of leaves of $T'$ is $O(c+s)=O(c)$.
 
-    Let $H':=H[\bigcup_{x\in V(T')} B_x]$ and notice that $\mathcal{T}':=(B_x:x\in V(T'))$ is a width-$(t-1)$ tree decomposition of $H'$. The tree $T'$ has $O(\log^{(t-2)} c)$ leaves and therefore has at most $O(\log^{(t-2)} c)$ branching nodes. By \cref{skeleton-size}, the $\mathcal{T}'$-skeleton $\hat{H'}$ is a $t$-tree and $|\hat{H}'|\in O(\log^{(t-2)} c)$.  By applying \weirdref{t-trees}{a} for $t-1$, we conclude that
-    \[  \uqs(\hat{H}')\in O\left(\frac{\log|\hat{H}'|}{\log^{(t-1)}|\hat{H}'|}\right) \subseteq O\left(\frac{\log^{(t-1)} c}{\log^{(t)} c}\right) = O(s) \enspace .
+    Let $H':=H[\bigcup_{x\in V(T')} B_x]$ and notice that $\mathcal{T}':=(B_x:x\in V(T'))$ is a width-$(t-1)$ tree decomposition of $H'$. The tree $T'$ has $O(c)$ leaves and therefore has at most $O(c)$ branching nodes. By \cref{skeleton-size}, the $\mathcal{T}'$-skeleton $\hat{H'}$ is a $t$-tree and $|\hat{H}'|\in O(c)$.  By applying \weirdref{t-trees}{a} for $t-1$, we conclude that
+    \[
+       \uqs(\hat{H}')\in
+       O\left(\frac{\log|\hat{H}'|}{\log^{(t)}|\hat{H}'|}\right)
+       \subseteq O\left(\frac{\log c}{\log^{(t)} c}\right) = O(s) \enspace .
     \]
     Therefore, $H'$ has a us-colouring $\varphi:V(H')\to \{a(k-c-1)-r,\ldots,a(k-c-1)-1\}$ for some $r\in O(s)$. Modifying $\varphi$ so that it colours $\varphi(v_i):=a(k-c-1)+i-1$ for each $i\in\{1,\ldots,t\}$ preserves the fact that $\varphi$ is a us-colouring.
 
@@ -487,37 +488,51 @@ The next lemma tells us what to do when we don't necessarily have the slack $s$ 
 
     Now we may assume that $|V(T)|\ge 2$.  For each node $v$ of $T$, define $n_v$ as in the proof of \cref{t-tree-slack}.   We say that a node $v$ of $T$ is \emph{heavy} if
     \[
-        n_v> \frac{\left(\log^{(t-1)} k\right)^k}{\log^{(t-1)}\left(c+\tfrac{\log^{(t-1)} c}{\log^{(t)} c}\right)^{c+\tfrac{\log^{(t-1)} c}{\log^{(t)} c}}} \enspace ,
+        n_v> \frac{\left(\log^{(t-1)} k\right)^k}{\log^{(t-1)}\left(c+\tfrac{\log c}{\log^{(t)} c}\right)^{c+\tfrac{\log c}{\log^{(t)} c}}} \enspace ,
     \]
     otherwise $v$ is \emph{light}.  For a heavy node $v$,
     \begin{align*}
         \left(\log^{(t-1)} k\right)^k/n_v
-        & < \left(\log^{(t-1)}\left(c+\tfrac{\log^{(t-1)} c}{\log^{(t)} c}\right)\right)^{c+\tfrac{\log^{(t-1)} c}{\log^{(t)} c}} \\
-        & = \left(\log^{(t-1)}c\right)^{\left(c+\tfrac{\log^{(t-1)} c}{\log^{(t)} c}\right)
-        \left(\tfrac{\log^{(t)}\left(c+\log^{(t-1)} c/\log^{(t)} c\right)}{\log^{(t)} c}\right)} \\
-        & = \left(\log^{(t-1)}c\right)^{\left(c+\tfrac{\log^{(t-1)} c}{\log^{(t)} c}\right)
+        & < \left(\log^{(t-1)}\left(c+\tfrac{\log c}{\log^{(t)} c}\right)\right)^{c+\tfrac{\log c}{\log^{(t)} c}} \\
+        & = \left(\log^{(t-1)}c\right)^{\left(c+\tfrac{\log c}{\log^{(t)} c}\right)
+        \left(\tfrac{\log^{(t)}\left(c+\log c/\log^{(t)} c\right)}{\log^{(t)} c}\right)} &\text{(change of base)} \\
+        & = \left(\log^{(t-1)}c\right)^{\left(c+\tfrac{\log c}{\log^{(t)} c}\right)
         \left(
-        1 + \tfrac{(\log e)^t\log^{(t-1)} c/\log^{(t)} c}{\prod_{j=0}^{t}\log^{(j)}c}
-        \right)} \\
+        1 + \tfrac{(\log e)^t\log c/\log^{(t)} c}{\prod_{j=0}^{t}\log^{(j)}c}
+        \right)} & \text{(by \cref{logi-ratio})} \\
+        & = \left(\log^{(t-1)}c\right)^{\left(c+\tfrac{\log c}{\log^{(t)} c}\right)
+        \left(
+        1 + \tfrac{(\log e)^t}{c\cdot\left(\prod_{j=2}^{t-1}\log^{(j)}c\right)\cdot(\log^{(t)} c)^2}
+        \right)} & \text{(for $t\ge 2$)} \\
+        & \le \left(\log^{(t-1)}c\right)^{\left(c+\tfrac{\log c}{\log^{(t)} c}\right)
+        \left(
+        1 + \tfrac{(\log e)^t}{c\cdot(\log^{(t)} c)^2}
+        \right)} & \text{($c\ge \tau(t)$, so $\prod_{j=2}^{t-1}\log^{(j)}c\ge 1$)} \\
+        & = \left(\log^{(t-1)}c\right)^{\left(c+\tfrac{\log c}{\log^{(t)} c}+
+        \tfrac{(\log e)^t}{(\log^{(t)} c)^2} + \tfrac{(\log e)^t\log c}{c\cdot(\log^{(t)} c)^3}
+        \right)}  \\
+        & = \left(\log^{(t-1)}c\right)^{\left(c+\tfrac{\log c}{\log^{(t)} c}
+          + o_c\left(\tfrac{1}{\log^{(t)} c}\right)
+        \right)}  \\
+        & = \left(\log^{(t-1)}c\right)^c \cdot c\cdot (1+o_c(1))  \numberthis \label{heavy-size}
     \end{align*}
-    By fighting a little with this equation we can show that, for any heavy node $v$,
-    \begin{equation}
-        \Gamma(v) > \left(\frac{\alpha}{c}\right)\cdot
-            \frac{(\log k)^k}{(\log c)^c} \enspace . \label{heavy-size}
-    \end{equation}
-    for some constant $\alpha > 0$.
 
-    Let $T'$ be the subtree of $T$ induced by its heavy nodes.  We say that a node of $T'$ is \emph{special} if it is a leaf or it is a branching node and we let $S$ denote the set of branching nodes.  Together, \cref{heavy-size} and \cref{total-weight-ii} imply that the number of leaves of $T'$ is at most $c/\alpha$.  In any tree with $\ell$ leaves, the number of branching nodes is at most $\ell-1$.  Therefore the number of special nodes of $T'$ is at most $2c/\alpha$.
+    Let $T'$ be the subtree of $T$ induced by its heavy nodes.  We say that a node of $T'$ is \emph{special} if it is a leaf or it is a branching node and we let $S$ denote the set of branching nodes.  Together, \cref{heavy-size} and \cref{total-weight-ii} imply that the number of leaves of $T'$ is at most $(1+o(1))c$.  In any tree with $\ell$ leaves, the number of branching nodes is at most $\ell-1$.  Therefore the number of special nodes of $T'$ is $|S|\le (2+o(1))c$.
 
-    Therefore, for $a\ge 2/\alpha$, one can obtain a humped us-colouring of $T'$ as follows (this is similar to the proof of \cref{skeleton-colour}):  First assign each special node $v\in S\setminus\{r\}$ $v$ a distinct colour $\varphi(v)\in\{a(k-c-1)+1,\ldots,ak\}$.  Next, using \cref{pathwidth}, us-colour the graph $T'-S$ (a collection of paths) using colours $\{a(k-c-1)-2,a(k-c-1)-1,a(k-c-1)\}$.
+    Let $H'=H[\bigcup_{x\in V(T')} B_x]$ and observe that $(B_x:x\in V(T'))$ is a width-$(t-1)$ tree decomposition of $H'$.  We can obtain a us-colouring of $H'$ as follows: (this is similar to the proof of \cref{skeleton-colour}):  Let $B:=\bigcup_{x\in S} B_x$ and assign each vertex  $v\in B$ a distinct colour $\varphi(v)\in\{a(k-c-1)+1,\ldots,ak\}$.  This clearly produces a us-colouring of the graph $H'[B]$.
 
-    This gives a colouring $\varphi$ of $T'$ that certainly satisfies (P1).  To see that it also satisfies (P2), observe that, since $|V(T)|\ge 2$, \cref{total-weight-ii} implies that $\gamma(v) > c$ for all $v\in V(T)$. Since $\gamma$ is integer valued, this means that $\gamma(v)\ge c+1$.  Therefore, for each $v\in V(T')$, $\varphi(v)\ge a(k-c-1)-2 \ge a(k-c-2)+1\ge a(k-\gamma(v)-1)+1$ so that $\varphi$ satisfies (P2).
+    Next, consider the as-yet-uncoloured set of nodes $U:=V(H')\setminus B$. The sequence $(B_x:x\in V(T'-S))$ is a width-$(t-1)$ $(T'-S)$-decomposition of $H'[U]=H[U]$. The graph $T'-S$ is a collection of disjoint paths, therefore $\pw(H')\le t-1$. Therefore, by \cref{pathwidth} $H'[U]$ has a us-colouring $\varphi:U\to \{a(k-c-2)+\lceil a/2\rceil,\ldots,\lfloor a(k-c)\rfloor\}$, provided that $a/2\ge 3t-2$.  It is straightforward to check that the colouring $\varphi$ produced this way is a us-colouring of the entire graph $H'$.
 
-    We are now left with the problem of extending the colouring $\varphi$ of $T'$ to a colouring of $T$.  The forest $T-T'$ contains trees $T_1,\ldots,T_m$ with roots $r_1,\ldots,r_m$, respectively.  For each $i\in\{1,\ldots,m\}$, $r_i$ is a light node, so
+    This gives a colouring $\varphi$ of $H'$ that certainly satisfies (P1).  To see that it also satisfies (P2), observe that, since $|V(T)|\ge 2$, the sum in \cref{total-weight-ii} has at least two terms, which implies that $\gamma(v) > c$ for all $v\in V(H)$. Since $\gamma$ is integer valued, this means that $\gamma(v)\ge c+1$.  Therefore, for each $v\in V(T')$, $\varphi(v)\ge a(k-c-2)+a/2 \ge a(k-c-2)+1\ge a(k-\gamma(v)-1)+1$ so that $\varphi$ satisfies (P2).
+
+    We are now left with the problem of extending the colouring $\varphi$ of $H'$ to a colouring of $H$.  The forest $T-T'$ contains trees $T_1,\ldots,T_m$ with roots $r_1,\ldots,r_m$, respectively.  For each $i\in\{1,\ldots,m\}$, $r_i$ is a light node, so
     \[
-        \Gamma(r_i) \le \frac{(\log k)^k}{\left(\log c + \frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}}
+        n_{r_i} \le \frac{(\log k)^k}{\left(\log\left(c + \frac{\log c}{\log^{(t)} c}\right)\right)^{c+\frac{\log c}{\log\log c}}}
+        = \frac{(\log k)^k}{\left(\log\left(c + s\right)\right)^{c+s}}
     \]
-    Now we can apply \cref{tree-slack} with the value $\phi = a(k-c-1)-3$ to obtain a us-colouring $\varphi:V(T_i)\to\{1,\ldots,a(k-c-1)\}$ of $T_i$.  Again, since every node of $T'$ receives a colour larger than $\phi$, it is straightforward to verify that this is indeed a humped us-colouring of $T$.
+    with $s$ defined as in the statement of \cref{t-tree-slack}.
+    Now we can apply \cref{t-tree-slack} to the graph $H_{i}:=H[\bigcup_{x\in V(T_{i})} B_x]$.  This produces a colouring $\varphi:V(H_i)\to\{1,\ldots,a(k-c-s)\}\cup \bigcup_{v\in B_{r_i}}\phi(v)$ in which the colours of vertices in $B_{r_i}$ are unchanged and are all at $a(k-c-s)+a/2$ and the colour of each vertex $v\in V(H_i)\setminus B_{r_i}$ is $\varphi(v)<a(k-c-s)+a/2$.  Therefore, (P2) is satisified.  The colours assigned to vertices in $H_i-B_{r_i}$ by \cref{t-tree-slack} satisfy (P1).
+    The proof that this produces a valid us-colouring of $H$ is exactly as in the proof of \cref{t-tree-slack}.
 \end{proof}
 
 
@@ -525,112 +540,122 @@ For any graph $H$, and any two vertices $v,w\in V(H)$, let $d_H(v,w)$ denote the
 
 When a BFS layering $L_0,\ldots,L_m$ of $H$ is given, we use the notations $H_i=H[L_i]$, and $H_{\ge i}=H[\bigcup_{j=i}^m L_i]$.  When $H$ is a $t$-tree and $L_0=\{v_1,\ldots,v_t\}$ is a $t$-clique in $H$, each component of $H_i$ is a $(t-1)$-tree.  It is helpful to think of $H_{\ge i}$ as a union of overlapping $t$-trees, each of which is rooted at a $t$-clique in $H_i$. In this way, $H_i$ is a $(t-1)$-tree with $t$-trees hanging off its cliques.
 
-For each $t$-clique $C$ in $H_i$, we use $H_C$ to denote the component of $H[C\cup\bigcup_{j=i+1}^m L_j]$ that contains $C$.  If $v_1,\ldots,v_n$ is a construction order for $H$ then for any component $H'$ of $L_i$, the subsequence $v_{i_1},\ldots,v_{i_|H'|}$ of $v_1,\ldots,v_n$ containing only those vertices in $V(H')$ is a construction order for $H'$.  In this way, each vertex $v_{i_j}$, has a naturally defined parent clique in $H'$.
+For each $t$-clique $C$ in $H_i$, we use $H_C$ to denote the connected component of $H[C\cup\bigcup_{j=i+1}^m L_j]$ that contains $C$.  If $v_1,\ldots,v_n$ is a construction order for $H$ then for any component $H'$ of $L_i$, the subsequence $v_{i_1},\ldots,v_{i_{|H'|}}$ of $v_1,\ldots,v_n$ containing only those vertices in $V(H')$ is a construction order for $H'$.  In this way, each vertex $v_{i_j}$, has a naturally defined parent clique in $H'$ which is a subset of its parent clique in $H$.
 
 % We say that a path $xyz$ in $H$ is \emph{BFS-humped} if $x,z\in L_i$ and $y\in L_{i-1}$ for some $i\in\{1,\ldots,m\}$.  A colouring $\varphi:V(H)\to\{1,\ldots,k\}$ is a \emph{BFS-humped us-colouring} if $\max\{\varphi(x),\varphi(y),\varphi(z)\}$ is unique for each BFS-humped path $xyz$ in $H$.
 
 
 
 \begin{thm}\label{two-tree-technical}
-    There exists constant $q,a>0$ such that, for every integer $k\ge 2$, every $n\le (\log k)^{k-q}$, and every $n$-vertex 2-tree $H$, $\uqs(H)\le ak$.
+    For every fixed positive integer $t$, there exists constants $q,a>0$ such that, for every integer $k\ge \tau(t)$, every $n\le (\log^{(t-1)} k)^{k-q}$, and every $n$-vertex t-tree $H$, $\uqs(H)\le ak$.
 \end{thm}
 
 \begin{proof}
-    Let $v_1,\ldots,v_n$ be a construction order for $H$ and
-    let $L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0=\{v_1,v_2\}$.  For each $v\in V(H)$, let $\ell(v)$ be such that $v\in L_{\ell(v)}$.  For each $i\in\{1,\ldots,m\}$ and each edge $vw\in E(H_i)$, recall that $H_{vw}$ is the component of $H[\{v,w\}\cup\bigcup_{j=i+1}^m L_i]$ that contains $vw$.
+    Assume $n\ge t+1$, otherwise the result obtained trivially for any $a\ge t+1$ by colouring each vertex of $H$ with a distinct colour.
 
-    For each vertex $v\in L_i$, let
+    Let $v_1,\ldots,v_n$ be a construction order for $H$ and let $L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0=\{v_1,\ldots,v_t\}$.  For each $v\in V(H)$, let $\ell(v)$ be such that $v\in L_{\ell(v)}$.
+    % For each $i\in\{1,\ldots,m\}$ and each edge $vw\in E(H_i)$, recall that $H_{vw}$ is the component of $H[\{v,w\}\cup\bigcup_{j=i+1}^m L_i]$ that contains $vw$.
+
+    For each vertex $v\in L_i$, let $N_i(v)$ denote the set of $t$-cliques in $H_i$ that contain $v$ and let
     \begin{equation}
-        n_v=\sum_{w\in N_{H[L_i]}(v)}|H_{vw}| \enspace . \label{nv}
+        n_v=\sum_{C\in N_i(v)}|H_{C}| \enspace . \label{nv}
     \end{equation}
-    In words, $n_v$ counts the sizes of all the 2-trees hanging off all the edges of $H_i$ that are incident to $v$.
+    In words, $n_v$ counts the sizes of all the $t$-trees hanging off all the $t$-cliques of $H_i$ that contain $v$.
 
     \begin{clm}\label{size-claim}
-        For each $i\in\{1,\ldots,m\}$ and each component $H'$ of $H_{\ge i}$, $\sum_{v\in H'[L_i]} n_v \le 2|H'|$.
+        For each $i\in\{1,\ldots,m\}$ and each component $H'$ of $H_{\ge i}$, $|H'|\le \sum_{v\in H'[L_i]} n_v \le t^2|H'|$.
     \end{clm}
 
     \begin{proof}[Proof of \cref{size-claim}]
-        Very roughly: the sum counts each vertex of $H'[L_{i+1}\cup\cdots\cup L_{i+m}]$ exactly twice and double counts the edges of $H'[L_i]$.
-        More carefully,
-        \begin{align*} |H'|
-            & = |H'[L_{i}]| + |H'[L_{i+1}\cup\cdots L_{m}] \\
-            & = |H'[L_i]|+\sum_{vw\in E(H'[L_i])} (|H_{vw}|-2) \\
-            & = |H'[L_i]|-2|E(H'[L_i])| + \sum_{vw\in E(H'[L_i])} |H_{vw}| \\
-            & = |H'[L_i]|-2(|H'[L_i]|-1) + \sum_{vw\in E(H'[L_i])} |H_{vw}| \\
-            & = -|H'[L_i]|+2 + \sum_{vw\in E(H'[L_i])} |H_{vw}| \\
-            & \ge \sum_{vw\in E(H'[L_i])} |H_{vw}|
-        \end{align*}
-        On the other hand,
-        \begin{align*}
-            \sum_{v\in H'[L_i]} n_v
-            & = \sum_{v\in H'[L_i]}\sum_{w\in N_H(v)\cap L_i}|H_{vw}| \\
-            & = 2 \sum_{vw\in E(H'[L_i])} |H_{vw}| \enspace . \qedhere
-        \end{align*}
+        The lower bound on the sum is trivial since each vertex of $H'$ is counted at least once.
+
+        Each vertex $w\in V(H')\cap(L_{i+1}\cup\cdots\cup L_{i+m})$ appears in $H_C$ for exactly one $t$-clique $C$ in $H_i$, so $w$ is counted exactly $t$ times---as part of $n_v$ for each $v\in C$. Therefore the contribution of vertices in $H'[L_{i+1}\cup\cdots\cup L_{i+m}]$ to the sum is exactly $t|H'[L_{i+1}\cup\cdots\cup L_{i+m}]|\le t^2|H'[L_{i+1}\cup\cdots\cup L_{i+m}]|$
+
+        Each of the $t$ vertices of each $t$-clique $C$ of $H'[L_i]$ are counted $t$ times---once as part of $n_v$ for each vertex in $v\in C$. Therefore the contribution of vertices in $L_i$ to the sum is $t^2$ times the number of $t$-cliques in $H'[L_i]$.  But $H_i$ is a $(t-1)$-tree with $|H'[L_i]|$ vertices.  It is well known, and not hard to show, that the number of $t$-cliques in an $n$-vertex $(t-1)$-tree is $\max\{0,n-t+1\}\le n$. Therefore the contribution of vertices in $H'[L_i]$ to the sum is at most $t^2|H'[L_i]|$.
+
+        Therefore
+        \[
+            \sum_{v\in H'[L_i]} n_v \le t^2|H'[L_i]| + t^2|H'[L_{i+1}\cup\cdots\cup L_{i+m}]| = t^2|H'| \enspace . \qedhere
+        \]
     \end{proof}
 
 Our proof is based on the following claim:
 
     \begin{clm}\label{main-claim}
         Let $H'$ be the union of one or more connected component of $H_{\ge i}$. There exists a constant $q$ such that,  if
-        \[
-            \sum_{v\in V(H')\cap L_i} n_v\le \frac{(\log k)^{k-q}}{(\log c)^c} \enspace ,
-        \]
-        then there exists $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,1\}$ such that
+        \begin{equation}
+            \sum_{v\in V(H'[L_i])} n_v\le \frac{(\log^{(t-1)} k)^{k-q}}{(\log^{(t-1)} c)^c} \enspace , \label{main-size}
+        \end{equation}
+        then there exists $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,\ldots,t-1\}$ such that
         \begin{compactenum}[(P1)]
-            \item The function $\theta:V(H')\to\{1,\ldots,4ak\}$ defined by $\theta(v)=4\varphi(v) - 2\psi(v) -(\ell(v)\bmod 2)$ is a humped us-colouring of $H'$;
+            \item The function $\theta:V(H')\to\{1,\ldots,2tak\}$ defined by $\theta(v)=2t\varphi(v) - 2\psi(v) -(\ell(v)\bmod 2)$ is a humped us-colouring of $H'$;
             \item for each $v\in V(H'[L_i])$, $\psi(v)=0$;
-            \item for each $\iota\in\{a(k-c-1)+1,\ldots,ak\}$ there is at most one vertex $v$ in $V(H'[L-i])$ with $\varphi(v)=\iota$.
+            \item for each $\iota\in\{a(k-c-1)+1,\ldots,ak\}$ there is at most one vertex $v$ in $V(H'[L_i])$ with $\varphi(v)=\iota$.
         \end{compactenum}
     \end{clm}
 
     \begin{proof}[Proof of \cref{main-claim}]
-        In all cases, (P2) requires setting $\psi(v)=0$ for all $v\in V(H'[L_i])$, so we will not mention this again.
+        In all cases, (P2) requires setting $\psi(v)=0$ for all $v\in V(H'[L_i])$, so we do this now and will not mention it again.
 
-        The proof is by induction on $m-i$. In the base case $m-i=0$ and $H'$ is a forest.  In this case, $n_v=1$ for each $v\in V(H')$.  Set $\gamma(v):=k$ and observe that $(\log k)^k/(\log(\gamma(v))^{\gamma(v)}=1=n_v$ for each $v\in V(H')$. Therefore,
-        \[
-            \sum_{v\in V(H')\cap L_i} \frac{(\log k)^k}{(\log \gamma(v))^{\gamma(v)}} = \sum_{v\in V(H')\cap L_i} n_v
-            \le \frac{(\log k)^{k-1}}{(\log c)^c}
-            \le \frac{(\log k)^{k}}{(\log c)^c} \enspace .
-        \]
-        Setting $\phi=k$ and then applying \cref{tree-ii} then gives a colouring $\varphi: V(H')\to\{1,\ldots,ak\}$ that satisfies (P1)--(P3).
+        The proof is by induction on $m-i$. In the base case $m-i=0$ and $H'$ is a $(t-1)$-forest.
+        % By \cref{size-claim}, $|H'|\le \frac{(\log^{(t-1)} k)^{k-q}}{(\log^{(t-1)} c)^c}$.
+        For each $v\in V(H')$, set  $\gamma(v):=k$.  Then
+        \begin{align*}
+            \sum_{v\in V(H')} \frac{(\log^{(t-1)} k)^k}{(\log^{(t-1)} \gamma(v))^{\gamma(v)}}
+            & = \sum_{v\in V(H')} 1 \\
+            & = |H'| \\
+            & \le \sum_{v\in V(H'[L_i])} n_v  & \text{(by \cref{size-claim})}\\
+            & \le \frac{(\log^{(t-1)} k)^{k-q}}{(\log^{(t-1)} c)^c} & \text{(by \cref{main-size})}\\
+            & \le \frac{(\log k)^{k}}{(\log c)^c} \enspace .
+        \end{align*}
+        Applying \cref{t-tree-no-slack} then gives a colouring $\varphi: V(H')\to\{1,\ldots,ak\}$ that satisfies (P1)--(P3).
 
-        In the general case, we set $\gamma(v):=\max\{c\in\N:(\log k)^k/(\log c)^c \ge n_v\}$ for each $v\in V(H'[L_i])$.  This implies that
+        In the general case, we set $\gamma(v):=\max\{c\in\N:(\log^{(t-1)} k)^k/(\log^{(t-1)} c)^c \ge n_v\}$ for each $v\in V(H'[L_i])$.  This implies that
         \[
-            \frac{(\log k)^k}{(\log(\gamma(v)+1))^{\gamma(v)+1}} < n_v
+            \frac{(\log^{(t-1)} k)^k}{(\log^{(t-1)}(\gamma(v)+1))^{\gamma(v)+1}} < n_v
             % \le \frac{(\log k)^k}{(\log \gamma(v))^{\gamma(v)}}
         \]
         Since $\gamma(v)+1\le k$,
         \[
-           n_v > \frac{(\log k)^k}{(\log(\gamma(v)+1))^{\gamma(v)+1}} \ge
-           \frac{(\log k)^{k-q}}{(\log\gamma(v))^{\gamma(v)}}
+           n_v > \frac{(\log k)^k}{(\log(\gamma(v)+1))^{\gamma(v)+1}}
+           = \frac{(\log k)^{k-1}}{(\log(\gamma(v)+1))^{\gamma(v)}}
+            \cdot
+            \frac{\log k}{\log(\gamma(v)+1)}
+           \ge
+           \frac{(\log k)^{k-1}}{(\log\gamma(v))^{\gamma(v)}}
        \]
-       for some constant $q>0$. Therefore,
+       Therefore,
        \[
-           \sum_{v\in H'[L_i]} \frac{(\log k)^k}{(\log \gamma(v))^{\gamma(v)}} < \sum_{v\in H'[L_i]} n_v(\log k)^{q} \le \frac{(\log k)^k}{(\log c)^c}
+           \sum_{v\in H'[L_i]} \frac{(\log k)^k}{(\log \gamma(v))^{\gamma(v)}} < \sum_{v\in H'[L_i]} n_v(\log k)
+           \le \frac{(\log k)^{k-q+1}}{(\log c)^c}
+           \le \frac{(\log k)^k}{(\log c)^c}
        \]
-       as required by \cref{tree-ii}.  Therefore, by \cref{tree-ii}, we can find a us-colouring $\varphi$ of the tree $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. In addition $\varphi(v)\ge a(k-c-\gamma(v)-1)+1$ for each $v\in V(H'[L_i])$.  It remains to show that we can extend this to a colouring of $V(H')\setminus L_i$.
+       for $q\ge 1$.  This satisfies the requirements for \cref{t-tree-no-slack}, so we can find a us-colouring $\varphi$ of the $(t-1)$-forest $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. In addition $\varphi(v)\ge a(k-c-\gamma(v)-1)+1$ for each $v\in V(H'[L_i])$.  It remains to show that we can extend $\varphi$ to a complete colouring of $H'$.
 
-       Refer to \cref{subproblems}.
-       For the root $r$ of the tree $H'[L_i]$, we define $D_r=\{x\in L_{i+1}:rx\in E(H)\}$.  For each node $w$ with parent $v$ in $H'[L_i]$, we define $D_w=\{x\in L_{i+1}:wx\in E(H)\}\setminus D_{v}$.
-       For each $w\in V(H'[L_i]$, consider the graph $H_w:= H'[D_w\cup \bigcup_{j=i+2}^m L_j]$ that contains $w$.
-       Now, $H_w[L_{i+1}]$ is a rooted forest with roots $w_1,\ldots,w_d$.  We apply the inductive hypothesis to $H_w$ and we obtain $\varphi:V(H_w)\to\{1,\ldots,ak\}$ and $\psi:V(H_w)\to\{0,1\}$ that satisfy the conditions of the claim.  We do this to colour $H_w$ for each $w\in V(H'[L_i])$.
+       Recall that $v_1,\ldots,v_n$ is a construction order for $H$. For each vertex $w$ in $H'[L_{i+1}]$ we define the $i$-parent $p(w)$ of $w$ to be the vertex $v_j\in H'[L_i]$ such that $wv_j\in E(H')$ and $j$ is minimized.  That is, $v_j$ is the first vertex in $w$'s parent clique that appears in the construction order.  For each vertex $v$ in $H'[L_i]$ we define $D_v:=\{w\in H'[L_{i+1}]: p(w)=v\}$.
 
-      \begin{figure}
-          \begin{center}
-               \includegraphics{figs/subproblems}
-          \end{center}
-          \caption{The definition of the set $D_w$, that determines $H_w$.}
-          \label{subproblems}
-      \end{figure}
+       For each $v\in V(H'[L_i]$, define the graph $H_v$ to be the component of $H'[D_v\cup \bigcup_{j=i+2}^m L_j]$ that contains $v$.
+       Now, $H_v[L_{i+1}]$ is a rooted $(t-1)$-forest with roots $r_1,\ldots,r_d$.  We apply the inductive hypothesis to $H_v$ and we obtain $\varphi:V(H_v)\to\{1,\ldots,ak\}$ and $\psi:V(H_w)\to\{0,1\}$ that satisfy the conditions of the claim.  We do this to colour $H_v$ for each $v\in V(H'[L_i])$.
 
-       At this point colourings $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,1\}$ are completely defined.  We must, however, make one small modification to $\psi$.  Since each vertex in $H'[L_{i+1}]$ is coloured by induction on some graph $H_w$, $\psi(v)=0$ for every vertex $v$ in $H'[L_{i+1}]$.  Now, the graph $H'[L_i]$ is a forest and therefore has a proper $2$-colouring $\zeta:V(H'[L_i])\to\{0,1\}$.  For each vertex $v$ in $H'[L_{i+1}]$ we consider the unique vertex $w\in V(H'[L_i])$ such that $v\in D_w$ (so that $v\in V(H_w)$) and we set $\psi(v):=\zeta(w)$.  This completes the description of the colourings $\varphi$ and $\psi$.
+       \begin{figure}
+           \begin{center}
+                \includegraphics{figs/subproblems}
+           \end{center}
+           \caption{The definition of the set $D_w$, that determines $H_w$.}
+           \label{subproblems}
+       \end{figure}
+
+       At this point colourings $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,1\}$ are completely defined.  We must, however, make one small modification to $\psi$.  Since each vertex in $H'[L_{i+1}]$ is coloured by induction on some graph $H_v$, $\psi(w)=0$ for every vertex $w$ in $H'[L_{i+1}]$.  Now, the graph $H'[L_i]$ is a $(t-1)$-forest and therefore has a proper $t$-colouring $\zeta:V(H'[L_i])\to\{0,\ldots,t-1\}$.  For each vertex $w$ in $H'[L_{i+1}]$ we set $\psi(w):=\zeta(p(w))$.  This completes the description of the colourings $\varphi$ and $\psi$.
 
        We have already ensured that $\varphi$ and $\psi$ satisfy (P2) and (P3). All that remains is to ensure that they satisfy (P1).  To do this, consider some humped path $xyz$ in $H'$.  There are a few cases to consider:
        \begin{compactenum}
-          \item If $xyz$ is completely contained in the forest $H'[L_i]$ then this path is properly coloured because \cref{tree-ii} produces a humped us-colouring $\varphi$ of $H'[L_i]$.
-          \item If $xyz$ is completely contained in $H_w$ for some $w\in H'[L_i]$ then the inductive hypothesis already ensures that $\theta$ was already a humped us-colouring of $H_w$ and the subsequent modifications to $\psi(v)$ for $v\in H_w[L_{i+1}]$ do not change this. In fact, these modifications do not change the relative order of $\theta(x)$ and $\theta(z)$ unless $\theta(x)=\theta(z)$.
+          \item If $xyz$ is completely contained in the forest $H'[L_i]$ then this path is properly coloured because \cref{t-tree-no-slack} produces a humped us-colouring $\varphi$ of $H'[L_i]$.
+          \item If $xyz$ is completely contained in $H_v$ for some $v\in H'[L_i]$ then the inductive hypothesis already ensures that $\theta$ was already a humped us-colouring of $H_w$ and the subsequent modifications to $\psi(v)$ for $v\in H_w[L_{i+1}]$ do not change this. In fact, these modifications do not change the relative order of $\theta(x)$ and $\theta(y)$ or the relative order of $\theta(y)$ and $\theta(z)$.
           \item If $x,y\in L_i$ and $z\in L_{i+1}$ then $\ell(x)\bmod 2\neq\ell(z)\bmod 2$ so $\theta(x)\neq\theta(z)$.
-          \item The only case that remains is when $x\in H_{v}$, $y\in H'[L_i]$ and $z\in H_w$ for some $v\neq w$. Refer to \cref{proper}.  In this case, the vertices $x$ and $z$ did not appear in the same application of induction.  Recall that $x$ and $z$ each have at most two neighbours in $L_{i-1}$, which implies that $y\in\{v,w\}$ and at least one of $x$ or $z$ is adjacent to both $v$ and $w$.  Therefore $vw$ is an edge of the tree $H'[L_i]$.  But this implies that $\psi(x)=\zeta(v)\neq\zeta(z)=\psi(z)$.
+          \item The only case that remains is when $x\in H_{v}$, $y\in H'[L_i]$ and $z\in H_w$ for some $v\neq w$. Refer to \cref{proper}.  In this case, the vertices $x$ and $z$ did not appear in the same application of induction so it is possible that $\varphi(x)=\varphi(z)=\phi$ for some value $\phi>\varphi(y)$.
+
+          Since $xy\in E(H)$, $yz\in E(H)$ and $xz\not\in E(H)$, the tree node
+          $x_T(y)$ is a common ancestor of $x_T(x)$ and $x_T(z)$.  This means that each of $x_T(p(x))$ and $x_T(p(z))$ are $T$-ancestors of $x_T(y)$  is a $T$-ancestor $x_T(y)$. Therefore $p(x)p(z)$ is an edge of $H'[L_i]$, so $\psi(x)=\zeta(p(x))\neq\zeta(p(z))=\psi(z)$.
       \end{compactenum}
       This completes the proof of \cref{main-claim}.
        \begin{figure}
@@ -641,13 +666,13 @@ Our proof is based on the following claim:
            \label{proper}
        \end{figure}
     \end{proof}
-    Finally, we can complete the proof of \cref{two-tree-technical} we apply \cref{main-claim} with $i=0$ and $H'=H$.  By \cref{size-claim} we can do this with any value $k$ such that $2n \le (\log k)^{k-q}$ to show that $\hus(H)\le 4a'k$ for some constant $a'$.  By \cref{humped}, this implies that $\uqs(H)\le 3\hus(H)\le ak$, for $a=12a'$.
+    Finally, we can complete the proof of \cref{two-tree-technical} we apply \cref{main-claim} with $i=0$ and $H'=H$.  By \cref{size-claim} we can do this with any value $k$ such that $t^2n \le (\log k)^{k-q}$ to show that $\hus(H)\le 2ta'k$ for some constant $a'$.  By \cref{humped}, this implies that $\uqs(H)\le 3\hus(H)\le ak$, for $a=6ta'$.
 \end{proof}
 
-\cref{two-tree-technical} gives our main result for 2-trees:
+\cref{two-tree-technical} gives our main result for $t$-trees:
 
 \begin{thm}
-    For every $n\ge \tau(3)$ and every $n$-vertex 2-tree $H$, $\uqs(H)\in O(\log n/\log^{(3)} n)$.
+    For every fixed integer $t>1$, every $n\ge \tau(t+1)$ and every $n$-vertex $t$-tree $H$, $\uqs(H)\in O(\log n/\log^{(t+1)} n)$.
 \end{thm}
 
 
@@ -805,13 +830,22 @@ Since every graph of treewidth at most 2 is planar, we obtain the following coro
 
 \section{Colouring Planar Graphs}
 
-\begin{lem}
+\begin{lem}\label{product-lemma}
     For any two graphs $G_1$ and $G_2$, $\uqs(G_1\boxtimes G_2)\le \uqs(G_1)\cdot\uqs(G_2)$.
 \end{lem}
 
 \begin{proof}
   Use a product colouring $\varphi(x,y)=\uqs(G_2)\cdot \rho(x) + \psi(y)$ where $\rho:V(G_1)\to\{0,\ldots,\uqs(G_1)-1\}$ and $\psi:V(G_2)\to\{0,\ldots,\uqs(G_2)-1\}$ are us-colourings of $G_1$ and $G_2$.  Consider any path $uvw$ in $G_1\boxtimes G_2$.  If the projection of $uvw$ onto $G_1$ is a path, then contribution of $\psi$ to $\varphi$ is irrelevant and the fact that $\rho$ is a us-colouring of $G_1$ implies that $\varphi(u)\neq \varphi(w)$ or that $\varphi(v)>\varphi(w)$.  If the projection of $uvw$ onto $G_1$ has only two vertices, then $uvw$ is a $3$-cycle in $G_1\boxtimes G_2$ and $\varphi(u)$, $\varphi(v)$ and $\varphi(w)$ are all distinct.  If the projection of $uvw$ onto $G_1$ has only one vertex then the projection of $uvw$ onto $G_2$ has three vertices.  In this case, the contribution of $\rho$ to $\varphi$ is irrelevant and  and the fact that $\rho$ is a us-colouring of $G_2$ implies that $\varphi(u)\neq \varphi(w)$ or that $\varphi(v)>\varphi(w)$.
 \end{proof}
+
+\cref{product-lemma,product-structure,t-trees} immediately imply that $\uqs(G)\in O(\log n/\log^{(4)} n)$ for every $n$-vertex planar graph $G$.  We now show how this can be improved to give the optimal upper bound
+$\uqs(G)\in O(\log n/\log^{(4)} n)$.
+
+\subsection{Outerplanar Graphs}
+
+
+\subsection{Planar 3-Trees}
+
 
 \section{Other Ideas}
 
@@ -820,561 +854,7 @@ Approximation algorithm for trees.  Using characterization in terms of $T_{h+1,h
 Extension to $\chi_\ell(G)$ for constant values of $\ell$.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-%
-%
-%
-%
-%
-% A \emph{factorial tree} $F_h$ of height $h$ is a rooted tree in which, for each $d\in\{0,\ldots,h-1\}$, each node of depth $d$ has $d+2$ children and each node of depth $h$ is a leaf.  A \emph{partial factorial tree} $F_{d,h}$ is a maximal subtree of $F_h$ rooted at a node of depth $d$. The following lower bound is due to \citet{karpas.ea:}.  We present a proof here for the sake of completeness.
-%
-%
-% \begin{lem}\label{factorial-tree}
-%     Let $T=F_{d,h}$ be a partial factorial tree rooted at some node $r$.
-%     For any us-colouring $\varphi:V(T_{d,h})\to\{1,\ldots,h\}$,
-%     $\varphi(r)\ge h-d+1$.
-% \end{lem}
-%
-% \begin{proof}
-%     The proof is by induction on $h-d$.    The base case $h-d=0$ is trivial: It simply states that $\varphi(r)\ge 1$.
-%
-%     For the inductive step, we apply the inductive hypothesis to each of the subtrees rooted at the children $r_1,\ldots,r_{d+2}$ of $r$ to determine that $\varphi(r_i)\in \{h-d,\ldots,h\}$ for each $i\in\{1,\ldots,d+2\}$.  Since $|\{h-d,\ldots,h\}|=d+1 < d+2$, $\varphi(r_i)=\varphi(r_j)\ge h-d$ for some distinct pair $i,j\{1,\ldots,d+2\}$.  Therefore $\varphi(r) \ge \varphi(r_i)+1 = h-d+1$.
-% \end{proof}
-%
-% By applying \cref{factorial-tree} with $d=0$, we obtain
-% \begin{cor}\label{factorial-tree-2}
-%     Any us-colouring $\varphi:V(F_h)\to\N$ of $F_h$ uses at least $h+1$ distinct colours, i.e, $|\{\varphi(v):v\in V(F_h)\}|\ge h+1$.
-% \end{cor}
-%
-%
-% \begin{lem}\label{tree-plus-apex}
-%     Let $k,h\in\N$ with $k > h+1$, let $G$ be the graph consisting of $k-h+1$ disjoint copies of $F_h$ plus an apex vertex $r_0$, and let $\varphi:V(G)\to\{1,\ldots,k\}$ be a us-colouring of $G$.  Then $\varphi(r_0) \ge h+2$.
-% \end{lem}
-%
-% \begin{proof}
-%     Let $T_1,\ldots,T_{k-h+1}$ denote the copies of $F_h$ in $G$.
-%     By \cref{factorial-tree-2}, each copy of $T_i$ requires at least $h+1$ distinct colours and therefore $\varphi(v_i)\in\{h+1,\ldots,k\}$ for at least one node $v_i\in V(T_i)$. Since $|\{h+1,\ldots,k\}|=k-h< k-h+1$ there exists distinct $i,j\in\{1,\ldots,k-h+1\}$ such that $\varphi(v_i)=\varphi(v_j)\ge h+1$.  Since $v_ir_0v_j$ is a path in $G$, this implies that $\varphi(r_0)\ge \varphi(r_i)+1 \ge h+2$.
-% \end{proof}
-%
-% Let $k=\ell(h+1)$ be a multiple of $h+1$ and define a graph $G_{k,h}$ as follows: $G_{k,h}$ has a set $L_{\ell}=\{r\}$ consisting of exactly one node.
-% For each $i\in\{0,\ldots,\ell-1\}$, and each vertex $v\in L_{i+1}$, we create $k-(\ell-i)(h+1)$ disjoint copies of $F_h$ that are each dominated by $v$. These newly created vertices are added to the set $L_i$.
-%
-% \begin{lem}
-%     For any us-colouring $\varphi:V(G_{k,h})\to \{1,\ldots,k\}$, any $i\in\{1,\ldots,\ell\}$, and any $v\in L_i$, $\varphi(v)\ge i(h+1)+1$.
-% \end{lem}
-%
-% \begin{proof}
-%     The proof is by induction on $\ell$.  In the base case $\ell=1$, $v\in L_1$ and its neighbours in $L_2$ induce the graph $G$ described in \cref{tree-plus-apex} and
-% \end{proof}
-%
-%
-% }
-% \begin{clm}
-%   For each $i\in\{0,\ldots,\ell\}$, $|S_i|=i!((h+1)(h+1)!)^i$.
-% \end{clm}
-%
-% \begin{proof}
-%   The proof is by induction on $i$.  By definition, $|S_0|=1=0!((h+1)(h+1)!)^0$, so this establishes the base case $i=0$. For each $i\in\{1,\ldots,\ell\}$,
-%   \[
-%      |S_i|=|S_{i-1}|\cdot i(h+1)(h+1)! = i!((h+1)(h+1)!)^i.
-%   \]
-% \end{proof}
-%
-% \begin{clm}
-%     $|V(G_{k,h})| \le \ell^\ell (h+1)^\ell (h+1)^k
-%     (1+o_h(1))\ell!((h+1)(h+1)!)
-%
-% \end{clm}
-%
-%
-%
-%
-%
-%
-%
-%
-% For $h,\ell\in \N$, let $G_{\ell,h}$ be a rooted graph defined as follows: $G_{1,h}$ is the graph $G$ described in \cref{tree-plus-apex} rooted at the apex vertex $r_0$.  For $\ell>1$, $G_{\ell,h}$ is obtained by taking $(h+1)!$ copies of $G_{\ell-1,h}$ with apex vertices $r_1,\ldots,r_{(h+1)!}$, taking one copy of $G_{1,h}$ with non-apex vertices $v_1,\ldots,v_{(h+1)!}$
-%
-%
-%
-% \begin{lem}
-%     Let $G$ be
-% \end{lem}
-
-
-
-% \begin{lem}
-%     Any humped us-colouring of $T_{a,a}$ requires at least $a$ distinct colours.
-% \end{lem}
-%
-% \begin{lem}
-%     Let $G:= (k-a)\times T_{a,a}$ consist of $k-a$ disjoint copies of $T_{a,a}$.
-% \end{lem}
-
-% \section{$2$-Trees}
-%
-% In this section we consider how to solve this problem for 2-trees.
-%
-% Let $T_{b,h}$ denote a complete $b$-ary tree of height $h$ (the rooted tree in which every leaf has depth $h$ and every non-leaf has exactly $b$ children).
-%
-% \begin{lem}\label{big-complete-tree}
-%     Let $k\ge x\ge 1$ be integers.
-%     Let $T$ be an $r$-rooted tree that contains no copy of $T_{k,k}$ and such that $T$ contains no copy of $T_{k,h}$ rooted at $r$.  Then, for each $c\in\{h,\ldots,2k\}$, $T$ has a us-colouring $\varphi:V(T)\to \{1,\ldots,2k\}$ such that $\varphi(r)=c$.
-% \end{lem}
-%
-% \begin{proof}
-%     The proof is by induction on $|V(T)|$.  The base case $|V(T)|=1$ is trivial.
-%
-%     For $|V(T)|>1$, let $r_1,\ldots,r_d$ be the children of $r$ and, for each $i\in\{1,\ldots,d\}$, let $T_i$ be the subtree of $T$ rooted at $r_i$.  The subtrees $T_1,ldots,T_d$ can be partitioned into two sets $T_1,\ldots,T_{d'}$ and $T_{d'+1},\ldots,T_d$ so that $T_i$ contains a copy of $T_{k,h-1}$ that includes $r_i$ if and only if $i\le d'$.  Note that, possibly, $d'=0$.   Certainly, $d' < k$ since, otherwise $T$ contains a copy of $T_{k,h}$ rooted at $r$.
-%
-%     Now, set $\varphi(r):=c$. For each $i\in\{1,\ldots,d'\}$, set $\varphi(r_i)$ to a distinct value in $\{k+1,\ldots,2k\}\setminus \{c\}$. For each $i\in\{d'+1,\ldots,d\}$, set $\varphi(r_i):=h-1 < c$.  By induction on each tree $T_i$, $\varphi$ can be completed to a humped us-colouring of $T_i$.  It is easy to verify that, such a colouring gives a humped us-colouring of $T$.
-% \end{proof}
-%
-% A colouring $\varphi:V(G)\to\N$ is a \emph{$(>r)$-unique} if there is no colour $r'>r$ such that $\varphi(v)=\varphi(w)=r'$ for two distint vertices $v,w\in V(G)$.
-%
-% For a tree $T$ and integer $k\ge \hus(T)$, let $\hus(T,k)$ denote the smallest integer $r$ such that $T$ has a humped $(>r)$-unique humped us-colouring $\varphi:V(G)\to\{1,\ldots,k\}$.
-%
-% \begin{lem}\label{big-repeats}
-%     Let $k$ and $x$ be integers with $k\ge 2x+1$.
-%     If $\hus(T,k)> 2x+1$, then $|V(T)|\ge (k-2x+2)\cdot x^x$.
-% \end{lem}
-%
-% \begin{proof}
-%     Let $T_1:= T$, let $i:=1$ and while $T_i$ contains a copy of $T_{x,x}$,
-%     select any maximum-depth node $r_i\in V(T_i)$ such that the subtree $T_{r_i}$ of $T_i$ rooted at $r_i$ contains a copy of $T_{x,x}$.  Set $T_{i+1}=T_i-T_{r_i}$ and set $i:=i+1$.  Note that choosing each $r_i$ to be of maximal depth ensures that $T_{r_i}$ does not contain a copy of $T_{x+1,x+1}$.
-%
-%     This yields a sequence of trees $T_1,\ldots,T_m$ where, for each $i\in\{1,\ldots,m-1\}$, $|V(T_i)|\ge x^x$ and, by \cref{big-complete-tree} $\hus(T_i) \le 2x+1$.  We claim that $m-1 > k-2x$, so $m\ge k-2x+2$ and therefore $|V(T)|\ge (k-2x+2)\cdot x^x$, thus completing the proof.
-%
-%     To see why this claim is true observe that, otherwise, we could obtain a $(>2x+1)$-unique humped us-colouring $\varphi:V(T)\to\{1,\ldots,k\}$ as follows: For each $i\in\{1,\ldots,m-1\}$ take a humped us-colouring of $T_i$ using $\{1,\ldots,2x+1\}$ so that $\varphi(r_i)=2x+1$.  Take a humped us-colouring of $T_m$ using $\{1,\ldots,2x\}$.   Finally, for each $i\in\{1,\ldots,m-1\}$, replace $\varphi(r_i)$ with a distinct colour in $\{2x+1,\ldots,k\}$.  This certainly produces a $(>2x+1)$-unique colouring and it is easy to verify that this colouring is indeed a humped us-colouring.
-% \end{proof}
-%
-% For a function $f:V(G)\to\R^+$, a colouring $\varphi:V(G)\to\N$ is $f$-lower-bounded if $\varphi(v)\ge f(v)$ for each $v\in V(G)$.  For a tree $T$ and $f:V(G)\to\N$, we let $T^f$ denote the tree obtained by replacing each leaf $v$ of $T$ with $T_{\lceil f(v)/2\rceil,\lceil f(v)/2\rceil
-% }$.  \cref{big-complete-tree,big-repeats} generalize naturally to the following.
-%
-% \begin{lem}\label{big-complete-tree}
-%     Let $k\ge x\ge 1$ be integers, let $T$ be a tree and let $f:V(T)\to\R$.  Then $T$ has an $f$-lower bounded humped us-colouring $\varphi:V(T)\to\{1,\ldots,2k\}$ or $T$ contains a subtree $S$ such that $S^f$ contains $T_{k,k}$.
-% \end{lem}
-%
-% \begin{lem}\label{big-repeats}
-%     Let $k$ and $x$ be integers with $k\ge 2x+1$.
-%     If $\hus(T,k)> 2x+1$, then $|V(T)|\ge (k-2x+2)\cdot x^x$.
-% \end{lem}
-%
-%
-%
-%
-% a \emph{weight-constrained}
-%
-%
-%
-%
-% \section{Generalization to $t$-Trees}
-% \seclabel{t-trees}
-%
-%
-% For the remainder of this section, $H$ is a $t$-tree on $n\ge t+1$ vertices, $\pi_1,\ldots,\pi_n$ is a construction order for $H$, and $\mathcal{T}:=(B_x:x\in V(T))$ is a canonical tree decomposition of $H$.  It is easy to see that every bag of $\mathcal{T}$ has size exactly $t+1$, $T$ is rooted at $r$, and
-% \begin{inparaenum}[(i)]\setcounter{enumi}{2}
-%   \item for each node $y$ of $T$ with parent $x$, $|B_y\setminus B_x|=1$.\label{three}
-% \end{inparaenum}
-% Note that this implies that $|V(T)|=n-t$, since $B_r$ contains $t+1$ vertices of $H$ and, by (\ref{three}), each $x\in V(T)\setminus\{r\}$ includes exactly one vertex of $H$ that is not in its parent.
-%
-% For each $v\in V(T)$ let $x_T(v)$ be the minimum-depth node $x\in V(T)$ such that $v\in B_x$.  A path $v_i,\ldots,v_r$ in $H$ is \emph{vertical} if $x_T(v_{i-1})$ is a strict $T$-ancestor of $x_T(v_i)$, for each $i\in\{1,\ldots,r\}$. (Equivalently, $v_0,\ldots,v_r$ is a subsequence of $\pi_1,\ldots,\pi_n$.) Any path in $H$ that is not vertical is \emph{humped}.  This allows us to define the humped us-chromatic number $\hus(H)=\hus(H,\mathcal{T})$ as in \cref{sec:trees}.
-%
-% \begin{lem}
-%     For any $t$-tree $H$, $\uqs(H)\le \binom{t+2}{t}\hus(H)$.
-% \end{lem}
-%
-% \begin{proof}
-%     A lemma of \citet{pilipczuk.siebertz:polynomial} (see \cite[Lemma~13]{pilipczuk.siebertz:polynomial-arxiv}) shows that from any vertex $v\in V(H)$, the number of vertical paths of length at most $p$ that end at $v$ is at most $\binom{t+p}{t}$.  Applying this with $p=2$ implies that we can greedily colour $v_1,\ldots,v_n$ to obtain a colouring $\psi:V(H)\to \{1,\ldots,\binom{t+2}{t}\}$ so that the endpoints of any non-trivial vertical path\footnote{A path is non-trivial if its length is at least 1.} of length at most $2$ are assigned different colours.  Let $\varphi:V(H)\to\{1,\ldots,k\}$ be a humped us-colouring of $H$.  As in \cref{product}, the colouring $\varphi':V(H)\to\{1,\ldots,k\}\times \{1,2,3\}$ defined by $\varphi'(v)=(\varphi(v),\varphi(v))$ proves the result.
-% \end{proof}
-%
-% \begin{lem}
-%     For any graph $G$, $\uqs(G)\le 3\pw(G)+1$.
-% \end{lem}
-%
-% \begin{proof}[Proof sketch]
-%     By induction on $\pw(G)$ starts by showing that, in the base case $\pw(G)=1$ (a caterpillar) the feet can all be coloured 1 and the the spine can be coloured with a repeating sequence $2,3,4,2,3,4\ldots$.
-% \end{proof}
-%
-%
-% \begin{obs}\label{colour-partition}
-%     Let $G$ be a graph, $X\subset V(G)$ and $\varphi:V(G)\to\N$ be such that
-%     \begin{compactenum}
-%         \item $\varphi:X\to\N$ is one-to-one;
-%         \item $\varphi$ is a us-colouring of $G-X$; and
-%         \item $\{\varphi(v):x\in X\} \cap \{\varphi(v):x\in V(G)\setminus X\} =\emptyset$.
-%     \end{compactenum}
-%     Then $\varphi$ is a us-colouring of $G$.
-% \end{obs}
-%
-% For a node $x\in V(T)$, $T_x$ denotes the subtree of $T$ induced by all $T$-descendants of $x$, including $x$. Let $k$ be an integer such that $n:=|V(H)|\le \sqrt[4]{k!}$. The \emph{rank} of $x$, denoted $\rho_T(x)$ is the largest integer $c$ such that $|T_x| \le \sqrt[4]{k!/c!}$.  Since $\sigma_T(x) \le n \le \sqrt[4]{k!}$, $\rho_T(x)$ is well defined and $\rho_T(x)\in\{1,\ldots,k\}$ for every $x\in V(T)$.
-%
-% For each $c\in\{1,\ldots,k\}$ let $L_c=\{x\in V(T):\rho_T(x) = c\}$ and let $X_c=\bigcup_{x\in L_c} B_x$.  For each $c\in\{1,\ldots,k\}$, $T[L_c]$ is a forest. Each root node of $T[L_c]$ is called a \emph{$c$-critical node}.  A node that is \emph{critical} if it is $c$-critical for some $c\in\{1,\ldots,k\}$.
-%
-% \begin{lem}\label{descendant-count}
-%     For any node $x\in V(T)$ with $\rho_T(x)=c$, the number of $(c+1)$-critical $T$-descendants of $x$ is $O(\sqrt{c})$.
-% \end{lem}
-%
-% \begin{proof}
-%     Since $\rho_T(x)=c$, $|T_x|\le \sqrt[4]{k!/c!}$.  Each $(c+1)$-critical node $y$ has $|T_y|> \sqrt[4]{k!/(c+2)!}$.  Letting $b$ denote the number of $(c+1)$-critical $T$-descendants of $x$ and chaining these inequalities gives
-%     \[
-%         b\sqrt[4]{k!/(c+2)!} < |T_x| \le \sqrt[4]{k!/c!} \enspace ,
-%     \]
-%     so $b \le \sqrt[4]{(c+1)(c+2)}=O(\sqrt{c})$.
-% \end{proof}
-%
-% The following lemma illustrates our plan for us-colouring $H$.  Namely, it allows us to focus our remaining effort on finding a us-colouring of the subgraph of $H$ induced by critical nodes that has some additional properties.
-%
-% \begin{lem}
-%     Let $C$ denote the set of critical nodes in $T$ and let $X=\bigcup_{x\in C} B_x$. and let $\varphi: X\to\N$ be a humped us-colouring of $H[X]$ such that, for each $c\in\{1,\ldots,k\}$ and each tree $T'$ in the forest $T[L_c]$, the restriction $\varphi: X\cap \bigcup_{x\in V(T')}B_x$ is one-to-one.  Then $\varphi$ can be completed to a humped us-colouring of $H$ such that $\varphi(v)\in\{-at\log k,\ldots,-1\}$ for every $v\in V(H)\setminus X$.
-% \end{lem}
-%
-% \begin{proof}
-%     Consider the graph $H-X$.  The tree decomposition $(B_x:x\in T)$ yields a width-$t$ tree decomposition of $H-X$ in which each component $H'$ is mapped to a subtree $T'$ in the forest $T-C$.  By \cref{descendant-count}, (TODO: State this explicitly) each tree $T'$ in the forest $T-C$ has at $O(\sqrt[4]{k})$ leaves and therefore $\pw(T')=O(\log k)$.  It follows that $\pw(H')=O(t\pw(T'))=O(t\log k)$.  Thus $H'$ can be us-coloured using the colour set $\{-at\log k,\ldots,-1\}$.  By \cref{colour-partition}, this extends $\varphi$ to a us-colouring of $H[V(H')\cup N_H(V(H'))]$.  This graph covers every path $uvw$ of $H$ except those with $u$ and $w$ in different components of $H-X$.  But any such path must have $v\in X$, so $\varphi(v)\ge 0$ and $\varphi(u),\varphi(w)<0$.
-% \end{proof}
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-% Key definition:  The \emph{$i$-heavy subtree} of $T$ consists of those nodes $x$ such that the subtree $T_x$ rooted at $x$ has at least $f(i-1)$ nodes.  A heavy subtree will have at most $\alpha(k-i)$ leaves.
-%
-%
-% For each triple of integers $1\le i,t \le k$, $1\le i\le k$, let $f_{k,t}(i)$.
-%
-%
-%
-% \section{Applying the Product Structure Theorem}
-% \seclabel{products}
-%
-%
-% \section{Conclusions}
-% \seclabel{conclusion}
-%
-% New Stuff:
-%
-% \begin{lem}\label{path-colour}
-%     Let $K$ be a $t$-path, let $\mathcal{P}:=(B_x:x\in V(P))$ be a width-$(t+1)$ path-decomposition of $K$ using the path $P=0,\ldots,m$, let $v_0$ be any vertex in $B_0$, and let $\varphi:B_{0}\setminus\{v_0\}\to\{\alpha\in N:\alpha > 3t\}$ be precolouring of all but one vertex of $B_{0}$.  The $\varphi$ can be extended to a us-colouring of $K$ in which $\varphi(v)\in\{0,\ldots,3t\}$ for each $v\in V(K)\setminus (B_0\setminus v_0)$.
-% \end{lem}
-%
-% \begin{proof}
-%     The proof is by induction on $t$. In the base case $t=0$ and $K$ consists of an independent set (TODO: make sure $0$-tree is defined.) and all its uncoloured vertices can be coloured $0$.
-%
-%     If $t>0$, it is well-known that $K$ contains a ``greedy path'' $w_0,\ldots,w_q$ such that $w_0\in B_0$, $w_q\in B_m$ and with the following property: (*)~there is no pair $1\le i<j-1\le q-1$ such that $w_i$ and $w_j$ are both adjacent to some $v\in V(K)\setminus \{w_0,\ldots,w_q\}$
-%
-%     For each $i\in\{0,\ldots,q\}$, set $\varphi(w_i)=3t-i\bmod 3$ (unless $i=0$ and $w_0\neq x_0$, in which $\varphi(w_0)$ is already defined.) Now, the graph $K-\{w_0,\ldots,w_q\}$ is a partial $(t-1)$-path which can be augmented to to a $(t-1)$-path $K'$.  Applying induction on $K'$ gives a us-colouring $\varphi:V(K')\to\{0,\ldots,3(t-1)\}$ of $K'$ and it is easy to check that, because of property~(*) this completes $\varphi$ to a us-colouring of $K$.
-% \end{proof}
-%
-% \begin{lem}
-%     Let $H$ be a $t$-tree, let $\mathcal{T}:=(B_x:x\in V(T))$ be a canonical path decomposition of $H$ where $T$ has root $r$,  let $T'$ be a subtree of $T$ with root $r'\neq r$ and having at most $\ell$ leaves, let $\kappa = (3t+1)\lceil\log_2(\ell+1)\rceil$, and let $\varphi:B_{r'}\setminus\{r'\}\to \{\alpha\in\N: \alpha > \tau\}$.  Then $\varphi$ can be completed to a us-colouring of the subgraph $H'=H[\bigcup_{x\in V(T')}B_x]$ so that $\varphi(v)\in\{1,\ldots,\tau\}$ for each $v\in V(H')\setminus (B_{r'}\setminus r')$.
-% \end{lem}
-%
-% \begin{proof}
-%     The proof is by induction on $\ell$.  When $\ell=1$, $T'$ is a path and $H'$ is therefore a $t$-path.  The result then follows immediately from \cref{path-colouring}.
-%
-%     Next we consider the case $\ell >1$.
-%     Let $T$ be ordered arbitrarily and let $x_1,\ldots,x_\ell$ be the leaves of $T'$ in the order they are encountered by an in in-order traversal.  Consider the path $P$ from the root of $T'$ to $x_{\lceil \ell/2\rceil}$.   Let $H[P]:=H[\bigcup_{x\in V(P)} B_x]$ and apply \cref{path-colouring} to $H[P]$ using the path decomposition $(B_x:x\in V(P))$ to obtain a us-colouring of $H[P]$ in which (after shifting) any newly-coloured vertex is assigned a colour in $\{\kappa - 3t,\ldots,\kappa\}$. Now, $T'-P$ is a forest that can be partitioned into two sets of trees, each of which has at most $\ell/2$ leaves.  We can now apply induction on each tree individually to obtain a us-colouring in which newly coloured nodes are assigned colours in $\{1,\ldots,\kappa-3t\}$.  It is easy to check that this gives a us-colouring of $H$.
-%
-%     TODO: Check constants.
-% \end{proof}
-%
-% \begin{lem}
-%     Let $H$ be a $t$-tree, let $\mathcal{T}:=(B_x:x\in V(T))$ be a canonical path decomposition of $H$,  let $T'$ be a subtree of $T$, let $\mathcal{P}=(P_x:x\in P)$ be a width-$p$ path decomposition of $T'$, let $S:=\bigcup_{x\in V(T')} B_x$  and let $Y:=\{x\in V(T): B_x\cap S\neq\emptyset\}$.
-% \end{lem}
-%
-
-
 \bibliographystyle{plainnat}
 \bibliography{us}
-
-\appendix
-
-\section{The Upper Bound for 2-Trees}
-
-\label{two-trees-appendix}
-[This is the original proof for 2-trees.]
-
-Before working directly with 2-trees we will work with node-weighted trees. The following lemma gives a condition under which we can colour a weighted tree with significantly fewer than $k$ colours.
-
-% explains how to proceed if the ratio between the total weight and maximum individual weight is sufficiently small.  When we have this slack, we can colour the tree with significantly less than $k$ colours.
-
-\begin{lem}\label{tree-slack}
-Let $t,k\in\N$, $c,s\in\R$ be such that $2< c\le k-1$, let $T$ be a non-empty tree with root $r$,  let $\gamma:V(T)\to\{z\in\R: z\ge 2\}$, and define
-\[
-    n_r:=\sum_{v\in V(T)} \frac{(\log k)^k}{(\log \gamma(v))^{\gamma(v)}} \enspace .
-\]
-There exists constants $a,b>0$ such that,
-if
-\begin{equation}
-     n_r \le \frac{(\log k)^k}{\left(\log (c+s))\right)^{c+s}} \enspace , \label{total-weight-i}
-\end{equation}
-where
-\begin{equation}
-    s := \frac{\log c}{\log\log c} \enspace ,
-\end{equation}
-% and
-% \begin{equation}
-%     \phi\in\left\{\lfloor a(k-c-s-1)\rfloor+1,\ldots,a(k-c-1)\right\} \label{phi-bound}
-% \end{equation}
-then $T$ has a humped us-colouring $\varphi$ such that
-\begin{compactenum}[(P1)]
-    \item $\varphi(r)=\lfloor a(k-c-1)\rfloor$; and
-    \item for each $v\in V(T)$, $a\cdot(k-\gamma(v)-1) < \varphi(v))\le a(k-c)$.
-\end{compactenum}
-\end{lem}
-
-\begin{proof}
-    The proof is by induction on $|V(T)|$.  In the base case, $|V(T)|=1$, so we set $\varphi(r):=\phi$, as required by (P1). The only thing to check is that this satisfies (P2). To check this, observe that
-    \[ \frac{(\log k)^k}{(\log\gamma(r))^{\gamma(r)}}\le n_r \le \frac{(\log k)^k}{(\log (c+s))^{c+s}}
-    \]
-    so $\gamma(r) \ge c+s \ge c+1$ for $s\ge \log c/\log\log c\ge 1$, which is satisfied for all $c>2$. Therefore, \cref{phi-bound} ensures that (P2) is satisfied.
-
-    Now assume $|V(T)|\ge 2$.  For each node $v\in V(T)$, let $n_v:=\sum_{w\in T_v} (\log k)^k/(\log\gamma(w))^{\gamma(w)}$, where $T_v$ denotes the subtree of $T$ induced by $v$ and all its $T$-descendants. Note that, for $v=r$, this corresponds with the definition of $n_r$ in the statement of the lemma.  We say that node $v$ of $T$ is \emph{heavy} if
-    \[
-        n_v > \frac{(\log k)^k}{\left(\log\left(c+s+\tfrac{\log(c+s)}{\log\log(c+s)}\right)\right)^{c+s+\tfrac{\log(c+s)}{\log\log(c+s)}}} \enspace ,
-    \]
-    and $v$ is \emph{light} otherwise.  For a heavy node $v$,
-    \begin{align*}
-        (\log k)^k/n_v & < \left(\log\left(c+s+\tfrac{\log(c+s)}{\log\log(c+s)}\right)\right)^{c+s+\tfrac{\log(c+s)}{\log\log(c+s)}} \\
-        & = (\log(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log\log(c+s)}\right)
-            \left(\tfrac{\log\log(c+s+\log(c+s)/\log\log(c+s))}{\log\log(c+s)}\right)} \\
-        & < (\log(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log\log(c+s)}\right)
-            \left(1 + \tfrac{(\log^2 e)(\log(c+s))/\log\log(c+s)}{(c+s)\log(c+s)}\right)} \\
-        & = (\log(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log\log(c+s)}\right)
-            \left(1 + \tfrac{\log^2 e}{(c+s)\log\log(c+s)}\right)} \\
-        & = (\log(c+s))^{c+s+\tfrac{\log(c+s)}{\log\log(c+s)} +
-            \tfrac{\log^2 e}{\log\log(c+s)} + \tfrac{(\log^2 e)\log(c+s)}{(c+s)(\log\log(c+s))^2}}  \\
-        & = (\log(c+s))^{c+s}\cdot c\cdot (\log^2 e)\cdot (1+o_c(1)) \enspace .
-        \numberthis \label{sizer}
-    \end{align*}
-
-    Let $T'$ be the subtree of $T$ induced by the set of heavy nodes.  Since no leaf of $T'$ is a $T$-descendant of any other leaf, it follows from \cref{total-weight-i,sizer} that the number of leaves of $T'$ is at most
-    $c\cdot (\log^2 e)\cdot (1+o(1))\in O(c)$.
-
-    Therefore the skeleton $\hat{T}'$ of $T'$ has $O(c)$ nodes so, by \cref{trees}, $\uqs(\hat{T}')\in O(\log (c)/\log\log (c))$. Therefore, by \cref{skeleton-colour}, $T'$ has a us-colouring $\varphi:V(T')\to \{a(k-c-1)-r,\ldots,a(k-c-1)\}$ for some $r\in O(\log c/\log\log c)$ in which $\varphi(r)=a(k-c-1)$.
-
-    Since $r\in O(\log (c)/\log\log (c))$ and $s=\log c/\log\log c$, there exists a constant $a$, such that $a(k-c-1)-r > a(k-c-s-1)$, so each node $v$ in $T'$ receives a colour larger than $a(k-c-s-1)$.  Recall that, for any node $v\in V(T)$, $\gamma(v)\ge c+s$, so $\varphi(v)>a(k-c-s-1)\ge a(k-\gamma(v)-1$  Therefore, the colouring $\varphi$ of $T'$, which is partial colouring of $T$ satisifies requirements (P1) and (P2).
-
-   Now, $T-T'$ is a forest of trees $T_1,\ldots,T_d$ rooted at nodes $r_1,\ldots,r_d$, respectively. For each $i\in\{1,\ldots,d\}$, $r_i$ is light,
-   \[
-       n_{r_1} \le \frac{(\log k)^k}{\left(\log\left(c+s+\tfrac{\log (c+s)}{\log\log (c+s)}\right)\right)^{c+s+\tfrac{\log (c+s)}{\log\log(c+s)}}} \enspace .
-   \]
-   Therefore, we can apply induction on each tree $T_i$ with the value $c'=c+s$.
-   When we do this we obtain a us-colouring of each tree $T_i$ in which $\varphi(r_i) = a(k-c-s-1) < a(k-c-1)-r \le \varphi(v)$ for every node $v$ in $V(T')$.  This ensures that the union of all colourings obtained this way is indeed a us-colouring of $T$.
-\end{proof}
-
-The next lemma tells us what to do when we don't have the slackness requirement of \cref{tree-slack}.   In this case we use the top $O(c)$ colours (which we can only use once) to create the slack needed to apply \cref{tree-slack}.
-
-
-\begin{lem}\label{tree-ii}
-Let $t,k\in\N$ and $c\in\R$ with $2< c\le k-1$, let $T$ be a non-empty forest with root $r$, let $\gamma:V(T)\to\{z\in\Z:z\ge 2\}$.  Then there exists a constant $a>0$ such that,
-if
-\begin{equation}
-   n_r:=\sum_{v\in V(T)} \frac{(\log k)^k}{(\log \gamma(v))^{\gamma(v)}} \le \frac{(\log k)^k}{(\log c)^c} \enspace . \label{total-weight-ii}
-\end{equation}
-% and
-% \begin{equation}
-%     \phi \in \{a(k-c-1)+1,\ldots,ak\} \label{phi-bound-ii}
-% \end{equation}
-then  $T$ has a humped us-colouring $\varphi:V(T)\to\{1,\ldots,ak\}$ such that
-\begin{compactenum}[(P1)]
-    % \item $\varphi(r)=\phi$;
-    \item for each $i\in\{a(k-c-1)+1,\ldots,ak\}$, there is at most one $v\in V(T)$ with $\varphi(v)=i$.
-    \item for each $v\in V(T)$, $\varphi(v)> a\cdot(k-\gamma(v))$.
-\end{compactenum}
-\end{lem}
-
-\begin{proof}
-    The proof is by induction on $|V(T)|$. In the base case, $|V(T)|=1$, we set $\varphi(r):=ak$.  This certainly satisifies (P1) and (P2).
-    % Furthermore, \cref{total-weight-ii} implies that $\gamma(r)\ge c$.  Therefore \cref{phi-bound-ii} ensures that (P3) is satisfied.
-
-    Now we may assume that $|V(T)|\ge 2$.  For each node $v$ of $T$, let $n_v:=\sum_{u\in V(T_v)}(\log k)^k/(\log(\gamma(u)))^{\gamma(u)}$ where $T_v$ denotes the subtree of $T$ induced by $v$ and all its $T$-descendants.  We say that a node $v$ of $T$ is \emph{heavy} if
-    \[
-        n_v> \frac{(\log k)^k}{\log\left(c+\frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}} \enspace ,
-    \]
-    otherwise $v$ is \emph{light}.
-    For a heavy node $v$,
-    \begin{align*}
-        (\log k)^k/n_v
-        & < \log\left(c+\frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}} \\
-        & = (\log c)^{\left(c+\frac{\log c}{\log\log c}\right)
-            \cdot \left(\tfrac{\log\log (c+\log c/\log\log c)}{\log\log c}\right)} \\
-        & < (\log c)^{\left(c+\frac{\log c}{\log\log c}\right)
-            \cdot \left(1+\tfrac{(\log^2 e)\log c/\log\log c)}{c\log c}\right)} \\
-        & = (\log c)^{\left(c+\frac{\log c}{\log\log c}\right)
-            \cdot \left(1+\tfrac{\log^2 e}{c\log\log c}\right)} \\
-        & = (\log c)^{c+\frac{\log c}{\log\log c}+\tfrac{\log^2 e}{\log\log c} + \tfrac{(\log^2 e)\log c}{c(\log\log c)^2}} \\
-        & = (\log c)^c\cdot c\cdot (\log^2)\cdot(1+o_c(1)) \numberthis \label{sizeish}
-    \end{align*}
-
-    Let $T'$ be the subtree of $T$ induced by its heavy nodes.  We say that a node of $T'$ is \emph{special} if it is a leaf or it is a branching node and we let $S$ denote the set of branching nodes.  Together, \cref{heavy-size} and \cref{total-weight-ii,sizeish} imply that the number of leaves of $T'$ is $O(c)$.  In any tree with $\ell$ leaves, the number of branching nodes is at most $\ell-1$.  Therefore the number of special nodes of $T'$ is at most $2c/\alpha$.
-
-    Therefore, for $a\ge 2/\alpha$, one can obtain a humped us-colouring of $T'$ as follows (this is similar to the proof of \cref{skeleton-colour}):  First assign each special node $v\in S\setminus\{r\}$ a distinct colour $\varphi(v)\in\{a(k-c-1)+1,\ldots,ak\}$.  Next, using \cref{pathwidth}, us-colour the graph $T'-S$ (a collection of paths) using colours $\{a(k-c-1)-2,a(k-c-1)-1,a(k-c-1)\}$.
-
-    This gives a colouring $\varphi$ of $T'$ that certainly satisfies (P1).  To see that it also satisfies (P2) observe that, since $|V(T)|\ge 2$, \cref{total-weight-ii} implies that $\gamma(v) > c$ for all $v\in V(T)$.
-    Since $\gamma$ is integer valued, this means that $\gamma(v)\ge c+1$.  Therefore, for each $v\in V(T')$, $\varphi(v)\ge a(k-c-1)-2 \ge a(k-c-2)+1\ge a(k-\gamma(v)-1)+1$ so that $\varphi$ satisfies (P2).
-
-    We are now left with the problem of extending the colouring $\varphi$ of $T'$ to a colouring of $T$.  The forest $T-T'$ contains trees $T_1,\ldots,T_m$ with roots $r_1,\ldots,r_m$, respectively.  For each $i\in\{1,\ldots,m\}$, $r_i$ is a light node, so
-    \[
-        \Gamma(r_i) \le \frac{(\log k)^k}{\left(\log c + \frac{\log c}{\log\log c}\right)^{c+\frac{\log c}{\log\log c}}}
-    \]
-    Now we can apply \cref{tree-slack} with the value $\phi = a(k-c-1)-3$ to obtain a us-colouring $\varphi:V(T_i)\to\{1,\ldots,a(k-c-1)\}$ of $T_i$.  Again, since every node of $T'$ receives a colour larger than $\phi$, it is straightforward to verify that this is indeed a humped us-colouring of $T$.
-\end{proof}
-
-
-For any graph $H$, and any two vertices $v,w\in V(H)$, let $d_H(v,w)$ denote the length of the shortest path, in $H$, from $v$ to $w$. For any $v\in V(H)$ and any $W\subseteq V(H)$, let $d_H(v,W)=\min\{w\in W: d_H(v,w)$. A \emph{BFS layering} of $H$ is a partition $L_0,\ldots,L_m$ of $V(H)$ such that, for each $i\in\{1,\ldots,m\}$ and each $v\in L_i$, $d_H(v,L_0)=i$.
-
-When a BFS layering $L_0,\ldots,L_m$ of $H$ is given, we use the notations $H_i=H[L_i]$, and $H_{\ge i}=H[\bigcup_{j=i}^m L_i]$.  When $H$ is a $t$-tree and $L_0=\{v_1,\ldots,v_t\}$ is a $t$-clique in $H$, each component of $H_i$ is a $(t-1)$-tree.  It is helpful to think of $H_{\ge i}$ as a union of overlapping $t$-trees, each of which is rooted at a $t$-clique in $H_i$. In this way, $H_i$ is a $(t-1)$-tree with $t$-trees hanging off its cliques.
-
-For each $t$-clique $C$ in $H_i$, we use $H_C$ to denote the component of $H[C\cup\bigcup_{j=i+1}^m L_j]$ that contains $C$.  If $v_1,\ldots,v_n$ is a construction order for $H$ then for any component $H'$ of $L_i$, the subsequence $v_{i_1},\ldots,v_{i_|H'|}$ of $v_1,\ldots,v_n$ containing only those vertices in $V(H')$ is a construction order for $H'$.  In this way, each vertex $v_{i_j}$, has a naturally defined parent clique in $H'$.
-
-% We say that a path $xyz$ in $H$ is \emph{BFS-humped} if $x,z\in L_i$ and $y\in L_{i-1}$ for some $i\in\{1,\ldots,m\}$.  A colouring $\varphi:V(H)\to\{1,\ldots,k\}$ is a \emph{BFS-humped us-colouring} if $\max\{\varphi(x),\varphi(y),\varphi(z)\}$ is unique for each BFS-humped path $xyz$ in $H$.
-
-
-
-\begin{thm}\label{two-tree-technical}
-    There exists constant $q,a>0$ such that, for every integer $k\ge 2$, every $n\le (\log k)^{k-q}$, and every $n$-vertex 2-tree $H$, $\uqs(H)\le ak$.
-\end{thm}
-
-\begin{proof}
-    Let $v_1,\ldots,v_n$ be a construction order for $H$ and
-    let $L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0=\{v_1,v_2\}$.  For each $v\in V(H)$, let $\ell(v)$ be such that $v\in L_{\ell(v)}$.  For each $i\in\{1,\ldots,m\}$ and each edge $vw\in E(H_i)$, recall that $H_{vw}$ is the component of $H[\{v,w\}\cup\bigcup_{j=i+1}^m L_i]$ that contains $vw$.
-
-    For each vertex $v\in L_i$, let
-    \begin{equation}
-        n_v=\sum_{w\in N_{H[L_i]}(v)}|H_{vw}| \enspace . \label{nv}
-    \end{equation}
-    In words, $n_v$ counts the sizes of all the 2-trees hanging off all the edges of $H_i$ that are incident to $v$.
-
-    \begin{clm}\label{size-claim}
-        For each $i\in\{1,\ldots,m\}$ and each component $H'$ of $H_{\ge i}$, $\sum_{v\in H'[L_i]} n_v \le 2|H'|$.
-    \end{clm}
-
-    \begin{proof}[Proof of \cref{size-claim}]
-        Very roughly: the sum counts each vertex of $H'[L_{i+1}\cup\cdots\cup L_{i+m}]$ exactly twice and double counts the edges of $H'[L_i]$.
-        More carefully,
-        \begin{align*} |H'|
-            & = |H'[L_{i}]| + |H'[L_{i+1}\cup\cdots L_{m}] \\
-            & = |H'[L_i]|+\sum_{vw\in E(H'[L_i])} (|H_{vw}|-2) \\
-            & = |H'[L_i]|-2|E(H'[L_i])| + \sum_{vw\in E(H'[L_i])} |H_{vw}| \\
-            & = |H'[L_i]|-2(|H'[L_i]|-1) + \sum_{vw\in E(H'[L_i])} |H_{vw}| \\
-            & = -|H'[L_i]|+2 + \sum_{vw\in E(H'[L_i])} |H_{vw}| \\
-            & \ge \sum_{vw\in E(H'[L_i])} |H_{vw}|
-        \end{align*}
-        On the other hand,
-        \begin{align*}
-            \sum_{v\in H'[L_i]} n_v
-            & = \sum_{v\in H'[L_i]}\sum_{w\in N_H(v)\cap L_i}|H_{vw}| \\
-            & = 2 \sum_{vw\in E(H'[L_i])} |H_{vw}| \enspace . \qedhere
-        \end{align*}
-    \end{proof}
-
-Our proof is based on the following claim:
-
-    \begin{clm}\label{main-claim}
-        Let $H'$ be the union of one or more connected component of $H_{\ge i}$. There exists a constant $q$ such that,  if
-        \[
-            \sum_{v\in V(H')\cap L_i} n_v\le \frac{(\log k)^{k-q}}{(\log c)^c} \enspace ,
-        \]
-        then there exists $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,1\}$ such that
-        \begin{compactenum}[(P1)]
-            \item The function $\theta:V(H')\to\{1,\ldots,4ak\}$ defined by $\theta(v)=4\varphi(v) - 2\psi(v) -(\ell(v)\bmod 2)$ is a humped us-colouring of $H'$;
-            \item for each $v\in V(H'[L_i])$, $\psi(v)=0$;
-            \item for each $\iota\in\{a(k-c-1)+1,\ldots,ak\}$ there is at most one vertex $v$ in $V(H'[L-i])$ with $\varphi(v)=\iota$.
-        \end{compactenum}
-    \end{clm}
-
-    \begin{proof}[Proof of \cref{main-claim}]
-        In all cases, (P2) requires setting $\psi(v)=0$ for all $v\in V(H'[L_i])$, so we will not mention this again.
-
-        The proof is by induction on $m-i$. In the base case $m-i=0$ and $H'$ is a forest.  In this case, $n_v=1$ for each $v\in V(H')$.  Set $\gamma(v):=k$ and observe that $(\log k)^k/(\log(\gamma(v))^{\gamma(v)}=1=n_v$ for each $v\in V(H')$. Therefore,
-        \[
-            \sum_{v\in V(H')\cap L_i} \frac{(\log k)^k}{(\log \gamma(v))^{\gamma(v)}} = \sum_{v\in V(H')\cap L_i} n_v
-            \le \frac{(\log k)^{k-1}}{(\log c)^c}
-            \le \frac{(\log k)^{k}}{(\log c)^c} \enspace .
-        \]
-        Setting $\phi=k$ and then applying \cref{tree-ii} then gives a colouring $\varphi: V(H')\to\{1,\ldots,ak\}$ that satisfies (P1)--(P3).
-
-        In the general case, we set $\gamma(v):=\max\{c\in\N:(\log k)^k/(\log c)^c \ge n_v\}$ for each $v\in V(H'[L_i])$.  This implies that
-        \[
-            \frac{(\log k)^k}{(\log(\gamma(v)+1))^{\gamma(v)+1}} < n_v
-            % \le \frac{(\log k)^k}{(\log \gamma(v))^{\gamma(v)}}
-        \]
-        Since $\gamma(v)+1\le k$,
-        \[
-           n_v > \frac{(\log k)^k}{(\log(\gamma(v)+1))^{\gamma(v)+1}} \ge
-           \frac{(\log k)^{k-q}}{(\log\gamma(v))^{\gamma(v)}}
-       \]
-       for some constant $q>0$. Therefore,
-       \[
-           \sum_{v\in H'[L_i]} \frac{(\log k)^k}{(\log \gamma(v))^{\gamma(v)}} < \sum_{v\in H'[L_i]} n_v(\log k)^{q} \le \frac{(\log k)^k}{(\log c)^c}
-       \]
-       as required by \cref{tree-ii}.  Therefore, by \cref{tree-ii}, we can find a us-colouring $\varphi$ of the tree $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. In addition $\varphi(v)\ge a(k-c-\gamma(v)-1)+1$ for each $v\in V(H'[L_i])$.  It remains to show that we can extend this to a colouring of $V(H')\setminus L_i$.
-
-       Refer to \cref{subproblems}.
-       For the root $r$ of the tree $H'[L_i]$, we define $D_r=\{x\in L_{i+1}:rx\in E(H)\}$.  For each node $w$ with parent $v$ in $H'[L_i]$, we define $D_w=\{x\in L_{i+1}:wx\in E(H)\}\setminus D_{v}$.
-       For each $w\in V(H'[L_i]$, consider the graph $H_w:= H'[D_w\cup \bigcup_{j=i+2}^m L_j]$ that contains $w$.
-       Now, $H_w[L_{i+1}]$ is a rooted forest with roots $w_1,\ldots,w_d$.  We apply the inductive hypothesis to $H_w$ and we obtain $\varphi:V(H_w)\to\{1,\ldots,ak\}$ and $\psi:V(H_w)\to\{0,1\}$ that satisfy the conditions of the claim.  We do this to colour $H_w$ for each $w\in V(H'[L_i])$.
-
-      \begin{figure}
-          \begin{center}
-               \includegraphics{figs/subproblems}
-          \end{center}
-          \caption{The definition of the set $D_w$, that determines $H_w$.}
-          \label{subproblems}
-      \end{figure}
-
-       At this point colourings $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,1\}$ are completely defined.  We must, however, make one small modification to $\psi$.  Since each vertex in $H'[L_{i+1}]$ is coloured by induction on some graph $H_w$, $\psi(v)=0$ for every vertex $v$ in $H'[L_{i+1}]$.  Now, the graph $H'[L_i]$ is a forest and therefore has a proper $2$-colouring $\zeta:V(H'[L_i])\to\{0,1\}$.  For each vertex $v$ in $H'[L_{i+1}]$ we consider the unique vertex $w\in V(H'[L_i])$ such that $v\in D_w$ (so that $v\in V(H_w)$) and we set $\psi(v):=\zeta(w)$.  This completes the description of the colourings $\varphi$ and $\psi$.
-
-       We have already ensured that $\varphi$ and $\psi$ satisfy (P2) and (P3). All that remains is to ensure that they satisfy (P1).  To do this, consider some humped path $xyz$ in $H'$.  There are a few cases to consider:
-       \begin{compactenum}
-          \item If $xyz$ is completely contained in the forest $H'[L_i]$ then this path is properly coloured because \cref{tree-ii} produces a humped us-colouring $\varphi$ of $H'[L_i]$.
-          \item If $xyz$ is completely contained in $H_w$ for some $w\in H'[L_i]$ then the inductive hypothesis already ensures that $\theta$ was already a humped us-colouring of $H_w$ and the subsequent modifications to $\psi(v)$ for $v\in H_w[L_{i+1}]$ do not change this. In fact, these modifications do not change the relative order of $\theta(x)$ and $\theta(z)$ unless $\theta(x)=\theta(z)$.
-          \item If $x,y\in L_i$ and $z\in L_{i+1}$ then $\ell(x)\bmod 2\neq\ell(z)\bmod 2$ so $\theta(x)\neq\theta(z)$.
-          \item The only case that remains is when $x\in H_{v}$, $y\in H'[L_i]$ and $z\in H_w$ for some $v\neq w$. Refer to \cref{proper}.  In this case, the vertices $x$ and $z$ did not appear in the same application of induction.  Recall that $x$ and $z$ each have at most two neighbours in $L_{i-1}$, which implies that $y\in\{v,w\}$ and at least one of $x$ or $z$ is adjacent to both $v$ and $w$.  Therefore $vw$ is an edge of the tree $H'[L_i]$.  But this implies that $\psi(x)=\zeta(v)\neq\zeta(z)=\psi(z)$.
-      \end{compactenum}
-      This completes the proof of \cref{main-claim}.
-       \begin{figure}
-           \begin{center}
-            \includegraphics{figs/proper}
-            \end{center}
-           \caption{$\psi(x)\neq\psi(z)$ ensures that $\theta(x)\neq \theta(z)$ in the humped path $xyz$ with $x\in H_x$}
-           \label{proper}
-       \end{figure}
-    \end{proof}
-    Finally, we can complete the proof of \cref{two-tree-technical} we apply \cref{main-claim} with $i=0$ and $H'=H$.  By \cref{size-claim} we can do this with any value $k$ such that $2n \le (\log k)^{k-q}$ to show that $\hus(H)\le 4a'k$ for some constant $a'$.  By \cref{humped}, this implies that $\uqs(H)\le 3\hus(H)\le ak$, for $a=12a'$.
-\end{proof}
-
-\cref{two-tree-technical} gives our main result for 2-trees:
-
-\begin{thm}
-    For every $n\ge \tau(3)$ and every $n$-vertex 2-tree $H$, $\uqs(H)\in O(\log n/\log^{(3)} n)$.
-\end{thm}
-
-
-
 
 \end{document}
