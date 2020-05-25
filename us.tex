@@ -711,61 +711,19 @@ Rewriting \cref{treewidth-lower-bound} in terms of $n:=|G|$, we obtain a more-re
     For every integer $t\ge 0$, there exists a constant $\alpha>0$ such that, for infinitely many $n\in\N$,   there exists an $n$-vertex graph $G$ with $tw(G)\le t$ and  $\uqs(G)\ge \alpha\log n/\log^{(t+1)} n$.
 \end{cor}
 
-Since every graph of treewidth at most 2 is planar, we obtain the following corollary from \cref{treewidth-lower-bound-n}:
+Since every graph of treewidth at most 2 is planar and is even a subgraph of a planar 3-tree, we obtain the following corollary from \cref{treewidth-lower-bound-n}:
 
 \begin{cor}\label{planar-lower-bound}
-    There exists a constant $\alpha>0$ such that, for infinitely many $n\in\N$, there is an $n$-vertex planar graph $G$ with $\uqs(G)\ge \alpha\log n/\log^{(3)} n$.
+    There exists a constant $\alpha>0$ such that, for infinitely many $n\in\N$, there is an $n$-vertex planar 3-tree $G$ with $\uqs(G)\ge \alpha\log n/\log^{(3)} n$.
 \end{cor}
 
-
-% \section{Lower Bound for 2-trees}
-%
-% Let $T_{b,h}$ denote a complete $b$-ary rooted tree of height $h$ (the rooted tree in which every leaf has depth $h$ and every non-leaf has exactly $b$ children).  The following lemma is due to \citet{karpas.neiman.ea:on}. We include a proof here for the sake of completeness.
-%
-% \begin{lem}\label{b-h-tree}
-%     Let $T=T_{b,h}$ for some $b\ge 1$, $h\ge 0$, let $r$ be the root of $T$, and let $\varphi:V(T)\to \{1,\ldots,b-1\}$ be a us-colouring of $T_{b,h}$.  Then $\varphi(r)\ge h+1$.
-% \end{lem}
-%
-% \begin{proof}
-%     The proof is by induction on $h$. The base case $h=0$ is trivial: It simply states that $\varphi(r)\ge 1$.
-%
-%     For $h>0$, apply the inductive hypothesis to each of the maximal subtrees rooted at the $b$ children $r_1,\ldots,r_{b+1}$ of $r$ to determine $\varphi(r_i)\in\{h,\ldots,b-1\}$.  Since $|\{h,\ldots,b-1\}|=b-h< b$, there are two distinct $i,j\in\{1,\ldots,b\}$ such that $\varphi(r_i)=\varphi(r_j)$.  Since $r_irr_j$ is a path in $T$ and $\varphi$ is a us-colouring, this implies that $\varphi(r)\ge \varphi(r_i)+1\ge h+1$.
-% \end{proof}
-%
-% \begin{lem}\label{apex-graph}
-%     Let $A$ be the graph consisting of $k$ disjoint copies of $T_{h+1,h}$ plus an apex vertex $a$, and let $\varphi:V(A)\to \{1,\ldots,k\}$ be a us-colouring of $A$.  Then $\varphi(a)\ge h+2$.
-% \end{lem}
-%
-% \begin{proof}
-%     Let $T_1,\ldots,T_{k}$ denote the copies of $T_{h+1,h}$ in $A$.
-%     By \cref{b-h-tree} any us-colouring of $T_i$ uses at least $b=h+1$ distinct colours or uses a colour greater than or equal to $h+1$.  In either case, $T_i$ contains a node $v_i$ with $\varphi(v_i)\in \{h+1,\ldots,k\}$, for each $i\in\{1,\ldots,k-h+1\}$.  Since $|\{h+1,\ldots,k\}|=k-h<k$, this implies that there exists distinct $i,j\in\{1,\ldots,k-h+1\}$ with $\varphi(v_i)=\varphi(v_j)$.  Since $v_iav_j$ is a path in $A$, this implies that $\varphi(a)\ge \varphi(v_i)+1\ge h+2$.
-% \end{proof}
-%
-% Define a graph $G_{\ell,h}$ whose vertex set is the disjoint untion of $L_0,\ldots,L_\ell$, defined as follows.  $L_0=\{r\}$ is a single vertex.  For each $i\in\{1,\ldots,\ell\}$ and each vertex $a\in L_{i-1}$, create $k$ copies of $T_{h+1,h}$ that are dominated by $a$.  Add all of these newly created vertices to $L_i$.
-%
-% \begin{lem}
-%     For any us-colouring $\varphi:V(G_{\ell,h})\to\{1,\ldots,k\}$ of $G_{\ell,h}$, any $i\in\{0,\ldots,\ell\}$ and any $v\in L_i$, $\varphi(v)\ge (\ell-i)(h+1) + 1$.
-% \end{lem}
-%
-% \begin{proof}
-%     The proof is by induction on $\ell-i$.  The base case $i=\ell$ (so $\ell-i=0$) is trivial, it simply states that node $v\in L_\ell$ receives a colour $\varphi(v)\ge 1$.
-%
-%     For $i < \ell$, consider the set $S_v$ consisting of neighbours of $v$ in $L_{i+1}$.  By induction, each $w\in S_v$ receives a colour $\varphi(w)\in \{(\ell-i-1)(h+1)+1,\ldots,k\}$.  Now applying \cref{apex-graph} to the induced graph $G_{\ell,h}[\{v\}\cup S_v]$ shows that $\varphi(v)\ge (\ell-i-1)(h+1)+h+2=(\ell-i)(h+1)+1$.
-% \end{proof}
-%
-%
-% \begin{thm}
-%     For infinitely many values of $n$ there exists an $n$-vertex $2$-tree $G$ such that $\uqs(G)\in \Omega(\log n)$.
-% \end{thm}
-%
-% \begin{proof}
-%     Use the graph $G_{\ell,h}$ with $h=\alpha\log\log n-1$, and $\ell=\beta\log n/\log\log n$.  The graph has size
-%     \[  (k(h+1)^{h+1})^\ell = n^{O(\alpha+\beta)} \enspace  \]
-%     and requires $\ell(h+1) = \Omega(\alpha\beta\log n)$ colours.
-% \end{proof}
+\cref{planar-lower-bound} establishes the lower bounds in \cref{planar,three-trees}.
 
 \section{Colouring Planar Graphs}
 \seclabel{planar}
+
+All that remains is to prove the upper upper bounds in \cref{planar,three-trees} on the number of colours required to us-colour planar graphs and 3-trees, respectively.  Along with the product structure theorem (\cref{product-structure}), the following simple lemma shows that, for this purpose 3-trees are equivalent to planar graphs.
+
 
 \begin{lem}\label{product-lemma}
     For any two graphs $G_1$ and $G_2$, $\uqs(G_1\boxtimes G_2)\le \uqs(G_1)\cdot\uqs(G_2)$.
@@ -776,15 +734,7 @@ Since every graph of treewidth at most 2 is planar, we obtain the following coro
 \end{proof}
 
 \cref{product-lemma,product-structure,t-trees} immediately imply that $\uqs(G)\in O(\log n/\log^{(4)} n)$ for every $n$-vertex planar graph $G$.  We now show how this can be improved to give the optimal upper bound
-$\uqs(G)\in O(\log n/\log^{(4)} n)$.
-
-% The main idea is to use the fact that the product structure theorem specifies that the graph $H$ is a \emph{planar} 3-tree.  Planar 3-tree behave, in many ways, more like 2-trees than $3$-trees.  We will prove the following:
-%
-% \begin{thm}\label{three-trees}
-%     For every $n$-vertex planar $3$-tree $H$, $\uqs(H)\in O(\log n/\log^{(3)} n)$.
-% \end{thm}
-
-The main property used in the proof of \cref{three-trees} is that the BFS layers of a planar 3-tree are outerplanar graphs, which behave more like trees than general 2-trees.  In order to prove \cref{three-trees} we prove (a weighted version) of the following optimal result:
+$\uqs(G)\in O(\log n/\log^{(4)} n)$.  The main property used in the proof of \cref{three-trees} is that the BFS layers of a planar 3-tree are outerplanar graphs, which behave more like trees than general 2-trees.  In order to prove \cref{three-trees} we prove (a weighted version) of the following optimal result:
 
 \begin{thm}
 For every $n$-vertex outerplanar graph $H$, $\uqs(H)\in O(\log n/\log^{(2)} n)$.
