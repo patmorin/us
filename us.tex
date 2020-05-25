@@ -9,21 +9,17 @@
 \usepackage{graphicx}
 \usepackage[noend]{algorithmic}
 
-\usepackage{xcolor}
-\definecolor{light-gray}{gray}{0.95}
-
 \usepackage[normalem]{ulem}
 \usepackage{cancel}
 \usepackage{enumitem}
 
 \usepackage[longnamesfirst,numbers,sort&compress]{natbib}
 
-%Taken from https://tex.stackexchange.com/questions/42726/align-but-show-one-equation-number-at-the-end
+% Taken from
+% https://tex.stackexchange.com/questions/42726/align-but-show-one-equation-number-at-the-end
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
 
-\newcommand{\snote}[1]{\fcolorbox{red}{yellow}{#1}}
-\newcommand{\pnote}[1]{\ \newline\noindent\fcolorbox{red}{yellow}{\begin{minipage}{\textwidth}#1\end{minipage}}}
 \setlength{\parskip}{1ex}
 
 \title{\MakeUppercase{(Layered) Partitions versus Decompositions}}
@@ -174,9 +170,23 @@ For two graphs $G_1$ and $G_2$, $G_1\boxtimes G_2$ is a graph whose vertex set i
     \item $v_1w_1\in E(G_1)$ and $v_2w_2\in E(G_2)$.
 \end{inparaenum}
 
+The following recent result shows that every planar graph is the subgraph of a strong product of very simple graphs.
+
 \begin{thm}\cite{dujmovic.joret.ea:planar}\label{product-structure}
     For every $n$-vertex planar graph $G$, there exists an at most $n$-vertex planar 3-tree $H$ and a path $P$ such that $G$ is isomorphic to a subgraph of $H\boxtimes P$.
 \end{thm}
+
+As the following simple lemma shows, product structure is highly relevant to 2-ranking:
+
+\begin{lem}\label{product-lemma}
+    For any two graphs $G_1$ and $G_2$, $\uqs(G_1\boxtimes G_2)\le \uqs(G_1)\cdot\uqs(G_2)$.
+\end{lem}
+
+\begin{proof}
+  Use a product colouring $\varphi(x,y)=\uqs(G_2)\cdot \rho(x) + \psi(y)$ where $\rho:V(G_1)\to\{0,\ldots,\uqs(G_1)-1\}$ and $\psi:V(G_2)\to\{0,\ldots,\uqs(G_2)-1\}$ are us-colourings of $G_1$ and $G_2$.  Consider any path $uvw$ in $G_1\boxtimes G_2$.  If the projection of $uvw$ onto $G_1$ is a path, then contribution of $\psi$ to $\varphi$ is irrelevant and the fact that $\rho$ is a us-colouring of $G_1$ implies that $\varphi(u)\neq \varphi(w)$ or that $\varphi(v)>\varphi(w)$.  If the projection of $uvw$ onto $G_1$ has only two vertices, then $uvw$ is a $3$-cycle in $G_1\boxtimes G_2$ and $\varphi(u)$, $\varphi(v)$ and $\varphi(w)$ are all distinct.  If the projection of $uvw$ onto $G_1$ has only one vertex then the projection of $uvw$ onto $G_2$ has three vertices.  In this case, the contribution of $\rho$ to $\varphi$ is irrelevant and  and the fact that $\rho$ is a us-colouring of $G_2$ implies that $\varphi(u)\neq \varphi(w)$ or that $\varphi(v)>\varphi(w)$.
+\end{proof}
+
+\cref{product-lemma,product-structure,three-trees} immediately imply the upper bound in \cref{planar}.
 
 \subsection{Inequalities for Iterated Logarithms}
 
@@ -202,7 +212,6 @@ Recall that, for any integer $i\ge 0$,
           \log\left(\log^{(i-1)}x\right) & \text{for $i\ge 1$} \\
       \end{cases}
 \]
-
 
 For any $x > \tau(i-1)$ and any $a\ge 0$, \cref{log-x-plus-a} generalizes as follows (by induction on $i$):
 \begin{equation}
@@ -471,7 +480,7 @@ The next lemma tells us what to do when we don't necessarily have the slack $s$ 
         = \frac{(\log k)^k}{\left(\log\left(c + s\right)\right)^{c+s}}
     \]
     with $s$ defined as in the statement of \cref{t-tree-slack}.
-    Now we can apply \cref{t-tree-slack} to the graph $H_{i}:=H[\bigcup_{x\in V(T_{i})} B_x]$.  This produces a colouring $\varphi:V(H_i)\to\{1,\ldots,a(k-c-s)\}\cup \bigcup_{v\in B_{r_i}}\phi(v)$ in which the colours of vertices in $B_{r_i}$ are unchanged and are all at least $a(k-c-s)+a/2$ and the colour of each vertex $v\in V(H_i)\setminus B_{r_i}$ is $\varphi(v)<a(k-c-s)+a/2$.  Therefore, (P2) is satisified.  The colours assigned to vertices in $H_i-B_{r_i}$ by \cref{t-tree-slack} satisfy (P1).
+    Now we can apply \cref{t-tree-slack} to the graph $H_{i}:=H[\bigcup_{x\in V(T_{i})} B_x]$.  This produces a colouring $\varphi:V(H_i)\to\{1,\ldots,a(k-c-s)\}\cup \bigcup_{v\in B_{r_i}}\varphi(v)$ in which the colours of vertices in $B_{r_i}$ are unchanged and are all at least $a(k-c-s)+a/2$ and the colour of each vertex $v\in V(H_i)\setminus B_{r_i}$ is $\varphi(v)<a(k-c-s)+a/2$.  Therefore, (P2) is satisified.  The colours assigned to vertices in $H_i-B_{r_i}$ by \cref{t-tree-slack} satisfy (P1).
     The proof that this produces a valid us-colouring of $H$ is exactly as in the proof of \cref{t-tree-slack}.
 \end{proof}
 
@@ -609,6 +618,43 @@ Our proof is based on the following claim:
 
 Rewriting \cref{two-tree-technical} in terms of $n$ completes the proof of \weirdref{t-trees}{a}, the upper bound in \cref{t-trees}.
 
+\subsection{A Generalization}
+
+Reviewing the proof of \cref{t-trees-tehcnical}, which relies on \cref{t-trees-no-slack,t-trees-slack} we see that it can be strengthened as follows:
+
+\begin{lem}
+    Let $r,t$ be fixed, let $H$ be an $n$-vertex $t$-tree, let $v_1,\ldots,v_n$ be a construction order for $H$ and let $L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0:=\{v_1,\ldots,v_{t+1}\}$.  If $\uqs(H[S]) \in O(\log |S|/\log^{(r)} |S|)$, for each $S\subseteq L_i$ and each $i\in\{1,\ldots,m\}$, then $\uqs(H) \in O(\log n/log^{(r)}n)$.
+\end{lem}
+
+
+\subsection{Planar 3-Trees}
+\seclabel{planar}
+
+To complete the upper bound in \cref{planar},  all that remains is to prove the upper upper in \cref{three-trees} on the number of colours required by 2-rankings of $n$-vertex planar 3-trees.  This proof is essentially a sharpening of the arguments in the previous section using the additional property of planarity.  Specifically, while a BFS layer in a layering of a 3-tree is a 2-forest, a BFS layer of a planar 3-tree is an outerplanar graph.  The following theorem shows that, with respect to $2$-ranking, outerplanar graphs behave more like trees than 2-trees:
+
+\begin{thm}\label{outerplanar}
+    For every $n$-vertex outerplanar graph $G$, $\uqs(G)\in O(\log n/\log^{(2)} n)$
+\end{thm}
+
+\begin{proof}
+    Divide and conquer.
+\end{proof}
+
+Using \cref{outerplanar},
+
+The main property used in the proof of \cref{three-trees} is that the BFS layers of a planar 3-tree are outerplanar graphs, which behave more like trees than general 2-trees.  In order to prove \cref{three-trees} we prove (a weighted version) of the following optimal result:
+
+\begin{thm}
+For every $n$-vertex outerplanar graph $H$, $\uqs(H)\in O(\log n/\log^{(2)} n)$.
+\end{thm}
+
+
+
+\subsection{Outerplanar Graphs}
+
+
+\subsection{Planar 3-Trees}
+
 
 
 \subsection{The Lower Bound for $t$-Trees}
@@ -719,31 +765,6 @@ Since every graph of treewidth at most 2 is planar and is even a subgraph of a p
 
 \cref{planar-lower-bound} establishes the lower bounds in \cref{planar,three-trees}.
 
-\section{Colouring Planar Graphs}
-\seclabel{planar}
-
-All that remains is to prove the upper upper bounds in \cref{planar,three-trees} on the number of colours required to us-colour planar graphs and 3-trees, respectively.  Along with the product structure theorem (\cref{product-structure}), the following simple lemma shows that, for this purpose 3-trees are equivalent to planar graphs.
-
-
-\begin{lem}\label{product-lemma}
-    For any two graphs $G_1$ and $G_2$, $\uqs(G_1\boxtimes G_2)\le \uqs(G_1)\cdot\uqs(G_2)$.
-\end{lem}
-
-\begin{proof}
-  Use a product colouring $\varphi(x,y)=\uqs(G_2)\cdot \rho(x) + \psi(y)$ where $\rho:V(G_1)\to\{0,\ldots,\uqs(G_1)-1\}$ and $\psi:V(G_2)\to\{0,\ldots,\uqs(G_2)-1\}$ are us-colourings of $G_1$ and $G_2$.  Consider any path $uvw$ in $G_1\boxtimes G_2$.  If the projection of $uvw$ onto $G_1$ is a path, then contribution of $\psi$ to $\varphi$ is irrelevant and the fact that $\rho$ is a us-colouring of $G_1$ implies that $\varphi(u)\neq \varphi(w)$ or that $\varphi(v)>\varphi(w)$.  If the projection of $uvw$ onto $G_1$ has only two vertices, then $uvw$ is a $3$-cycle in $G_1\boxtimes G_2$ and $\varphi(u)$, $\varphi(v)$ and $\varphi(w)$ are all distinct.  If the projection of $uvw$ onto $G_1$ has only one vertex then the projection of $uvw$ onto $G_2$ has three vertices.  In this case, the contribution of $\rho$ to $\varphi$ is irrelevant and  and the fact that $\rho$ is a us-colouring of $G_2$ implies that $\varphi(u)\neq \varphi(w)$ or that $\varphi(v)>\varphi(w)$.
-\end{proof}
-
-\cref{product-lemma,product-structure,t-trees} immediately imply that $\uqs(G)\in O(\log n/\log^{(4)} n)$ for every $n$-vertex planar graph $G$.  We now show how this can be improved to give the optimal upper bound
-$\uqs(G)\in O(\log n/\log^{(4)} n)$.  The main property used in the proof of \cref{three-trees} is that the BFS layers of a planar 3-tree are outerplanar graphs, which behave more like trees than general 2-trees.  In order to prove \cref{three-trees} we prove (a weighted version) of the following optimal result:
-
-\begin{thm}
-For every $n$-vertex outerplanar graph $H$, $\uqs(H)\in O(\log n/\log^{(2)} n)$.
-\end{thm}
-
-\subsection{Outerplanar Graphs}
-
-
-\subsection{Planar 3-Trees}
 
 
 \section{Other Ideas}
