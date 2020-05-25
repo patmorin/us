@@ -126,7 +126,7 @@ In addition to planar graphs, there are product structure theorems for a number 
     there exists an integer $c=c(\mathcal{G})$ such that, for every $n$-vertex graph $G\in\mathcal{G}$, $\uqs(G)\in O(\log n/\log^{(c)} n)$.
 \end{thm}
 
-The remainder of this paper is organized as follows: \Cref{sec:basics} reviews some basic tools used in the following sections. \Cref{sec:t-trees} proves \cref{sec:t-trees}. \Cref{sec:planar} proves \cref{three-trees} and the helper lemma that completes the proof of \cref{planar}.
+The remainder of this paper is organized as follows: \Cref{sec:basics} reviews some basic tools used in the following sections. \Cref{upper-bounds} proves the upper bounds in \cref{planar,t-trees,three-trees}.  \Cref{lower-bounds} proves the lower bound in \cref{t-trees}, which immediately implies the lower bounds in \cref{planar,three-trees}. \Cref{conclusion} gives a brief summary and conclusions.
 
 \section{Preliminaries}
 \seclabel{basics}
@@ -227,8 +227,8 @@ In several places we have ratios involving iterated logarithms, in which case we
 \end{equation}
 which is again valid for all $x> \tau(i-1)$.
 
-\section{Colouring $t$-Trees}
-\seclabel{t-trees}
+\section{Upper Bounds}
+\label{upper-bounds}
 
 In this section we prove asymptotically tight bounds for the worst-case number of colours needed to us-colour $n$-vertex $t$-trees.  Note that, throughout this section, and the rest of the paper, we treat $t$ as a fixed constant that does not depend on $n$.  Asymptotic notations $O$, $\Omega$, and $o$ are used are used assuming that $n$ (or some increasing function of $n$) is the only parameter tending to infinity.
 
@@ -655,7 +655,8 @@ Before proving \cref{outerplanar} we show how it completes the proof of the uppe
     This is the proof we've been discussing with Mehrnoosh. It uses the fact that the neighbourhood of a vertex in an outerplanar graph has bounded pathwidth.
 \end{proof}
 
-\subsection{Lower Bounds}
+\section{Lower Bounds}
+\label{lower-bounds}
 
 Next we prove the lower bound in \cref{t-trees} which implies the lower bounds in \cref{planar,three-trees}.
 
@@ -764,6 +765,7 @@ Since every graph of treewidth at most 2 is planar and is even a subgraph of a p
 \cref{planar-lower-bound} establishes the lower bounds in \cref{planar,three-trees}.
 
 \section{Discussion}
+\label{conclusion}
 
 We have given asymptotically optimal bounds on the number of colours required by $2$-rankings of $n$-vertex $t$-trees, planar 3-trees, outerplanar graphs, and planar graphs.  Prior to this work, the best known bounds were $\Omega(n/\log n)$ (trees) and $O(\log n)$.
 
