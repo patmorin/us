@@ -237,6 +237,10 @@ We begin by proving the first half of \cref{t-trees}:
     For every fixed $t\ge 1$ and every $n$-vertex $t$-tree $H$, $\uqs(H)\in O(\log n/\log^{(t+1)} n)$.
 \end{namedtheorem}
 
+In order to prove eventually prove a tight bound for planar 3-tree (\cref{three-trees}) we introduce a light abstraction.  We say 
+
+
+
 We now give a brief overview of the proof of \weirdref{t-trees}{a}.  The proof is by induction on the value of $t$.  The base case, $t=1$, is handled by \cref{trees}.  We need to prove that $H$ has a us-colouring using colours $\{1,\ldots,ak\}$ for some constant $a$ and some $k\in O(\log n/\log^{(t+1)} n)$.  An asymptotically equivalent statement of this is: If $n \le (\log^{(t-1)}k)^k$, then $H$ has a us-colouring using colours $\{1,\ldots,ak\}$, and this is the version of the statement that we prove.
 
 The proof considers a BFS layering $L_1,\ldots,L_m$ of $H$ and uses the fact that each layer $L_i$ induces a $(t-1)$-forest $H[L_i]$, on which we can apply \weirdref{t-trees}{a} inductively.  The main difficulty with this approach is that a vertex $v$ in $H[L_i]$ dominates an entire $(t-1)$-forest $F$ in $H[L_{i+1}]$.  If some colour $\phi$ is used more than once in the colouring of $F$, then $v$ must be assigned a colour larger than $\phi$.
