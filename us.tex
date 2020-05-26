@@ -33,7 +33,7 @@
 \DeclareMathOperator{\lhppw}{lhp-pw}
 
 
-\title{\MakeUppercase{Asymptotically Optimal 2-Ranking of Planar Graphs}}
+\title{\MakeUppercase{Asymptotically Optimal Vertex 2-Ranking of Planar Graphs}}
 \author{Prosenjit Bose, Vida Dujmović, Mehrnoosh Javarsineh, and Pat Morin}
 
 \newcommand{\uqs}{\chi_2}
@@ -50,6 +50,7 @@
 \newcommand{\weirdref}[2]{\cref{#1}#2}
 \newcommand{\weirdlabel}[2]{\label{#1-#1}}
 
+\pagenumbering{roman}
 \begin{document}
 \begin{titlepage}
 \maketitle
@@ -76,7 +77,7 @@ A sequence of integers $\phi_0,\ldots,\phi_r$ is \emph{ranked} if $\max\{\phi_0,
 }
 The $\ell$-ranking number $\chi_\ell(G)$ is the minimum integer $k$ such that $G$ has a $\ell$-ranking $\varphi:V(G)\to \{1,\ldots,k\}$.
 
-The case $\ell=2$ has received special attention \cite{almeter.demircan.ea:graph,karpas.neiman.ea:on}. A $2$-ranking is called a \emph{unique-superior colouring} (abbreviated \emph{us-colouring}) by \citet{karpas.neiman.ea:on} who prove the following result:
+The case $\ell=2$ has received special attention \cite{almeter.demircan.ea:graph,karpas.neiman.ea:on,shalu.antony:complexity}. A $2$-ranking is called a \emph{unique-superior colouring} (abbreviated \emph{us-colouring}) by \citet{karpas.neiman.ea:on} who prove the following result:
 
 \setcounter{othertheorem}{19}
 \begin{othertheorem}[\cite{karpas.neiman.ea:on}]\label{trees}
@@ -125,6 +126,21 @@ In addition to planar graphs, there are product structure theorems for a number 
     \end{compactenum}
     there exists an integer $c=c(\mathcal{G})$ such that, for every $n$-vertex graph $G\in\mathcal{G}$, $\uqs(G)\in O(\log n/\log^{(c)} n)$.
 \end{thm}
+
+\subsection{Related Work}
+
+For a graph $G$, a vertex $\infty$-ranking is known as a \emph{vertex ranking} \cite{bodlaender.deogun.ea:rankings} or \emph{ordered colouring} of $G$ \cite{katchalski.mccuaig.ea:ordered}.  Finding an $\infty$-ranking $\varphi$ that uses exactly $\chi_\infty(G)$ colours is equivalent to finding a minimum-height elimination tree of $G$ \cite{torre.greenlaw.ea:optimal,deogun.kloks.ea:on}.  This measure has applications to parallel Cholesky factorization of matrices \cite{bodlaender.gilbert.ea:approximating,duff.reid:multifrontal,liu:role,dereniowski.kubale:cholesky} and in VLSI layout \cite{leiserson:area,sen.deng.ea:on}.  More recently, \citet{even.smorodinsky:hitting} showed that $\chi_\infty(G)$ determines the competitive ratio of the best algorithm for the online hitting set problem in $G$.
+
+The \emph{vertex ranking problem} of determining $\chi_\infty(G)$ for an arbitrary graph $G$ is known to be NP-hard, even on some restricted classes of graphs \cite{bodlaender.deogun.ea:rankings,llewellyn.tovey.ea:local,llewellyn.tovey.ea:erratum,dereniowski.nadolski:vertex}. Polynomial-time algorithms for the vertex ranking problem have been found for several families of graphs: \citet{schaeffer:optimal} showed this for trees and \citet{deogun.kloks.ea:on} showed this for permutation graphs.
+
+A straightforward application of planar separators shows that, for any $n$-vertex planar graph $G$, $\chi_\infty(G) \in O(\sqrt(n))$ \cite{llewellyn.tovey.ea:local,katchalski.mccuaig.ea:ordered}, and this bound is optimal:  There exists $n$-vertex planar graphs $G$ with $\chi_\infty(G)\in \Omega(\sqrt{n})$ \cite{katchalski.mccuaig.ea:ordered}.  A lower bound of \citet{katchalski.mccuaig.ea:ordered} shows that upper bounds like this, based on separators are essentially tight: If, for every $r$-element set $S\subseteq V(G)$, the graph $G-S$ has a component of size at least $\alpha m$, then $\chi_\infty(G) \in\Omega(\alpha r)$. In a similar vein, \citet{bodlaender.gilbert.ea:approximating,kloks:treewidth} show that $\chi_\infty(G)$ is lower bounded by 1 plus the pathwidth of $G$.
+
+It is not hard to see that, even for an $n$-vertex path $P$, $\chi_\infty(P)\in\Omega(\log n)$.  The same separator argument, applied to treewidth-$t$ graphs shows that every $n$-vertex treewidth-$t$ graph $G$ has $\chi_\infty(G)\in O(t\log n)$.  This shows that, even for graphs with constant-size separators, (worst-case asymptotically) optimal bounds are obtained by divide-and-conquer.
+
+More recently, at least two works have considered $\chi_\ell$ for finite $\ell$.  \citet{karpas.neiman.ea:on} proved \cref{trees}: a tight bound of $\uqs(T)\in O(\log n/\log\log n)$ for every $n$-vertex tree $T$ and \cref{planar-graphs} the upper bound $\uqs(G)\in O(\log n)$ for every $n$-vertex planar graph.  More generally, the same authors show that, for any proper minor-closed family $\mathcal{G}$ of graphs and, for every positive integer $\ell$, $\chi_\ell(G)\in O(\ell\log n)$ for every $n$-vertex $G\in\mathcal{G}$.  Finally, they show that, for fixed $d$, every $n$-vertex $d$-degenerate graph $G$ has $\uqs(G)\in O(\sqrt{n})$ and there exists examples with $\uqs(G)\in\Omega(n^{1/3})$.
+
+\citet{shalu.antony:complexity} show that determining the minimum number of colours required by a 2-ranking of a given graph is NP-hard, even when restricted to planar bipartite graphs.  \citet{almeter.demircan} determine the exact value of $\uqs(Q_d)=d+1$ where $Q_d$ is the $d$-cube.  They also shows that, for subcubic graphs $G$, $\uqs(G)\le 7$ and show the existence of a graph with maximum degree $k$ such that $\uqs(G)\in\Omega(k^2/\log k)$.
+
 
 The remainder of this paper is organized as follows: \Cref{sec:basics} reviews some basic tools used in the following sections. \Cref{upper-bounds} proves the upper bounds in \cref{planar,t-trees,three-trees}.  \Cref{lower-bounds} proves the lower bound in \cref{t-trees}, which immediately implies the lower bounds in \cref{planar,three-trees}. \Cref{conclusion} gives a brief summary and conclusions.
 
@@ -186,7 +202,7 @@ As the following simple lemma shows, product structure is highly relevant to 2-r
 \end{lem}
 
 \begin{proof}
-  Use a product colouring $\varphi(x,y)=\uqs(G_2)\cdot \rho(x) + \psi(y)$ where $\rho:V(G_1)\to\{0,\ldots,\uqs(G_1)-1\}$ and $\psi:V(G_2)\to\{0,\ldots,\uqs(G_2)-1\}$ are us-colourings of $G_1$ and $G_2$.  Consider any path $uvw$ in $G_1\boxtimes G_2$.  If the projection of $uvw$ onto $G_1$ is a path, then contribution of $\psi$ to $\varphi$ is irrelevant and the fact that $\rho$ is a us-colouring of $G_1$ implies that $\varphi(u)\neq \varphi(w)$ or that $\varphi(v)>\varphi(w)$.  If the projection of $uvw$ onto $G_1$ has only two vertices, then $uvw$ is a $3$-cycle in $G_1\boxtimes G_2$ and $\varphi(u)$, $\varphi(v)$ and $\varphi(w)$ are all distinct.  If the projection of $uvw$ onto $G_1$ has only one vertex then the projection of $uvw$ onto $G_2$ has three vertices.  In this case, the contribution of $\rho$ to $\varphi$ is irrelevant and  and the fact that $\rho$ is a us-colouring of $G_2$ implies that $\varphi(u)\neq \varphi(w)$ or that $\varphi(v)>\varphi(w)$.
+  Use a product colouring $\varphi(x,y)=\uqs(G_2)\cdot \rho(x) + \psi(y)$ where $\rho:V(G_1)\to\{0,\ldots,\uqs(G_1)-1\}$ and $\psi:V(G_2)\to\{0,\ldots,\uqs(G_2)-1\}$ are 2-rankings of $G_1$ and $G_2$.  Consider any path $uvw$ in $G_1\boxtimes G_2$.  If the projection of $uvw$ onto $G_1$ is a path, then contribution of $\psi$ to $\varphi$ is irrelevant and the fact that $\rho$ is a 2-ranking of $G_1$ implies that $\varphi(u)\neq \varphi(w)$ or that $\varphi(v)>\varphi(w)$.  If the projection of $uvw$ onto $G_1$ has only two vertices, then $uvw$ is a $3$-cycle in $G_1\boxtimes G_2$ and $\varphi(u)$, $\varphi(v)$ and $\varphi(w)$ are all distinct.  If the projection of $uvw$ onto $G_1$ has only one vertex then the projection of $uvw$ onto $G_2$ has three vertices.  In this case, the contribution of $\rho$ to $\varphi$ is irrelevant and  and the fact that $\rho$ is a 2-ranking of $G_2$ implies that $\varphi(u)\neq \varphi(w)$ or that $\varphi(v)>\varphi(w)$.
 \end{proof}
 
 \cref{product-lemma,product-structure,three-trees} immediately imply the upper bound in \cref{planar}.
@@ -230,7 +246,7 @@ which is again valid for all $x> \tau(i-1)$.
 \section{Upper Bounds}
 \label{upper-bounds}
 
-In this section we prove asymptotically tight bounds for the worst-case number of colours needed to us-colour $n$-vertex $t$-trees.  Note that, throughout this section, and the rest of the paper, we treat $t$ as a fixed constant that does not depend on $n$.  Asymptotic notations $O$, $\Omega$, and $o$ are used are used assuming that $n$ (or some increasing function of $n$) is the only parameter tending to infinity.
+In this section we prove asymptotically tight bounds for the worst-case number of colours needed to 2-rank $n$-vertex $t$-trees.  Note that, throughout this section, and the rest of the paper, we treat $t$ as a fixed constant that does not depend on $n$.  Asymptotic notations $O$, $\Omega$, and $o$ are used are used assuming that $n$ (or some increasing function of $n$) is the only parameter tending to infinity.
 
 \subsection{The Upper Bound for $t$-Trees}
 
@@ -240,11 +256,11 @@ We begin by proving the first half of \cref{t-trees}:
     For every fixed $t\ge 1$ and every $n$-vertex $t$-tree $H$, $\uqs(H)\in O(\log n/\log^{(t+1)} n)$.
 \end{namedtheorem}
 
-We now give a brief overview of the proof of \weirdref{t-trees}{a}.  The proof is by induction on the value of $t$.  The base case, $t=1$, is handled by \cref{trees}.  We need to prove that $H$ has a us-colouring using colours $\{1,\ldots,ak\}$ for some constant $a$ and some $k\in O(\log n/\log^{(t+1)} n)$.  An asymptotically equivalent statement of this is: If $n \le (\log^{(t-1)}k)^k$, then $H$ has a us-colouring using colours $\{1,\ldots,ak\}$, and this is the version of the statement that we prove.
+We now give a brief overview of the proof of \weirdref{t-trees}{a}.  The proof is by induction on the value of $t$.  The base case, $t=1$, is handled by \cref{trees}.  We need to prove that $H$ has a 2-ranking using colours $\{1,\ldots,ak\}$ for some constant $a$ and some $k\in O(\log n/\log^{(t+1)} n)$.  An asymptotically equivalent statement of this is: If $n \le (\log^{(t-1)}k)^k$, then $H$ has a 2-ranking using colours $\{1,\ldots,ak\}$, and this is the version of the statement that we prove.
 
 The proof considers a BFS layering $L_1,\ldots,L_m$ of $H$ and uses the fact that each layer $L_i$ induces a $(t-1)$-forest $H[L_i]$, on which we can apply \weirdref{t-trees}{a} inductively.  The main difficulty with this approach is that a vertex $v$ in $H[L_i]$ dominates an entire $(t-1)$-forest $F$ in $H[L_{i+1}]$.  If some colour $\phi$ is used more than once in the colouring of $F$, then $v$ must be assigned a colour larger than $\phi$.
 
-To account for this, we use a strengthening of \weirdref{t-trees}{a} that applies to any $t$-forest $H'$ contained in $H[L_{i+1}\cup\cdots\cup L_m]$.  This strengthening shows that, if $H'$ has size at most $(\log^{(t-1)} k)^k/(\log^{(t-1)} c)^c$ then $H'$ has a us-colouring using colours $\{1,\ldots,ak\}$ in which no colour larger than $a(k-c-1)$ appears more than once in the colouring of $H'[L_{i+1}]$.  In essence, the size of $H'$ provides a lower bound on the colour assigned to some vertex $v$ in $L_i$.
+To account for this, we use a strengthening of \weirdref{t-trees}{a} that applies to any $t$-forest $H'$ contained in $H[L_{i+1}\cup\cdots\cup L_m]$.  This strengthening shows that, if $H'$ has size at most $(\log^{(t-1)} k)^k/(\log^{(t-1)} c)^c$ then $H'$ has a 2-ranking using colours $\{1,\ldots,ak\}$ in which no colour larger than $a(k-c-1)$ appears more than once in the colouring of $H'[L_{i+1}]$.  In essence, the size of $H'$ provides a lower bound on the colour assigned to some vertex $v$ in $L_i$.
 
 It turns out to be easier to work with a $(t-1)$-forest $F$ contained in $H[L_i]$, in which each vertex $v$ is assigned a lower bound $a(k-\gamma(v)-1)$ on its colour.  This lower bound can also be interpreted as a weight  $(\log^{(t-1)}k)^k/(\log^{(t-1)}\gamma(v))^{\gamma(v)}$ that describes the size of the $t$-forest $H'$ in $H[L_{i+1}\cup\cdots\cup L_m]$ that is attached to $v$.  The condition that $H'$ has size at most $(\log^{(t-1)} k)^k/(\log^{(t-1)} c)^c$ translates roughly into the condition
 \[
@@ -252,23 +268,23 @@ It turns out to be easier to work with a $(t-1)$-forest $F$ contained in $H[L_i]
 \]
 We are able to show that $F$ has a special kind of separator $S$ such that
 \begin{compactenum}
-    \item $F[S]$ can be us-coloured using $O(c)$ large colours in $\{a(k-c)+1,\ldots,ak\}$ that are each used only once and $O(t)$ small colours in $\{a(k-c-1)+1,\ldots,a(k-c)\}$ (that are used repeatedly); and
-    \item Each component of $F-S$ can be us-coloured using $O(k-c)$ small colours $\{1,\ldots,a(k-c-1)\}$.
+    \item $F[S]$ can be 2-ranked using $O(c)$ large colours in $\{a(k-c)+1,\ldots,ak\}$ that are each used only once and $O(t)$ small colours in $\{a(k-c-1)+1,\ldots,a(k-c)\}$ (that are used repeatedly); and
+    \item Each component of $F-S$ can be 2-ranked using $O(k-c)$ small colours $\{1,\ldots,a(k-c-1)\}$.
 \end{compactenum}
-Each of these colourings respect the lower bounds given by $\gamma(v)$ for each vertex $v$ of $F$.  The separator $S$ has a \emph{shadow-completeness} property: if $uvw$ is a path with $u,w\in S$ and $v\in V(F-S)$, then $uw\in E(F[S])$.  This ensures that the resulting colouring is a us-colouring of $F$.
+Each of these colourings respect the lower bounds given by $\gamma(v)$ for each vertex $v$ of $F$.  The separator $S$ has a \emph{shadow-completeness} property: if $uvw$ is a path with $u,w\in S$ and $v\in V(F-S)$, then $uw\in E(F[S])$.  This ensures that the resulting colouring is a 2-ranking of $F$.
 
 The preceding sketch ignores a difficulty caused by the fact that forests in $H[L_{i+1}]$ are attached to $t$-cliques in $H[L_i]$ rather than individual vertices of $H[L_i]$.  If we treat each of these forests individually, then we run into the problem that there may be two $t$-cliques $C_1$ and $C_2$ with a vertex $v$ in common.  A $(t-1)$-forest $F_1$ attached to $C_1$ may avoid using colours larger than $a(k-c)$ more than once and a forest $F_2$ attached to $C_2$ may avoid using colours larger than $a(k-c)$ more than once.  Nevertheless, $F_1$ may have one vertex $u$ of colour $\phi >a(k-c)$ and $F_2$ may also have one vertex $w$ of colour $\phi$.  Since $uvw$ is a path in $H$, $v$'s colour must be larger than $\phi$.  We get around this by using an auxilliary colouring $\zeta$ of the $t$-cliques in $H[L_i]$ so that if two $t$-cliques $C_1$ and $C_2$ have a vertex in common and the preceding situation occurs, then $\zeta(C_1)\neq \zeta(C_2)$.  The vertices in $F_1$ receive the secondary colour $\zeta(C_1)$ and the vertices in $F_2$ receive the secondary colour $\zeta(C_2)$.  In this way, the vertices $u$ and $w$ described above receive different colours.
 
 \subsubsection{Some Combination Lemmas}
 
-A path $v_i,\ldots,v_r$ in $H$ is \emph{vertical} if $x_T(v_{i-1})$ is a strict $T$-ancestor of $x_T(v_i)$, for each $i\in\{1,\ldots,r\}$. (Equivalently, $v_0,\ldots,v_r$ is a subsequence of $v_1,\ldots,v_n$.) Any path in $H$ that is not vertical is \emph{humped}.  This allows us to define the humped us-chromatic number $\hus(H)=\hus(H,\mathcal{T})$ as the minimum number of colours needed in a humped us-colouring of $H$.
+A path $v_i,\ldots,v_r$ in $H$ is \emph{vertical} if $x_T(v_{i-1})$ is a strict $T$-ancestor of $x_T(v_i)$, for each $i\in\{1,\ldots,r\}$. (Equivalently, $v_0,\ldots,v_r$ is a subsequence of $v_1,\ldots,v_n$.) Any path in $H$ that is not vertical is \emph{humped}.  This allows us to define the humped us-chromatic number $\hus(H)=\hus(H,\mathcal{T})$ as the minimum number of colours needed in a humped 2-ranking of $H$.
 
 \begin{lem}\label{humped}
     For any $t$-tree $H$, $\uqs(H)\le (\binom{t+2}{t}-1)\hus(H)$.
 \end{lem}
 
 \begin{proof}
-    A lemma of \citet{pilipczuk.siebertz:polynomial} (see \cite[Lemma~13]{pilipczuk.siebertz:polynomial-arxiv}) shows that from any vertex $v\in V(H)$, the number of vertical paths of length at most $p$ that end at $v$ is at most $\binom{t+p}{t}$.  Applying this with $p=2$ implies that we can greedily colour $v_1,\ldots,v_n$ to obtain a colouring $\psi:V(H)\to \{0,\ldots,\binom{t+2}{t}-2\}$ so that the endpoints of any non-trivial vertical path of length at most $2$ are assigned different colours.  Let $\varphi':V(H)\to\{1,\ldots,k\}$ be a humped us-colouring of $H$.  Then the colouring $\varphi:V(H)\to\{1,\ldots,\binom{t+2}{t}k\}$ defined by $\varphi(v):=(\binom{t+2}{t}-1)\varphi'(v)-\psi(v)$ proves the result.
+    A lemma of \citet{pilipczuk.siebertz:polynomial} (see \cite[Lemma~13]{pilipczuk.siebertz:polynomial-arxiv}) shows that from any vertex $v\in V(H)$, the number of vertical paths of length at most $p$ that end at $v$ is at most $\binom{t+p}{t}$.  Applying this with $p=2$ implies that we can greedily colour $v_1,\ldots,v_n$ to obtain a colouring $\psi:V(H)\to \{0,\ldots,\binom{t+2}{t}-2\}$ so that the endpoints of any non-trivial vertical path of length at most $2$ are assigned different colours.  Let $\varphi':V(H)\to\{1,\ldots,k\}$ be a humped 2-ranking of $H$.  Then the colouring $\varphi:V(H)\to\{1,\ldots,\binom{t+2}{t}k\}$ defined by $\varphi(v):=(\binom{t+2}{t}-1)\varphi'(v)-\psi(v)$ proves the result.
 \end{proof}
 
 
@@ -285,7 +301,7 @@ A path $v_i,\ldots,v_r$ in $H$ is \emph{vertical} if $x_T(v_{i-1})$ is a strict 
         \item $H$ contains no path $v_iw v_j$ with $|i-j|>1$; and
         \item $\pw(H-\{v_1,\ldots,v_m\})\le \pw(H)-1$.
     \end{inparaenum}
-    Property~(iii) implies that we can therefore inductively colour $H-\{v_1,\ldots,v_m\}$ using colours $\{1,\ldots,3\pw(H)-2\}$ and then colour each $v_i$ with colour $3\pw(H)-1+i\bmod 3$.  Property~(i) ensures that this gives a us-colouring of $H[v_1,\ldots,v_m]$.  Property~(ii) and the fact that $v_1,\ldots,v_m$ are coloured using larger colours than those used $H-\{v_1,\ldots,v_m\}$ ensures that the resulting colouring is a us-colouring of $H$.
+    Property~(iii) implies that we can therefore inductively colour $H-\{v_1,\ldots,v_m\}$ using colours $\{1,\ldots,3\pw(H)-2\}$ and then colour each $v_i$ with colour $3\pw(H)-1+i\bmod 3$.  Property~(i) ensures that this gives a 2-ranking of $H[v_1,\ldots,v_m]$.  Property~(ii) and the fact that $v_1,\ldots,v_m$ are coloured using larger colours than those used $H-\{v_1,\ldots,v_m\}$ ensures that the resulting colouring is a 2-ranking of $H$.
 \end{proof}
 
 A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$. For a graph $H$ with a rooted tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$, we define the $\mathcal{T}$-skeleton $\hat{H}$ of $H$ as the graph with vertex set $V(\hat{H}):=\bigcup_{x\in \Lambda(T)} B_x$ and containing the edge $vw$ if there exists $x,y\in V(T)$ with $v\in B_x$, $w\in B_y$ such that the path in $T$ from $x$ to $y$ contains no branching node in its interior.  It is worth noting that the skeleton $\hat{H}$ of $H$ is a minor of $H$ since it can be obtained from $H$ by repeatedly contracting an edge $vw$ with $v\in V(\hat{H})$ and $w\not\in V(\hat{H})$ into $v$.
@@ -299,7 +315,7 @@ A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least t
 \end{lem}
 
 \begin{proof}
-    Let $\varphi:V(\hat{H})\to \{3t+2,\ldots,\uqs(\hat{H})+3t+1\}$ be a us-colouring of $\hat{H}$. The graph $P:=T-\Lambda(T)$ consists of disjoint paths and, for any edge $vw\in H-V(\hat{H})$ there is a node $x\in V(P)$ such that $\{v,w\}\subseteq B_x$.  Therefore $H-V(\hat{H})$ has pathwidth at most $t$ so, by \cref{pathwidth}, it can be us-coloured using colours $1,\ldots,3t+1$.  This gives the desired colouring of $H$ using colours $\{1,\ldots,\uqs(\hat{H})+3t+1\}$.  To see why this is a us-colouring observe that for any path $uvw$ with $u,w\in V(\hat{H})$ and $v\in V(H)\setminus V(\hat{H})$, the edge $uw\in\hat{H}$, so $\varphi(u)\neq\varphi(w)$.
+    Let $\varphi:V(\hat{H})\to \{3t+2,\ldots,\uqs(\hat{H})+3t+1\}$ be a 2-ranking of $\hat{H}$. The graph $P:=T-\Lambda(T)$ consists of disjoint paths and, for any edge $vw\in H-V(\hat{H})$ there is a node $x\in V(P)$ such that $\{v,w\}\subseteq B_x$.  Therefore $H-V(\hat{H})$ has pathwidth at most $t$ so, by \cref{pathwidth}, it can be 2-ranked using colours $1,\ldots,3t+1$.  This gives the desired colouring of $H$ using colours $\{1,\ldots,\uqs(\hat{H})+3t+1\}$.  To see why this is a 2-ranking observe that for any path $uvw$ with $u,w\in V(\hat{H})$ and $v\in V(H)\setminus V(\hat{H})$, the edge $uw\in\hat{H}$, so $\varphi(u)\neq\varphi(w)$.
 \end{proof}
 
 \subsubsection{The Meat}
@@ -325,7 +341,7 @@ where
 \[
     s := \frac{\log c}{\log^{(\mu)} c}
 \]
-then $H$ has a us-colouring $\varphi:V(H)\to\N$ such that
+then $H$ has a 2-ranking $\varphi:V(H)\to\N$ such that
 \begin{compactenum}[(P1)]
     \item for each $i\in\{1,\ldots,{t'}\}$, $\varphi(v_1)=\lfloor a(k-c-1)\rfloor+i-1$; and
     \item for each $v\in V(H)\setminus B_r$, $a(k-\gamma(v)-1) < \varphi(v) \le a(k-c-1)$.
@@ -375,7 +391,7 @@ then $H$ has a us-colouring $\varphi:V(H)\to\N$ such that
        O\left(\frac{\log|\hat{H}'|}{\log^{(\mu)}|\hat{H}'|}\right)
        \subseteq O\left(\frac{\log c}{\log^{(\mu)} c}\right) = O(s) \enspace .
     \]
-    Therefore, $H'$ has a us-colouring $\varphi:V(H')\to \{a(k-c-1)-r,\ldots,a(k-c-1)-1\}$ for some $r\in O(s)$. Modifying $\varphi$ so that it colours $\varphi(v_i):=a(k-c-1)+i-1$ for each $i\in\{1,\ldots,t\}$ preserves the fact that $\varphi$ is a us-colouring.
+    Therefore, $H'$ has a 2-ranking $\varphi:V(H')\to \{a(k-c-1)-r,\ldots,a(k-c-1)-1\}$ for some $r\in O(s)$. Modifying $\varphi$ so that it colours $\varphi(v_i):=a(k-c-1)+i-1$ for each $i\in\{1,\ldots,t\}$ preserves the fact that $\varphi$ is a 2-ranking.
 
     The colouring $\varphi$ of $H'$ is a partial colouring of $H$. By definition, $\varphi$ satisifies requirement (P1). For a sufficiently large constant $a$, $a(k-c-1)-r > a(k-c-s-1)$, so each vertex in $H'$ receives a colour larger than $a(k-c-s-1)$.  For any vertex $v\in V(H)\setminus (B_r\setminus \{v_1\})$,
     \[ \frac{(\log^{(\mu-1)} k)^k}{(\log^{(\mu-1)}\gamma(v))^{\gamma(v)}}
@@ -401,11 +417,11 @@ then $H$ has a us-colouring $\varphi:V(H)\to\N$ such that
    Therefore, we can apply induction on each graph $H_{r_1},\ldots,H_{r_m}$ since these graphs satisfy \cref{total-weight-i} with the value $c'=c+s$.
    Consider one particular such graph $H_{r_j}$ and let $v_1',\ldots,v_t'$ denote the vertices of $B_{r_i}$.  The vertices $v_2',\ldots,v_t'$ appear in $H'$ and have already received colours greater than $a(k-c'-1)$.  The vertex $v_1'$ has not been assigned a colour yet and it can receive colour $a(k-c'-1)$.  Applying the inductive hypothesis colours the remaining vertices $V(H_{r_i})\setminus B_{r_i}$ using colours smaller than $a(k-c'-1)$.  Doing this for each of $H_{r_1},\ldots,H_{r_m}$ completes the colouring $\varphi$ to a total colouring of $H$.
 
-   All that remains is to verify that $\varphi$ is a us-colouring of $H$. To see this, consider any length-2 path $uvw$.  There are a few cases to consider:
+   All that remains is to verify that $\varphi$ is a 2-ranking of $H$. To see this, consider any length-2 path $uvw$.  There are a few cases to consider:
    \begin{enumerate}
     \item If $\varphi(u)=\varphi(w) \ge a(k-c'-1)$ then $\{u,w\}\subseteq V(H')$. Either
     \begin{enumerate}
-       \item $v\in V(H')$ in which case $\varphi(v)>\varphi(u)$ since $\varphi$ is a us-colouring of $H'$ (by the application of \weirdref{t-trees}{a}); or
+       \item $v\in V(H')$ in which case $\varphi(v)>\varphi(u)$ since $\varphi$ is a 2-ranking of $H'$ (by the application of \weirdref{t-trees}{a}); or
        \item $v\in V(H_{r_i})\setminus V(H')$ for some $i\in\{1,\ldots,m\}$.  This case is not possible.  Since $v\not\in V(H')$, there is no $x\in V(T')$ with $v\in B_x$.  But this implies that both $u$ and $w$ are contained in $B_{r_i}$, so $uw\in E(H')$, so $\varphi(u)\neq\varphi(w)$ since $\varphi$ is a proper colouring of $H'$.
    \end{enumerate}
    \item If $\varphi(u)=\varphi(w) < a(k-c'-1)$ then $u\in V(H_{r_i})\setminus V(H')$ and $w\in V(H_{r_j})\setminus V(H')$.  Either
@@ -429,7 +445,7 @@ The next lemma tells us what to do when we don't necessarily have the slack $s$ 
          n_r \le \frac{(\log^{(\mu-1)} k)^k}{(\log^{(\mu-1)} c)^{c}} \enspace ,
      \label{total-weight-ii}
     \end{equation}
-    then $H$ has a us-colouring $\varphi:V(T)\to\{1,\ldots,ak\}$ such that
+    then $H$ has a 2-ranking $\varphi:V(T)\to\{1,\ldots,ak\}$ such that
     \begin{compactenum}[(P1)]
         \item for each $i>a(k-c-1)$, there is at most one $v\in V(H)$ with $\varphi(v)=i$.
         % \item for each $i\in\{1,\ldots,{t'}\}$, $\varphi(v_1)=a(k-c-1)+i-1$; and
@@ -473,9 +489,9 @@ The next lemma tells us what to do when we don't necessarily have the slack $s$ 
 
     Let $T'$ be the subtree of $T$ induced by its heavy nodes.  We say that a node of $T'$ is \emph{special} if it is a leaf of $T'$ or it is a branching node of $T'$ and we let $S$ denote the set of branching nodes.  Together, \cref{heavy-size} and \cref{total-weight-ii} imply that the number of leaves of $T'$ is at most $(1+o(1))c$.  In any tree with $\ell$ leaves, the number of branching nodes is at most $\ell-1$.  Therefore the number of special nodes of $T'$ is $|S|\le (2+o(1))c$.
 
-    Let $H'=H[\bigcup_{x\in V(T')} B_x]$ and observe that $(B_x:x\in V(T'))$ is a width-$(t-1)$ tree decomposition of $H'$.  We can obtain a us-colouring of $H'$ as follows: (this is similar to the proof of \cref{skeleton-colour}):  Let $B:=\bigcup_{x\in S} B_x$ and assign each vertex  $v\in B$ a distinct colour $\varphi(v)\in\{\lfloor a(k-c-1)\rfloor+1,\ldots,ak\}$.  This clearly produces a us-colouring of the graph $H'[B]$.
+    Let $H'=H[\bigcup_{x\in V(T')} B_x]$ and observe that $(B_x:x\in V(T'))$ is a width-$(t-1)$ tree decomposition of $H'$.  We can obtain a 2-ranking of $H'$ as follows: (this is similar to the proof of \cref{skeleton-colour}):  Let $B:=\bigcup_{x\in S} B_x$ and assign each vertex  $v\in B$ a distinct colour $\varphi(v)\in\{\lfloor a(k-c-1)\rfloor+1,\ldots,ak\}$.  This clearly produces a 2-ranking of the graph $H'[B]$.
 
-    Next, consider the as-yet-uncoloured vertex set $U:=V(H')\setminus B$. The sequence $(B_x:x\in V(T'-S))$ is a width-$(t-1)$ $(T'-S)$-decomposition of $H'[U]=H[U]$. The graph $T'-S$ is a collection of disjoint paths, therefore $\pw(H')\le t-1$. Therefore, by \cref{pathwidth} $H'[U]$ has a us-colouring $\varphi:U\to \{a(k-c-2)+\lceil a/2\rceil,\ldots,\lfloor a(k-c-1)\rfloor\}$, provided that $a/2\ge 3t-2$.  It is straightforward to check that the colouring $\varphi$ produced this way is a us-colouring of the entire graph $H'$.
+    Next, consider the as-yet-uncoloured vertex set $U:=V(H')\setminus B$. The sequence $(B_x:x\in V(T'-S))$ is a width-$(t-1)$ $(T'-S)$-decomposition of $H'[U]=H[U]$. The graph $T'-S$ is a collection of disjoint paths, therefore $\pw(H')\le t-1$. Therefore, by \cref{pathwidth} $H'[U]$ has a 2-ranking $\varphi:U\to \{a(k-c-2)+\lceil a/2\rceil,\ldots,\lfloor a(k-c-1)\rfloor\}$, provided that $a/2\ge 3t-2$.  It is straightforward to check that the colouring $\varphi$ produced this way is a 2-ranking of the entire graph $H'$.
 
     This gives a colouring $\varphi$ of $H'$ that certainly satisfies (P1).  To see that it also satisfies (P2), observe that, since $|V(T)|\ge 2$, the sum in \cref{total-weight-ii} has at least two terms, which implies that $\gamma(v) > c$ for all $v\in V(H)$. Since $\gamma$ is integer valued, this means that $\gamma(v)\ge c+1$.  Therefore, for each $v\in V(T')$, $\varphi(v)\ge a(k-c-2)+a/2 \ge a(k-c-2)+1\ge a(k-\gamma(v)-1)+1$ so that $\varphi$ satisfies (P2).
 
@@ -486,12 +502,12 @@ The next lemma tells us what to do when we don't necessarily have the slack $s$ 
     \]
     with $s$ defined as in the statement of \cref{t-tree-slack}.
     Now we can apply \cref{t-tree-slack} to the graph $H_{i}:=H[\bigcup_{x\in V(T_{i})} B_x]$.  This produces a colouring $\varphi:V(H_i)\to\{1,\ldots,a(k-c-s)\}\cup \bigcup_{v\in B_{r_i}}\varphi(v)$ in which the colours of vertices in $B_{r_i}$ are unchanged and are all at least $a(k-c-s)+a/2$ and the colour of each vertex $v\in V(H_i)\setminus B_{r_i}$ is $\varphi(v)<a(k-c-s)+a/2$.  Therefore, (P2) is satisified.  The colours assigned to vertices in $H_i-B_{r_i}$ by \cref{t-tree-slack} satisfy (P1).
-    The proof that this produces a valid us-colouring of $H$ is exactly as in the proof of \cref{t-tree-slack}.
+    The proof that this produces a valid 2-ranking of $H$ is exactly as in the proof of \cref{t-tree-slack}.
 \end{proof}
 
 
 
-% We say that a path $xyz$ in $H$ is \emph{BFS-humped} if $x,z\in L_i$ and $y\in L_{i-1}$ for some $i\in\{1,\ldots,m\}$.  A colouring $\varphi:V(H)\to\{1,\ldots,k\}$ is a \emph{BFS-humped us-colouring} if $\max\{\varphi(x),\varphi(y),\varphi(z)\}$ is unique for each BFS-humped path $xyz$ in $H$.
+% We say that a path $xyz$ in $H$ is \emph{BFS-humped} if $x,z\in L_i$ and $y\in L_{i-1}$ for some $i\in\{1,\ldots,m\}$.  A colouring $\varphi:V(H)\to\{1,\ldots,k\}$ is a \emph{BFS-humped 2-ranking} if $\max\{\varphi(x),\varphi(y),\varphi(z)\}$ is unique for each BFS-humped path $xyz$ in $H$.
 
 
 
@@ -544,7 +560,7 @@ Our proof is based on the following claim:
         \end{equation}
         then there exists $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,\ldots,t-1\}$ such that
         \begin{compactenum}[(P1)]
-            \item The function $\theta:V(H')\to\{1,\ldots,2tak\}$ defined by $\theta(v)=2t\varphi(v) - 2\psi(v) -(\ell(v)\bmod 2)$ is a humped us-colouring of $H'$;
+            \item The function $\theta:V(H')\to\{1,\ldots,2tak\}$ defined by $\theta(v)=2t\varphi(v) - 2\psi(v) -(\ell(v)\bmod 2)$ is a humped 2-ranking of $H'$;
             \item for each $v\in V(H'[L_i])$, $\psi(v)=0$;
             \item for each $\iota\in\{a(k-c-1)+1,\ldots,ak\}$ there is at most one vertex $v$ in $V(H'[L_i])$ with $\varphi(v)=\iota$.
         \end{compactenum}
@@ -585,7 +601,7 @@ Our proof is based on the following claim:
            \le \frac{(\log^{(\mu-1)} k)^{k-q+1}}{(\log^{(\mu-1)} c)^c}
            \le \frac{(\log^{(\mu-1)} k)^k}{(\log^{(\mu-1)} c)^c}
        \]
-       for $q\ge 1$.  This satisfies the requirements for \cref{t-tree-no-slack}, so we can find a us-colouring $\varphi$ of the $(t-1)$-forest $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in V(H'[L_i])$.  It remains to show that we can extend $\varphi$ to a complete colouring of $H'$.
+       for $q\ge 1$.  This satisfies the requirements for \cref{t-tree-no-slack}, so we can find a 2-ranking $\varphi$ of the $(t-1)$-forest $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in V(H'[L_i])$.  It remains to show that we can extend $\varphi$ to a complete colouring of $H'$.
 
        Recall that $v_1,\ldots,v_n$ is a construction order for $H$. For each vertex $w$ in $H'[L_{i+1}]$ we define the $i$-parent $p(w)$ of $w$ to be the vertex $v_j\in H'[L_i]$ such that $wv_j\in E(H')$ and $j$ is minimized.  That is, $v_j$ is the first vertex in $w$'s parent clique that appears in the construction order.  For each vertex $v$ in $H'[L_i]$ we define $D_v:=\{w\in H'[L_{i+1}]: p(w)=v\}$.
 
@@ -604,8 +620,8 @@ Our proof is based on the following claim:
 
        We have already ensured that $\varphi$ and $\psi$ satisfy (P2) and (P3). All that remains is to ensure that they satisfy (P1).  To do this, consider some humped path $xyz$ in $H'$.  There are a few cases to consider:
        \begin{compactenum}
-          \item If $xyz$ is completely contained in the forest $H'[L_i]$ then this path is properly coloured because \cref{t-tree-no-slack} produces a us-colouring $\varphi$ of $H'[L_i]$.
-          \item If $xyz$ is completely contained in $H_v$ for some $v\in H'[L_i]$ then the inductive hypothesis already ensures that $\theta$ was already a humped us-colouring of $H_w$ and the subsequent modifications to $\psi(v)$ for $v\in H_w[L_{i+1}]$ do not change this. In fact, these modifications do not change the relative order of $\theta(x)$ and $\theta(y)$ or the relative order of $\theta(y)$ and $\theta(z)$.
+          \item If $xyz$ is completely contained in the forest $H'[L_i]$ then this path is properly coloured because \cref{t-tree-no-slack} produces a 2-ranking $\varphi$ of $H'[L_i]$.
+          \item If $xyz$ is completely contained in $H_v$ for some $v\in H'[L_i]$ then the inductive hypothesis already ensures that $\theta$ was already a humped 2-ranking of $H_w$ and the subsequent modifications to $\psi(v)$ for $v\in H_w[L_{i+1}]$ do not change this. In fact, these modifications do not change the relative order of $\theta(x)$ and $\theta(y)$ or the relative order of $\theta(y)$ and $\theta(z)$.
           \item If $x,y\in L_i$ and $z\in L_{i+1}$ then $\ell(x)\bmod 2\neq\ell(z)\bmod 2$ so $\theta(x)\neq\theta(z)$.
           \item The only case that remains is when $x\in V(H_{v})$, $y\in V(H'[L_i])$ and $z\in V(H_w)$ for some $v\neq w$. Refer to \cref{proper}.  In this case, the vertices $x$ and $z$ did not appear in the same application of induction so it is possible that $\varphi(x)=\varphi(z)=\phi$ for some value $\phi>\varphi(y)$.
 
@@ -650,10 +666,45 @@ We prove the following optimal result for outerplanar graphs:
 
 Before proving \cref{outerplanar} we show how it completes the proof of the upper bound in \cref{three-trees}.  Since outerplanarity is preserved under taking minors, \cref{outerplanar,outerplanar-layers} imply that every planar 3-tree is BFS-$2$-bounded.  The upper bound in \cref{three-trees} then follows from \cref{mu-bounded}.
 
+% [TODO: Question: Is there a product structure theorem for outerplanar graphs?  Maybe $G\subseteq T\boxtimes P$ where $P$]
+\begin{lem}\label{outerplanar-technical}
+    Let $c,k$ be positive integers with $0\le c < k$, Let $G$ be an edge-maximal outerplane graph with outer face $F=v_1,\ldots,v_n$ and $3\le n:=|G|\le k!/c!-2$. Then, for any distinct $\phi_1,\phi_2,\phi_3\in\{a(k-c-1)+1,\ldots,ak\}$, there exists a weak 2-ranking $\varphi:V(G)\to\{1,\ldots,k\}$ such that $\varphi(v_i)=\phi_i$ for each $i\in\{1,2,3\}$.
+\end{lem}
+
+\begin{proof}
+    The proof is by induction on $n:=|G|$. The base case $n=3$ is trivial since, for any $a\ge 3$ we can colour the vertices of $G$ with the three colours $\phi_1$, $\phi_2$, and $\phi_3$.
+
+    For $n\ge 3$, let $w_1,\ldots,w_d$ denote the neighbours of $v_2$ in cyclic order, ordered so that $w_1=v_1$ and $w_d=v_3$. Then $w_1,\ldots,w_d$ is a path in $G$.  Consider the subgraph $X$ of $G$ induced by every vertex of every inner face of $G$ that is bounded by $w_iw_{i+1}$ for some $i\in\{1,\ldots,d-1\}$.
+
+    More formally, for each $i\in\{1,\ldots,d-1\}$, let
+    $Z_i$ denote the set of vertices $v$ such that $v\neq v_2$ and $vw_iw_{i+1}$ is an inner face of $G$. Observe that $|Z_i|\le 1$ since there are at most two faces bounded by $w_iw_{i+1}$ and one of these is $v_2w_iw_{i+1}$.  Then $X=G[v_2,w_1,\ldots,w_{d}\cup\bigcup_{j=1}^{i-1} Z_i]$.  We claim that $\pw(X)\le 3$.  Indeed, consider the path decomposition $(B_x:x\in P)$ where $P:=1,\ldots,d-1$ and, for each $x\in\{1,\ldots,d-1\}$, $B_x:=\{v_2,w_i,w_{i+1}\}\cup Z_i$.  Each bag $B_x$ in this path decomposition has size 4 or less.
+
+    For convenience, define $Z_0:=Z_{d+1}:=\emptyset$.  Fix some $i\in\{1,\ldots,d\}$ and consider the graph $G-\{w_{i}\}-Z_{i-1}-Z_i$.  This graph has a component $C$ that contains $v_2$ and (possibly) other components $C_1,\ldots,C_m$.  Let $G_i:=G[w_i\cup Z_{i-1}\cup Z_i\bigcup_{j=1}^m V(C_j)]$.  We say that $G_i$ is \emph{heavy} if $|G_i|-2 > k!/(c+1)!$ and let $I\subseteq\{1,\ldots,d\}$ consist of all $i$ for which $G_i$ is heavy.  Observe that $\sum_{i=1}^{d}(|G_i|-2)\le |G|-2$.  Therefore, $|I|< c+1$ so $|I|\le c$.
+
+    Let $Q=\bigcup_{i\in I}\left(Z_i\cup\{w_{i},w_{i+1}\}\right)$ be the set of vertices that bound heavy subgraph.  Now, $|Q|\le 3|I|\le 3c$.  Therefore, each vertex $v\in Q$ can be assigned a distinct colour $\varphi(v)\in\{a(k-c-1)+1,\ldots,ak\}\setminus\{\phi_1,\phi_2,\phi_3\}$, provided that $a(c+1)-3\ge 3c$ which is satisfied for $a\ge 3$.
+
+    Since $\pw(X)\le 3$, $\pw(X-Q)$ has pathwidth 3. Therefore, by \cref{pathwidth} $X-Q$ has a 2-ranking $\varphi:V(X-Q)\to\{a(k-c-2)+1,\ldots,a(k-c-1)\}$ provided that $a \ge 10\ge 3\pw(X-Q)+1$.  We can then apply induction to complete the colouring for each graph $G_i$.
+\end{proof}
+
+% The proof of \cref{outerplanar} is obtained by combining \cref{trees} with the following product structure theorem for outerplanar graphs:
+%
+% \begin{thm}\label{product-structure-outerplanar}
+%     For every $n$-vertex outerplanar graph $G$, there exists an at most $n$-vertex tree $T$ and a path $P$ of length at most $n-1$ such that $G$ is isomorphic to a subgraph of $T\boxtimes P$.
+% \end{thm}
+%
+% \begin{proof}
+%
+% \end{proof}
+
 
 \begin{proof}[Proof of \cref{outerplanar}]
-    This is the proof we've been discussing with Mehrnoosh. It uses the fact that the neighbourhood of a vertex in an outerplanar graph has bounded pathwidth.
+    We apply \cref{outerplanar-technical} to obtain a weak 2-ranking of $G$ with respect to the layering $L_0,\ldots,L_m$ and then triple the number of colours to obtain a 2-ranking. 
+    % This is an immediate consequence of \cref{product-structure-outerplanar,product-colouring,trees}.
 \end{proof}
+
+%
+%     This is the proof we've been discussing with Mehrnoosh. It uses the fact that the neighbourhood of a vertex in an outerplanar graph has bounded pathwidth.
+% \end{proof}
 
 \section{Lower Bounds}
 \label{lower-bounds}
@@ -661,7 +712,7 @@ Before proving \cref{outerplanar} we show how it completes the proof of the uppe
 Next we prove the lower bound in \cref{t-trees} which implies the lower bounds in \cref{planar,three-trees}.
 
 \begin{lem}\label{apex-graph}
-    Let $h,k\ge 1$ be integers, let $U$ be a graph with $\uqs(U)\ge h$ and let $G$ be a graph obtained by taking $k+1$ disjoint copies $U_0,\ldots,U_k$ of $U$ and adding an apex vertex $a$ adjacent to each $v\in\bigcup_{i=0}^k V(U_i)$.  Then, for any integer $k_0\in \{1,\ldots,k\}$ and any us-colouring of $\varphi:V(G)\to\{k_0,\ldots,k\}$, $\varphi(a) \ge k_0+1$.
+    Let $h,k\ge 1$ be integers, let $U$ be a graph with $\uqs(U)\ge h$ and let $G$ be a graph obtained by taking $k+1$ disjoint copies $U_0,\ldots,U_k$ of $U$ and adding an apex vertex $a$ adjacent to each $v\in\bigcup_{i=0}^k V(U_i)$.  Then, for any integer $k_0\in \{1,\ldots,k\}$ and any 2-ranking of $\varphi:V(G)\to\{k_0,\ldots,k\}$, $\varphi(a) \ge k_0+1$.
 \end{lem}
 
 \begin{proof}
@@ -675,7 +726,7 @@ For a graph $U$ with and integers $h,\ell\ge 0$, we define the $(h,\ell)$-boost 
 \end{lem}
 
 \begin{proof}
-    Suppose, for the sake of contradiction, that $\uqs(U^{(h,\ell)})=k<h\ell+1$ and let $\varphi:V(U^{(h,\ell)})\to\{1,\ldots,k\}$ be a us-colouring of $U_{(h,\ell)}$.  Let $L_0,\ldots,L_{\ell}$ be the partition of $V(U^{(h,\ell)})$ used in the definition of $V(U^{(h,\ell)})$.
+    Suppose, for the sake of contradiction, that $\uqs(U^{(h,\ell)})=k<h\ell+1$ and let $\varphi:V(U^{(h,\ell)})\to\{1,\ldots,k\}$ be a 2-ranking of $U_{(h,\ell)}$.  Let $L_0,\ldots,L_{\ell}$ be the partition of $V(U^{(h,\ell)})$ used in the definition of $V(U^{(h,\ell)})$.
     % (Alternatively, $L_0,\ldots,L_{\ell}$ are the breadth-first-search layers of $U^{(h,\ell)}$ rooted at $a_0$.)
     We will show by induction on $\ell-i$ that, for each $a\in L_{i}$, $\varphi(a)\ge(\ell-i)h+1$. This gives the desired contradiction since it implies that, for the unique vertex $a_0\in L_0$, $\varphi(a_0)\ge \ell h+1 > k$.
 
