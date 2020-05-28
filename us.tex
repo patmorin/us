@@ -117,9 +117,15 @@ For general $t$-trees, we obtain the following generalization of \cref{trees}:
 
 Observe that, for $t=2$, the lower bound in \cref{t-trees} matches the upper bounds in \cref{planar,three-trees}.  Since every $2$-tree is planar and is, in fact, a subgraph of a planar $3$-tree, the lower bound in \cref{t-trees} establishes the lower bounds in \cref{planar,three-trees}.
 
-In addition to planar graphs, there are product structure theorems for a number of other graph classes, including bounded genus graphs, apex minor-free graphs, and $k$-planar graphs.  Using the same proof along with product structure theorems for these graph classes, \cref{t-trees}, implies the following meta-theorem:
+In addition to planar graphs, there are product structure theorems for a number of other graph classes, including bounded genus graphs, apex minor-free graphs, and $k$-planar graphs.  Using the same proof along with product structure theorems for these graph classes, \cref{t-trees}, implies the following two results:
 
-\begin{thm}\label{meta-theorem}
+\begin{thm}\label{bounded-genus}
+    For every $n$-vertex graph $G$ of Euler genus at most $g$, $\trn(G)\in O(g\log n/\log^{(3)} n)$ and this is asymptotically optimal.
+\end{thm}
+
+
+
+\begin{thm}\label{meta-theorem}\label{meta}
     For each of the following graph classes $\mathcal{G}$:
     \begin{compactenum}
         \item the class of graphs that have non-crossing drawings in a surface of genus at most $g$;
@@ -139,7 +145,33 @@ A straightforward application of planar separators shows that, for any $n$-verte
 
 It is not hard to see that, even for an $n$-vertex path $P$, $\chi_\infty(P)\in\Omega(\log n)$.  The same separator argument, applied to treewidth-$t$ graphs shows that every $n$-vertex treewidth-$t$ graph $G$ has $\chi_\infty(G)\in O(t\log n)$.  This shows that, even for graphs with constant-size separators, (worst-case asymptotically) optimal bounds are obtained by divide-and-conquer using separators.  More references on graph rankings are available in Section 7.19 of the dynamic survey by \citet{gallian:dynamic}.
 
-At least three works have considered $\chi_\ell$ for finite $\ell$ with a focus on the case $\ell=2$.  Note that 2-rankings fall between two very well-studied graph parameters:
+\begin{table}
+    \begin{centering}
+        \begin{tabular}{|l|c|c|l|} \hline
+            Graph class & Upper Bound & Lower Bound & Ref. \\ \hline
+            Trees & $O(\log n/\log\log n)$ & $\Omega(\log n/\log\log n)$ & \cite{karpas.neiman.ea:on} \\
+            Planar graphs & $O(\log n)$ & $\Omega(\log n/\log\log n)$ & \cite{karpas.neiman.ea:on} \\
+            Proper minor closed & $O(\log n)$ & $\Omega(\log n/\log\log n)$ & \cite{karpas.neiman.ea:on} \\
+            $d$-cubes & $d+1$ & $d+1$ & \cite{almeter.demircan.ea:graph} \\
+            Max-degree 3 & $7$ & & \cite{almeter.demircan.ea:graph} \\
+            Max-degree $\Delta$ & $O(\min\{\Delta^2,\Delta\sqrt{n}\})$ & $\Omega(\Delta^2/\log \Delta)$ & \cite{karpas.neiman.ea:on,almeter.demircan.ea:graph} \\
+            $d$-degenerate & $O(d\sqrt{n})$ & $\Omega(n^{1/3} + d^2/\log d)$ & \cite{karpas.neiman.ea:on,almeter.demircan.ea:graph} \\
+            \hline \multicolumn{4}{c}{} \\
+            \hline
+            $t$-trees & $O(\log n/\log^{(t+1)} n)$ & $\Omega(\log n/\log^{(t+1)} n)$ & \cref{t-trees} \\
+            Planar graphs & $O(\log n/\log^{(3)} n)$ & $\Omega(\log n/\log^{(3)} n)$ & \cref{planar,t-trees} \\
+            Outerplanar graphs & $O(\log n/\log^{(2)} n)$ & $\Omega(\log n/\log^{(2)} n)$ & \cref{t-trees}, \cite{karpas.neiman.ea:on} \\
+            Bounded genus & TODO & $\Omega(\log n/\log^{(3)} n)$ & \cref{meta,t-trees} \\
+            $A$-minor-free (apex $A$) & $O(\log n/\log^{(c(A))} n)$ & & \cref{meta} \\
+            $(g,k)$-planar & $O(\log n/\log^{(c(g,k))} n)$ & & \cref{meta} \\
+            \hline
+        \end{tabular}
+    \end{centering}
+    \caption{Summary of previous and new results on $\trn$.}
+\label{summary-table}
+\end{table}
+
+At least three works have considered $\chi_\ell$ for finite $\ell$ with a focus on the case $\ell=2$.  These results are summarized in \cref{summary-table}.  Note that 2-rankings fall between two very well-studied graph parameters:
 \begin{compactitem}
     \item \emph{star colourings}, which ensure that the graph induced by an 2 colour classes is forest of stars and
     \item \emph{distance-2 colourings} which ensure that the endpoints each non-trivial path of length at most 2 receive distinct colours.
@@ -156,7 +188,7 @@ The remainder of this paper is organized as follows: \Cref{sec:basics} reviews s
 \seclabel{basics}
 
 In this paper we use standard graph theory terminology as used in the book by \citet{diestel:graph}
-Every graph $G$ we consider is finite, simple, and undirected with vertex set denoted $V(G)$ and edge set denoted $E(G)$.  We use the shorthand $|G|:=|V(G)|$ to denote the number of vertices in $G$.  We use $N_G(v):=\{w\in V(G): vw\in E(G)\}$ to denote the open neighbourhood of $v$ in $G$.  For any set $S$, the induced subgraph  $G[S]$ is a graph with $V(G[S]):=V(G)\cap S$ and $E(G[S]):=\{vw\in E(G): \{v,w\}\subseteq S\}$, and $G-S:=G[V(G)\setminus S]$.
+Every graph $G$ we consider is finite, simple, and undirected with vertex set denoted $V(G)$ and edge set denoted $E(G)$.  We use the shorthand $|G|:=|V(G)|$ to denote the number of vertices in $G$.  We use $N_G(v):=\{w\in V(G): vw\in E(G)\}$ to denote the open neighbourhood of $v$ in $G$.  For any set $S$, the induced subgraph  $G[S]$ is a graph with $V(G[S]):=V(G)\cap S$ and $E(G[S]):=\{vw\in E(G): \{v,w\}\subseteq S\}$, and $G-S:=G[V(G)\setminus S]$. For each $n\in\N$, $K_n$ denotes the complete graph on $n$ vertices.
 
 The \emph{length} of a path $v_0,\ldots,v_r$ in a graph is equal to the number, $r$, of edges in the path. A path is \emph{trivial} if it has length 0 and \emph{non-trivial} otherwise.
 
@@ -666,9 +698,9 @@ Our proof is based on the following claim:
        Now, $H_v[L_{i+1}]$ is a rooted $(t-1)$-forest with roots $r_1,\ldots,r_d$.  We apply the inductive hypothesis to $H_v$ and we obtain $\varphi:V(H_v)\to\{1,\ldots,ak\}$ and $\psi:V(H_w)\to\{0,1\}$ that satisfy the conditions of the claim.  We do this to colour $H_v$ for each $v\in V(H'[L_i])$.
 
        \begin{figure}
-           \begin{center}
+           \begin{centering}
                 \includegraphics{figs/subproblems}
-           \end{center}
+           \end{centering}
            \caption{The definition of the set $D_w$, that determines $H_w$.}
            \label{subproblems}
        \end{figure}
@@ -687,9 +719,9 @@ Our proof is based on the following claim:
       \end{compactenum}
       This completes the proof of \cref{main-claim}.
        \begin{figure}
-           \begin{center}
-            \includegraphics{figs/proper}
-            \end{center}
+           \begin{centering}
+                \includegraphics{figs/proper}
+            \end{centering}
            \caption{$\psi(x)\neq\psi(z)$ ensures that $\theta(x)\neq \theta(z)$ in the humped path $xyz$ with $x\in H_x$}
            \label{proper}
        \end{figure}
@@ -721,11 +753,11 @@ To complete the upper bound in \cref{planar},  all that remains is to prove the 
     Let $H$ be a planar 3-tree and let $L_0,\ldots,L_m$ be a BFS layering of $H$ where $L_0:=\{v_1,\ldots,v_4\}$ is a clique in $H$.  Then, for each $i\in\{1,\ldots,m\}$, $H[L_i]$ is outerplanar.
 \end{obs}
 
-We will prove the following optimal result for outerplanar graphs:
-
+We prove the following optimal result for outerplanar graphs:
 \begin{thm}\label{outerplanar}
     For every $n$-vertex outerplanar graph $G$, $\trn(G)\in O(\log n/\log^{(2)} n)$.
 \end{thm}
+The optimality of \cref{outerplanar} follows from the lower bound in \cref{trees} and the fact that every tree is outerplanar.
 
 Before proving \cref{outerplanar} we show how it completes the proof of the upper bound in \cref{three-trees}.
 
@@ -765,12 +797,20 @@ For a rooted ordered tree $T$, let $T^+$ denote the graph obtained from $T$ by a
 The following product structure theorem shows that every outerplanar graph is the subgraph of the strong product of $H\boxtimes P$ where $H$ is almost a tree and $P$ is a length-$1$ path:
 
 \begin{thm}\label{product-structure-outerplanar}
-    For every $n$-vertex outerplanar graph $G$, there exists an at most $n$-node rooted ordered tree $T$ and a length-1 path $P$ such that $G$ is isomorphic to a subgraph of $T^+\boxtimes P$.
+    For every $n$-vertex outerplanar graph $G$, there exists an at most $n$-node rooted ordered tree $T$ such that $G$ is isomorphic to a subgraph of $T^+\boxtimes K_2$.
 \end{thm}
 
-\Cref{product-structure-outerplanar} is an immediate consequence of the following technical lemma:
+\Cref{product-structure-outerplanar} is an immediate consequence of the following technical lemma (see \cref{outerplanar-product}):
 
-\begin{lem}
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=.95\textwidth]{figs/outerplanar-product}
+    \end{center}
+    \caption{The statement of \cref{product-structure-outerplanar-technical}.}
+    \label{outerplanar-product}
+\end{figure}
+
+\begin{lem}\label{product-structure-outerplanar-technical}
     Let $P=xy$ be a length-1 path, let $G$ be an edge-maximal outerplane graph with $|G|\ge 2$, and let $vw$ be an edge of the outer face of $G$.  Then there exists an at most $n$-node rooted ordrered tree $T$ with root $r$ and an injective function $\xi:V(G)\to V(T^+\boxtimes P)$ such that
     \begin{compactenum}[(P1)]
         \item $\xi(v)=(r,x)$;
@@ -781,7 +821,7 @@ The following product structure theorem shows that every outerplanar graph is th
 \end{lem}
 
 \begin{proof}
-    The proof is by induction on $n:=|G|$.  For the base case $n=2$ and $G=vw$ consists of a single edge.  We use the tree $T$ consisting of a single node $r$ and the function $\xi$ defined by $\xi(v)=(r,x)$, $\xi(w)=(r,y)$.  By definition this satisfies (P1) and (P2).  It satisfies (P3) because $xy\in E(P)$ so (by the definition of $\boxtimes$) $\xi(v)\xi(w)=(r,x)(r,y)\in E(T^+\boxtimes P)$. Condition (P4) is vacuous, since $N_G(v)\cup N_G(w)\setminus\{v,w\}=\emptyset$
+    The proof is by induction on $n:=|G|$. For the base case $n=2$ and $G$ consists of a single edge $vw$.  We use the tree $T$ consisting of a single node $r$ and the function $\xi$ defined by $\xi(v)=(r,x)$, $\xi(w)=(r,y)$.  By definition this satisfies (P1) and (P2).  It satisfies (P3) because $xy\in E(P)$ so (by the definition of $\boxtimes$) $\xi(v)\xi(w)=(r,x)(r,y)\in E(T^+\boxtimes P)$. Condition (P4) is vacuously true, since $N_G(v)\cup N_G(w)\setminus\{v,w\}=\emptyset$
 
     For $n\ge 3$, let $\{u_0,\ldots,u_d\} := N_G(v)\cup N_G(w) \setminus \{v,w\}$ ordered in the order these vertices appear on the outer face of $G$ so that the path $u_0,v,w,u_d$ is on the outer face of $G$.  For each $i\in\{1,\ldots,d\}$, let $G_i^-$ be the component of $G-\{u_{i-1},u_i\}$ that does not contain $\{v,w\}$, and let $G_i=G[\{u_{i-1},u_i\}\cup V(G_i^-)]$.  For each $i\in\{1,\ldots,d\}$, the edge $u_{i-1}u_i$ is on the outer face of $G_i$.  By applying induction on $G_i$ for each $i\in\{1,\ldots,d\}$ we obtain trees $T_1,\ldots,T_d$ with roots $r_1,\ldots,r_d$, and functions $\xi_1,\ldots,\xi_d$, where each $(T_i,\xi_i)$ satisfies the conditions of the lemma with $v=u_{i-1}$ and $w=u_i$.
 
@@ -806,6 +846,19 @@ The following product structure theorem shows that every outerplanar graph is th
         \item If $s,t\in V(G_i)\setminus\{u_{i-1},u_i\}$ for some $i\in\{1,\ldots,d\}$ then $\xi(s)=\xi_i(s)$ and $\xi(t)=\xi_i(t)$ so, by the inductive hypothesis and (P3), $\xi(s)\xi(t)\in \xi_i(s)\xi_i(t)\in E(T_i^+\boxtimes P) \subseteq E(T^+\boxtimes P)$. \qedhere
     \end{enumerate}
 \end{proof}
+
+\subsection{Bounded Genus Graphs}
+
+We now prove the upper bound in \cref{bounded-genus}. To do this, we make use of the following product structure theorem of \citet{dujmovic.joret.ea:planar}:\footnote{\citet{dujmovic.joret.ea:planar} state a version of \cref{strong-product-genus} that describes $H$ as an apex graph of treewidth at most $4$.  By definition, this means that $H$ has an apex vertex $a$ such that $H-\{a\}$ is planar.  It is not hard to see that the removal of $a$ also reduces the treewidth of $H$ to 3, yielding the version \cref{product-structure-genus} stated here.}
+
+\begin{thm}[\cite{dujmovic.joret.ea:planar}] \label{product-structure-genus}
+    For every $n$-vertex graph $G$ of Euler genus at most $g$, there exists some at most $n$-vertex path $P$, some at most $n$-vertex graph $H$, and a vertex $a\in V(H)$ such that $H-\{a\}$ is a planar 3-tree and $G$ is isomorphic to a subgraph of $H\boxtimes K_{\max\{2g,3\}}\boxtimes P$
+\end{thm}
+
+\begin{proof}[Proof of \cref{bounded-genus}]
+    Apply \cref{product-structure-genus} to $G$ to obtain the graph $H$ and path $P$.  By \cref{planar} there exists a 2-ranking $\varphi:V(H-\{a\})\to \{1,\ldots,k\}$ with $k\in O(\log n/\log^{(3)} n)$. Setting $\varphi(a):=k+1$ then gives a 2-ranking of $H$, so $\trn(H)\le k+1\in O(\log n/\log^{(3)} n)$.  The same argument used in the proof of \cref{dumb} to show that $\dtcn(K_3\boxtimes P)\le 9$ shows that $\dtcn(K_{\max\{2g,3\}}\boxtimes P)\le 3\max\{2g+3\}$.  \cref{bounded-genus} now follows from \cref{product-lemma}.
+\end{proof}
+
 
 % \begin{proof}[Proof of \cref{outerplanar}]
 %

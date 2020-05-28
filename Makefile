@@ -10,6 +10,7 @@ install: $(name).pdf
 	scp $(name).pdf cglab.ca:public_html/publications/drafts/$(name)/
 
 clean :
-	rm -f $(name).pdf figs/*.pdf
+	make -C figs clean
+	rm -f $(name).pdf 
 
 reset: clean all

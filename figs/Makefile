@@ -15,5 +15,5 @@ epss: $(pdfs)
 	ipetoipe -pdf $<
 
 clean :
-	rm -f ./*.pdf ./*.eps
+	rm -f $(pdfs) 
 
