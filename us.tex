@@ -413,7 +413,7 @@ This section is devoted to proving the upper bound in \cref{simple-t-trees}:
 
 The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part of the paper, so we give a brief overview of the proof strategy before delving into the details.  The proof is by induction on the value of $t$.  The base, $t=1$ is easy: Every simple 1-tree is forest of paths, which has a 2-ranking using 3 colours.  In the general case, we need to prove that $H$ has a 2-ranking using colours $\{1,\ldots,ak\}$ for some constant $a$ and some $k\in O(\log n/\log^{(t)} n)$.  An asymptotically equivalent statement of this is: If $n \le (\log^{(t-2)}k)^k$, then $H$ has a 2-ranking using colours $\{1,\ldots,ak\}$, and this is the version of the statement that we prove.
 
-We use a BFS layering $L_1,\ldots,L_m$ of $H$ and use the fact (\cref{simple-bfs-layers}) that each layer $L_i$ induces a $(t-2)$-forest $H[L_i]$, on which we can apply \weirdref{simple-t-trees}{a} inductively.\footnote{Here, and throughout, we make use of the fact $\trn(H)$ is monotone: it does not decrease when edges are added to $H$ and the fact (\cref{simple-subgraph}) that any graph $H$ is a subgraph of some simple $t$-tree $H'$ with $V(H')=V(H)$ and $E(H')\supseteq E(H)$.}  The main difficulty with this approach is that a vertex $v$ in $H[L_i]$ dominates an entire simple $(t-2)$-forest $F$ in $H[L_{i+1}]$.  If some colour $\phi$ is used more than once in the colouring of $F$, then $v$ must be assigned a colour larger than $\phi$.
+We use a BFS layering $L_1,\ldots,L_m$ of $H$ and use the fact (\cref{simple-bfs-layers}) that each layer $L_i$ induces a simple $(t-1)$-forest $H[L_i]$, on which we can apply \weirdref{simple-t-trees}{a} inductively.\footnote{Here, and throughout, we make use of the fact $\trn(H)$ is monotone: it does not decrease when edges are added to $H$ and the fact (\cref{simple-subgraph}) that any graph $H$ with $\stw(H)\le t$ is a subgraph of some simple $t$-tree $H'$ with $V(H')=V(H)$ and $E(H')\supseteq E(H)$.}  The main difficulty with this approach is that a vertex $v$ in $H[L_i]$ dominates an entire simple $(t-1)$-forest $F$ in $H[L_{i+1}]$.  If some colour $\phi$ is used more than once in the colouring of $F$, then $v$ must be assigned a colour larger than $\phi$.
 
 To account for this, we use a strengthening of \weirdref{simple-t-trees}{a} that applies to any simple $t$-forest $H'$ contained in $H[L_{i+1}\cup\cdots\cup L_m]$.  This strengthening shows that, if $H'$ has size at most $(\log^{(t-2)} k)^k/(\log^{(t-2)} c)^c$ then $H'$ has a 2-ranking using colours $\{1,\ldots,ak\}$ in which no colour larger than $a(k-c-1)$ appears more than once in the first layer, $H'[L_{i+1}]$.  In essence, the size of $H'$ provides a lower bound, $a(k-c-1)$, on the colour assigned to some vertex $v$ in $L_i$.
 
@@ -956,9 +956,9 @@ As noted in the introduction, several other families of graphs are known to have
     For any apex graph $A$, there exists a value $t$ such that any $n$-vertex $A$-minor free graph $G$ is isomorphic to a subgraph of $H\boxtimes P$ where $H$ is an at most $n$-vertex graph of treewidth at most $t$ and $P$ is a path.
 \end{thm}
 
-\citet{dujmovic.morin.ea:structure} show a similar result for some non-minor-closed families of graphs, the most well-know of which are the $k$-planar graphs:
+\citet{dujmovic.morin.ea:structure} show a similar result for some non-minor-closed families of graphs, the most well-known of which are the $k$-planar graphs:
 
-\begin{thm}[dujmovic.morin.ea:structure]\label{gk-planar}
+\begin{thm}[\cite{dujmovic.morin.ea:structure}]\label{gk-planar}
     For any integers $g$ and $k$, there exists a value $t$ such that any $n$-vertex $(g,k)$-planar graph $G$ is isomorphic to a subgraph of $H\boxtimes P$, where $H$ is an at most $n$-vertex graph of treewidth at most $t$ and $P$ is a path.
 \end{thm}
 
