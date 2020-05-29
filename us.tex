@@ -169,10 +169,11 @@ It is not hard to see that, even for an $n$-vertex path $P$, $\chi_\infty(P)\in\
             $d$-degenerate & $O(d\sqrt{n})$ & $\Omega(n^{1/3} + d^2/\log d)$ & \cite{karpas.neiman.ea:on,almeter.demircan.ea:graph} \\
             \hline \multicolumn{4}{c}{} \\
             \hline
+            Simple $t$-trees & $O(\log n/\log^{(t)} n)$ & $\Omega(\log n/\log^{(t)} n)$ & \cref{simple-t-trees} \\
             $t$-trees & $O(\log n/\log^{(t+1)} n)$ & $\Omega(\log n/\log^{(t+1)} n)$ & \cref{t-trees} \\
             Planar graphs & $O(\log n/\log^{(3)} n)$ & $\Omega(\log n/\log^{(3)} n)$ & \cref{planar,t-trees} \\
             Outerplanar graphs & $O(\log n/\log^{(2)} n)$ & $\Omega(\log n/\log^{(2)} n)$ & \cref{t-trees}, \cite{karpas.neiman.ea:on} \\
-            Genus-$g$ & $O(g\log n/\log^{(3)} n)$ & $\Omega(\log n/\log^{(3)} n)$ & \cref{bounded-genus,t-trees} \\
+            Genus-$g$ graphs & $O(g\log n/\log^{(3)} n)$ & $\Omega(\log n/\log^{(3)} n)$ & \cref{bounded-genus,t-trees} \\
             $A$-minor-free (apex $A$) & $O(\log n/\log^{(c(A))} n)$ & & \cref{meta} \\
             $(g,k)$-planar & $O(\log n/\log^{(c(g,k))} n)$ & & \cref{meta} \\
             \hline
@@ -193,7 +194,7 @@ Every 2-ranking is a star colouring and every distance-2 colouring is a 2-rankin
 
 \citet{shalu.antony:complexity} show that determining the minimum number of colours required by a 2-ranking of a given graph is NP-hard, even when restricted to planar bipartite graphs.  \citet{almeter.demircan.ea:graph} determine the exact value of $\trn(Q_d)=d+1$ where $Q_d$ is the $d$-cube.  They also shows that, for graphs $G$ of maximum degree 3, $\trn(G)\le 7$ and show the existence of a graph with maximum degree $k$ such that $\trn(G)\in\Omega(k^2/\log k)$.
 
-The remainder of this paper is organized as follows: \Cref{sec:basics} reviews some basic tools used in the following sections. \Cref{upper-bounds} proves the upper bounds in \cref{planar,t-trees,three-trees}.  \Cref{lower-bounds} proves the lower bound in \cref{t-trees}, which immediately implies the lower bounds in \cref{planar,three-trees}. \Cref{conclusion} gives a brief summary and conclusions.
+The remainder of this paper is organized as follows: \Cref{sec:basics} reviews some basic tools used in the following sections. \Cref{upper-bounds} proves the upper bounds in \cref{planar,t-trees,simple-t-trees,bounded-genus}.  \Cref{lower-bounds} proves the lower bound in \cref{t-trees}, which immediately implies the lower bounds in \cref{planar,simple-t-trees}. \Cref{conclusion} gives a brief summary and conclusions.
 
 \section{Preliminaries}
 \seclabel{basics}
@@ -771,9 +772,7 @@ Our proof is based on the following claim:
        Now, $H_v[L_{i+1}]$ is a rooted $(t-1)$-forest with roots $r_1,\ldots,r_d$.  We apply the inductive hypothesis to $H_v$ and we obtain $\varphi:V(H_v)\to\{1,\ldots,ak\}$ and $\psi:V(H_w)\to\{0,1\}$ that satisfy the conditions of the claim.  We do this to colour $H_v$ for each $v\in V(H'[L_i])$.
 
        \begin{figure}
-           \begin{centering}
-                \includegraphics{figs/subproblems}
-           \end{centering}
+           \centering{\includegraphics{figs/subproblems}}
            \caption{The definition of the set $D_w$, that determines $H_w$.}
            \label{subproblems}
        \end{figure}
@@ -792,9 +791,7 @@ Our proof is based on the following claim:
       \end{compactenum}
       This completes the proof of \cref{main-claim}.
        \begin{figure}
-           \begin{centering}
-                \includegraphics{figs/proper}
-            \end{centering}
+           \centering{\includegraphics{figs/proper}}
            \caption{$\psi(x)\neq\psi(z)$ ensures that $\theta(x)\neq \theta(z)$ in the humped path $xyz$ with $x\in H_x$}
            \label{proper}
        \end{figure}
@@ -950,6 +947,27 @@ We now prove the upper bound in \cref{bounded-genus}. To do this, we make use of
 \begin{proof}[Proof of \cref{bounded-genus}]
     Apply \cref{product-structure-genus} to $G$ to obtain the graph $H$ and path $P$.  By \cref{planar} there exists a 2-ranking $\varphi:V(H-\{a\})\to \{1,\ldots,k\}$ with $k\in O(\log n/\log^{(3)} n)$. Setting $\varphi(a):=k+1$ then gives a 2-ranking of $H$, so $\trn(H)\le k+1\in O(\log n/\log^{(3)} n)$.  The same argument used in the proof of \cref{dumb} to show that $\dtcn(K_3\boxtimes P)\le 9$ shows that $\dtcn(K_{\max\{2g,3\}}\boxtimes P)\le 3\max\{2g+3\}$.  \cref{bounded-genus} now follows from \cref{product-lemma}.
 \end{proof}
+
+\subsection{Other Graph Families with Product Structure}
+
+As noted in the introduction, several other families of graphs are known to have product structure theorems like \cref{product-structure,product-structure-genus}.  In particular, \citet{dujmovic.joret.ea:planar} show:
+
+\begin{thm}[\cite{dujmovic.joret.ea:planar}]\label{apex-minor-free}
+    For any apex graph $A$, there exists a value $t$ such that any $n$-vertex $A$-minor free graph $G$ is isomorphic to a subgraph of $H\boxtimes P$ where $H$ is an at most $n$-vertex graph of treewidth at most $t$ and $P$ is a path.
+\end{thm}
+
+\citet{dujmovic.morin.ea:structure} show a similar result for some non-minor-closed families of graphs, the most well-know of which are the $k$-planar graphs:
+
+\begin{thm}[dujmovic.morin.ea:structure]\label{gk-planar}
+    For any integers $g$ and $k$, there exists a value $t$ such that any $n$-vertex $(g,k)$-planar graph $G$ is isomorphic to a subgraph of $H\boxtimes P$, where $H$ is an at most $n$-vertex graph of treewidth at most $t$ and $P$ is a path.
+\end{thm}
+
+\begin{proof}[Proof of \cref{meta}]
+    For any $n$-vertex member $G$ of these graph families, \cref{gk-planar,apex-minor-free} show that $G$ is a subgraph of $H\boxtimes P$ with $\tw(H)\le t$.  \Cref{product-lemma,t-trees} and the fact taht $\trn(P)\le 3$ then imply \cref{meta}.
+\end{proof}
+
+
+
 
 
 % \begin{proof}[Proof of \cref{outerplanar}]
@@ -1130,6 +1148,11 @@ Two directions for future work stand out:
 \begin{itemize}
 \item Approximation algorithm for trees, $t$-trees, and planar graphs.  Constant factor approximation algorithms for trees look easy just using a greedy strategy (any tree that needs $2k$ colours contains a complete $k$-ary tree of height $k$).  Does this extend to $t$-trees.
 \end{itemize}
+
+
+\section*{Acknowledgement}
+
+The authors are grateful to David R. Wood who, after reading an early draft of this paper, pointed us to the notion of simple treewidth, which greatly simplifies the exposition.
 
 
 \bibliographystyle{plainnat}
