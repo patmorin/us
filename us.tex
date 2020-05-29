@@ -26,6 +26,7 @@
 \author{}
 
 \DeclareMathOperator{\tw}{tw}
+\DeclareMathOperator{\stw}{stw}
 \DeclareMathOperator{\ltw}{ltw}
 \DeclareMathOperator{\pw}{pw}
 \DeclareMathOperator{\lpw}{lpw}
@@ -58,9 +59,9 @@
 \maketitle
 
 \begin{abstract}
-  A (vertex) 2-ranking is a labelling $\varphi:V(G)\to\N$ of the vertices of a graph $G$ with integer colours so that for any path $v_0,\ldots,v_r$ of length $r\le 2$, $\max\{\varphi(v_0),\ldots,\varphi(v_r)\}$ appears exactly once in the sequence $\varphi(v_0),\ldots,\varphi(v_r)$.  We show that every $n$-vertex planar graph has a 2-ranking using $O(\log n/\log\log\log n)$ colours and this is tight; for some $n$-vertex planar graphs, any 2-ranking requires $\Omega(\log n/\log\log\log n)$ colours.
+  A (vertex) 2-ranking is a labelling $\varphi:V(G)\to\N$ of the vertices of a graph $G$ with integer colours so that for any path $v_0,\ldots,v_r$ of length $r\le 2$, $\max\{\varphi(v_0),\ldots,\varphi(v_r)\}$ appears exactly once in the sequence $\varphi(v_0),\ldots,\varphi(v_r)$.  We show that every $n$-vertex planar graph has a 2-ranking using $O(\log n/\log\log\log n)$ colours and this is tight; for some $n$-vertex planar graphs, any 2-ranking requires $\Omega(\log n/\log\log\log n)$ colours.  This result also extends to bounded genus graphs.
 
-  In developing this proof we obtain optimal bounds on the number of colours needed for 2-ranking $t$-trees, planar 3-trees, and outerplanar graphs.  These upper bounds are constructive and give $O(n\log n)$-time algorithms.  Additional results that come from our techniques include new sublogarithmic upper bounds on the number of colours needed for 2-rankings of bounded genus graphs, apex minor-free graphs, and $k$-planar graphs.
+  In developing this proof we obtain optimal bounds on the number of colours needed for 2-ranking $t$-trees and simple $t$-trees (this includes planar 3-trees and outerplanar graphs).  These upper bounds are constructive and give $O(n\log n)$-time algorithms.  Additional results that come from our techniques include new sublogarithmic upper bounds on the number of colours needed for 2-rankings of bounded genus graphs, apex minor-free graphs, and $k$-planar graphs.
 \end{abstract}
 \end{titlepage}
 
@@ -93,37 +94,47 @@ The same authors prove the following result for planar graphs:
     For every $n$-vertex planar graph $G$, $\trn(G)\in O(\log n)$.
 \end{othertheorem}
 
-Since every tree is a planar graph and no better lower bound is known for planar graphs, this leaves an obvious question:  Which is the correct bound for planar graphs $\log n$ or $\log n/\log\log n$?  As it turns out, neither is correct.  Let $\log x :=\log_2 x$ denote the binary logarithm of $x$ and define $\log^{(0)}x:=x$ and, for any integer $i>0$, let $\log^{(i)}x:=\log(\log^{(i-1)} x)$. We prove:
+Since every tree is a planar graph and no better lower bound is known for planar graphs, this leaves an obvious question:  Which is the correct bound for planar graphs, $\log n$ or $\log n/\log\log n$?  As it turns out, neither is correct.  Let $\log x :=\log_2 x$ denote the binary logarithm of $x$ and define $\log^{(0)}x:=x$ and, for any integer $i>0$, let $\log^{(i)}x:=\log(\log^{(i-1)} x)$. We prove:
 
 
 \begin{thm}\label{planar}
     For every $n$-vertex planar graph $G$, $\trn(G)\in O(\log n/\log^{(3)} n)$ and this is asymptotically optimal: for infinitely many values of $n$, there exists an $n$-vertex planar graph $G$ with $\trn(G)\in \Omega(\log n/\log^{(3)} n)$
 \end{thm}
 
-Our proof of the upper bound in \cref{planar} makes use of a recent \emph{product structure theorem} of \citet{dujmovic.joret.ea:planar} which states that every planar graph $G$ is a subgraph of $H\boxtimes K_3\boxtimes P$ where $H$ is a planar $3$-tree, $K_3$ is a 3-cycle, $P$ is a path, and $\boxtimes$ denotes the strong graph product.\footnote{Definitions of $t$-trees, treewidth and strong graph product appear later, in \cref{sec:basics}.}  To apply this theorem, we prove the following result:
+Our proof of the upper bound in \cref{planar} makes use of a recent \emph{product structure theorem} of \citet{dujmovic.joret.ea:planar} which states that every planar graph $G$ is a subgraph of $H\boxtimes K_3\boxtimes P$ where $H$ is a planar $3$-tree, $K_3$ is a 3-cycle, $P$ is a path, and $\boxtimes$ denotes the strong graph product.\footnote{Definitions of $t$-trees, simple $t$-trees, treewidth, simple treewidth, and strong graph product appear later, in \cref{sec:basics}.}  To apply this theorem, we prove the following result:
 
-\begin{thm}\label{three-trees}
-    For every $n$-vertex planar $3$-tree, $\trn(G) \in O(\log n/\log^{(3)}n)$.
-    and this is asymptotically optimal: for infinitely many values of $n$, there exists an $n$-vertex planar $3$-tree $T$ with $\trn(T)\in\Omega(\log n/\log^{(3)} n)$.
+\begin{thm}\label{simple-t-trees}
+    For every $n$-vertex simple $t$-tree $H$, $\trn(H) \in O(\log n/\log^{(t)}n)$.
+    and this is asymptotically optimal: for all integer $t\ge 1$ and infinitely many values of $n$, there exists an $n$-vertex simple $t$-tree $H$ with $\trn(H)\in\Omega(\log n/\log^{(t)} n)$.
 \end{thm}
 
-\cref{three-trees} is then applied to the graph $H$ along with a simple product colouring lemma which shows that, for any two graphs $G_1$ and $G_2$, $\trn(G_1\boxtimes G_2)\le \trn(G_1)\cdot\dtcn(G_2)$ where $\dtcn(G_2)$ is the \emph{distance-2 colouring number} of $G_2$;  the minimum number of colours needed to colour $G_2$ so that the endpoints of each non-trivial path of length at most 2 have different colours.  It is easy to see that $\dtcn(K_3\times P)\le 9$, so $\trn(H\boxtimes K_3\boxtimes P)\le 9\trn(H)$.
+\Cref{simple-t-trees} is immediately relevant because a 3-tree is planar if and only if it is a simple $3$-tree. Therefore, the lower bound in \cref{simple-t-trees} immediately implies the lower bound in \cref{planar} since it shows the existence of $n$-vertex planar graphs with $\trn(T)\in\Omega(\log n/\log^{(t)} n)$.
 
-For general $t$-trees, we obtain the following generalization of \cref{trees}:
+To obtain the upper bound in \cref{planar}, we apply \cref{simple-t-trees} to the graph $H$ defined by the product structure theorem along with a simple lemma which shows that, for any two graphs $G_1$ and $G_2$, $\trn(G_1\boxtimes G_2)\le \trn(G_1)\cdot\dtcn(G_2)$ where $\dtcn(G_2)$ is the \emph{distance-2 colouring number} of $G_2$;  the minimum number of colours needed to colour $G_2$ so that the endpoints of each non-trivial path of length at most 2 have different colours.  It is easy to see that $\dtcn(K_3\times P)\le 9$, so $\trn(H\boxtimes K_3\boxtimes P)\le 9\trn(H)$.
+
+%
+% For general $t$-trees, we obtain the following generalization of \cref{trees}:
+%
+% \begin{thm}\label{t-trees}
+%     For every fixed $t$ and every $n$-vertex $t$-tree, $\trn(G) \in O(\log n/\log^{(t+1)}(n)$ and this is asymptotically optimal: for infinitely many values of $n$, there exists an $n$-vertex $t$-tree $T$ with $\trn(T)\in\Omega(\log n/\log^{(t+1)} n)$.
+% \end{thm}
+
+% Observe that, for $t=2$, the lower bound in \cref{t-trees} matches the upper bounds in \cref{planar,three-trees}.  Since every $2$-tree is planar and is, in fact, a subgraph of a planar $3$-tree, the lower bound in \cref{t-trees} establishes the lower bounds in \cref{planar,three-trees}.
+
+Every (not-necessarily simple) $t$-tree is the subgraph of some simple $(t+1)$-tree. Therefore, the upper bound in \cref{simple-t-trees} implies the (upper bound in) the following generalization of \cref{trees}:
 
 \begin{thm}\label{t-trees}
-    For every fixed $t$ and every $n$-vertex $t$-tree, $\trn(G) \in O(\log n/\log^{(t+1)}(n)$ and this is asymptotically optimal: for infinitely many values of $n$, there exists an $n$-vertex $t$-tree $T$ with $\trn(T)\in\Omega(\log n/\log^{(t+1)} n)$.
+    For every fixed $t$ and every $n$-vertex $t$-tree $H$, $\trn(H) \in O(\log n/\log^{(t+1)}(n)$ and this is asymptotically optimal: for infinitely many values of $n$, there exists an $n$-vertex $t$-tree $H$ with $\trn(H)\in\Omega(\log n/\log^{(t+1)} n)$.
 \end{thm}
 
-Observe that, for $t=2$, the lower bound in \cref{t-trees} matches the upper bounds in \cref{planar,three-trees}.  Since every $2$-tree is planar and is, in fact, a subgraph of a planar $3$-tree, the lower bound in \cref{t-trees} establishes the lower bounds in \cref{planar,three-trees}.
+The lower bound in \cref{t-trees} through a construction of a $t$-tree $H$ with
+$\trn(H)\in\Omega(\log n/\log^{(t+1)} n)$.  Again, since every $(t-1)$-tree is the subgraph of a simple $t$-tree, the lower bound in \cref{t-trees} implies the lower bound in \cref{simple-t-trees}.
 
-In addition to planar graphs, there are product structure theorems for a number of other graph classes, including bounded genus graphs, apex minor-free graphs, and $k$-planar graphs.  Using the same proof along with product structure theorems for these graph classes, \cref{t-trees}, implies the following two results:
+In addition to planar graphs, there are product structure theorems for a number of other graph classes, including bounded genus graphs, apex minor-free graphs, and $k$-planar graphs.  Using product structure theorems for these graph classes along with \cref{simple-t-trees,t-trees}, we obtain the following two results:
 
 \begin{thm}\label{bounded-genus}
-    For every $n$-vertex graph $G$ of Euler genus at most $g$, $\trn(G)\in O(g\log n/\log^{(3)} n)$ and this is asymptotically optimal.
+    For every $n$-vertex graph $G$ of Euler genus at most $g$, $\trn(G)\in O(g\log n/\log^{(3)} n)$.
 \end{thm}
-
-
 
 \begin{thm}\label{meta-theorem}\label{meta}
     For each of the following graph classes $\mathcal{G}$:
@@ -212,7 +223,51 @@ In the special case where $X$ is a tree (or a forest), $\mathcal{X}$ is called a
 
 It is not difficult to see that every $t$-tree $H$ has treewidth $t$ and a tree-decomposition of $H$ can be constructed incrementally from a construction order $v_1,\ldots,v_n$ of $H$: Start with a tree $T$ that consists of a single node $r$ with bag $B_r:=\{v_1,\ldots,v_{\min\{t+1,n\}}\}$ and, for $i\gets t+2,\ldots,n$, let $p_i$ be the minimum-depth node of $T$ such that $B_{p_i}$ contains the parent clique $N_H(v_i)\cap\{v_1,\ldots,v_{i-1}\}$ of $v_i$, and add a new leaf $x_i$ to $T$ adjacent to $p_i$ whose bag $B_{x_i}$ contains $v_i$ and its parent clique.  We call a tree-decomposition constructed this way a \emph{canonical} tree decomposition of $H$ generated by the construction order $v_1,\ldots,v_n$.
 
-It is easy to see that, every bag of a canonical tree decomposition $\mathcal{T}$ of a $t$-tree $H$ has size exactly $\min\{t+1,|H|\}$, $T$ is rooted at $r$ and, for each node $x$ of $T$ with parent $p$, $|B_x\setminus B_p|=1$.  Note that this implies that $|V(T)|=\max\{1,n-t\}$, since $B_r$ contains $t+1$ vertices of $H$ and, for each $x\in V(T)\setminus\{r\}$, $B_x$ includes exactly one vertex of $H$ that is not in its parent $B_p$ where $p$ is the $T$-parent of $x$.  For each $v\in V(H)$, we let $x_T(v)$ be the minimum-depth node $x\in V(T)$ such that $v\in B_x$.
+By construction, every bag of a canonical tree decomposition $\mathcal{T}$ of a $t$-tree $H$ has size exactly $\min\{t+1,|H|\}$, $T$ is rooted at $r$ and, for each node $x$ of $T$ with parent $p$, $|B_x\setminus B_p|=1$.  Note that this implies that $|V(T)|=\max\{1,n-t\}$.
+% , since $B_r$ contains $t+1$ vertices of $H$ and, for each $x\in V(T)\setminus\{r\}$, $B_x$ includes exactly one vertex of $H$ that is not in its parent $B_p$ where $p$ is the $T$-parent of $x$.
+For each $v\in V(H)$, we let $x_T(v)$ be the minimum-depth node $x\in V(T)$ such that $v\in B_x$.
+
+\subsection{Simple Treewidth}
+
+
+A tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of a graph $H$ is $t$-simple if it has width $t$ and for every $t$-element subset $S\subseteq V(H)$, $|\{x\in V(T):S\subseteq B_x\}|\le 2$.  The simple treewidth $\stw(H)$ of a graph $H$ is the minimum integer $t$ such that $H$ has a $t$-simple tree decomposition.  A $t$-tree $H$ is a \emph{simple} $t$-tree if its canonical tree decompositions are $t$-simple.\footnote{Although a simple $t$-tree $H$ has different canonical tree decompositions depending on the choice of $v_1,\ldots,v_t$ in the construction order, each of these tree decompositions $(B_x:x\in V(T))$ generates the same set $\{B_x:x\in V(T)\}$ of bags that enumerate the $t+1$ cliques of $H$.  Therefore all of these tree decompositions are $t$-simple or none of them are.}
+
+The following claims show that, for our purposes, simple treewidth behaves similarly to treewidth:
+
+\begin{clm}\label{simple-minor-closed}
+    For every graph $G$ and every minor $M$ of $G$, $\stw(M)\le\stw(G)$.
+\end{clm}
+
+\begin{clm}\label{simple-subgraph}
+    For any graph $G$ with $\stw(G)=t$, there exists a simple $t$-forest $H$ with $V(G)= V(H)$ and $E(G)\subseteq E(H)$.
+\end{clm}
+
+% If the preceding claim is false, then this one isn't:
+%
+% \begin{clm}
+%     For any graph $G$ with $\stw(G)=t$, there exists a simple $t$-forest $H$ such that $|H|\in O(|G|)$, $V(G)\subset V(H)$ and $E(G)\subseteq E(H)$ with
+% \end{clm}
+
+\begin{clm}\label{simple-bfs-layers}
+    Let $H$ be a simple $t$-tree, let $n:=|H|$, let $t':=\min\{t,n\}$, let $v_1,\ldots,v_n$ be a construction order for $H$ and let $L_0,\ldots,L_m$ be the BFS ordering of $H$ with $L_0:=v_1,\ldots,v_{t'}$.   Then, for each $i\in\{1,\ldots,m\}$, $\stw(H[L_i])\le t-1$.
+\end{clm}
+
+We work with simple $t$-trees because they arise naturally:
+
+\begin{clm}\label{simple-small-cases}
+    A graph $H$ is
+    \begin{compactenum}[(i)]
+        \item a simple $1$-tree if and only if $H$ is a forest of paths.
+        \item a simple $2$-tree if and only if $H$ is an edge-maximal outerplanar graph;
+        \item a simple $3$-tree if and only if $H$ is a planar 3-tree;
+    \end{compactenum}
+\end{clm}
+
+Simple treewidth and treewidth are closely related:
+
+\begin{clm}\label{simple-treewidth-vs-treewidth}
+    For every graph $G$, $\tw(G)\le \stw(G)\le \tw(G)+1$.
+\end{clm}
 
 \subsection{Product Structure}
 
@@ -331,32 +386,40 @@ which is again valid for all $x> \tau(i-1)$.
 
 In this section we prove asymptotically tight bounds for the worst-case number of colours needed to 2-rank $n$-vertex $t$-trees.  Note that, throughout this section, and the rest of the paper, we treat $t$ as a fixed constant that does not depend on $n$.  Asymptotic notations $O(\cdot)$, $\Omega(\cdot)$, and $o(\cdot)$ are used assuming that $n$ (or some increasing function of $n$) is the only parameter tending to infinity.
 
-\subsection{$t$-Trees}
+\subsection{Simple $t$-Trees}
 
-We begin by proving the first half of \cref{t-trees}:
+We begin by proving the following result:
 
 \begin{namedtheorem}[\weirdref{t-trees}{a}]\weirdlabel{t-trees}{a}
-    For every fixed $t\ge 1$ and every $n$-vertex $t$-tree $H$, $\trn(H)\in O(\log n/\log^{(t+1)} n)$.
+    For every fixed $t\ge 1$ and every $n$-vertex simple $t$-tree $H$, $\trn(H)\in O(\log n/\log^{(t)} n)$.
 \end{namedtheorem}
 
-The proof of \weirdref{t-trees}{a} is the most technically demanding part of the paper, so we give a brief overview of the proof strategy before delving into the details.  The proof is by induction on the value of $t$.  The base case, $t=1$, is handled by \cref{trees}.  We need to prove that $H$ has a 2-ranking using colours $\{1,\ldots,ak\}$ for some constant $a$ and some $k\in O(\log n/\log^{(t+1)} n)$.  An asymptotically equivalent statement of this is: If $n \le (\log^{(t-1)}k)^k$, then $H$ has a 2-ranking using colours $\{1,\ldots,ak\}$, and this is the version of the statement that we prove.
+\weirdref{t-trees}{a} immediately implies the upper bounds in \cref{planar,t-trees}:
 
-We use a BFS layering $L_1,\ldots,L_m$ of $H$ and use the fact that each layer $L_i$ induces a $(t-1)$-forest $H[L_i]$, on which we can apply \weirdref{t-trees}{a} inductively.\footnote{Here, and throughout, we make use of the fact $\trn(H)$ does not decrease when edges are added to $H$ and the fact that any $t$-forest $H$ is a subgraph of some $t$-tree $H'$ with $V(H')=V(H)$ and $E(H')\supseteq E(H)$.}  The main difficulty with this approach is that a vertex $v$ in $H[L_i]$ dominates an entire $(t-1)$-forest $F$ in $H[L_{i+1}]$.  If some colour $\phi$ is used more than once in the colouring of $F$, then $v$ must be assigned a colour larger than $\phi$.
+\begin{proof}[Proof of \cref{planar} (upper bound)]
+    A 3-tree is planar if and only if it is a simple 3-tree.  Therefore
+\end{proof}
 
-To account for this, we use a strengthening of \weirdref{t-trees}{a} that applies to any $t$-forest $H'$ contained in $H[L_{i+1}\cup\cdots\cup L_m]$.  This strengthening shows that, if $H'$ has size at most $(\log^{(t-1)} k)^k/(\log^{(t-1)} c)^c$ then $H'$ has a 2-ranking using colours $\{1,\ldots,ak\}$ in which no colour larger than $a(k-c-1)$ appears more than once in the first layer, $H'[L_{i+1}]$.  In essence, the size of $H'$ provides a lower bound, $a(k-c-1)$, on the colour assigned to some vertex $v$ in $L_i$.
+The proof of \weirdref{t-trees}{a} is the most technically demanding part of the paper, so we give a brief overview of the proof strategy before delving into the details.  The proof is by induction on the value of $t$.  The base, $t=1$ is easy: Every simple 1-tree is forest of paths, which has a 2-ranking using 3 colours.  In the general case, we need to prove that $H$ has a 2-ranking using colours $\{1,\ldots,ak\}$ for some constant $a$ and some $k\in O(\log n/\log^{(t)} n)$.  An asymptotically equivalent statement of this is: If $n \le (\log^{(t-2)}k)^k$, then $H$ has a 2-ranking using colours $\{1,\ldots,ak\}$, and this is the version of the statement that we prove.
 
-It turns out to be easier to forget about $L_{i+1},\ldots,L_{m}$ and to work, instead, with a $(t-1)$-forest $H'$ contained in $H[L_i]$, in which each vertex $v$ is assigned a lower bound $a(k-\gamma(v)-1)$ on its colour.  This lower bound can also be interpreted as a weight  $(\log^{(t-1)}k)^k/(\log^{(t-1)}\gamma(v))^{\gamma(v)}$ that describes the size of the $t$-forest $H_v$ in $H[L_{i+1}\cup\cdots\cup L_m]$ whose first layer $H_v[L_{i+1}]$ is dominated by $v$.  The condition that $H'$ has size at most $(\log^{(t-1)} k)^k/(\log^{(t-1)} c)^c$ translates roughly into the condition
+We use a BFS layering $L_1,\ldots,L_m$ of $H$ and use the fact (\cref{simple-bfs-layers}) that each layer $L_i$ induces a $(t-2)$-forest $H[L_i]$, on which we can apply \weirdref{t-trees}{a} inductively.\footnote{Here, and throughout, we make use of the fact $\trn(H)$ is monotone: it does not decrease when edges are added to $H$ and the fact (\cref{simple-subgraph}) that any graph $H$ is a subgraph of some simple $t$-tree $H'$ with $V(H')=V(H)$ and $E(H')\supseteq E(H)$.}  The main difficulty with this approach is that a vertex $v$ in $H[L_i]$ dominates an entire simple $(t-2)$-forest $F$ in $H[L_{i+1}]$.  If some colour $\phi$ is used more than once in the colouring of $F$, then $v$ must be assigned a colour larger than $\phi$.
+
+To account for this, we use a strengthening of \weirdref{t-trees}{a} that applies to any simple $t$-forest $H'$ contained in $H[L_{i+1}\cup\cdots\cup L_m]$.  This strengthening shows that, if $H'$ has size at most $(\log^{(t-2)} k)^k/(\log^{(t-2)} c)^c$ then $H'$ has a 2-ranking using colours $\{1,\ldots,ak\}$ in which no colour larger than $a(k-c-1)$ appears more than once in the first layer, $H'[L_{i+1}]$.  In essence, the size of $H'$ provides a lower bound, $a(k-c-1)$, on the colour assigned to some vertex $v$ in $L_i$.
+
+It turns out to be easier to forget about $L_{i+1},\ldots,L_{m}$ and to work, instead, with a simple $(t-1)$-forest $H'$ contained in $H[L_i]$, in which each vertex $v$ is assigned a lower bound $a(k-\gamma(v)-1)$ on its colour.  This lower bound can also be interpreted as a weight  $(\log^{(t-2)}k)^k/(\log^{(t-2)}\gamma(v))^{\gamma(v)}$ that describes the size of the $t$-forest $H_v$ in $H[L_{i+1}\cup\cdots\cup L_m]$ whose first layer $H_v[L_{i+1}]$ is dominated by $v$.  The condition that $H'$ has size at most $(\log^{(t-2)} k)^k/(\log^{(t-2)} c)^c$ translates roughly into the condition
 \[
-   \sum_{v\in V(H')}\frac{(\log^{(t-1)}k)^k}{(\log^{(t-1)}\gamma(v)^{\gamma(v)}} \le \frac{(k\log k)^k}{(c\log c)^c}
+   \sum_{v\in V(H')}\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)}\gamma(v)^{\gamma(v)}} \le \frac{(k\log^{(t-2)} k)^k}{(c\log^{(t-2)} c)^c}
 \]
 We are able to show that $H'$ has a special kind of separator $S$ such that
 \begin{compactenum}
     \item $H'[S]$ can be 2-ranked using $O(c)$ large colours in $\{a(k-c-1)+1,\ldots,ak\}$ that are each used only once and $O(1)$ small colours in $\{a(k-c-2)+1,\ldots,a(k-c-1)\}$ (that may be used repeatedly); and
     \item Each component of $H'-S$ can be 2-ranked using $O(k-c)$ small colours $\{1,\ldots,a(k-c-1)\}$.
 \end{compactenum}
-Each of these colourings respect the lower bounds given by $\gamma(v)$ for each vertex $v$ of $H'$.  The separator $S$ has a \emph{shadow-completeness} property: if $uvw$ is a path with $u,w\in S$ and $v\in V(H'-S)$, then $uw\in E(H'[S])$.  This ensures that the resulting colouring is a 2-ranking of $F$.
+Each of these colourings respect the lower bounds given by $\gamma(v)$ for each vertex $v$ of $H'$.  The separator $S$ has a \emph{shadow-completeness} property: if $uvw$ is a path with $u,w\in S$ and $v\in V(H'-S)$, then $uw\in E(H'[S])$.  This ensures that the resulting colouring is a 2-ranking of $H'$.
 
-The preceding proof sketch ignores a difficulty caused by the fact that forests in $H[L_{i+1}]$ are attached to $t$-cliques in $H[L_i]$ rather than individual vertices of $H[L_i]$.  If we treat each of these forests individually, then we run into the problem that there may be two $t$-cliques $C_1$ and $C_2$ of $H[L_i]$ with a vertex $v$ in common.  A $(t-1)$-forest $F_1$ attached to $C_1$ may avoid using colours larger than $a(k-c)$ more than once and a forest $F_2$ attached to $C_2$ may avoid using colours larger than $a(k-c-1)$ more than once.  Nevertheless, $F_1$ may have one vertex $u$ of colour $\phi >a(k-c-1)$ and $F_2$ may also have one vertex $w$ of colour $\phi$.  Since $uvw$ is a path in $H$, $v$'s colour must be larger than $\phi$.  We get around this by using an auxilliary colouring $\zeta$ of the $t$-cliques in $H[L_i]$ so that if two $t$-cliques $C_1$ and $C_2$ have a vertex in common and the preceding situation occurs, then $\zeta(C_1)\neq \zeta(C_2)$.  The vertices in $F_1$ receive the secondary colour $\zeta(C_1)$ and the vertices in $F_2$ receive the secondary colour $\zeta(C_2)$.  In this way, the vertices $u$ and $w$ described above receive different colours.
+The preceding proof sketch ignores a difficulty caused by the fact that simple $t$-forests in $H[L_{i+1}\cup\cdots\cup L_m]$ are attached to $t$-cliques in $H[L_i]$ rather than individual vertices of $H[L_i]$.  When we treat each of these forests individually, we run into the problem that there may be two $t$-cliques $C_1$ and $C_2$ of $H[L_i]$ with a vertex $v$ in common.  A simple $(t-1)$-forest $F_1$ attached to $C_1$ may avoid using colours larger than $a(k-c)$ more than once and a forest $F_2$ attached to $C_2$ may avoid using colours larger than $a(k-c-1)$ more than once.  Nevertheless, $F_1$ may have one vertex $u$ of colour $\phi >a(k-c-1)$ and $F_2$ may also have one vertex $w$ of colour $\phi$.  Since $uvw$ is a path in $H$, $v$'s colour must be larger than $\phi$.  We get around this by using an auxilliary colouring $\zeta$ of the $t$-cliques in $H[L_i]$ so that if two $t$-cliques $C_1$ and $C_2$ have a vertex in common and the preceding situation occurs, then $\zeta(C_1)\neq \zeta(C_2)$.  The vertices in $F_1$ receive the secondary colour $\zeta(C_1)$ and the vertices in $F_2$ receive the secondary colour $\zeta(C_2)$.  In this way, the vertices $u$ and $w$ described above receive different colours.
+
+With this proof sketch complete, we now begin with the actual proof.
 
 \subsubsection{Some Combination Lemmas}
 
@@ -387,10 +450,10 @@ Let $H$ be a $t$-tree, let $v_1,\ldots,v_n$ be a construction order for $H$ that
     Property~(iii) implies that we can therefore inductively colour $H-\{v_1,\ldots,v_m\}$ using colours $\{1,\ldots,3\pw(H)-2\}$ and then colour each $v_i$ with colour $3\pw(H)-1+i\bmod 3$.  Property~(i) ensures that this gives a 2-ranking of $H[v_1,\ldots,v_m]$.  Property~(ii) and the fact that $v_1,\ldots,v_m$ are coloured using larger colours than those used $H-\{v_1,\ldots,v_m\}$ ensures that the resulting colouring is a 2-ranking of $H$.
 \end{proof}
 
-A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$. For a graph $H$ with a rooted tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$, we define the $\mathcal{T}$-skeleton $\hat{H}$ of $H$ as the graph with vertex set $V(\hat{H}):=\bigcup_{x\in \Lambda(T)} B_x$ and containing the edge $vw$ if there exists $x,y\in V(T)$ with $v\in B_x$, $w\in B_y$ such that the path in $T$ from $x$ to $y$ contains no branching node in its interior.  It is worth noting that the skeleton $\hat{H}$ of $H$ is a minor of $H$ since it can be obtained from $H$ by repeatedly contracting an edge $vw$ with $v\in V(\hat{H})$ and $w\not\in V(\hat{H})$ into $v$.
+A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$. For a graph $H$ with a rooted tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$, we define the $\mathcal{T}$-skeleton $\hat{H}$ of $H$ as the graph with vertex set $V(\hat{H}):=\bigcup_{x\in \Lambda(T)} B_x$ and containing the edge $vw$ if there exists $x,y\in V(T)$ with $v\in B_x$, $w\in B_y$ such that the path in $T$ from $x$ to $y$ contains no branching node in its interior.  It is worth noting that the skeleton $\hat{H}$ of $H$ is a minor of $H$ since it can be obtained from $H$ by repeatedly contracting an edge $vw$ with $v\in V(\hat{H})$ and $w\not\in V(\hat{H})$ into $v$. By \cref{simple-minor-closed} this implies that, if $H$ is a simple $t$-tree then $\hat{H}$ is also a simple $t$-tree.
 
 \begin{obs}\label{skeleton-size}
-    Let $H$ be a $t$-tree and let $\mathcal{T}:=(B_x:x\in V(T))$ be a width-$t$ tree decomposition of $H$.  Then the $\mathcal{T}$-skeleton $\hat{H}$ of $H$ is also a $t$-tree and has a tree decomposition $(B_x:x\in V(\hat{T}))$ where $|\hat{T}|=|\Lambda(T)|$ and therefore $|\hat{H}|\le (t+1)|\Lambda(T)|$.
+    Let $H$ be a (simple) $t$-tree and let $\mathcal{T}:=(B_x:x\in V(T))$ be a width-$t$ tree decomposition of $H$.  Then the $\mathcal{T}$-skeleton $\hat{H}$ of $H$ is also a (simple) $t$-tree and has a (simple) tree decomposition $(B_x:x\in V(\hat{T}))$ where $|\hat{T}|=|\Lambda(T)|$ and therefore $|\hat{H}|\le (t+1)|\Lambda(T)|$.
 \end{obs}
 
 \begin{lem}\label{skeleton-colour}
@@ -403,26 +466,26 @@ A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least t
 
 \subsubsection{The Meat}
 
-In order to eventually prove a tight bound for planar 3-trees (\cref{three-trees}) we introduce a light abstraction so that the proof of \weirdref{t-trees}{a} generalizes easily.  We say that a $(t-1)$-forest $L$ is \emph{$\mu$-bounded} if, for every minor $M$ of $L$, $\trn(M)\in O(\log|M|/\log^{(\mu)}|M|)$.  For a $t$-tree $H$ with construction order $v_1,\ldots,v_n$, and BFS layering $L_0,\ldots,L_m$ with $L_0:=\{v_1,\ldots,v_{t+1}\}$ we say that $H$ is \emph{BFS-$\mu$-bounded} if, for each $i\in\{1,\ldots,m\}$, the $(t-1)$-forest $H[L_i]$ is $\mu$-bounded.
+% In order to eventually prove a tight bound for planar 3-trees (\cref{three-trees}) we introduce a light abstraction so that the proof of \weirdref{t-trees}{a} generalizes easily.  We say that a $(t-1)$-forest $L$ is \emph{$\mu$-bounded} if, for every minor $M$ of $L$, $\trn(M)\in O(\log|M|/\log^{(\mu)}|M|)$.  For a $t$-tree $H$ with construction order $v_1,\ldots,v_n$, and BFS layering $L_0,\ldots,L_m$ with $L_0:=\{v_1,\ldots,v_{t+1}\}$ we say that $H$ is \emph{BFS-$\mu$-bounded} if, for each $i\in\{1,\ldots,m\}$, the $(t-1)$-forest $H[L_i]$ is $\mu$-bounded.
 
-Recall that we are working on a proof of \weirdref{t-trees}{a} that works by induction on $t$ and the base case $t=1$ is already established by \cref{trees}. In terms of $\mu$-boundedness, the inductive hypothesis states that each BFS layer $H[L_i]$ is $t$-bounded, so $H$ is BFS-$t$-bounded.  Indeed, for each layer $L_i$, $H[L_i]$ is a $(t-1)$-forest.  Since taking minors does not increase treewidth, $\tw(M)\le (t-1)$ for any minor $M$ of $H[L_i]$ so, by \weirdref{t-trees}{a}, $\trn(M)\in O(\log|M|/\log^{(t)}|M|)$.
+Recall that we are working on a proof of \weirdref{t-trees}{a} that works by induction on $t$ and the base case $t=1$ is easy ($H$ is a forest of paths). \Cref{simple-bfs-layers,simple-subgraph} says that each BFS layer $H[L_i]$ is a $(t-1)$-forest.  Before working directly with $t$-trees and $t$-forests we will work with vertex-weighted $(t-1)$-trees and $(t-1)$-forests in which each node $v$ is given a lower bound $a(k-\lambda(v)-1)+1$ on its colour.
 
-Before working directly with $t$-trees and $t$-forests we will work with vertex-weighted $(t-1)$-trees and $(t-1)$-forests in which each node $v$ is given a lower bound $a(k-\lambda(v)-1)+1$ on its colour. The following lemma give a \emph{slackness} condition that makes it possible to find a colouring that does not use \emph{any} colour larger than $a(k-c-1)$.
+The next two lemmata will eventually be applied to (subgraphs of) BFS layers of $H$, which is why they are stated in terms of $(t-1)$-trees.  The first lemma gives a \emph{slackness} condition that makes it possible to find a colouring that does not use \emph{any} colour larger than $a(k-c-1)$.
 
 \begin{lem}\label{t-tree-slack}
-Let $\mu,t,k\in\N$ and $c\in\R$ with $2\le \mu\le t$ and $\tau(t)\le c\le k-1$; let $H$ be a $\mu$-bounded $(t-1)$-tree; let $t':=\min\{t, |H|\}$; let $v_1,\ldots,v_{|H|}$ be a construction order for $H$ generating a canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ rooted at $r\in V(T)$; let $\gamma:V(H)\to\{z\in\N: z\ge \tau(t-1)\}$; and let
+Let $t,k\in\N$ and $c\in\R$ with $t\ge 2$ and $\tau(t)\le c\le k-1$; let $H$ be a simple $(t-1)$-tree; let $t':=\min\{t, |H|\}$; let $v_1,\ldots,v_{|H|}$ be a construction order for $H$ generating a canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ rooted at $r\in V(T)$; let $\gamma:V(H)\to\{z\in\N: z\ge \tau(t-1)\}$; and let
 \[
-    n_r:=\sum_{v\in V(H)\setminus (B_r\setminus\{v_1\})} \frac{\left(\log^{(\mu-1)} k\right)^k}{\left(\log^{(\mu-1)} \gamma(v)\right)^{\gamma(v)}} \enspace .
+    n_r:=\sum_{v\in V(H)\setminus (B_r\setminus\{v_1\})} \frac{\left(\log^{(t-2)} k\right)^k}{\left(\log^{(t-2)} \gamma(v)\right)^{\gamma(v)}} \enspace .
 \]
 There exists an integer constant $a>0$ such that,
 if
 \begin{equation}
-     n_r \le \frac{(\log^{(\mu-1)} k)^k}{\left(\log^{(\mu-1)} (c + s)\right)^{c+s}} \enspace ,
+     n_r \le \frac{(\log^{(t-2)} k)^k}{\left(\log^{(t-2)} (c + s)\right)^{c+s}} \enspace ,
  \label{total-weight-i}
 \end{equation}
 where
 \[
-    s := \frac{\log c}{\log^{(\mu)} c}
+    s := \frac{\log c}{\log^{(t-1)} c}
 \]
 and if $\phi_1,\ldots,\phi_t'$ are distinct integers, each greater than $a(k-c-1)$,
 then $H$ has a 2-ranking $\varphi:V(H)\to\N$ such that
@@ -435,7 +498,7 @@ then $H$ has a 2-ranking $\varphi:V(H)\to\N$ such that
 \begin{proof}
     For each node $x\in V(T)$, let $T_x$ denote the subtree of $T$ induced by $x$ and all its $T$-descendants and let $H_x:=H[\bigcup_{y\in V(T_x)} B_y]$. Recall that, for $x\neq r$, $B_x$ contains exactly one vertex $v_1'$ that is not present in $B_p$ where $p$ is the $T$-parent of $x$.  Define
     \[
-        n_x:=\sum_{v\in V(H_x)\setminus (B_x\setminus \{v_1'\})}(\log^{(\mu-1)} k)^k/(\log^{(\mu-1)}\gamma(v))^{\gamma(v)} \enspace .
+        n_x:=\sum_{v\in V(H_x)\setminus (B_x\setminus \{v_1'\})}(\log^{(t-2)} k)^k/(\log^{(t-2)}\gamma(v))^{\gamma(v)} \enspace .
     \]
     Note that, when $x=r$, this coincides with the definition of $n_r$ in the statement of the lemma (with $v_1'=v_1$).
 
@@ -443,47 +506,48 @@ then $H$ has a 2-ranking $\varphi:V(H)\to\N$ such that
 
     Now assume $|H|\ge t+1$, so $|T|=|H|-t+1\ge 2$.  We say that node $x$ of $T$ is \emph{heavy} if
     \begin{equation}
-        n_v > \frac{(\log^{(\mu-1)} k)^k}{\left(\log^{(\mu-1)}\left(c+s+\tfrac{\log(c+s)}{\log^{(\mu)}(c+s)}\right)\right)^{c+s+\tfrac{\log(c+s)}{\log^{(\mu)}(c+s)}}} \enspace , \label{heavy-def}
+        n_v > \frac{(\log^{(t-2)} k)^k}{\left(\log^{(t-2)}\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)\right)^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}}} \enspace , \label{heavy-def}
     \end{equation}
     and $v$ is \emph{light} otherwise.  For a heavy node $v$,
     \begin{align*}
-        (\log^{(\mu-1)} k)^k/n_v & < \left(\log^{(\mu-1)}\left(c+s+\tfrac{\log(c+s)}{\log^{(\mu)}(c+s)}\right)\right)^{c+s+\tfrac{\log(c+s)}{\log^{(\mu)}(c+s)}} \\
-        & = \left(\log^{(\mu-1)}(c+s)\right)^{\left(c+s+\tfrac{\log(c+s)}{\log^{(\mu)}(c+s)}\right)
-            \left(\tfrac{\log^{(\mu)}(c+s+\log(c+s)/\log^{(\mu)}(c+s))}{\log^{(\mu)}(c+s)}\right)} & \text{(change of base)} \\
-        & < (\log^{(\mu-1)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(\mu)}(c+s)}\right)
-            \left(1 + \tfrac{(\log e)^\mu(\log(c+s))/\log^{(\mu)}(c+s)}{\prod_{j=0}^{\mu}\log^{(j)}(c+s)}\right)}
+        (\log^{(t-2)} k)^k/n_v & < \left(\log^{(t-2)}\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)\right)^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}} \\
+        & = \left(\log^{(t-2)}(c+s)\right)^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
+            \left(\tfrac{\log^{(t-1)}(c+s+\log(c+s)/\log^{(t-1)}(c+s))}{\log^{(t-1)}(c+s)}\right)} & \text{(change of base)} \\
+        & < (\log^{(t-2)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
+            \left(1 + \tfrac{(\log e)^{t-1}(\log(c+s))/\log^{(t-1)}(c+s)}{\prod_{j=0}^{t-1}\log^{(j)}(c+s)}\right)}
             & \text{(by \cref{logi-ratio})}\\
-        & = (\log^{(\mu-1)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(\mu)}(c+s)}\right)
-            \left(1 + \tfrac{(\log e)^\mu}{(c+s)\cdot\left(\prod_{j=2}^{\mu-1}\log^{(j)}(c+s)\right)(\log^{(\mu)}(c+s))^2}\right)} &
-            \text{(for $\mu\ge 2$)}\\
-        & \le (\log^{(\mu-1)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(\mu)}(c+s)}\right)
-            \left(1 + \tfrac{(\log e)^\mu}{(c+s)\cdot(\log^{(\mu)}(c+s))^2}\right)}
-            & \text{($c\ge \tau(\mu)$, so $\prod_{j=2}^{\mu-1}\log^{(j)}c\ge 1$)} \\
-        & = (\log^{(\mu-1)}(c+s))^{c+s+\tfrac{\log(c+s)}{\log^{(\mu)}(c+s)} +
-            \tfrac{(\log e)^\mu}{(\log^{(\mu)}(c+s))^2} + \tfrac{(\log e)^\mu\log(c+s)}{(c+s)(\log^{(\mu)}(c+s))^3}}  \\
-        & = (\log^{(\mu-1)}(c+s))^{c+s+\tfrac{\log(c+s)}{\log^{(\mu)}(c+s)} + o_c\left(\frac{1}{\log^{(\mu)}(c+s)}\right)}  \\
-        & = (\log^{(\mu-1)}(c+s))^{c+s}\cdot (c+s)\cdot (1+o_c(1)) \enspace .
+        & = (\log^{(t-2)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
+            \left(1 + \tfrac{(\log e)^{t-1}}{(c+s)\cdot\left(\prod_{j=2}^{t-2}\log^{(j)}(c+s)\right)(\log^{(t-1)}(c+s))^2}\right)} &
+            \text{(for $t-1\ge 2$)}\\
+        & \le (\log^{(t-2)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
+            \left(1 + \tfrac{(\log e)^{t-1}}{(c+s)\cdot(\log^{(t-1)}(c+s))^2}\right)}
+            & \text{($c\ge \tau(t-1)$, so $\prod_{j=2}^{t-2}\log^{(j)}c\ge 1$)} \\
+        & = (\log^{(t-2)}(c+s))^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)} +
+            \tfrac{(\log e)^{t-1}}{(\log^{(t-1)}(c+s))^2} + \tfrac{(\log e)^{t-1}\log(c+s)}{(c+s)(\log^{(t-1)}(c+s))^3}}  \\
+        & = (\log^{(t-2)}(c+s))^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)} + o_c\left(\frac{1}{\log^{(t-1)}(c+s)}\right)}  \\
+        & = (\log^{(t-2)}(c+s))^{c+s}\cdot (c+s)\cdot (1+o_c(1)) \enspace .
         \numberthis \label{sizer}
     \end{align*}
     [TODO: Hide comments once we've checked everything.]
     Let $T'$ be the subtree of $T$ induced by the set of heavy nodes and let $L$ be the set of leaves in $T'$.  Observe that, for any two distinct leaves $x,y\in L$, $V(H_x)\cap V(H_y)=B_x\cap B_y$.  If follows that $n_r\ge \sum_{x\in L} n_x\ge |L|\cdot(\ref{heavy-def})$.  Therefore
     \[
-        |L| \le \frac{n_v}{(\ref{heavy-def})} \le \frac{(\ref{sizer})}{\left(\log^{(\mu-1)}(c+s)\right)^{c+s}} \le (c+s)(1+o_c(1)) \in O(c) \enspace .
+        |L| \le \frac{n_v}{(\ref{heavy-def})} \le \frac{(\ref{sizer})}{\left(\log^{(t-2)}(c+s)\right)^{c+s}} \le (c+s)(1+o_c(1)) \in O(c) \enspace .
     \]
     Therefore, the number of leaves in $T'$ is $O(c)$.
 
-    Let $H':=H[\bigcup_{x\in V(T')} B_x]$ and notice that $\mathcal{T}':=(B_x:x\in V(T'))$ is a width-$(t-1)$ tree decomposition of $H'$. The tree $T'$ has $O(c)$ leaves and therefore has at most $O(c)$ branching nodes. By \cref{skeleton-size}, the $\mathcal{T}'$-skeleton $\hat{H'}$ of $H'$ is a $t$-tree and $|\hat{H}'|\in O(c)$.  Since $H$ is $\mu$-bounded and $\hat{H}'$ is a minor of $H'$ (and therefore a minor of $H$),
+    Let $H':=H[\bigcup_{x\in V(T')} B_x]$ and notice that $\mathcal{T}':=(B_x:x\in V(T'))$ is a width-$(t-1)$ tree decomposition of $H'$. The tree $T'$ has $O(c)$ leaves and therefore has at most $O(c)$ branching nodes. By \cref{skeleton-size}, the $\mathcal{T}'$-skeleton $\hat{H'}$ of $H'$ is a simple $t$-tree and $|\hat{H}'|\in O(c)$.  By the inductive hypothesis,
+    % Since $H$ is $\mu$-bounded and $\hat{H}'$ is a minor of $H'$ (and therefore a minor of $H$),
     \[
        \trn(\hat{H}')\in
-       O\left(\frac{\log|\hat{H}'|}{\log^{(\mu)}|\hat{H}'|}\right)
-       \subseteq O\left(\frac{\log c}{\log^{(\mu)} c}\right) = O(s) \enspace .
+       O\left(\frac{\log|\hat{H}'|}{\log^{(t-1)}|\hat{H}'|}\right)
+       \subseteq O\left(\frac{\log c}{\log^{(t-1)} c}\right) = O(s) \enspace .
     \]
     Therefore, $H'$ has a 2-ranking $\varphi:V(H')\to \{\lceil a(k-c-1)\rceil-r,\ldots,\lceil a(k-c-1)\rceil-1\}$ for some $r\in O(s)$. Modifying $\varphi$ so that it colours $\varphi(v_i):=\phi_i$ for each $i\in\{1,\ldots,t\}$ preserves the fact that $\varphi$ is a 2-ranking.
 
     The colouring $\varphi$ of $H'$ is a partial colouring of $H$. By definition, $\varphi$ satisifies requirement (P1). For a sufficiently large constant $a$, $\lceil a(k-c-1)\rceil-r > \lceil a(k-c-s-1)\rceil+1$, so each vertex in $H'$ receives a colour larger than $\lceil a(k-c-s-1)\rceil+1$.  For any vertex $v\in V(H)\setminus (B_r\setminus \{v_1\})$,
-    \[ \frac{(\log^{(\mu-1)} k)^k}{(\log^{(\mu-1)}\gamma(v))^{\gamma(v)}}
+    \[ \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}}
          \le n_r
-         \le \frac{(\log^{(\mu-1)} k)^k}{(\log^{(\mu-1)}(c+s))^{(c+s)}}
+         \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}(c+s))^{(c+s)}}
     \]
     so $\gamma(v)\ge c+s$, so the partial colouring $\varphi$ satisifies requirement (P2).
 
@@ -492,12 +556,12 @@ then $H$ has a 2-ranking $\varphi:V(H)\to\N$ such that
    \[
        n_{r_i} \le \frac{(\log k)^k}{
         \left(
-            \log^{(\mu-1)}
+            \log^{(t-2)}
                 \left(
-                   c+s+\tfrac{\log^{(\mu-1)} (c+s)}{\log^{(\mu)}(c+s)}
+                   c+s+\tfrac{\log^{(t-2)} (c+s)}{\log^{(t-1)}(c+s)}
                \right)
         \right)^{\left(
-           c+s+\tfrac{\log^{(\mu-1)} (c+s)}{\log^{(\mu)}(c+s)}
+           c+s+\tfrac{\log^{(t-2)} (c+s)}{\log^{(t-1)}(c+s)}
        \right)}
        }
    \]
