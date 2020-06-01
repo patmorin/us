@@ -745,26 +745,82 @@ Our proof is based on the following claim:
         \end{align*}
         Since $H$ is a $t$-tree, \cref{simple-bfs-layers} implies that $\stw(H[L_i])\le t-1$ so applying \cref{t-tree-no-slack} to $H[L_i]$ gives a colouring $\varphi: V(H')\to\{1,\ldots,ak\}$ that satisfies (P1)--(P3).
 
-        In the general case, we set $\gamma(v):=\max\{x\in\N:(\log^{(t-2)} k)^k/(\log^{(t-2)} x)^x \ge n_v\}$ for each $v\in V(H'[L_i])$.  This implies that
+        In the general case, we set
+        \[
+            \gamma(v):=\max\left\{x\in\N:\text{$x\ge\tau(t-2)$ and $(\log^{(t-2)} k)^k/(\log^{(t-2)} x)^x \ge n_v$}\right\}
+        \]
+        for each $v\in V(H'[L_i])$.  Note that $\gamma(v)$ is well defined for each $v\in V(H'[L_i])$ since $n_v\ge 1$ and $k\ge \tau(t-1)>\tau(t-2)$.
+
+        This definition of $\gamma(v)$ implies that $(\log^{(t-2)}\gamma(v))^{\gamma(v)}$ provides a rough approximation of $n_v$.  We now quantify this more precisely. The use of $\max$ in definition of $n_v$ implies that
         \[
             \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}(\gamma(v)+1))^{\gamma(v)+1}} < n_v
         \]
-        Since $\gamma(v)+1\le k$ [TODO: Explain!],
-        \[
-           n_v > \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}(\gamma(v)+1))^{\gamma(v)+1}}
-           \ge \frac{(\log^{(t-2)} k)^{k-1}}{(\log^{(t-2)}(\gamma(v)+1))^{\gamma(v)}}
-            \cdot
-            \frac{\log^{(t-2)} k}{\log^{(t-2)}(\gamma(v)+1)}
-           \ge
-           \frac{(\log^{(t-2)} k)^{k-1}}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}}
-       \]
+        Therefore,
+        \begin{align*}
+           n_v
+           & > \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}(\gamma(v)+1))^{\gamma(v)+1}} \\
+           & > \frac{
+                    (\log^{(t-2)} k)^{k}
+                    }{
+                    \left(\log^{(t-2)}\gamma(v) + \tfrac{(\log e)^{t-2}}{\prod_{j=0}^{t-3}\log^{(j)} \gamma(v)}\right)^{\gamma(v)+1}}
+                & \text{(by \cref{logi-x-plus-a})} \\
+        & = \frac{
+                 (\log^{(t-2)} k)^{k}
+                 }{
+                 \left((\log^{(t-2)}\gamma(v))\left(1 + \tfrac{(\log e)^{t-2}}{\prod_{j=0}^{t-2}\log^{(j)} \gamma(v)}\right)\right)^{\gamma(v)+1}}
+             & \text{(by factoring)} \\
+         & = \frac{
+                  (\log^{(t-2)} k)^{k}
+                  }{
+                  \left(\log^{(t-2)}\gamma(v)\right)^{\gamma(v)+1}
+                  \cdot
+                  \left(1 + \tfrac{(\log e)^{t-2}}{\prod_{j=0}^{t-2}\log^{(j)} \gamma(v)}\right)^{\gamma(v)+1}}
+              & \text{(by distributing)} \\
+          & = \frac{
+                   (\log^{(t-2)} k)^{k-1}
+                   }{
+                   \left(\log^{(t-2)}\gamma(v)\right)^{\gamma(v)}
+                   \cdot
+                   \left(1 + \tfrac{(\log e)^{t-2}}{\prod_{j=0}^{t-2}\log^{(j)} \gamma(v)}\right)^{\gamma(v)+1}}
+               & \text{(since $k\ge\gamma(v)$)} \\
+           & = \frac{
+                    (\log^{(t-2)} k)^{k-1}
+                    }{
+                    \left(\log^{(t-2)}\gamma(v)\right)^{\gamma(v)}
+                    }
+                    \cdot
+                    \exp\left(-\tfrac{(\gamma(v)+1)(\log e)^{t-2}}{\prod_{j=0}^{t-2}\log^{(j)} \gamma(v)}\right)
+                & \text{(since $e^x\ge 1+x$)} \\
+            & \ge \frac{
+                     (\log^{(t-2)} k)^{k-1}
+                     }{
+                     \left(\log^{(t-2)}\gamma(v)\right)^{\gamma(v)}
+                     }
+                     \cdot
+                     \exp\left(-\tfrac{(\gamma(v)+1)(\log e)^{t-2}}{\gamma(v)}\right)
+                 & \text{(since $\gamma(v)\ge \tau(t-2)$)} \\
+             & \ge \frac{
+                      (\log^{(t-2)} k)^{k-1}
+                      }{
+                      \left(\log^{(t-2)}\gamma(v)\right)^{\gamma(v)}
+                      }
+                      \cdot
+                      \exp\left(-2(\log e)^{t-2}\right)
+                  & \text{(since $(\gamma(v)+1)/\gamma(v)<2$)} \\
+            & \ge \frac{
+                     (\log^{(t-2)} k)^{k-q}
+                     }{
+                     \left(\log^{(t-2)}\gamma(v)\right)^{\gamma(v)}
+                     }
+       \end{align*}
+       for any $k\ge \tau(t-1)$ and $q\ge 2(\log e)^{t-1}+1$.
        Therefore,
        \[
-           \sum_{v\in H'[L_i]} \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} \gamma(v))^{\gamma(v)}} < \sum_{v\in H'[L_i]} n_v(\log k)
-           \le \frac{(\log^{(t-2)} k)^{k-q+1}}{(\log^{(t-2)} c)^c}
-           \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} c)^c}
+           \sum_{v\in H'[L_i]} \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} \gamma(v))^{\gamma(v)}}
+           < \sum_{v\in H'[L_i]} n_v(\log^{(t-2)} k)^q
+           \le \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} c)^c}
        \]
-       for $q\ge 1$.  This satisfies the requirements for \cref{t-tree-no-slack}, so we can find a 2-ranking $\varphi$ of the $(t-1)$-forest $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in V(H'[L_i])$.  It remains to show that we can extend $\varphi$ to a complete colouring of $H'$.
+       This satisfies the requirements for \cref{t-tree-no-slack}, so we can find a 2-ranking $\varphi$ of the $(t-1)$-forest $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in V(H'[L_i])$.  It remains to show that we can extend $\varphi$ to a complete colouring of $H'$.
 
        Recall that $v_1,\ldots,v_n$ is a construction order for $H$. For each vertex $w$ in $H'[L_{i+1}]$ we define the $i$-parent $p(w)$ of $w$ to be the vertex $v_j\in H'[L_i]$ such that $wv_j\in E(H')$ and $j$ is minimized.  That is, $v_j$ is the first vertex in $w$'s parent clique that appears in the construction order.  For each vertex $v$ in $H'[L_i]$ we define $D_v:=\{w\in H'[L_{i+1}]: p(w)=v\}$.
 
