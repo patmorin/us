@@ -758,7 +758,7 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
     \begin{clm}\label{size-claim}
         For each $i\in\{1,\ldots,m\}$ and each component $H'$ of $H[\bigcup_{j=i}^m L_j]$,
         \[
-            \sum_{v\in V(H'[L_i])} n_v = |H'[L_i] + t|H'-L_i|
+            \sum_{v\in V(H'[L_i])} n_v = |H'[L_i] |+ t|H'-L_i|
             \le t|H'| \enspace .
         \]
     \end{clm}
@@ -808,12 +808,12 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
 Our proof is based on the following claim:
 
     \begin{clm}\label{main-claim}
-        Let $H'$ be the union of one or more connected component of $H[\bigcup_{j=i}^m L_i]$. There exists a constant $q$ such that,  if
+        Let $H'$ be the union of one or more connected component of $H[\bigcup_{j=i}^m L_i]$. There exists a constant $a$ such that, if
         \begin{equation}
-            \sum_{v\in V(H'[L_i])} n_v\le \frac{(\log^{(t-2)} k)^{k-q}}{(\log^{(t-2)} (c+s))^{c+s}} \enspace , \label{main-size}
+            \sum_{v\in V(H'[L_i])} n_v\le \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} (c+s))^{c+s}} \enspace , \label{main-size}
         \end{equation}
-        where $s:=\log c/\log^{(t-1)} c$.
-        Then there exists $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,\ldots,t-1\}$ such that
+        where $s:=\log c/\log^{(t-1)} c$,
+        then there exists $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,\ldots,t-1\}$ such that
         \begin{compactenum}[(P1)]
             \item The function $\theta:V(H')\to\{1,\ldots,3tak\}$ defined by $\theta(v)=3t\varphi(v) - 3\psi(v) -(\ell(v)\bmod 3)$ is a 2-ranking of $H'$;
             \item for each $v\in V(H'[L_i])$, $\psi(v)=0$; and
@@ -826,18 +826,16 @@ Our proof is based on the following claim:
     \begin{proof}[Proof of \cref{main-claim}]
         In all cases, (P2) requires setting $\psi(v)=0$ for all $v\in V(H'[L_i])$, so we do this now and will not mention it again.
 
-        [TODO: Base case]
-        % The proof is by induction on $m-i$. In the base case $m-i=0$ and $H'$ is a $(t-1)$-forest.
-        % To handle this case, we set $\gamma(v):=k$ for each $v\in V(H')$.  Then
-        % \begin{align*}
-        %     \sum_{v\in V(H')} \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} \gamma(v))^{\gamma(v)}}
-        %     & = \sum_{v\in V(H')} 1 \\
-        %     & = |H'| \\
-        %     & \le \sum_{v\in V(H'[L_i])} n_v  & \text{(by \cref{size-claim})}\\
-        %     & \le \frac{(\log^{(t-2)} k)^{k-q}}{(\log^{(t-2)} c)^c} & \text{(by \cref{main-size})}\\
-        %     & \le \frac{(\log^{(t-2)} k)^{k}}{(\log^{t-2} c)^c} \enspace .
-        % \end{align*}
-        % Since $H$ is a $t$-tree, \cref{simple-bfs-layers} implies that $\stw(H[L_i])\le t-1$ so applying \cref{t-tree-no-slack} to $H[L_i]$ gives a colouring $\varphi: V(H')\to\{1,\ldots,ak\}$ that satisfies (P1)--(P3).
+        The proof is by induction on $m-i$. In the base case $m-i=0$ and $H'$ is a $(t-1)$-forest.
+        To handle this case, we set $\gamma(v):=k$ for each $v\in V(H')$.  Then
+        \begin{align*}
+            \sum_{v\in V(H')} \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} \gamma(v))^{\gamma(v)}}
+            & = \sum_{v\in V(H')} 1 \\
+            & = |H'| \\
+            & \le \sum_{v\in V(H'[L_i])} n_v  & \text{(by \cref{size-claim})}\\
+            & \le \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} c)^c} & \text{(by \cref{main-size})} \enspace .
+        \end{align*}
+        Since $H$ is a simple $t$-tree, \cref{simple-bfs-layers} implies that $\stw(H[L_i])\le t-1$ so applying \cref{t-tree-slack} to $H[L_i]$ gives a colouring $\varphi: V(H')\to\{1,\ldots,ak\}$ that satisfies (P1) and (P3).
 
         In the general case, we set $\gamma(v)$ equal to the solution of $(\log^{(t-2)} k)^k/(\log^{(t-2)} \gamma(v))^{\gamma(v)} = n_v$. Now,
         \[ \sum_{v\in V(H'[L_i])}\frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} \gamma(v))^{\gamma(v)}} = \sum_{v\in V(H'[L_i])} n_v \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} (c+s))^{c+s}} \enspace .
@@ -934,9 +932,9 @@ Our proof is based on the following claim:
        For each $v\in V(H'[L_i])$, define the graph $H_v$ to be the component of $H'[D_v\cup \bigcup_{j=i+2}^m L_j]$ that contains $D_v$.  Note that $H_v$ is a subgraph of $H^+_v$.
        % Now, $H_v[L_{i+1}]$ is a rooted $(t-1)$-forest with roots $r_1,\ldots,r_d$.
        and there are vertices $w$ in $H_v[L_{i+1}]$ that have already been assigned colours $\varphi(w)$ and $\psi(w)$ because $w\in S_{v'}$ for some $v'\in V(H'[L_i])$.  Consider the \emph{uncoloured graph} $H^-_v:=H_v-\bigcup_{v'\in V(H'[L_i])} S_{v'}$.  Since $H^-_v\subseteq H_v\subseteq H^+_v$, any component $Y$ of $H^-$ has size at most $(\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$.  Furthermore, if $Y$ is a subgraph of $H_C$ for some $t$-clique $C$ in $H'[L_i]$, then
-       \[
+       \begin{equation}
         |Y| \le \min_{v'\in C}\left(\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)} (\gamma(v'))+s(v'))^{\gamma(v)+s(v')}} \right) \enspace . \label{min}
-       \]
+        \end{equation}
        Again, this is because $Y\subseteq Y^+$ where $Y^+$ is a component of $H_C\subseteq H^+_{v'}$.
 
        We apply the inductive hypothesis to each component $Y$ of $H^-_v$ and we obtain $\varphi:V(H^-_v)\to\{1,\ldots,ak\}$ and $\psi:V(H_w)\to\{0,1\}$ that satisfy the conditions of the claim.  We do this to colour $H^-_v$ for each $v\in V(H'[L_i])$.
@@ -976,21 +974,22 @@ Our proof is based on the following claim:
            \label{proper}
        \end{figure}
     \end{proof}
-    Finally, to complete the proof of \cref{two-tree-technical} we apply \cref{main-claim} with $i=0$ and $H'=H$.  By \cref{size-claim} we can do this with any value $k$ such that $t^2n \le (\log k)^{k-q}$ to show that $\htrn(H)\le 2ta'k$ for some constant $a'$.  By \cref{humped}, this implies that $\trn(H)\le 3\htrn(H)\le ak$, for $a=6ta'$.
+    Finally, to complete the proof of \cref{two-tree-technical} we apply \cref{main-claim} with $i=0$ and $H'=H$.  By \cref{size-claim} we can do this with any value $k$ such that $tn \le (\log k)^{k}$ to show that $\trn(H)\le 2tak$ for some constant $a$.
 \end{proof}
 
 Rewriting \cref{two-tree-technical} in terms of $n$ yields \weirdref{simple-t-trees}{a}:
 
 \begin{proof}[Proof of \weirdref{simple-t-trees}{a}]
     By \cref{two-tree-technical}, $\trn(H)\in O(k)$ for any $k$ that satisfies
-    \[  (\log^{(t-2)} k)^{k-O(1)} \ge n \Leftrightarrow
-        k \ge \frac{\log n}{\log^{(t-1)} k} + O(1)
+    \[  (\log^{(t-2)} k)^{k} \ge n \Leftrightarrow
+        k \ge \frac{\log n}{\log^{(t-1)} k}
     \]
     Taking $k=2\log n/\log^{(t)} n$, this becomes
     \[
         \frac{2\log n}{\log^{(t)} n}
-        \ge \frac{\log n}{\log^{(t-1)}(\log n + 2 -\log^{(t)} n)} + O(1)
-        = \frac{\log n}{\log^{(t)} n} + O(1)
+        \ge \frac{\log n}{\log^{(t-1)}(\log n + 2 -\log^{(t)} n)}
+        = \frac{\log n}{\log^{(t)} n - O(1/\log n)}
+        = \frac{\log n}{\log^{(t)} n}+O(1) \enspace .
     \]
     which is clearly true for all sufficiently large $n$.
     % \[  \frac{2\log n}{\log^{(t)} n} \ge \frac{\log n}{\log^{(t) k}}
