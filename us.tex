@@ -596,35 +596,45 @@ then $H$ has a 2-ranking $\varphi:V(H)\to\N$ such that
 
 The next lemma tells us what to do when we don't necessarily have the slack $s$ required to apply \cref{t-tree-slack}.  In this case we use the top $O(c)$ colours (which we can only use once) to colour a subgraph $H'$ of $H$ so that each $(t-1)$-tree in the uncoloured $(t-1)$-forest $H-H'$ has the slack needed to apply \cref{t-tree-slack}.
 
-\begin{lem}\label{t-tree-no-slack}
+\begin{lem}\label{t-tree-no-slack-separator}
     Let $t,k\in\N$ and $c\in\R$ with $t\ge 2$ and $\tau(t)\le c\le k-1$; let $H$ be a simple $(t-1)$-tree; let $t':=\min\{t, |H|\}$; let $v_1,\ldots,v_{|H|}$ be a construction order for $H$ generating a canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ rooted at $r\in V(T)$; let $\gamma:V(H)\to\{z\in\N: z\ge \tau(t-1)\}$; and let
     \[
-        n_r:=\sum_{v\in V(H)\setminus (B_r\setminus\{v_1\})} \frac{\left(\log^{(t-2)} k\right)^k}{\left(\log^{(t-2)} \gamma(v)\right)^{\gamma(v)}} \enspace .
+        W(H):=\sum_{v\in V(H)} \frac{\left(\log^{(t-2)} k\right)^k}{\left(\log^{(t-2)} \gamma(v)\right)^{\gamma(v)}} \enspace .
     \]
     There exists an integer constant $a>0$ such that,
     if
     \begin{equation}
-         n_r \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} c)^{c}} \enspace ,
+         W(H) \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} c)^{c}} \enspace ,
      \label{total-weight-ii}
     \end{equation}
-    then $H$ has a 2-ranking $\varphi:V(T)\to\{1,\ldots,ak\}$ such that
-    \begin{compactenum}[(P1)]
-        \item for each $i>a(k-c-1)$, there is at most one $v\in V(H)$ with $\varphi(v)=i$.
-        % \item for each $i\in\{1,\ldots,{t'}\}$, $\varphi(v_1)=a(k-c-1)+i-1$; and
-        \item for each $v\in V(H)\setminus B_r$, $\varphi(v)> a(k-\gamma(v)-1)$.
+    then there exists $S\subseteq V(T)$ such that
+    \begin{compactenum}
+        \item $|S|\in O(c+1)$; and
+        \item For each component $X$ of $H-\bigcup_{x\in S} B_x$,
+        \[
+            W(X):=\sum_{v\in V(X)} \frac{\left(\log^{(t-2)} k\right)^k}{\left(\log^{(t-2)} \gamma(v)\right)^{\gamma(v)}}
+            \le W_0 :=
+            \frac{\left(\log^{(t-2)} k\right)^k}{\left(\log^{(t-2)} (c+s)\right)^{c+s}}
+        \]
+        where $s:=\log c/\log^{(t+1)} c$.
     \end{compactenum}
 \end{lem}
 
 \begin{proof}
-    The proof is by induction on $|H|$. In the base case, $1\le|H|\le t+1$, so $|T|=1$, we set $\varphi(v_i):=ak-i+1$ for each $i\in\{1,\ldots,t'\}$.  This certainly satisfies (P1).  Furthermore, \cref{total-weight-ii} implies that $\gamma(v)\ge c$ for each $v\in V(H)$, so (P2) is satisfied for $a\ge t$.
+    % If $|H|\le t+1$, then $|V(T)|=1$ and the result is trivial, by taking $S=\{r\}$.
+    % The proof is by induction on $|H|$. In the base case, $1\le|H|\le t+1$, so $|T|=1$, we set $\varphi(v_i):=ak-i+1$ for each $i\in\{1,\ldots,t'\}$.  This certainly satisfies (P1).  Furthermore, \cref{total-weight-ii} implies that $\gamma(v)\ge c$ for each $v\in V(H)$, so (P2) is satisfied for $a\ge t$.
 
-    Now we may assume that $|H|\ge t+1$, so that $|T|\ge 2$.  For each node $v$ of $T$, define $n_v$ as in the proof of \cref{t-tree-slack}.   We say that a node $v$ of $T$ is \emph{heavy} if
-    \[
-        n_v> \frac{\left(\log^{(t-2)} k\right)^k}{\log^{(t-2)}\left(c+\tfrac{\log c}{\log^{(t-1)} c}\right)^{c+\tfrac{\log c}{\log^{(t-1)} c}}} \enspace ,
-    \]
-    otherwise $v$ is \emph{light}.  For a heavy node $v$,
+    We say that a subgraph $H'$ of $H$ is \emph{heavy} if
+    %
+    % Therefore, assume that $|H|\ge t+1$, so that $|T|\ge 2$.  For each node $v$ of $T$, define $n_v$ as in the proof of \cref{t-tree-slack}.   We say that a node $v$ of $T$ is \emph{heavy} if
+    % \[
+        $W(H'):=\sum_{v\in V(H')} > W_0$.
+    %
+    %     := \frac{\left(\log^{(t-2)} k\right)^k}{\log^{(t-2)}\left(c+\tfrac{\log c}{\log^{(t-1)} c}\right)^{c+\tfrac{\log c}{\log^{(t-1)} c}}} \enspace ,
+    % \]
+    otherwise $v$ is \emph{light}.  For a heavy subgraph $H'$,
     \begin{align*}
-        \left(\log^{(t-2)} k\right)^k/n_v
+        \frac{\left(\log^{(t-2)} k\right)^k}{W(H')}
         & < \left(\log^{(t-2)}\left(c+\tfrac{\log c}{\log^{(t-1)} c}\right)\right)^{c+\tfrac{\log c}{\log^{(t-1)} c}} \\
         & = \left(\log^{(t-2)}c\right)^{\left(c+\tfrac{\log c}{\log^{(t-1)} c}\right)
         \left(\tfrac{\log^{(t-1)}\left(c+\log c/\log^{(t-1)} c\right)}{\log^{(t-1)} c}\right)} &\text{(change of base)} \\
@@ -649,25 +659,62 @@ The next lemma tells us what to do when we don't necessarily have the slack $s$ 
         & = O\left(c\cdot\left(\log^{(t-2)}c\right)^c\right)  \numberthis \label{heavy-size}
     \end{align*}
 
-    Let $T'$ be the subtree of $T$ induced by its heavy nodes.  We say that a node of $T'$ is \emph{special} if it is a leaf of $T'$ or it is a branching node of $T'$ and we let $S$ denote the set of special nodes.  Together, \cref{heavy-size} and \cref{total-weight-ii} imply that $T'$ has $O(c)$ leaves.  The number of branching nodes in $T'$ does not exceed the number of leaves in $T'$.   Therefore $T'$ has $|S|=O(c)$ special nodes.
-
-    Let $H'=H[\bigcup_{x\in V(T')} B_x]$ and observe that $(B_x:x\in V(T'))$ is a width-$(t-1)$ tree decomposition of $H'$.  We can obtain a 2-ranking of $H'$ as follows: (this is similar to the proof of \cref{skeleton-colour}):  Let $B:=\bigcup_{x\in S} B_x$ and assign each vertex  $v\in B$ a distinct colour $\varphi(v)\in\{\lfloor a(k-c-1)\rfloor+1,\ldots,ak\}$.  This clearly produces a 2-ranking of the graph $H'[B]$.
-
-    Next, consider the as-yet-uncoloured vertex set $U:=V(H')\setminus B$. The sequence $(B_x:x\in V(T'-S))$ is a width-$(t-1)$ $(T'-S)$-decomposition of $H'[U]=H[U]$. The graph $T'-S$ is a collection of disjoint paths, therefore $\pw(H')\le t-1$. Therefore, by \cref{pathwidth} $H'[U]$ has a 2-ranking $\varphi:U\to \{a(k-c-2)+\lceil a/2\rceil,\ldots,\lfloor a(k-c-1)\rfloor\}$, provided that $a/2\ge 3t-2$.  It is straightforward to check that the colouring $\varphi$ produced this way is a 2-ranking of the entire graph $H'$.
-
-    This gives a colouring $\varphi$ of $H'$ that certainly satisfies (P1).  To see that it also satisfies (P2), observe that, since $|V(T)|\ge 2$, the sum in \cref{total-weight-ii} has at least two terms, which implies that $\gamma(v) > c$ for all $v\in V(H)$. Since $\gamma$ is integer valued, this means that $\gamma(v)\ge c+1$.  Therefore, for each $v\in V(T')$, $\varphi(v)\ge a(k-c-2)+a/2 \ge a(k-c-2)+1\ge a(k-\gamma(v)-1)+1$ so that $\varphi$ satisfies (P2).
-
-    We are now left with the problem of extending the colouring $\varphi$ of $H'$ to a colouring of $H$.  The forest $T-T'$ contains trees $T_1,\ldots,T_m$ with roots $r_1,\ldots,r_m$, respectively.  For each $i\in\{1,\ldots,m\}$, $r_i$ is a light node, so
+    It is well-known, and easy to prove, that there exists a set $S\subseteq V(T)$ of size at most
     \[
-        n_{r_i} \le \frac{(\log^{(t-2)} k)^k}{\left(\log^{(t-2)}\left(c + \frac{\log c}{\log^{(t-1)} c}\right)\right)^{c+\frac{\log c}{\log^{(t-1)} c}}}
-        = \frac{(\log k)^k}{\left(\log\left(c + s\right)\right)^{c+s}}
+        \left\lceil \frac{W(H)}{W_0}\right\rceil \in O(c)
     \]
-    with $s$ defined as in the statement of \cref{t-tree-slack}.
-    Now we can apply \cref{t-tree-slack} to the graph $H_{i}:=H[\bigcup_{x\in V(T_{i})} B_x]$.  This produces a colouring $\varphi:V(H_i)\to\{1,\ldots,a(k-c-s)\}\cup \bigcup_{v\in B_{r_i}}\varphi(v)$ in which the colours of vertices in $B_{r_i}$ are unchanged and are all at least $a(k-c-s)+a/2$ and the colour of each vertex $v\in V(H_i)\setminus B_{r_i}$ is $\varphi(v)<a(k-c-s)+a/2$.  Therefore, (P2) is satisified.  The colours assigned to vertices in $H_i-B_{r_i}$ by \cref{t-tree-slack} satisfy (P1).
-    The proof that this produces a valid 2-ranking of $H$ is exactly as in the proof of \cref{t-tree-slack}.
+    such that each component of $H-\bigcup_{x\in S}B_x$ is light, which completes the proof.
+    %
+    %
+    %
+    % Let $T'$ be the subtree of $T$ induced by its heavy nodes.  We say that a node of $T'$ is \emph{special} if it is a leaf of $T'$ or it is a branching node of $T'$ and we let $S$ denote the set of special nodes.  Together, \cref{heavy-size} and \cref{total-weight-ii} imply that $T'$ has $O(c)$ leaves.  The number of branching nodes in $T'$ does not exceed the number of leaves in $T'$.   Therefore $T'$ has $|S|=O(c)$ special nodes.
+    %
+    % Let $H'=H[\bigcup_{x\in V(T')} B_x]$ and observe that $(B_x:x\in V(T'))$ is a width-$(t-1)$ tree decomposition of $H'$.  We can obtain a 2-ranking of $H'$ as follows: (this is similar to the proof of \cref{skeleton-colour}):  Let $B:=\bigcup_{x\in S} B_x$ and assign each vertex  $v\in B$ a distinct colour $\varphi(v)\in\{\lfloor a(k-c-1)\rfloor+1,\ldots,ak\}$.  This clearly produces a 2-ranking of the graph $H'[B]$.
+    %
+    % Next, consider the as-yet-uncoloured vertex set $U:=V(H')\setminus B$. The sequence $(B_x:x\in V(T'-S))$ is a width-$(t-1)$ $(T'-S)$-decomposition of $H'[U]=H[U]$. The graph $T'-S$ is a collection of disjoint paths, therefore $\pw(H')\le t-1$. Therefore, by \cref{pathwidth} $H'[U]$ has a 2-ranking $\varphi:U\to \{a(k-c-2)+\lceil a/2\rceil,\ldots,\lfloor a(k-c-1)\rfloor\}$, provided that $a/2\ge 3t-2$.  It is straightforward to check that the colouring $\varphi$ produced this way is a 2-ranking of the entire graph $H'$.
+    %
+    % This gives a colouring $\varphi$ of $H'$ that certainly satisfies (P1).  To see that it also satisfies (P2), observe that, since $|V(T)|\ge 2$, the sum in \cref{total-weight-ii} has at least two terms, which implies that $\gamma(v) > c$ for all $v\in V(H)$. Since $\gamma$ is integer valued, this means that $\gamma(v)\ge c+1$.  Therefore, for each $v\in V(T')$, $\varphi(v)\ge a(k-c-2)+a/2 \ge a(k-c-2)+1\ge a(k-\gamma(v)-1)+1$ so that $\varphi$ satisfies (P2).
+    %
+    % We are now left with the problem of extending the colouring $\varphi$ of $H'$ to a colouring of $H$.  The forest $T-T'$ contains trees $T_1,\ldots,T_m$ with roots $r_1,\ldots,r_m$, respectively.  For each $i\in\{1,\ldots,m\}$, $r_i$ is a light node, so
+    % \[
+    %     n_{r_i} \le \frac{(\log^{(t-2)} k)^k}{\left(\log^{(t-2)}\left(c + \frac{\log c}{\log^{(t-1)} c}\right)\right)^{c+\frac{\log c}{\log^{(t-1)} c}}}
+    %     = \frac{(\log k)^k}{\left(\log\left(c + s\right)\right)^{c+s}}
+    % \]
+    % with $s$ defined as in the statement of \cref{t-tree-slack}.
+    % Now we can apply \cref{t-tree-slack} to the graph $H_{i}:=H[\bigcup_{x\in V(T_{i})} B_x]$.  This produces a colouring $\varphi:V(H_i)\to\{1,\ldots,a(k-c-s)\}\cup \bigcup_{v\in B_{r_i}}\varphi(v)$ in which the colours of vertices in $B_{r_i}$ are unchanged and are all at least $a(k-c-s)+a/2$ and the colour of each vertex $v\in V(H_i)\setminus B_{r_i}$ is $\varphi(v)<a(k-c-s)+a/2$.  Therefore, (P2) is satisified.  The colours assigned to vertices in $H_i-B_{r_i}$ by \cref{t-tree-slack} satisfy (P1).
+    % The proof that this produces a valid 2-ranking of $H$ is exactly as in the proof of \cref{t-tree-slack}.
 \end{proof}
 
+TODO: For $n\le(\log^{(t-2)} k)^k$, define $r_k(n)$ as the solution to
+\[  (\log^{(t-2)} x)^x = (\log^{(t-1)} k)^k / n \]
 
+\begin{lem}\label{t-tree-no-slack-ii}
+    Let $t,k\in\N$ and $c\in\R$ with $t\ge 2$ and $\tau(t)\le c\le k-1$; let $H$ be a partial simple $(t-1)$-tree with encompassing $(t-1)$-tree $H^+$; let $t':=\min\{t, |H|\}$; let $v_1,\ldots,v_{|H|}$ be a construction order for $H^+$ generating a canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H^+$ rooted at $r\in V(T)$; let $\gamma:V(H)\to\{z\in\N: z\ge \tau(t-1)\}$; and let
+    \[
+        W(H):=\sum_{v\in V(H)} \frac{\left(\log^{(t-2)} k\right)^k}{\left(\log^{(t-2)} \gamma(v)\right)^{\gamma(v)}} \enspace .
+    \]
+    There exists an integer constant $a>0$ such that,
+    if
+    \begin{equation}
+         W(H) \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} c)^{c}} \enspace ,
+     \label{total-weight-iii}
+    \end{equation}
+    then $H$ has a 2-ranking $\varphi:V(T)\to\{1,\ldots,ak\}$ such that
+    \begin{compactenum}[(P1)]
+        \item for each $i>a(k-c-1)$, there is at most one $v\in V(H)$ with $\varphi(v)=i$;
+        % \item for each $i\in\{1,\ldots,{t'}\}$, $\varphi(v_1)=a(k-c-1)+i-1$; and
+        \item for each $v\in V(H)\setminus B_r$, $\varphi(v)> a(k-\gamma(v)-1)$; and
+        % \item for each component $X$ of $H$ and each $i\in\{a(k-r_k(W(X))-1),\ldots,ak\}$ [TODO: ceilings] there is at most one $v\in V(X)$ such that \varphi(v)=i$.
+    \end{compactenum}
+\end{lem}
+
+\begin{proof}
+    Apply \cref{t-tree-no-slack-separator} to $H^+$ to find the set $S\subset V(T)$ of size $O(c)$.  For each $v\in\bigcup_{x\in S} B_x$, set $\varphi(v)$ to a distinct value in $\{a(k-c-1)+1,\ldots,ak\}$.  Now consider the graph $H':=H-\bigcup_{x\in S} B_x$.  Each component $X'$ of $H'$ is contained in some component $X$ of $H$. There are two cases to consider:
+    \begin{enumerate}
+        \item $(\log^{(t-2)} k)^k/(\log^{(t-2)} (c+s))^{c+s}< W(X)\le W(H)$ (so $c\le r_k(|X|)< c+s$): In this case, we apply \cref{t-tree-slack} to colour $X'$ using colours less than $a(k-c-1) > a(k-r_k(|X|)+1)$!!!!!!!
+        \item $W(X)\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (c+s))^{c+s}$ (so $r_k(|X|) > c+s$):  In this case, we apply \cref{t-tree-slack} to colour $X$ using colours less than $a(k-c-1)<a(k-c-s)$//
+    \end{enumerate}
+\end{proof}
 
 % We say that a path $xyz$ in $H$ is \emph{BFS-humped} if $x,z\in L_i$ and $y\in L_{i-1}$ for some $i\in\{1,\ldots,m\}$.  A colouring $\varphi:V(H)\to\{1,\ldots,k\}$ is a \emph{BFS-humped 2-ranking} if $\max\{\varphi(x),\varphi(y),\varphi(z)\}$ is unique for each BFS-humped path $xyz$ in $H$.
 
