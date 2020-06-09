@@ -204,27 +204,18 @@ Every graph $G$ we consider is finite, simple, and undirected with vertex set de
 
 The \emph{length} of a path $v_0,\ldots,v_r$ in a graph is equal to the number, $r$, of edges in the path. A path is \emph{trivial} if it has length 0 and \emph{non-trivial} otherwise.
 
-Let $T$ be a rooted tree rooted at some node $r\in v(T)$.  For any node $x\in V(T)$, let $P_T(x)$ denote the path, in $T$ from $r$ to $x$.  The \emph{$T$-depth} of $x\in V(T)$, denoted $d_T(x)$ is the length of the path $P_T(x)$.  A node $a\in V(T)$ is a \emph{$T$-ancestor} of $x\in V(T)$ if $a\in V(P_T(x))$. If $a$ is a $T$-ancestor of $x$ then $x$ is a \emph{$T$-descendant} of $a$.  Note that every node of $T$ is both a $T$-ancestor and $T$-descendant of itself.  If $a$ is a $T$-ancestor of $x$ and $x\neq a$ then $a$ is a \emph{strict} $T$-ancestor of $x$ and $x$ is a \emph{strict} $T$-descedant of $x$.
+Let $T$ be a rooted tree rooted at some node $r\in v(T)$.  For any node $x\in V(T)$, let $P_T(x)$ denote the path, in $T$ from $r$ to $x$.  The \emph{$T$-depth} of $x\in V(T)$, denoted $d_T(x)$ is the length of the path $P_T(x)$.  A node $a\in V(T)$ is a \emph{$T$-ancestor} of $x\in V(T)$ if $a\in V(P_T(x))$. If $a$ is a $T$-ancestor of $x$ then $x$ is a \emph{$T$-descendant} of $a$.  Note that every node of $T$ is both a $T$-ancestor and $T$-descendant of itself.  If $a$ is a $T$-ancestor of $x$ and $x\neq a$ then $a$ is a \emph{strict} $T$-ancestor of $x$ and $x$ is a \emph{strict} $T$-descedant of $x$.  The strict ancestor relation induces a partial order $\prec_T$ on $V(T)$ in which $x\prec_T y$ if and only if $x$ is a strict $T$-ancestor of $y$.
 
-For any graph $H$, and any two vertices $v,w\in V(H)$, let $d_H(v,w)$ denote the length of the shortest path, in $H$, from $v$ to $w$. For any $v\in V(H)$ and any $W\subseteq V(H)$, let $d_H(v,W)=\min\{w\in W: d_H(v,w)$. A \emph{BFS layering} of $H$ is a partition $L_0,\ldots,L_m$ of $V(H)$ such that, for each $i\in\{1,\ldots,m\}$ and each $v\in L_i$, $d_H(v,L_0)=i$.
+For any graph $H$, and any two vertices $v,w\in V(H)$, let $d_H(v,w)$ denote the length of the shortest path, in $H$, from $v$ to $w$. For any $v\in V(H)$ and any $W\subseteq V(H)$, let $d_H(v,W)=\min\{w\in W: d_H(v,w)$. A \emph{BFS layering} of $H$ is a partition of $V(H)$ into a sequence $\mathcal{L}:=(L_0,\ldots,L_m)$ of sets such that, for each $i\in\{1,\ldots,m\}$ and each $v\in L_i$, $d_H(v,L_0)=i$.  Any such sequence induces a partial order $\prec_{\mathcal{L}}$ on $V(H)$ in which $v\prec_{\mathcal{L}} w$ if and only if $v\in L_i$, $w\in L_j$ and $0\le i<j\le m$.
 
 
 \subsection{Treewidth}
 
 A graph $H$ is a \emph{$t$-tree} if $H$ is a clique of size at most $t$ or if it contains a vertex $v$ such that $H[N_H(v)]$ is a $t$-clique and $H-\{t\}$ is a $t$-tree.  A \emph{$t$-forest} is a graph whose connected components are $t$-trees.
 
-The recursive definition of $t$-trees implies that there is a permutation $v_1,\ldots,v_n$ of $V(H)$ such that, for each $i\in\{1,\ldots,n\}$, $H[N_H(v_i)\cap \{v_1,\ldots,v_{i-1}\}]$ is a clique of size.  We call $v_1,\ldots,v_n$ a \emph{construction order} for $H$.  For a given construction order $v_1,\ldots,v_n$ of $H$, we call $C_{v_i}:=N_H(v_i)\cap \{v_1,\ldots,v_{i-1}\}$ the \emph{parent clique} of $v_i$ (with respect to the order $v_1,\ldots,v_n$).  The \emph{dominant parent} $p(v_i)$ of $v_i$ (w.r.t. $v_1,\ldots,v_n$) is the vertex $v_j\in C_{v_i}$ that minimizes $j$. Note that the parent clique and dominant parent of any vertex $v_i$, is determined by the choice of the \emph{root clique} $v_1,\ldots,v_{t}$.
+The recursive definition of $t$-trees implies that there is a permutation $\mathcal{R}:=(v_1,\ldots,v_n)$ of $V(H)$ such that, for each $i\in\{1,\ldots,n\}$, $H[N_H(v_i)\cap \{v_1,\ldots,v_{i-1}\}]$ is a clique of size $\min\{t,i-1\}$.  We call $\mathcal{R}$ a \emph{construction order} for $H$.  A construction order $\mathcal{R}$ induces a total order on $H$ that we denote by $<_{\mathcal{R}}$.
 
-If $v_1,\ldots,v_n$ is a construction order for a $t$-tree $H$ and $L_0,\ldots,L_m$ is a BFS layering of $H$ with $L_0:=\{v_1,\ldots,v_{t}\}$, then for any any $v_i\in L_{i'}$ and $v_j\in L_{j'}$, $i < j$ implies $i'\le j'$.  We will use this property frequently.  In particular, if $v\in L_{i}$ for some $i\in\{1,\ldots,m\}$, then the dominant parent $p(v)\in L_{i-1}$.  We also make use of the following property:
-
-\begin{lem}\label{up-clique}
-    Let $H$ be a $t$-tree with construction order $v_1,\ldots,v_n$ and let $L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0:=\{v_1,\ldots,v_{t+1}\}$.  For any $i\in\{0,\ldots,m-1\}$ and any path $uvw$ in $H$ with $u,w\in L_{i+1}$, and $v\in L_i$, there exists a $t$-clique $C$ in $H[L_i]$ such that $(N_H(u)\cup N_H(w))\cap L_i\subseteq C$.
-\end{lem}
-
-\begin{proof}
-    TODO.
-\end{proof}
-
+When a construction order $\mathcal{R}:=(v_1,\ldots,v_n)$ of $H$ is given, we call $C_{v_i}:=N_H(v_i)\cap \{v_1,\ldots,v_{i-1}\}$ the \emph{parent clique} of $v_i$ (with respect to the order $v_1,\ldots,v_n$).  The \emph{dominant parent} $p(v_i)$ of $v_i$ (w.r.t. $v_1,\ldots,v_n$) is the vertex $v_j\in C_{v_i}$ that minimizes $j$. Note that the parent clique and dominant parent of any vertex $v_i$, is determined by the choice of the \emph{root clique} $v_1,\ldots,v_{t}$.
 
 For two graphs $H$ and $X$, an \emph{$X$-decomposition} of $H$ is a sequence $\mathcal{X}:=(B_x:x\in V(X))$ of subsets of $V(H)$ called \emph{bags} indexed by the nodes of $X$ and such that
  \begin{inparaenum}[(i)]
@@ -239,7 +230,39 @@ It is not difficult to see that every $t$-tree $H$ has treewidth $t$ and a tree-
 
 By construction, every bag of a canonical tree decomposition $\mathcal{T}$ of a $t$-tree $H$ has size exactly $\min\{t+1,|H|\}$, $T$ is rooted at $r$ and, for each node $x$ of $T$ with parent $p$, $|B_x\setminus B_p|=1$.  Note that this implies that $|V(T)|=\max\{1,n-t\}$.
 % , since $B_r$ contains $t+1$ vertices of $H$ and, for each $x\in V(T)\setminus\{r\}$, $B_x$ includes exactly one vertex of $H$ that is not in its parent $B_p$ where $p$ is the $T$-parent of $x$.
-For each $v\in V(H)$, we let $x_T(v)$ be the minimum-depth node $x\in V(T)$ such that $v\in B_x$.
+For a rooted tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of a graph $H$ and any $v\in V(H)$, we use the notation $x_T(v)$ to denote the minimum $T$-depth node $x\in V(T)$ such that $v\in B_x$.  This induces a partial order $\prec_{\mathcal{T}}$ on $V(H)$ in which $v\prec_{\mathcal{T}} w$ if and only if $x_T(v)\prec_T x_T(w)$.
+
+The following observation relates construction orders, orders induced by BFS layerings, and orders induced by canonical tree decompositions:
+
+\begin{obs}\label{order-relation}
+    Let $H$ be a $t$-tree with construction order $\mathcal{R}:=(v_1,\ldots,v_n)$, $n\ge t+1$, that generates a canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$, and let $\mathcal{L}:=(L_0,\ldots,L_m)$ be a BFS layering of $H$ with $L_0:=\{v_1,\ldots,v_t\}$.  For any $v,w\in V(H)$,
+    if $v\prec_{\mathcal{T}} w$ or $v\prec_{\mathcal{L}} w$ then $v<_{\mathcal{R}} w$.
+\end{obs}
+
+\begin{obs}\label{dominant-parent}
+    Let $H$ be a $t$-tree with construction order $\mathcal{R}:=(v_1,\ldots,v_n)$, $n\ge t+1$, and let $\mathcal{L}:=(L_0,\ldots,L_m)$ be a BFS layering of $H$ with $L_0:=\{v_1,\ldots,v_{t}\}$.  Then, for any $i\in\{1,\ldots,m\}$ and any vertex $v\in L_{i}$ with dominant parent $p$, $p\in L_{i-1}$.
+\end{obs}
+
+\begin{proof}
+    A well-known property of BFS layerings is that, for $i>0$, any vertex $v\in L_{i}$ has some neighbour $w\in L_{i-1}$.  By definition, $p\le_\mathcal{R} w$ so, by \cref{order-relation} $p\le_\mathcal{L} w$. Since $w\in L_{i-1}$, $p\in L_0\cup\cdots\cup L_{i-1}$.  Another well known property of BFS decompositions is that $v$ has no neighbour in $L_0,\ldots,L_{i-2}$.  Therefore $p\in L_{i-1}$.
+\end{proof}
+
+
+\begin{obs}\label{up-clique}
+    Let $H$ be a $t$-tree with construction order $\mathcal{R}:=(v_1,\ldots,v_n)$, $n\ge t+1$, let $\mathcal{L}:=(L_0,\ldots,L_m)$ be a BFS layering of $H$ with $L_0:=\{v_1,\ldots,v_{t}\}$, let $uvw$ be a path in $H$ with $u,w\in L_{i+1}$, $v\in L_{i-1}$, and let $p,q\in L_{i-1}$ be the dominant parents of $u$ and $w$ respectively.  Then $\{v,p,q\}$ is a clique in $H$.
+\end{obs}
+
+\begin{proof}
+    Refer to \cref{up-clique-figure}. Consider the canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ generated by $v_1,\ldots,v_n$.  By \cref{order-relation}, $v\prec_{\mathcal{T}} u,w$ and, by definition $p,q\preceq_{\mathcal{T}} v$.  Therefore $p,q\prec_{\mathcal{T}} v\prec_{\mathcal{T}} u,w$.  Since $pu\in E(H)$, this implies that $p\in B_{x_T(v)}$.  Similarly $u\in B_{x_T(v)}$.  By definition, $v\in B_{x_T(v)}$.  The vertices in $B_{x_T(v)}$ form a clique in $H$, so $\{v,p,q\}$ is a clique in $H$.
+\end{proof}
+
+\begin{figure}
+    \centering{
+        \includegraphics{figs/up-clique}
+    }
+    \caption{The proof of \cref{up-clique}}
+    \label{up-clique-figure}
+\end{figure}
 
 \subsection{Simple Treewidth}
 
@@ -973,19 +996,19 @@ Our proof is based on the following claim:
        We have already ensured that $\varphi$ and $\psi$ satisfy (P2) and (P3). All that remains is to ensure that they satisfy (P1).  To do this, consider some path $uvw$ in $H'$.  We must show that $\theta(u)\neq\theta(w)$ or $\theta(u)<\theta(v)$.  There are a few cases to consider (see \cref{cases}):
        \begin{figure}
             \centering{
-                \begin{tabular}{|c|c|c|}\hline
+                \begin{tabular}{|c|c|c|}\hline & & \\[.1mm]
                     \includegraphics{figs/cases-1} &
                     \includegraphics{figs/cases-2} &
                     \includegraphics{figs/cases-3} \\
-                    1 & 2 & 3 \\ \hline
+                    (1) & (2) & (3) \\ \hline & & \\[.1mm]
                     \includegraphics{figs/cases-4} &
                     \includegraphics{figs/cases-5} &
                     \includegraphics{figs/cases-6} \\
-                    4 & 5 & 6 \\ \hline
+                    (4) & (5) & (6) \\ \hline & & \\[.1mm]
                     \includegraphics{figs/cases-7} &
                     \includegraphics{figs/cases-8} &
                     \includegraphics{figs/cases-9} \\
-                    7(i) & 7(ii) & 8 \\ \hline
+                    (7(a)) & (7(b)) & (8) \\ \hline
                 \end{tabular}
             }
             \caption{Cases in the proof of \cref{main-claim}.}
@@ -994,24 +1017,24 @@ Our proof is based on the following claim:
        \begin{compactenum}
           \item If $u\in L_i$ and $w\in L_j$ for $i\neq j$ then $i\bmod 3\neq j\bmod 3$, so $\theta(u)\neq\theta(w)$.
 
-          \item If $u,w\in L_i$ and $v\in L_{i+1}$ then $u,w$ is contained the parent clique $C_v$ of $v$.  In particular, $uw\in E(H'[L_i])$ so $\varphi(u)\neq\varphi(w)$ since \cref{t-tree-slack} produces a 2-ranking (which is a proper colouring) $\varphi$ of $H'[L_i]$.
+          \item If $u,w\in L_i$ and $v\in L_{i+1}$ then $u,w$ is contained in the parent clique $C_v$ of $v$.  In particular, $uw\in E(H'[L_i])$ so $\varphi(u)\neq\varphi(w)$ since \cref{t-tree-slack} produces a 2-ranking (which is a proper colouring) $\varphi$ of $H'[L_i]$.
 
           \item If $u,v,w\in L_i$ then $uvw$ is completely contained in $H'[L_i]$ and $\varphi(u)\neq\varphi(w)$ or $\varphi(u)<\varphi(v)$ because \cref{t-tree-slack} produces a 2-ranking $\varphi$ of $H'[L_i]$.
 
-          \item If $uw\in E(H^-_p)$ or the path $uvw$ is contained in $H^-_{p}$ for some vertex $p$ in $H'[L_i]$ then the inductive hypothesis ensures that $\theta$ was already a 2-ranking of $H^-_v$ and the subsequent modifications to $\psi(w)$ for $w\in H^-_v[L_{i+1}]$ do not change this. In fact, these modifications do not change the relative order of $\theta(u)$ and $\theta(w)$ or the relative order of $\theta(u)$ and $\theta(v)$.
+          \item If $uw\in E(H^-_p)$ or the path $u,v,w\in V(H^-_p)$ for some vertex $p$ in $H'[L_i]$ then the inductive hypothesis ensures that $\theta$ was already a 2-ranking of $H^-_v$ and the subsequent modifications to $\psi(w)$ for $w\in H^-_v[L_{i+1}]$ do not change this. In fact, these modifications do not change the relative order of $\theta(u)$ and $\theta(w)$ or the relative order of $\theta(u)$ and $\theta(v)$.
 
-          \item If $u,w\in V(H^-_p)$ for some $p\in V(H'[L_i])$, $v$ is in $H'[L_i]$, and $v\neq p$ then, by \cref{up-clique}, there exists a $t$-clique $C$ in $H'[L_i]$ with $\{p,v\}\subseteq C$ such that $\{u,w\}\subseteq V(H_C)$.  Therefore, by \cref{min}, $\varphi(u),\varphi(w)\le a(k-\gamma(v)-1) < \varphi(v)$ so $\theta(u),\theta(w) < \theta(v)$.
+          \item If $u,w\in V(H^-_p)$ for some $p\in V(H'[L_i])$, $v$ is in $H'[L_i]$, and $v\neq p$ then, by \cref{up-clique}, $pv\in E(H'[L_i])$.  Therefore, there exists a $t$-clique $C$ in $H'[L_i]$ with $\{p,v\}\subseteq C_u$. such that $u\in V(H_{C})$.  Therefore, by \cref{min}, $\varphi(u)\le a(k-\gamma(v)-1) < \varphi(v)$ so $\theta(u) < \theta(v)$.
 
           \item If $u\in V(H^-_{p})$, $v\in V(H'[L_i])$ and $w\in V(H^-_q)$ for some $p\neq q$, then $p=p(v)$ and $q=p(w)$.  By \cref{up-clique}, the edge $pq\in E(H[L_i])$, so $\psi(u)=\zeta(p)\neq\zeta(q)=\psi(w)$ since $\zeta$ is a proper colouring of $H'[L_i]$.
 
-          \item If $u,w\in V(H_{p}-H^-_{p})$ for some $p\in V(H'[L_i])$ then $\varphi(u)$ and $\psi(w)$ were assigned by some vertex $p'\in V(H'[L_i])$ such that $v\in S_{p'}$.  Similarly, $\varphi(w)$ and $\psi(w)$ were assigned by some vertex $q'\in V(H'[L_i])$ such that $w\in S_{q'}$.  There are two subcases to consider:
+          \item If $u,w\in V(H_{p}-H^-_{p})$ for some $p\in V(H'[L_i])$ then $\varphi(u)$ and $\psi(u)$ were assigned by some vertex $p'\in V(H'[L_i])$ such that $v\in S_{p'}$.  Similarly, $\varphi(w)$ and $\psi(w)$ were assigned by some vertex $q'\in V(H'[L_i])$ such that $w\in S_{q'}$.  There are two subcases to consider:
           \begin{compactenum}
             \item If $p'=q'$ then $\varphi(u)\neq\varphi(q)$ since every vertex in $S_{p'}$ is assigned a unique colour by $\varphi$.
-            \item If $p'\neq q'$ then, by \cref{up-clique}, $p'q'\in E(H'[L_i])$ so that $\psi(u)\neq \psi(w)$.
+            \item If $p'\neq q'$ then, by \cref{up-clique}, $p'q'\in E(H'[L_i])$ so that $\psi(u)=\zeta(p')\neq\zeta(q')=\psi(w)$.
         \end{compactenum}
-        In either case $\theta(x)\neq\theta(z)$.
+        In either case $\theta(u)\neq\theta(w)$.
 
-        \item If $u\in V(H^-_{p})$ and $w\in V(H_p-H^-_{p})$ for some $p\in V(H'[L_i])$ then $w\in S_{q'}$ for some $q'\in V(H'[L_i])$ and $\varphi(w)$ (and $\psi(w)$) was assigned by $q'$, so $\varphi(w)>a(k-\gamma(q')-1)$. On the other hand, by \cref{min}, $\varphi(u) \le a(k-\gamma(q')-1)$.  Therefore $\varphi(u)<\varphi(w)$ so $\theta(u)\neq\theta(w)$.
+        \item If $u,w\in H_p[L_{i+1}]$, $u\in V(H^-_{p})$ and $w\not\in V(H^-_{p})$ for some $p\in V(H'[L_i])$ then $w\in S_{q'}$ for some $q'\in V(H'[L_i])$ and $\varphi(w)$ (and $\psi(w)$) was assigned by $q'$, so $\varphi(w)>a(k-\gamma(q')-1)$. On the other hand, by \cref{min}, $\varphi(u) \le a(k-\gamma(q')-1)$.  Therefore $\varphi(u)<\varphi(w)$ so $\theta(u)\neq\theta(w)$.
       \end{compactenum}
       This completes the proof of \cref{main-claim}.
        % \begin{figure}
