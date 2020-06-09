@@ -642,7 +642,7 @@ The next lemma helps deal with the case where we don't necessarily have the slac
     There exists an integer constant $a>0$ such that,
     if
     \begin{equation}
-         n_H \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} c)^{c}} \enspace ,
+         n_H \in O\left( \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} c)^{c}} \right)\enspace ,
      \label{total-weight-ii}
     \end{equation}
     then there exists $S_T\subseteq V(T)$ defining $S:=\bigcup_{x\in S_T} B_x$ such that
@@ -795,7 +795,7 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
     For each $v\in V(H)$, let $\ell(v)$ be such that $v\in L_{\ell(v)}$.
     For each $t$-clique $C$ in $H[L_i]$, we use $H_C$ to denote the connected component of $H[C\cup\bigcup_{j=i+1}^m L_j]$ that contains $C$.
     % For each $i\in\{1,\ldots,m\}$ and each edge $vw\in E(H_i)$, recall that $H_{vw}$ is the component of $H[\{v,w\}\cup\bigcup_{j=i+1}^m L_i]$ that contains $vw$.
-    For each vertex $v\in L_i$, let $N_i(v)$ denote the set of $t$-cliques in $H[L_i]$ that contain $v$ and let $H^+_v:=H[\bigcup_{C\in N_i(v)} H_C]-L_i$.  In words, $H^+_v$ is the set of all $t$-trees hanging off all the $t$-cliques of $H_i$ that contain $v$.  Let $n_v:=\tau(t-1)+|H^+_v|$.
+    For each vertex $v\in L_i$, let $N_i(v)$ denote the set of $t$-cliques in $H[L_i]$ that contain $v$ and let $H^+_v:=H[\bigcup_{C\in N_i(v)} H_C]-L_i$.  In words, $H^+_v$ is the set of all $t$-trees hanging off all the $t$-cliques of $H_i$ that contain $v$.  Let $n_v:=\tau(t-1)+|H^+_v|$.  For each $v\in L_i$, we set $\gamma(v)$ to be the solution to the equation $(\log^{(t-2)} k)^k/(\log^{(t-2)} \gamma(v))^{\gamma(v)} = n_v$.
 
     \begin{clm}\label{size-claim}
         For each $i\in\{1,\ldots,m\}$ and each component $H'$ of $H[\bigcup_{j=i}^m L_j]$,
@@ -867,18 +867,19 @@ Our proof is based on the following claim:
     \begin{proof}[Proof of \cref{main-claim}]
         In all cases, (P2) requires setting $\psi(v)=0$ for all $v\in V(H'[L_i])$, so we do this now and will not mention it again.
 
-        The proof is by induction on $m-i$. In the base case $m-i=0$ and $H'$ is a $(t-1)$-forest.
-        To handle this case, we set $\gamma(v):=k$ for each $v\in V(H')$.  Then
+        The proof is by induction on $m-i$. In the base case $m-i=0$ and $H'$ is a $(t-1)$-forest.  Then, for each $v\in L_i$, $n_v=\tau(t-1)$.  Then
         \begin{align*}
             \sum_{v\in V(H')} \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} \gamma(v))^{\gamma(v)}}
-            & = \sum_{v\in V(H')} 1 \\
-            & = |H'| \\
-            & \le \sum_{v\in V(H'[L_i])} n_v  & \text{(by \cref{size-claim})}\\
+            & = \sum_{v\in V(H')} n_v \\
+            % & = \tau(t-1)\cdot|H'| \\
+            % & \le \sum_{v\in V(H'[L_i])} n_v  & \text{(by \cref{size-claim})}\\
             & \le \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} c)^c} & \text{(by \cref{main-size})} \enspace .
         \end{align*}
         Since $H$ is a simple $t$-tree, \cref{simple-bfs-layers} implies that $\stw(H[L_i])\le t-1$ so completing $H'$ to a simple $(t-1)$-tree using \cref{simple-subgraph} and applying \cref{t-tree-slack} to $H'[L_i]$ gives a colouring $\varphi: V(H')\to\{1,\ldots,ak\}$ that satisfies (P1) and (P3).  This handles the case $m=i$.
 
-        For the inductive step, $m-i\ge 1$.  In this case, for each $v\in V(H'[L_i])$, we set $\gamma(v)$ equal to the solution of $(\log^{(t-2)} k)^k/(\log^{(t-2)} \gamma(v))^{\gamma(v)} = n_v$. Now,
+        For the inductive step, $m-i\ge 1$.
+        % In this case, for each $v\in V(H'[L_i])$, we set $\gamma(v)$ equal to the solution of $(\log^{(t-2)} k)^k/(\log^{(t-2)} \gamma(v))^{\gamma(v)} = n_v$.
+        Now,
         \[
             \sum_{v\in V(H'[L_i])}\frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} \gamma(v))^{\gamma(v)}}
             = \sum_{v\in V(H'[L_i])} n_v
@@ -918,7 +919,7 @@ Our proof is based on the following claim:
        %    & = \frac{
        %             (\log^{(t-2)} k)^{k-1}
        %             }{
-       %             \left(\log^{(t-2)}\gamma(v)\right)^{\gamma(v)}
+       %             \left(\log^{(t-2)}\gamma(v)\ right)^{\gamma(v)}
        %             \cdot
        %             \left(1 + \tfrac{(\log e)^{t-2}}{\prod_{j=0}^{t-2}\log^{(j)} \gamma(v)}\right)^{\gamma(v)+1}}
        %         & \text{(since $k\ge\gamma(v)$)} \\
@@ -961,11 +962,20 @@ Our proof is based on the following claim:
        % \]
        % [TODO: Discuss tree decomposition of $H'[L_i]$.]
        % This satisfies the requirements for \cref{t-tree-no-slack-separator}, so we can find $S\subseteq V(H'[L_i])$ of size $O(c)$ such that, every component $Y$ of $H'[L_i]-S$ has $W(Y)\le (\log^{(t-2)}k)^k/(\log^{(t-2)}(c+s))^{c+s}$.  Let $X_1,\ldots,X_a$ be the components of $H'[L_i]$ and, for each $i\in\{1,\ldots,a\}$, let $X_{i,1},\ldots,X_{i,b_i}$ be the components of $X_i-S$.
-       This choice of $\gamma$ satisfies the requirements for \cref{t-tree-slack}, so we can find a 2-ranking of the $(t-1)$-forest $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in V(H'[L_i])$.  It remains to show that we can extend $\varphi$ to a complete colouring of $H'$.
+       Therefore $\gamma$ satisfies the requirements for \cref{t-tree-slack}, so we can find a 2-ranking of the $(t-1)$-forest $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in V(H'[L_i])$.  It remains to show that we can extend $\varphi$ to a complete colouring of $H'$.
 
        % Unfortunately, we cannot simply apply induction to $H^+_v$ for each $v\in V(H'[L_i])$ since, in general, $H^+_v$ and $H^+_w$ are not disjoint for distinct vertices $v,w\in V(H'[L_i])$.
 
-       By \cref{t-tree-no-slack-separator}, there exists a set $S_v\subseteq H^+_v[L_{i+1}]$ of size $O(\gamma(v)+1)$ such that each component $X$ of $H^+_v-S_v$ has size $|X|\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$, where $s(v):=\log\gamma(v)/\log^{(t-1)}\gamma(v)$.
+       The next step is use \cref{t-tree-no-slack-separator} to break $H'-L_i$ into sufficiently small components.  For any $v\in H'[L_{i]}]$, define
+       \begin{align*}
+          n_{H^+_v} & := \sum_{w\in V(H^+_v)[L_{i+1}]} n_w \\
+                    & \le \tau(t-1)\cdot|H^+_v| & \text{(by \cref{size-claim})} \\
+                    & \le \tau(t-1)\cdot n_v & \text{(by \cref{size-claim})} \\
+                    & = \tau(t-1)\cdot\left(\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}}\right)
+                    & \text{(by definition of $\gamma(v)$)} \\
+                    & \in O\left(\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}}\right) &\text{(for $t\in O(1)$)}
+       \end{align*}
+       Therefore, $\gamma$ satisifies the conditions for applying \cref{t-tree-no-slack-separator} to $H^+_v[L_{i+1}]$.  Therefore, there exists a set $S_v\subseteq H^+_v[L_{i+1}]$ of size $O(\gamma(v)+1)$ such that each component $X$ of $H^+_v-S_v$ has $n_X\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$, where $s(v):=\log\gamma(v)/\log^{(t-1)}\gamma(v)$.
 
        Let $\zeta:V(H'[L_i])\to\{0,\ldots,t-1\}$ be a proper colouring of $H'[L_i]$.  Assign each of the vertices in $S_v$ a distinct colour $\varphi(w)$ from the set $\{\lfloor a(k-\gamma(v))\rfloor+1,\ldots,ak\}$.  In addition, assign $\psi(w):=\zeta(v)$.  Note that, if we do this for each $v\in V(H'[L_i])$ there may be some vertices $w\in L_{i+1}$ that are assigned colours $\varphi(w)$ and $\psi(w)$ more than once.  In this case, we arbitrarily choose one of the vertices $v\in H'[L_i]$ such that $w\in S_v$ and use the colours $\varphi(w)$ and $\psi(w)$ assigned to $w$ by $v$.
 
@@ -975,11 +985,11 @@ Our proof is based on the following claim:
        For each vertex $v$ in $H'[L_i]$ we define $D_v:=\{w\in H'[L_{i+1}]: p(w)=v\}$.  For each $v\in V(H'[L_i])$, define the graph $H_v$ to be the component of $H'[D_v\cup \bigcup_{j=i+2}^m L_j]$ that contains $D_v$.  Note that $H_v$ is a subgraph of $H^+_v$.
        % Now, $H_v[L_{i+1}]$ is a rooted $(t-1)$-forest with roots $r_1,\ldots,r_d$.
 
-       There are some vertices $w$ in $H_v[L_{i+1}]$ that have already been assigned colours $\varphi(w)$ and $\psi(w)$ because $w\in S_{v'}$ for some $v'\in V(H'[L_i])$.  Consider the \emph{uncoloured graph} $H^-_v:=H_v-\bigcup_{v'\in V(H'[L_i])} S_{v'}$.  Since $H^-_v\subseteq H_v\subseteq H^+_v$, any component $Y$ of $H^-$ has size at most $(\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$.  Furthermore, if $Y$ is a subgraph of $H_C$ for some $t$-clique $C$ in $H'[L_i]$, then
+       There are some vertices $w$ in $H_v[L_{i+1}]$ that have already been assigned colours $\varphi(w)$ and $\psi(w)$ because $w\in S_{v'}$ for some $v'\in V(H'[L_i])$.  Consider the \emph{uncoloured graph} $H^-_v:=H_v-\bigcup_{v'\in V(H'[L_i])} S_{v'}$.  Since $H^-_v\subseteq H_v\subseteq H^+_v$, any component $Y$ of $H^-$ has $n_Y\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$.  Furthermore, if $Y$ is a subgraph of $H_C$ for some $t$-clique $C$ in $H'[L_i]$, then
        \begin{equation}
-        |Y| \le \min_{v'\in C}\left(\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)} (\gamma(v'))+s(v'))^{\gamma(v')+s(v')}} \right) \enspace . \label{min}
+        n_Y \le \min_{v'\in C}\left(\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)} (\gamma(v'))+s(v'))^{\gamma(v')+s(v')}} \right) \enspace . \label{min}
         \end{equation}
-       Again, this is because $Y\subseteq Y^+$ where $Y^+$ is a component of $H_C\subseteq H^+_{v'}$ and every component of $H^+_{v'}-S_{v'}$ has size at most $(\log^{(t-2)}k)^k/(\log^{(t-2)} (\gamma(v'))+s(v'))^{\gamma(v')+s(v')}$.
+       Again, this is because $Y\subseteq Y^+$ where $Y^+$ is a component of $H_C\subseteq H^+_{v'}$ and every component $Y$ of $H^+_{v'}-S_{v'}$ has $n_Y\le (\log^{(t-2)}k)^k/(\log^{(t-2)} (\gamma(v'))+s(v'))^{\gamma(v')+s(v')}$.
 
        We apply the inductive hypothesis to each component $Y$ of $H^-_v$ and we obtain $\varphi:V(H^-_v)\to\{1,\ldots,ak\}$ and $\psi:V(H_w)\to\{0,1\}$ that satisfy the conditions of the claim.  We do this to colour $H^-_v$ for each $v\in V(H'[L_i])$.
 
