@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.18">
-<info created="D:20200609054220" modified="D:20200609062355"/>
+<info created="D:20200609054220" modified="D:20200609064125"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -384,8 +384,8 @@ h
 375.352 649.97
 383.051 659.758 c
 </path>
-<text matrix="0.7 0 0 1 -27.5157 12" transformations="translations" pos="316.995 643.618" stroke="black" type="label" width="20.295" height="6.812" depth="2.32" valign="baseline" style="math">L_{i-1}</text>
-<text matrix="0.7 0 0 1 -33.1157 15" transformations="translations" pos="330.889 616.226" stroke="black" type="label" width="10.097" height="6.812" depth="1.49" valign="baseline" style="math">L_{ i}</text>
+<text matrix="0.7 0 0 1 -18.5157 30" transformations="translations" pos="316.995 643.618" stroke="black" type="label" width="10.097" height="6.812" depth="1.49" halign="center" valign="baseline" style="math">L_{i}</text>
+<text matrix="0.7 0 0 1 -19.1157 -1" transformations="translations" pos="330.889 616.226" stroke="black" type="label" width="20.184" height="6.812" depth="2.32" halign="center" valign="baseline" style="math">L_{i+1}</text>
 <path matrix="0.7 0 0 1 -28.2157 16" stroke="black">
 136.088 585.59 m
 194.723 570.969
@@ -519,5 +519,7 @@ h
 <text matrix="1 0 0 1 -112 6" transformations="translations" pos="434.806 676.726" stroke="black" type="label" width="5.187" height="4.289" depth="0" halign="right" valign="baseline" style="math">v</text>
 <text matrix="1 0 0 1 -115 9" transformations="translations" pos="406.371 611.432" stroke="black" type="label" width="5.703" height="4.289" depth="0" halign="right" valign="top" style="math">u</text>
 <text matrix="1 0 0 1 -118 9" transformations="translations" pos="485.882 610.642" stroke="black" type="label" width="7.401" height="4.289" depth="0" valign="top" style="math">w</text>
+<text matrix="1 0 0 1 3 -1" transformations="translations" pos="395.577 620.12" stroke="black" type="label" width="20.184" height="6.812" depth="2.32" valign="center" style="math">L_{i+1}</text>
+<text matrix="1 0 0 1 -0.159368 88.7792" transformations="translations" pos="395.577 620.12" stroke="black" type="label" width="10.097" height="6.812" depth="1.49" valign="center" style="math">L_{i}</text>
 </page>
 </ipe>
