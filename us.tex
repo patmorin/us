@@ -456,7 +456,9 @@ This section is devoted to proving the upper bound in \cref{simple-t-trees}:
 \end{proof}
 
 
-The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part of the paper, so we give a brief overview of the proof strategy before delving into the details.  The proof is by induction on the value of $t$.  The base, $t=1$, is easy: By \cref{simple-small-cases}(i), every simple 1-tree is forest of paths, which has a 2-ranking using 3 colours.  In the general case, we need to prove that $H$ has a 2-ranking using colours $\{1,\ldots,ak\}$ for some constant $a$ and some $k\in O(\log n/\log^{(t)} n)$.  An asymptotically equivalent statement of this is: If $n \le (\log^{(t-2)}k)^k$, then $H$ has a 2-ranking using colours $\{1,\ldots,ak\}$, and this is the version of the statement that we prove.
+The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part of the paper, so we give a brief overview of the proof strategy before delving into the details.  Before reading further, the reader may want to read the lower bound proof in \cref{lower-bounds} since it is simpler and it motivates some of the steps used the by the colouring algorithm we describe here.
+
+The proof is by induction on the value of $t$.  The base, $t=1$, is easy: By \cref{simple-small-cases}(i), every simple 1-tree is forest of paths, which has a 2-ranking using 3 colours.  In the general case, we need to prove that $H$ has a 2-ranking using colours $\{1,\ldots,ak\}$ for some constant $a$ and some $k\in O(\log n/\log^{(t)} n)$.  An asymptotically equivalent statement of this is: If $n \le (\log^{(t-2)}k)^k$, then $H$ has a 2-ranking using colours $\{1,\ldots,ak\}$, and this is the version of the statement that we prove.
 
 We use a BFS layering $L_1,\ldots,L_m$ of $H$ and use the fact (\cref{simple-bfs-layers}) that each layer $L_i$ induces a simple $(t-1)$-forest $H[L_i]$, on which we can apply \weirdref{simple-t-trees}{a} inductively.\footnote{Here, and throughout, we make use of the fact $\trn(H)$ is monotone: it does not decrease when edges are added to $H$ and the fact (\cref{simple-subgraph}) that any graph $H$ with $\stw(H)\le t$ is a subgraph of some simple $t$-tree $H'$ with $V(H')=V(H)$ and $E(H')\supseteq E(H)$.}  The main difficulty with this approach is that a vertex $v$ in $H[L_i]$ dominates an entire simple $(t-1)$-forest $F$ in $H[L_{i+1}]$.  If some colour $\phi$ is used more than once in the colouring of $F$, then $v$ must be assigned a colour larger than $\phi$.
 
@@ -1305,7 +1307,7 @@ As noted in the introduction, several other families of graphs are known to have
 \section{Lower Bounds}
 \label{lower-bounds}
 
-Next we prove the lower bound in \cref{t-trees}.
+Next we prove the lower bound in \cref{t-trees}, which establishes all the other lower bounds. The idea in this lower bound is to construct a $t$-tree $G$ that has a BFS layering $L_0,\ldots,L_\ell$ such that, for each $i,\in\{0,\ldots,\ell-1\}$ and each vertex $a\in L_i$, $G[N_G(a)\cap L_{i+1}]$ is a collection of $(t-1)$-trees $U_{a,0},\ldots,U_{a,k}$, each of which is itself an example of a small $(t-1)$-tree that requires at least $h$ colours.  This forces the colour of $a$ to exceed, by at least $h+1$, the smallest colour used in $U_{a,0},\ldots,U_{a,k}$.  Proceeding bottom up, this forces the vertex in $L_0$ to receive a colour larger than $(h+1)\ell$.
 
 \begin{lem}\label{apex-graph}
     Let $h,k\ge 1$ be integers, let $U$ be a graph with $\trn(U)\ge h$ and let $G$ be a graph obtained by taking $k+1$ disjoint copies $U_0,\ldots,U_k$ of $U$ and adding an apex vertex $a$ adjacent to each $v\in\bigcup_{i=0}^k V(U_i)$.  Then, for any integer $k_0\in \{1,\ldots,k\}$ and any 2-ranking of $\varphi:V(G)\to\{k_0,\ldots,k\}$, $\varphi(a) \ge k_0+h$.
@@ -1393,7 +1395,7 @@ Our upper bounds are constructive and lead to $O(n)$ time algorithms for finding
 
 Two directions for future work stand out:
 \begin{inparaenum}[(i)]
-    \item This paper settles many questions related to $2$-ranking.  How much (if any) of this can be extended to $\ell$-ranking for $\ell>2$.
+    \item This paper settles many questions related to $2$-ranking.  How much (if any) of this can be extended to $\ell$-ranking for $\ell>2$?
     \item For constant $d$, the lower and upper bounds for 2-ranking $d$-degenerate graphs are $\Omega(n^{1/3})$ and $O(\sqrt{n})$, respectively.  Closing this gap is an intriguing open problem.
 \end{inparaenum}
 
