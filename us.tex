@@ -1308,14 +1308,16 @@ As noted in the introduction, several other families of graphs are known to have
 Next we prove the lower bound in \cref{t-trees}.
 
 \begin{lem}\label{apex-graph}
-    Let $h,k\ge 1$ be integers, let $U$ be a graph with $\trn(U)\ge h$ and let $G$ be a graph obtained by taking $k+1$ disjoint copies $U_0,\ldots,U_k$ of $U$ and adding an apex vertex $a$ adjacent to each $v\in\bigcup_{i=0}^k V(U_i)$.  Then, for any integer $k_0\in \{1,\ldots,k\}$ and any 2-ranking of $\varphi:V(G)\to\{k_0,\ldots,k\}$, $\varphi(a) \ge k_0+1$.
+    Let $h,k\ge 1$ be integers, let $U$ be a graph with $\trn(U)\ge h$ and let $G$ be a graph obtained by taking $k+1$ disjoint copies $U_0,\ldots,U_k$ of $U$ and adding an apex vertex $a$ adjacent to each $v\in\bigcup_{i=0}^k V(U_i)$.  Then, for any integer $k_0\in \{1,\ldots,k\}$ and any 2-ranking of $\varphi:V(G)\to\{k_0,\ldots,k\}$, $\varphi(a) \ge k_0+h$.
 \end{lem}
 
 \begin{proof}
-    Since $\trn(U_i)\ge h$, there exists $v_i\in V(U_i)$ such that $\varphi(v_i)\ge h$, for each $i\in\{0,\ldots,k\}$.  Since $|\{0,\ldots,k\}=k+1>k-k_0+1=|\{k_0,\ldots,k\}|$ the Pigeonhole Principle implies that there exists distinct $i,j\in\{0,\ldots,k\}$ such that $\varphi(v_i)=\varphi(v_j)$.  Since $v_i a v_j$ is a path in $G$, this implies that $\varphi(a)\ge \varphi(v_i)+1\ge h+1$.
+    Since $\trn(U_i)\ge h$, there exists $v_i\in V(U_i)$ such that $\varphi(v_i)\ge k_0+h-1$, for each $i\in\{0,\ldots,k\}$.  Since $|\{0,\ldots,k\}|=k+1>k-k_0+1=|\{k_0,\ldots,k\}|$ the Pigeonhole Principle implies that there exists distinct $i,j\in\{0,\ldots,k\}$ such that $\varphi(v_i)=\varphi(v_j)$.  Since $v_i a v_j$ is a path in $G$, this implies that $\varphi(a)\ge \varphi(v_i)+1\ge k_0+h$.
 \end{proof}
 
-For a graph $U$ with and integers $h,\ell\ge 0$, we define the $(h,\ell)$-boost $U^{(h,\ell)}$ of $U$ as follows: The vertex set of $U^{(h,\ell)}$ is the disjoint union of $L_0,\ldots,L_\ell$.  The set $L_0:=\{a_0\}$ consists of a single vertex. For each $i\in\{1,\ldots,\ell\}$ and each $a\in L_{i-1}$, $U^{(h,\ell)}$ contains $h\ell+1$ disjoint copies $U_{a,0},\ldots,U_{a,h\ell}$ of $U$ and contains the edge $av$ for each $v\in\bigcup_{j=0}^{h\ell} V(U_j)$.  This determines the set $L_i=\bigcup_{a\in L_{i-1}}\bigcup_{j=0}^{h\ell} V(U_{a,j})$.
+For a graph $U$ with and integers $h,\ell\ge 0$, we define the $(h,\ell)$-boost $U^{(h,\ell)}$ of $U$ as follows: The vertex set of $U^{(h,\ell)}$ is the disjoint union of $L_0,\ldots,L_\ell$.  The set $L_0:=\{a_0\}$ consists of a single vertex. For each $i\in\{1,\ldots,\ell\}$ and each $a\in L_{i-1}$, $U^{(h,\ell)}$ contains $h\ell+1$ disjoint copies $U_{a,0},\ldots,U_{a,h\ell}$ of $U$ and contains the edge $av$ for each $v\in\bigcup_{j=0}^{h\ell} V(U_{a,j})$.  This determines the set $L_i=\bigcup_{a\in L_{i-1}}\bigcup_{j=0}^{h\ell} V(U_{a,j})$.
+
+As a simple example, if $U$ is a 1-vertex graph, then $U^{(h,\ell)}$ is a complete $(h+1)\ell$-ary tree of height $\ell$.
 
 \begin{lem}\label{boost}
     For any graph $U$, any integer $\ell\ge 0$, and any $h\ge\trn(U)$, $\trn(U^{(h,\ell)})\ge h\ell +1$.
@@ -1349,67 +1351,38 @@ For a graph $U$ with and integers $h,\ell\ge 0$, we define the $(h,\ell)$-boost 
 \end{proof}
 
 
-\begin{thm}\label{treewidth-lower-bound}
-    For each integer $t\ge 0$, there exists $\alpha,\beta>0$
-    such that, for each integer $\ell\ge 2^{2^{2^{\ddots}}}$, there exists a graph $G$, with $|G|\le (\log^{(t-1)}\ell)^{\alpha\ell}$, $\tw(G)\le t$, and $\trn(G)\ge (\beta\ell\log\ell)/\log^{(t)}(\ell\log\ell)$.
-\end{thm}
+\begin{lem}\label{treewidth-lower-bound}
+    For each integer $t\ge 1$ and each integer $r\ge \tau(t)$, there exists a graph $G$, with $|G|\le (\log^{(t-1)}r)^{t r}$, $\tw(G)\le t$, and $\trn(G)\ge r$.
+\end{lem}
 
 \begin{proof}
-    The case $t=0$ is trivial; For every $n\ge 1$, taking $G$ to be an $\ell^\ell$-vertex graph with no edges gives a graph with $\tw(G)=0$ and
-    \[
-        \trn(G)=1=\frac{\ell\log \ell}{\ell\log\ell} = \frac{(\ell\log \ell)}{\log^{(0)}(\ell\log\ell)} \enspace .
-    \]
-    This establishes the result for $t=0$ with $\alpha=\beta=1$.
+    The proof is by induction on $t$.  The base case $t=1$ has already been established by \citet{karpas.neiman.ea:on} who show that the complete $(r+1)$-ary tree $T$ of height $r-1$ has $\trn(T)\ge r$.  The tree $T$ has size $\sum_{i=0}^{r-1} (r+1)^i \le r^r=(\log^{(0)}r)^{r}$.  This establishes the result for $t=1$.
 
-    The remainder of the proof is by induction on $t$.  The base case $t=1$ has already been established by \citet{karpas.neiman.ea:on} who show that the complete $(\ell+1)$-ary tree $T$ of height $\ell-1$ has $\trn(T)\ge \ell$.  The tree $T$ has size $\sum_{i=0}^{\ell-1} (\ell+1)^i \le \ell^\ell$.
-    Observe that
-    \[
-        \trn(T) \ge \ell = \frac{\ell\log\ell}{\log\ell} \ge \frac{\ell\log\ell}{\log(\ell\log\ell)} = \frac{\ell \log \ell}{\log^{(1)}(\ell\log\ell)}
-    \]
-    This establishes the result for $t=1$ with the constant $\alpha=\beta=1$.
+    For $t>1$ we can apply the inductive hypothesis to obtain a graph $U$,     with $\tw(U)\le t-1$, $|U|=(\log^{(t-2)} h)^{(t-1)h}$ and $\trn(U)\ge h$.
+    Now we take the graph $G:=U^{(h,\ell)}$.  By \cref{boost-treewidth}, $\tw(G)\le \tw(U)+1\le t$.  By \cref{boost},
+    $\trn(G)\ge h\ell+1 > h\ell$.
 
-    For $t>1$ we can apply the inductive hypothesis to obtain a graph $U$, with $\tw(U)\le t-1$, $|U|=(\log^{(t-2)}m)^{\alpha'm}$ and $\trn(U)\ge \beta' m\log m/\log^{(t-1)}(m\log m)=:h$.
-    We do this with the value $m:=\log^{(2)}(\ell^\ell)/\log^{(t+1)}(\ell^\ell)=\log (\ell\log\ell)/(\log^{(t)}(\ell\log\ell))$.  Now we take the graph $G:=U^{(h,\ell)}$.  By \cref{boost-treewidth}, $\tw(U^{(h,\ell)})\le \tw(U)+1\le t$.  By \cref{boost},
-    \begin{align*}
-       \trn(G) & \ge \ell h+1 > \ell h\\
-               & = \frac{\ell \beta' m\log m}{\log^{(t-1)}(m\log m)} \\
-               & = \left(\beta'\ell m\right)\left(\frac{\log m}{\log^{(t-1)}(m\log m)}\right) \\
-               & = \left(\frac{\beta'\ell \log(\ell\log\ell)}{\log^{(t)}(\ell\log\ell)}\right)\left(\frac{\log m}{\log^{(t-1)}(m\log m)}\right) \\
-               & \ge \left(\frac{\beta'\ell \log\ell}{\log^{(t)}(\ell\log\ell)}\right) \left(\frac{\log m}{\log^{(t-1)}(m\log m)}\right) \\
-               & \ge \frac{(\beta'/2)\ell \log\ell}{\log^{(t)}(\ell\log\ell)}
-   \end{align*}
-   where the final inequality holds for all $t\ge 2$ and $m\ge 1$ (which holds for all $\ell\ge 2$).
-
-   By \cref{boost-size}, the size of $G$ is given by
+   By \cref{boost-size},
    \begin{align*}
-        |G| & \le \gamma\cdot \left((\log^{(t-2)}m)^{\alpha' m}\ell h\right)^\ell \\
-        & = \gamma ((\log^{(t-2)}m)^{\alpha'\ell m}) (\ell^\ell) (h^\ell) \\
-        & = \gamma \left(\log^{(t-2)}\left(\frac{\log(\ell\log\ell)}{\log^{(t)}(\ell\log\ell)}\right)\right)
-        ^{\frac{\alpha'\ell\log(\ell\log\ell)}{\log^{(t)}(\ell\log\ell)}} \cdot (\ell^\ell) (h^\ell) \\
-        & \le \gamma \left(\log^{(t-2)}(\log(\ell\log\ell))\right)
-        ^{\frac{\alpha'\ell\log(\ell\log\ell)}{\log^{(t)}(\ell\log\ell)}} \cdot (\ell^\ell) (h^\ell) \\
-        & = \gamma \left(\log^{(t-1)}(\ell\log\ell)\right)
-        ^{\frac{\alpha'\ell\log(\ell\log\ell)}{\log^{(t)}(\ell\log\ell)}} \cdot (\ell^\ell) (h^\ell) \\
-        & = \gamma (\ell\log\ell)^{\alpha'\ell} (\ell^\ell) (h^\ell) \\
-        & = \ell^{(\alpha'+1)\ell + \frac{\ell\log h + \ell\log\log\ell \log\gamma}{\log\ell}} \\
-        & = \ell^{(\alpha'+4)\ell}
+        |G| & \le (|U|\cdot\ell\cdot h)^{\ell} \\
+        & \le \left((\log^{(t-2)} h)^{(t-1)h}\cdot\ell\cdot h\right)^{h} \\
+        & = (\log^{(t-2)} h)^{(t-1)h\ell}\cdot (h\ell)^{\ell} \\
+        & = (\log^{(t-1)} r)^{(t-1)\ell\log r}\cdot (\ell\log r)^{\ell}
+        & \text{(for $h=\log r$)}\\
+        & = (\log^{(t-1)} r)^{(t-1)r}\cdot r^{r/\log r}
+        & \text{(for $\ell = r/\log r$)}\\
+        & = (\log^{(t-1)} r)^{(t-1)r}\cdot e^{r} \\
+        & \le (\log^{(t-1)} r)^{tr} & \text{(since $r\ge \tau(t)$, so $\log^{(t-1)} r\ge e$)}
    \end{align*}
-   for all sufficiently large $\ell$.
+   for $r\ge \tau(t)$.
 \end{proof}
 
-Rewriting \cref{treewidth-lower-bound} in terms of $n:=|G|$, we obtain a more-readily digestible corollary:
-
-\begin{cor}\label{treewidth-lower-bound-n}
-    For every integer $t\ge 0$, there exists a constant $\alpha>0$ such that, for infinitely many $n\in\N$,   there exists an $n$-vertex graph $G$ with $tw(G)\le t$ and  $\trn(G)\ge \alpha\log n/\log^{(t+1)} n$.
-\end{cor}
-
-\begin{proof}[Proof of \cref{planar} (lower bound)]
-    By \cref{treewidth-lower-bound-n}, there exists $n$-vertex 2-trees $G$ with $\trn(G)\in O(\log n/\log^{(3)} n)$.  Since every 2-tree is planar, such $G$ establish the lower bound in \cref{planar}.
+\begin{proof}[Proof of \cref{t-trees} (lower bound)]
+    \Cref{treewidth-lower-bound} produces a graph $G$ of size $n \le (\log^{(t-1)} r)^{tr}$ and $\trn(G)\ge r$.  So,
+    \[  \log n \le r\log^{(t)} r = \trn(G)\log^{(t)} \trn(G)\]
+    and attempting to solve for $\trn(G)$ shows that $\trn(G)\in \Omega(\log n/\log^{(t+1)} n)$.
 \end{proof}
 
-\begin{proof}[Proof of \cref{simple-t-trees} (lower bound)]
-    By \cref{treewidth-lower-bound-n}, there exists $n$-vertex graphs $G$ with $\tw(G)=t-1$ and $\trn(G)\in\Omega(\log n/\log^{(t)} n)$.  By \cref{simple-treewidth-vs-treewidth} $\stw(G)\le t$.
-\end{proof}
 
 \section{Discussion}
 \label{conclusion}
