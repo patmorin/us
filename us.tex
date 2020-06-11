@@ -297,12 +297,31 @@ Simple treewidth and treewidth are closely related:
 
 The following two claims are easy, but we are unable to find a reference that proves them, so we include proofs for completeness.
 
+The case $t=2$ of the following lemma is well known: Every outerplanar graph is a subgraph of some edge-maximal outerplanar graph.  The case $t=3$ was proven by \citet{kratochvil.vaner:note}, who note that it is also implicit in earlier work of \citet{elmallah.colbourn:on}.
+
 \begin{clm}\label{simple-subgraph}
-    For any graph $G$ with $\stw(G)=t$, there exists a simple $t$-forest $H$ with $V(G)= V(H)$ and $E(G)\subseteq E(H)$.
+    For any graph $G$ with $\stw(G)\le t$, there exists a simple $t$-forest $H$ with $V(G)= V(H)$ and $E(G)\subseteq E(H)$.
 \end{clm}
 
 \begin{proof}
-    TODO: Or find a reference.
+    [TODO]
+    % Let $\mathcal{T}:=(B_x:x\in V(T))$ be a $t$-simple tree decomposition of $G$.  By a standard argument we may assume there are no two distinct nodes $x,y\in V(T)$ such that $B_x\subseteq B_y$.  We may further assume that, for each node $x\in V(T)$, the vertices of $B_x$ form a clique in $G$.
+    %
+    % The proof is by induction on $|T|$.  If $|T|=1$, so that $T$ has only one node $r$, then $G$ is contained in a clique of size $|G|$.
+    %
+    % If $|T|>1$, $|B_x|=t+1$ for each $x\in V(T)$, and $|B_x\cap B_y|=t$ for each edge $xy\in E(T)$, then $G$ is a simple $t$-tree and there is nothing to prove.
+    % \begin{enumerate}
+    %     \item If there exists a non-leaf node $x\in V(T)$ such that $|B_x|<t+1$, then consider two graphs formed by $G-B_x$ and $G-x
+    %
+    % If there exists a leaf $x\in V(T)$ such that $|B_x|<t+1$ then take vertices from $B_y$ where $y$ is the parent of $x$.
+    %
+    %
+    % $B_x$  graph $G-B_x$.
+    %
+    %  remove   Otherwise, there exists an edge $xy\in E(T)$ such that $|B_x\cap B_y|<t$.
+    %
+    %
+    % TODO: Or find a reference.
 \end{proof}
 
 \begin{clm}\label{simple-bfs-layers}
@@ -417,7 +436,7 @@ which is again valid for all $x> \tau(i-1)$.
 \section{Lower Bounds}
 \label{lower-bounds}
 
-Next we prove the lower bound in \cref{t-trees}, which establishes all the other lower bounds. The idea in this lower bound is to construct a $t$-tree $G$ that has a BFS layering $L_0,\ldots,L_\ell$ such that, for each $i,\in\{0,\ldots,\ell-1\}$ and each vertex $a\in L_i$, $G[N_G(a)\cap L_{i+1}]$ is a collection of $(t-1)$-trees $U_{a,0},\ldots,U_{a,k}$, each of which is itself an example of a small $(t-1)$-tree that requires at least $h$ colours.  This forces the colour of $a$ to exceed, by at least $h+1$, the smallest colour used in $U_{a,0},\ldots,U_{a,k}$.  Proceeding bottom up, this forces the vertex in $L_0$ to receive a colour larger than $(h+1)\ell$.
+Next we prove the lower bound in \cref{t-trees}, which establishes all the other lower bounds. The idea in this lower bound is to construct a $t$-tree $G$ that has a BFS layering $L_0,\ldots,L_m$ such that, for each $i,\in\{0,\ldots,m-1\}$ and each vertex $a\in L_i$, $G[N_G(a)\cap L_{i+1}]$ is a collection of $(t-1)$-trees $U_{a,0},\ldots,U_{a,k}$, each of which is itself an example of a small $(t-1)$-tree that requires at least $h$ colours.  This forces the colour of $a$ to exceed, by at least $h+1$, the smallest colour used in $U_{a,0},\ldots,U_{a,k}$.  Proceeding bottom up, this forces the vertex in $L_0$ to receive a colour larger than $(h+1)m$.
 
 \begin{lem}\label{apex-graph}
     Let $h,k\ge 1$ be integers, let $U$ be a graph with $\trn(U)\ge h$ and let $G$ be a graph obtained by taking $k+1$ disjoint copies $U_0,\ldots,U_k$ of $U$ and adding an apex vertex $a$ adjacent to each $v\in\bigcup_{i=0}^k V(U_i)$.  Then, for any integer $k_0\in \{1,\ldots,k\}$ and any 2-ranking of $\varphi:V(G)\to\{k_0,\ldots,k\}$, $\varphi(a) \ge k_0+h$.
@@ -427,39 +446,37 @@ Next we prove the lower bound in \cref{t-trees}, which establishes all the other
     Since $\trn(U_i)\ge h$, there exists $v_i\in V(U_i)$ such that $\varphi(v_i)\ge k_0+h-1$, for each $i\in\{0,\ldots,k\}$.  Since $|\{0,\ldots,k\}|=k+1>k-k_0+1=|\{k_0,\ldots,k\}|$ the Pigeonhole Principle implies that there exists distinct $i,j\in\{0,\ldots,k\}$ such that $\varphi(v_i)=\varphi(v_j)$.  Since $v_i a v_j$ is a path in $G$, this implies that $\varphi(a)\ge \varphi(v_i)+1\ge k_0+h$.
 \end{proof}
 
-For a graph $U$ with and integers $h,\ell\ge 0$, we define the $(h,\ell)$-boost $U^{(h,\ell)}$ of $U$ as follows: The vertex set of $U^{(h,\ell)}$ is the disjoint union of $L_0,\ldots,L_\ell$.  The set $L_0:=\{a_0\}$ consists of a single vertex. For each $i\in\{1,\ldots,\ell\}$ and each $a\in L_{i-1}$, $U^{(h,\ell)}$ contains $h\ell+1$ disjoint copies $U_{a,0},\ldots,U_{a,h\ell}$ of $U$ and contains the edge $av$ for each $v\in\bigcup_{j=0}^{h\ell} V(U_{a,j})$.  This determines the set $L_i=\bigcup_{a\in L_{i-1}}\bigcup_{j=0}^{h\ell} V(U_{a,j})$.
-
-As a simple example, if $U$ is a 1-vertex graph, then $U^{(h,\ell)}$ is a complete $(h+1)\ell$-ary tree of height $\ell$.
+For a graph $U$ with and integers $h,m\ge 0$, we define the \emph{$(h,m)$-boost} $U^{(h,m)}$ of $U$ as follows: The vertex set of $U^{(h,m)}$ is the disjoint union of $L_0,\ldots,L_m$.  The set $L_0:=\{a_0\}$ consists of a single vertex. For each $i\in\{1,\ldots,m\}$ and each $a\in L_{i-1}$, $U^{(h,m)}$ contains $hm+1$ disjoint copies $U_{a,0},\ldots,U_{a,hm}$ of $U$ and contains the edge $av$ for each $v\in\bigcup_{j=0}^{hm} V(U_{a,j})$.  This determines the set $L_i=\bigcup_{a\in L_{i-1}}\bigcup_{j=0}^{hm} V(U_{a,j})$.  As a simple example, if $U$ is a 1-vertex graph, then $U^{(h,m)}$ is a complete $(h+1)m$-ary tree of height $m$.
 
 \begin{lem}\label{boost}
-    For any graph $U$, any integer $\ell\ge 0$, and any $h\ge\trn(U)$, $\trn(U^{(h,\ell)})\ge h\ell +1$.
+    For any graph $U$, any integer $m\ge 0$, and any $h\ge\trn(U)$, $\trn(U^{(h,m)})\ge hm +1$.
 \end{lem}
 
 \begin{proof}
-    Suppose, for the sake of contradiction, that $\trn(U^{(h,\ell)})=k<h\ell+1$ and let $\varphi:V(U^{(h,\ell)})\to\{1,\ldots,k\}$ be a 2-ranking of $U_{(h,\ell)}$.  Let $L_0,\ldots,L_{\ell}$ be the partition of $V(U^{(h,\ell)})$ used in the definition of $V(U^{(h,\ell)})$.
-    % (Alternatively, $L_0,\ldots,L_{\ell}$ are the breadth-first-search layers of $U^{(h,\ell)}$ rooted at $a_0$.)
-    We will show by induction on $\ell-i$ that, for each $a\in L_{i}$, $\varphi(a)\ge(\ell-i)h+1$. This gives the desired contradiction since it implies that, for the unique vertex $a_0\in L_0$, $\varphi(a_0)\ge \ell h+1 > k$.
+    Suppose, for the sake of contradiction, that $\trn(U^{(h,m)})=k<hm+1$ and let $\varphi:V(U^{(h,m)})\to\{1,\ldots,k\}$ be a 2-ranking of $U_{(h,m)}$.  Let $L_0,\ldots,L_{m}$ be the partition of $V(U^{(h,m)})$ used in the definition of $V(U^{(h,m)})$.
+    % (Alternatively, $L_0,\ldots,L_{m}$ are the breadth-first-search layers of $U^{(h,m)}$ rooted at $a_0$.)
+    We will show by induction on $m-i$ that, for each $a\in L_{i}$, $\varphi(a)\ge(m-i)h+1$. This gives the desired contradiction since it implies that, for the unique vertex $a_0\in L_0$, $\varphi(a_0)\ge m h+1 > k$.
 
-    The base case of the induction, $\ell-i=0$, is trivial; it simply asserts that $\varphi(v)\ge 1$ for each $v\in L_\ell$.  For any $i\in\{0,\ldots,\ell-1\}$ we apply the inductive hypothesis to conclude that $\varphi(v)\in\{(\ell-i-1)h+1,\ldots,k\}$ for each $v\in L_{i+1}$.  For each $a\in L_i$, the subgraph of $U^{(h,\ell)}$ induced by $a$ and its neighbours in $L_{i+1}$ contains the graph described in \cref{apex-graph} with $k_0:=(\ell-i-1)h+1$.  The conclusion of \cref{apex-graph} therefore implies that $\varphi(a)\ge k_0+h=(\ell-i)h+1$, as required.
+    The base case of the induction, $m-i=0$, is trivial; it simply asserts that $\varphi(v)\ge 1$ for each $v\in L_m$.  For any $i\in\{0,\ldots,m-1\}$ we apply the inductive hypothesis to conclude that $\varphi(v)\in\{(m-i-1)h+1,\ldots,k\}$ for each $v\in L_{i+1}$.  For each $a\in L_i$, the subgraph of $U^{(h,m)}$ induced by $a$ and its neighbours in $L_{i+1}$ contains the graph described in \cref{apex-graph} with $k_0:=(m-i-1)h+1$.  The conclusion of \cref{apex-graph} therefore implies that $\varphi(a)\ge k_0+h=(m-i)h+1$, as required.
 \end{proof}
 
 \begin{lem}\label{boost-size}
-    For any graph $U$ and any integers $h,\ell \ge 1$, $|U^{(h,\ell)}| \le (|U|(h\ell))^{\ell}\cdot (1+O((|U|h\ell)^{-1})$.
+    For any graph $U$ and any integers $h,m \ge 1$, $|U^{(h,m)}| \le (|U|(hm))^{m}\cdot (1+O((|U|hm)^{-1})$.
 \end{lem}
 
 \begin{proof}
-    It is easy to see that, for each $i\in \{0,\ldots,\ell\}$, $|L_i|=(|U|(h\ell+1))^i$.  Therefore,
-    \[ |U^{h,\ell}| = \sum_{i=0}^\ell |L_i| = \sum_{i=0}^\ell (|U|(h\ell+1))^i = (|U|(h\ell))^{\ell}\cdot (1+O((|U|h\ell)^{-1}) \enspace . \qedhere
+    It is easy to see that, for each $i\in \{0,\ldots,m\}$, $|L_i|=(|U|(hm+1))^i$.  Therefore,
+    \[ |U^{h,m}| = \sum_{i=0}^m |L_i| = \sum_{i=0}^m (|U|(hm+1))^i = (|U|(hm))^{m}\cdot (1+O((|U|hm)^{-1}) \enspace . \qedhere
     \]
 \end{proof}
 
 
 \begin{lem}\label{boost-treewidth}
-    For any graph $U$ and any integers $h,\ell\ge$, $\tw(U^{(h,\ell)})\le \tw(U)+1$.
+    For any graph $U$ and any integers $h,m\ge$, $\tw(U^{(h,m)})\le \tw(U)+1$.
 \end{lem}
 
 \begin{proof}
-  Create a width-$(\tw(U)+1)$ tree-decomposition $(B_x:x\in V(T))$ of $U^{(h,\ell)}$ as follows: Start with $T$ having a single node $z_0$ with $B_{z_0}=L_0$.  For each $i\in\{1,\ldots,\ell\}$, and each $a\in L_{i-1}$, find some bag $B_z$ in the current decomposition that contains $a$, take $h+1$ disjoint copies $(A_x:x\in V(T_0)),\ldots,(A_x:x\in V(T_h))$ of some width-$t$ tree decomposition $\mathcal{T}$ of $U$.  For each $i\in\{0,\ldots,h\}$, add an edge from $z$ to any node of the tree in $T_i$ and add $a$ to every bag in $T_i$.  It is straightforward to verify that this does, indeed, give a width-$\tw(U)+1$ tree-decomposition of $U^{(h,\ell)}$.
+  Create a width-$(\tw(U)+1)$ tree-decomposition $(B_x:x\in V(T))$ of $U^{(h,m)}$ as follows: Start with $T$ having a single node $z_0$ with $B_{z_0}=L_0$.  For each $i\in\{1,\ldots,m\}$, and each $a\in L_{i-1}$, find some bag $B_z$ in the current decomposition that contains $a$, take $h+1$ disjoint copies $(A_x:x\in V(T_0)),\ldots,(A_x:x\in V(T_h))$ of some width-$t$ tree decomposition $\mathcal{T}$ of $U$.  For each $i\in\{0,\ldots,h\}$, add an edge from $z$ to any node of the tree in $T_i$ and add $a$ to every bag in $T_i$.  It is straightforward to verify that this does, indeed, give a width-$\tw(U)+1$ tree-decomposition of $U^{(h,m)}$.
 \end{proof}
 
 
@@ -471,18 +488,18 @@ As a simple example, if $U$ is a 1-vertex graph, then $U^{(h,\ell)}$ is a comple
     The proof is by induction on $t$.  The base case $t=1$ has already been established by \citet{karpas.neiman.ea:on} who show that the complete $(r+1)$-ary tree $T$ of height $r-1$ has $\trn(T)\ge r$.  The tree $T$ has size $\sum_{i=0}^{r-1} (r+1)^i \le r^r=(\log^{(0)}r)^{r}$.  This establishes the result for $t=1$.
 
     For $t>1$ we can apply the inductive hypothesis to obtain a graph $U$,     with $\tw(U)\le t-1$, $|U|=(\log^{(t-2)} h)^{(t-1)h}$ and $\trn(U)\ge h$.
-    Now we take the graph $G:=U^{(h,\ell)}$.  By \cref{boost-treewidth}, $\tw(G)\le \tw(U)+1\le t$.  By \cref{boost},
-    $\trn(G)\ge h\ell+1 > h\ell$.
+    Now we take the graph $G:=U^{(h,m)}$.  By \cref{boost-treewidth}, $\tw(G)\le \tw(U)+1\le t$.  By \cref{boost},
+    $\trn(G)\ge hm+1 > hm$.
 
    By \cref{boost-size},
    \begin{align*}
-        |G| & \le (|U|\cdot\ell\cdot h)^{\ell} \\
-        & \le \left((\log^{(t-2)} h)^{(t-1)h}\cdot\ell\cdot h\right)^{h} \\
-        & = (\log^{(t-2)} h)^{(t-1)h\ell}\cdot (h\ell)^{\ell} \\
-        & = (\log^{(t-1)} r)^{(t-1)\ell\log r}\cdot (\ell\log r)^{\ell}
+        |G| & \le (|U|\cdot m\cdot h)^{m} \\
+        & \le \left((\log^{(t-2)} h)^{(t-1)h}\cdot m\cdot h\right)^{h} \\
+        & = (\log^{(t-2)} h)^{(t-1)hm}\cdot (hm)^{m} \\
+        & = (\log^{(t-1)} r)^{(t-1)m\log r}\cdot (m\log r)^{m}
         & \text{(for $h=\log r$)}\\
         & = (\log^{(t-1)} r)^{(t-1)r}\cdot r^{r/\log r}
-        & \text{(for $\ell = r/\log r$)}\\
+        & \text{(for $m = r/\log r$)}\\
         & = (\log^{(t-1)} r)^{(t-1)r}\cdot e^{r} \\
         & \le (\log^{(t-1)} r)^{tr} & \text{(since $r\ge \tau(t)$, so $\log^{(t-1)} r\ge e$)}
    \end{align*}
@@ -883,7 +900,7 @@ The next lemma helps deal with the case where we don't necessarily have the slac
 % We say that a path $xyz$ in $H$ is \emph{BFS-humped} if $x,z\in L_i$ and $y\in L_{i-1}$ for some $i\in\{1,\ldots,m\}$.  A colouring $\varphi:V(H)\to\{1,\ldots,k\}$ is a \emph{BFS-humped 2-ranking} if $\max\{\varphi(x),\varphi(y),\varphi(z)\}$ is unique for each BFS-humped path $xyz$ in $H$.
 
 
-We are now ready to prove the technical statement that implies \weirdref{simple-t-trees}{a}. Note that, in the following statement $H$ is a $t$-tree, no longer a $(t-1)$-tree.  This is the whole enchilada:
+We are now ready to prove the technical statement that implies \weirdref{simple-t-trees}{a}. Note that in the following statement $H$ is a $t$-tree, no longer a $(t-1)$-tree.  This is the whole enchilada:
 
 
 \begin{lem}\label{two-tree-technical}
