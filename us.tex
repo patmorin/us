@@ -283,9 +283,9 @@ We work with simple $t$-trees because they arise naturally:
 \begin{lem}[\cite{knauer.ueckerdt:simple,markenzon.justel.ea:subclasses}]\label{simple-small-cases}
     A graph $H$ is
     \begin{compactenum}[(i)]
-        \item a simple $1$-tree if and only if $H$ is a forest of paths.
+        \item a simple $1$-tree if and only if $H$ is a path;
         \item a simple $2$-tree if and only if $H$ is an edge-maximal outerplanar graph;
-        \item a simple $3$-tree if and only if $H$ is a planar 3-tree;
+        \item a simple $3$-tree if and only if $H$ is a planar 3-tree.
     \end{compactenum}
 \end{lem}
 
@@ -295,13 +295,11 @@ Simple treewidth and treewidth are closely related:
     For every graph $G$, $\tw(G)\le \stw(G)\le \tw(G)+1$.
 \end{lem}
 
-The following two claims are easy, but we are unable to find a reference that proves them, so we include proofs for completeness.
+The following two results are easy, but we are unable to find a reference that proves them, so we include proofs for completeness.  The case $t=2$ of the following lemma is well known: Every outerplanar graph is a subgraph of some edge-maximal outerplanar graph.  The case $t=3$ was proven by \citet{kratochvil.vaner:note}, who note that it is also implicit in earlier work of \citet{elmallah.colbourn:on}.
 
-The case $t=2$ of the following lemma is well known: Every outerplanar graph is a subgraph of some edge-maximal outerplanar graph.  The case $t=3$ was proven by \citet{kratochvil.vaner:note}, who note that it is also implicit in earlier work of \citet{elmallah.colbourn:on}.
-
-\begin{clm}\label{simple-subgraph}
+\begin{lem}\label{simple-subgraph}
     For any graph $G$ with $\stw(G)\le t$, there exists a simple $t$-forest $H$ with $V(G)= V(H)$ and $E(G)\subseteq E(H)$.
-\end{clm}
+\end{lem}
 
 \begin{proof}
     [TODO]
@@ -324,9 +322,9 @@ The case $t=2$ of the following lemma is well known: Every outerplanar graph is 
     % TODO: Or find a reference.
 \end{proof}
 
-\begin{clm}\label{simple-bfs-layers}
+\begin{lem}\label{simple-bfs-layers}
     Let $H$ be a simple $t$-tree, let $n:=|H|$, let $v_1,\ldots,v_n$ be a construction order for $H$, and let $L_0,\ldots,L_m$ be the BFS ordering of $H$ with $L_0:=v_1,\ldots,v_{\min\{t,n\}}$.   Then, for each $i\in\{1,\ldots,m\}$, $\stw(H[L_i])\le t-1$.
-\end{clm}
+\end{lem}
 
 \begin{proof}
     Delete BFS layers $L_{i+1},\ldots,L_m$ and contract BFS layers $L_0,\ldots,L_{i-1}$ into a single vertex $v_0$ to obtain a minor $H'$ of $H$ in which $v_0$ is a dominant vertex.  By \cref{simple-minor-closed}, $\stw(H')\le t$, so $H'$ has a $t$-simple tree decomposition $\mathcal{T}':=(B_x:x\in V(T))$.  Since $v_0$ is a dominant vertex, $v_0$ appears in every bag of $\mathcal{T}'$.  Therefore $\mathcal{T}:=(B_x\setminus\{v_0\}:x\in V(T))$ is a $(t-1)$-simple tree decomposition of $H'-\{v_0\}=H[L_i]$.
@@ -436,7 +434,7 @@ which is again valid for all $x> \tau(i-1)$.
 \section{Lower Bounds}
 \label{lower-bounds}
 
-Next we prove the lower bound in \cref{t-trees}, which establishes all the other lower bounds. The idea in this lower bound is to construct a $t$-tree $G$ that has a BFS layering $L_0,\ldots,L_m$ such that, for each $i,\in\{0,\ldots,m-1\}$ and each vertex $a\in L_i$, $G[N_G(a)\cap L_{i+1}]$ is a collection of $(t-1)$-trees $U_{a,0},\ldots,U_{a,k}$, each of which is itself an example of a small $(t-1)$-tree that requires at least $h$ colours.  This forces the colour of $a$ to exceed, by at least $h+1$, the smallest colour used in $U_{a,0},\ldots,U_{a,k}$.  Proceeding bottom up, this forces the vertex in $L_0$ to receive a colour larger than $(h+1)m$.
+Next we prove the lower bound in \cref{t-trees}, which establishes all the other lower bounds. The idea in this lower bound is to construct a $t$-tree $G$ that has a BFS layering $L_0,\ldots,L_m$ such that, for each $i,\in\{0,\ldots,m-1\}$ and each vertex $a\in L_i$, $G[N_G(a)\cap L_{i+1}]$ is a collection of $(t-1)$-trees $U_{a,0},\ldots,U_{a,k}$, each of which is a copy of a small $(t-1)$-tree $U$ that requires at least $h$ colours.  This forces the colour of $a$ to exceed, by at least $h+1$, the smallest colour used in $U_{a,0},\ldots,U_{a,k}$.  Proceeding bottom up, this forces the vertex in $L_0$ to receive a colour larger than $(h+1)m$.  The lower bound is then obtained by using induction on $t$ to upper bound the size of the $(t-1)$-tree $U$ need that has $\trn(U)\ge h$ and choosing the parameters $h$ and $m$ appropriately.
 
 \begin{lem}\label{apex-graph}
     Let $h,k\ge 1$ be integers, let $U$ be a graph with $\trn(U)\ge h$ and let $G$ be a graph obtained by taking $k+1$ disjoint copies $U_0,\ldots,U_k$ of $U$ and adding an apex vertex $a$ adjacent to each $v\in\bigcup_{i=0}^k V(U_i)$.  Then, for any integer $k_0\in \{1,\ldots,k\}$ and any 2-ranking of $\varphi:V(G)\to\{k_0,\ldots,k\}$, $\varphi(a) \ge k_0+h$.
@@ -446,7 +444,7 @@ Next we prove the lower bound in \cref{t-trees}, which establishes all the other
     Since $\trn(U_i)\ge h$, there exists $v_i\in V(U_i)$ such that $\varphi(v_i)\ge k_0+h-1$, for each $i\in\{0,\ldots,k\}$.  Since $|\{0,\ldots,k\}|=k+1>k-k_0+1=|\{k_0,\ldots,k\}|$ the Pigeonhole Principle implies that there exists distinct $i,j\in\{0,\ldots,k\}$ such that $\varphi(v_i)=\varphi(v_j)$.  Since $v_i a v_j$ is a path in $G$, this implies that $\varphi(a)\ge \varphi(v_i)+1\ge k_0+h$.
 \end{proof}
 
-For a graph $U$ with and integers $h,m\ge 0$, we define the \emph{$(h,m)$-boost} $U^{(h,m)}$ of $U$ as follows: The vertex set of $U^{(h,m)}$ is the disjoint union of $L_0,\ldots,L_m$.  The set $L_0:=\{a_0\}$ consists of a single vertex. For each $i\in\{1,\ldots,m\}$ and each $a\in L_{i-1}$, $U^{(h,m)}$ contains $hm+1$ disjoint copies $U_{a,0},\ldots,U_{a,hm}$ of $U$ and contains the edge $av$ for each $v\in\bigcup_{j=0}^{hm} V(U_{a,j})$.  This determines the set $L_i=\bigcup_{a\in L_{i-1}}\bigcup_{j=0}^{hm} V(U_{a,j})$.  As a simple example, if $U$ is a 1-vertex graph, then $U^{(h,m)}$ is a complete $(h+1)m$-ary tree of height $m$.
+For a graph $U$ and integers $h,m\ge 0$, we define the \emph{$(h,m)$-boost} $U^{(h,m)}$ of $U$ as follows: The vertex set of $U^{(h,m)}$ is the disjoint union of $L_0,\ldots,L_m$.  The set $L_0:=\{a_0\}$ consists of a single vertex. For each $i\in\{1,\ldots,m\}$ and each $a\in L_{i-1}$, $U^{(h,m)}$ contains $hm+1$ disjoint copies $U_{a,0},\ldots,U_{a,hm}$ of $U$ and contains the edge $av$ for each $v\in\bigcup_{j=0}^{hm} V(U_{a,j})$.  This determines the set $L_i=\bigcup_{a\in L_{i-1}}\bigcup_{j=0}^{hm} V(U_{a,j})$.  As a simple example, if $U$ is a 1-vertex graph, then $U^{(h,m)}$ is a complete $(hm+1)$-ary tree of height $m$.
 
 \begin{lem}\label{boost}
     For any graph $U$, any integer $m\ge 0$, and any $h\ge\trn(U)$, $\trn(U^{(h,m)})\ge hm +1$.
@@ -461,7 +459,7 @@ For a graph $U$ with and integers $h,m\ge 0$, we define the \emph{$(h,m)$-boost}
 \end{proof}
 
 \begin{lem}\label{boost-size}
-    For any graph $U$ and any integers $h,m \ge 1$, $|U^{(h,m)}| \le (|U|(hm))^{m}\cdot (1+O((|U|hm)^{-1})$.
+    For any graph $U$ and any integers $h,m \ge 1$, $|U^{(h,m)}| \le (|U|\cdot h\cdot m)^{m}\cdot (1+O((|U|hm)^{-1})$.
 \end{lem}
 
 \begin{proof}
@@ -472,7 +470,7 @@ For a graph $U$ with and integers $h,m\ge 0$, we define the \emph{$(h,m)$-boost}
 
 
 \begin{lem}\label{boost-treewidth}
-    For any graph $U$ and any integers $h,m\ge$, $\tw(U^{(h,m)})\le \tw(U)+1$.
+    For any graph $U$ and any integers $h,m\ge 1$, $\tw(U^{(h,m)})\le \tw(U)+1$.
 \end{lem}
 
 \begin{proof}
@@ -494,21 +492,20 @@ For a graph $U$ with and integers $h,m\ge 0$, we define the \emph{$(h,m)$-boost}
    By \cref{boost-size},
    \begin{align*}
         |G| & \le (|U|\cdot m\cdot h)^{m} \\
-        & \le \left((\log^{(t-2)} h)^{(t-1)h}\cdot m\cdot h\right)^{h} \\
+        & \le \left((\log^{(t-2)} h)^{(t-1)h}\cdot m\cdot h\right)^{m} \\
         & = (\log^{(t-2)} h)^{(t-1)hm}\cdot (hm)^{m} \\
         & = (\log^{(t-1)} r)^{(t-1)m\log r}\cdot (m\log r)^{m}
         & \text{(for $h=\log r$)}\\
         & = (\log^{(t-1)} r)^{(t-1)r}\cdot r^{r/\log r}
         & \text{(for $m = r/\log r$)}\\
         & = (\log^{(t-1)} r)^{(t-1)r}\cdot e^{r} \\
-        & \le (\log^{(t-1)} r)^{tr} & \text{(since $r\ge \tau(t)$, so $\log^{(t-1)} r\ge e$)}
+        & \le (\log^{(t-1)} r)^{tr} & \text{(since $r\ge \tau(t)$, so $\log^{(t-1)} r\ge e$).} & \qedhere
    \end{align*}
-   for $r\ge \tau(t)$.
 \end{proof}
 
 \begin{proof}[Proof of \cref{t-trees} (lower bound)]
     \Cref{treewidth-lower-bound} produces a graph $G$ of size $n \le (\log^{(t-1)} r)^{tr}$ and $\trn(G)\ge r$.  So,
-    \[  \log n \le r\log^{(t)} r = \trn(G)\log^{(t)} \trn(G)\]
+    \[  \log n \le tr\log^{(t)} r = t\cdot\trn(G)\log^{(t)} \trn(G)\]
     and attempting to solve for $\trn(G)$ shows that $\trn(G)\in \Omega(\log n/\log^{(t+1)} n)$.
 \end{proof}
 
@@ -673,24 +670,25 @@ then $H$ has a 2-ranking $\varphi:V(H)\to\N$ such that
     \begin{align*}
         (\log^{(t-2)} k)^k/n_v & < \left(\log^{(t-2)}\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)\right)^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}} \\
         & = \left(\log^{(t-2)}(c+s)\right)^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
-            \left(\tfrac{\log^{(t-1)}(c+s+\log(c+s)/\log^{(t-1)}(c+s))}{\log^{(t-1)}(c+s)}\right)} & \text{(change of base)} \\
+            \left(\tfrac{\log^{(t-1)}(c+s+\log(c+s)/\log^{(t-1)}(c+s))}{\log^{(t-1)}(c+s)}\right)} \\
+            & \qquad\qquad\text{(change of base)} \\
         & < (\log^{(t-2)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
-            \left(1 + \tfrac{\log(c+s)/\log^{(t-1)}(c+s)}{\prod_{j=0}^{t-1}\log^{(j)}(c+s)}\right)}
-            & \text{(by \cref{logi-ratio})}\\
+            \left(1 + \tfrac{\log(c+s)/\log^{(t-1)}(c+s)}{\prod_{j=0}^{t-1}\log^{(j)}(c+s)}\right)} \\
+            & \qquad\qquad\text{(by \cref{logi-ratio})}\\
         & = (\log^{(t-2)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
-            \left(1 + \tfrac{1}{(c+s)\cdot\left(\prod_{j=2}^{t-1}\log^{(j)}(c+s)\right)\log^{(t-1)}(c+s)}\right)} &
-            \text{(for $t\ge 2$)}\\
+            \left(1 + \tfrac{1}{(c+s)\cdot\left(\prod_{j=2}^{t-1}\log^{(j)}(c+s)\right)\log^{(t-1)}(c+s)}\right)} \\
+            & \qquad\qquad\text{(for $t\ge 2$)}\\
         & \le (\log^{(t-2)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
-            \left(1 + \tfrac{1}{(c+s)\cdot \log^{(t-1)}(c+s)}\right)}
-            & \text{($c\ge \tau(t-1)$, so $\prod_{j=2}^{t-1}\log^{(j)}c\ge 1$)} \\
+            \left(1 + \tfrac{1}{(c+s)\cdot \log^{(t-1)}(c+s)}\right)} \\
+            & \qquad\qquad\text{($c\ge \tau(t-1)$, so $\textstyle \prod_{j=2}^{t-1}\log^{(j)}c\ge 1$)} \\
         & = (\log^{(t-2)}(c+s))^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)} +
             \tfrac{1}{\log^{(t-1)}(c+s)} + \tfrac{\log(c+s)}{(c+s)(\log^{(t-1)}(c+s))^2}}  \\
-        & = (\log^{(t-2)}(c+s))^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)} + O_c\left(\frac{1}{\log^{(t-1)}(c+s)}\right)}  \\
+        & = (\log^{(t-2)}(c+s))^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)} + O\left(\frac{1}{\log^{(t-1)}(c+s)}\right)}  \\
         & = (\log^{(t-2)}(c+s))^{c+s}\cdot (c+s)\cdot O_c(1) \\
-        & = O\left(c\cdot\left(\log^{(t-2)}(c+s)\right)^{c+s}\right) \enspace .
+        & = O\left(c\cdot\left(\log^{(t-2)}(c+s)\right)^{c+s}\right) \enspace ,
         \numberthis \label{sizer}
     \end{align*}
-    [TODO: Hide comments once we've checked everything.]
+    since $c+s\in O(c)$.
     Let $T'$ be the subtree of $T$ induced by the set of heavy nodes and let $L$ be the set of leaves in $T'$.  Observe that, for any two distinct leaves $x,y\in L$, $V(H_x)\cap V(H_y)=B_x\cap B_y$.  If follows that $n_r\ge \sum_{x\in L} n_x\ge |L|\cdot(\ref{heavy-def})$.  Therefore the number of leaves in $T'$ is
     \[
         |L| \le \frac{n_v}{(\ref{heavy-def})} \le \frac{(\ref{sizer})}{\left(\log^{(t-2)}(c+s)\right)^{c+s}} = O(c)
@@ -1113,7 +1111,7 @@ Our proof is based on the following claim:
        \begin{equation}
         n_Y \le \min_{v'\in C}\left(\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)} (\gamma(v'))+s(v'))^{\gamma(v')+s(v')}} \right) \enspace . \label{min}
         \end{equation}
-       Again, this is because $Y\subseteq Y^+$ where $Y^+$ is a component of $H_C\subseteq H^+_{v'}$ and every component $Y$ of $H^+_{v'}-S_{v'}$ has $n_Y\le (\log^{(t-2)}k)^k/(\log^{(t-2)} (\gamma(v'))+s(v'))^{\gamma(v')+s(v')}$.
+       Again, this is because $Y\subseteq Y^+$ where $Y^+$ is a component of $H_C\subseteq H^+_{v'}$ and each component $Y'$ of $H^+_{v'}-S_{v'}$ has $n_{Y'}\le (\log^{(t-2)}k)^k/(\log^{(t-2)} (\gamma(v'))+s(v'))^{\gamma(v')+s(v')}$.
 
        We apply the inductive hypothesis to each component $Y$ of $H^-_v$ and we obtain $\varphi:V(H^-_v)\to\{1,\ldots,ak\}$ and $\psi:V(H_w)\to\{0,1\}$ that satisfy the conditions of the claim.  We do this to colour $H^-_v$ for each $v\in V(H'[L_i])$.
 
@@ -1123,7 +1121,7 @@ Our proof is based on the following claim:
        %     \label{subproblems}
        % \end{figure}
 
-       At this point colourings $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,1\}$ are completely defined.  We must, however, make one small modification to $\psi$.  Since each vertex in $H'[L_{i+1}]$ is coloured by induction on some component of $H^-_v$ for some $v\in V(H'[L_i])$, $\psi(w)=0$ for each $w\in V(H'[L_{i+1}])$.
+       At this point colourings $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,1\}$ are completely defined.  We must, however, make one small modification to $\psi$.  Since each vertex in $H'[L_{i+1}]$ is coloured by induction on some component of $H^-_v$ for some $v\in V(H'[L_i])$, $\psi(w)=0$ for each $w\in V(H'[L_{i+1}])$, and we are free to change this.
        % Now, the graph $H'[L_i]$ is a $(t-1)$-forest and therefore has a proper $t$-colouring $\zeta:V(H'[L_i])\to\{0,\ldots,t-1\}$.
        Recall that $\zeta:V(H'[L_i])\to\{0,\ldots,t-1\}$ is a proper $t$-colouring of $H'[L_i]$.  For each vertex $v$ in $H'[L_i]$ and each vertex $w$ in $H^-_v[L_{i+1}]$ we set $\psi(w):=\zeta(v)=\zeta(p(w))$.  This completes the description of the colourings $\varphi$ and $\psi$.
 
