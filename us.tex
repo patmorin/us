@@ -298,75 +298,43 @@ The following two results are easy, but we are unable to find a reference that p
     If $|G|\le t+1$, then the result is trivial, so suppose that $|G|>t+1$.
     Let $\mathcal{T}:=(B_x:x\in V(T))$ be a $t$-simple tree decomposition of $G$.  We will transform $\mathcal{T}$ into a canonical decomposition of $H$.
 
-    First we transform $\mathcal{T}$ so that, for each edge $xy\in E(T)$ from a parent $x$ to its child $y$, $|B_y\setminus B_x| \ge 1$.  This is easy, if $B_y\subseteq B_x$ then we can contract $y$ into $x$ without affecting $t$-simplicity.
+    We say that a node $x\in V(T)$ is \emph{redundant} if it has a neighbour $y$ such that $B_x\subseteq B_y$.  We say that $\mathcal{T}$ is \emph{concise} if $T$ has no redundant nodes.  We may assume that $\mathcal{T}$ is concise since,  if $B_x\subseteq B_y$ for some $xy\in E(T)$ then we can contract $x$ into $y$ without affecting $t$-simplicity.  Repeating this exhaustively ensures that $\mathcal{T}$ is concise.
 
-    % When no such operation is possible, $|B_y\setminus B_x|\ge 1$ for every edge $xy\in E(T)$.
+    Next, we do transformations on $T$ (if necessary) so that $|B_r|=t+1$ for at least one node $r\in V(T)$. Let $r$ be a node in $T$ that maximizes $|B_r|$. As long as $|B_r|<t+1$ we find a neighbour $x$ of $r$ and add an element of $B_x\setminus B_r$ to $B_r$.  If this causes $B_x$ to become redundant (because $B_x\subset B_r$) the we contract $x$ into $r$.  To see that this operation maintains $t$-simplicity, suppose that, after the operation some $t$-element subset of $V(G)$ appears in $B_r$, $B_x$, and $B_y$ for some node $y$ adjacent to $x$.  Since $B_y$ and $B_x$ are not changed by the operation, $C\subseteq B_x\cap B_y$.  But $|B_y|\le t$ and $\mathcal{T}$ is concise, so $|C|\le|B_x\cap B_y|\le|B_y|-1= t-1$, a contradiction. Thus we may assume that $T$ is rooted at a node $r$ with $|B_r|=t+1$.
 
-    % If every node $x$ of $T$ has $|B_x|= t+1$, then we are done; $\mathcal{T}$ is a canonical tree decomposition of a simple $t$-tree $H$.  Otherwise,
-    % there exists some non-leaf node $x$ with $|B_x|<t+1$.
+    Now, we say that $\mathcal{T}$ is \emph{maximally deep} if no node $x$ has two children $y$ and $z$ with $B_y\cap B_x\subseteq B_z\cap B_x$.  If such a configuration of nodes exists, then we can remove the edge $xy$ and add the edge $zy$, to make $y$ a child of $z$.  This does not affect $t$-simplicity and increases the total path length of $T$, which is upper bounded by $(|T|^2+|T|)/2$ and, since $T$ is concise and has at least one node $r$ with $|B_r|=t+1$, $|T|\le n-t$.  Therefore after a finite number of such operations, $\mathcal{T}$ is maximally deep.
+
+    We say that a node $x\in V(T)$ with parent $p$ is \emph{incremental} if $|B_x\setminus B_y|=1$ and use the convention that the root $r$ is always incremental.  We say that $x$ is \emph{maximal} if $|B_x|=t+1$.  We say that $\mathcal{T}$ is \emph{uniform} if, for each $x\in V(T)\setminus\{r\}$, $x$ is incremental and maximal.  Observe that, if $\mathcal{T}$ is uniform then $\mathcal{T}$ is a canonical tree decomposition of a simple $t$-tree $H$, and we are done.
+
+    If $\mathcal{T}$ is not uniform, then there exists $x\in V(T)$ such that every $T$-ancestor of $x$, including $x$, is incremental and maximal, but some child $y$ of $x$ is not incremental or not maximal.  Observe that $|B_x\cap B_y| < t$, otherwise $y$ is redundant (because $|B_y|\le t$ so $B_y=B_x\cap B_y$) or $y$ is maximal and incremental (because $|B_y|=t+1$ so $|B_y\setminus B_x|=|B_y|-|B_x\cap B_y|=1$).
+
+    If $|B_y|\le t$ then take some element $v$ from $B_x\setminus B_y$ and add it to $B_y$.  We claim that, if we choose the correct element $v$, then this preserves the $t$-simplicity of $\mathcal{T}$.  Suppose otherwise, so that  $C:=(B_x\cap B_y)\cup\{v\}$ is contained $B_z$ for some node $z\in V(T)\setminus\{x,y\}$.  There are three cases to consider:
+    \begin{compactenum}
+        \item $z$ is a child of $x$:  This is not possible since $\mathcal{T}$ is maximally deep, so $B_x\cap B_y\not\subseteq B_z$.
+        \item $z$ is a child of $y$:  This is not possible since, before the operation, $v\not\in B_y$, and $v\in B_x$, so $v\not\in B_z$.
+        \item $z$ is the parent of $x$:  Since $|B_x|=t+1$ and $|B_x\cap B_y|<t$, there exists two elements $v,w\in B_x\setminus B_y$.  Since $x$ and $z$ are maximal and incremental $|B_x\setminus B_z|=1$. Therefore, at least one of $v$ or $w$ is not contained in $B_z$ and, without loss of generality we assume it is $v$.  But then $v\not\in B_z$ so $C\not\subseteq B_z$.
+    \end{compactenum}
+
+    If $|B_y|=t+1$ then consider the subtree $T_y$ of $T$ containing all $T$-descendants of $y$, including $y$.  $T_y$ has a subtree $T_y'$ containing all nodes $z$ such that $B_z\supseteq B_x\cap B_y$.  The tree $T_y'$ is non-empty and therefore contains some node $z$ that has no children in $T_y'$.  We replace the edge $xy$ in $T$ with $xz$.  This does not change the fact that $\mathcal{T}$ is a $t$-simple tree decomposition of $G$.  The point now is that 
+
+    If $T_y'$ contains a node $z$ with $|B_z|<t+1$, then we do this and the algorithm continues.  Otherwise, $T_y'$
     %
     %
+    % (Assume that $|B_x\cap B_y|=t-1$, otherwise things are easy.)
     %
-    % such that $|B_a|=t+1$ for every strict $T$-ancestor $a$ of $x$.
-    %
-    % Next we want to transform $\mathcal{T}$ so that the bag, $B_r$ at the root $r$ of $T$ has size exactly $t+1$.  Suppose that $B_r$ does not
-
-    Now, we say that $\mathcal{T}$ is \emph{maximally deep} if no node $x$ has two children $y$ and $z$ with $B_y\cap B_x\subseteq B_z\cap B_x$.  If such a configuration of nodes exists, then we can remove the edge $xy$ and add the edge $zy$, to make $y$ a child of $z$.  This does not affect $t$-simplicity and increases the total path length of $T$, which is upper bounded by $(|T|^2+|T|)/2$.  Therefore after a finite number of such operations, $\mathcal{T}$ is maximally deep.
-
-    We say that $\mathcal{T}$ is \emph{uniform} if there is no node $x$ with child $y$ such that $|B_y\setminus B_x|>1$.  Suppose $\mathcal{T}$ is not uniform and that $B_y\setminus B_x=v_1,\ldots,v_d$ for some parent-child edge $xy\in E(T)$.
-
-    If $|B_y|\le t$, then we can replace the edge $xy$ with a path $x,x_1,\ldots,x_{d-1},y$ where, for each $i\in\{1,\ldots,d\}$, $B_{x_i}=\{v_1,\ldots,v_i\}\cup (B_x\cap B_y)$.  We use the convention that $x_0:=x$ and $x_d:=y$. This does not affect $t$-simplicity since each newly introduced node $x_i$ has $|B_{x_i}|<|B_y|\le t$.
-
-    If $|B_y|=t+1$, then performing the same operation may affect $t$-simplicity. In particular, the newly introduced bag $C:=B_{x_{d-1}}$ has size $t$ and $C\subset B_y$.  There is at most one child $z$ of $y$ with $C\subset B_z$.  If no such child $z$ exists, then the resulting tree decomposition is $t$-simple.  If, however the child $z$ does exist, then we perform the following operation:
-
-    We make two children $y'$ and $z'$ of $x_{d-2}$ whose bags contain $t$-element subsets of $B_x$ that each contain $B_x\cap B_y$.   Note that there is still a danger that this violates $t$-simplicity if $|B_x|=t-1$ and one of these nodes contains a copy the intersection between $B_x$ and $B_x$'x parent bag. [I guess in general, we'll make that happen.]   If this happens, then the maximal deepness property (at $x$) ensures that $B_x$ contains a useless vertex and we can replace one of our new nodes with $y$ or $z$.
-
-
-     contains  $\{v_1,\ldots,v_{d-1}\}\cup (B_x\cap B_y)$ and $\{v_1,\ldots,v_{d-2}\} whose children are $y$ and $z$, respectively.
-
-
-
-    We make $y$ and $z$ children of $x_{d-1}$.
-
-
-    and there is no child $z$ of $y$ such that $B_z\supseteq\{v_1,\ldots,v_{d-1}\}\cup (B_x\cap B_y)$, then we perform the same operation, replacing $xy$ with $x,x_1,\ldots,x_{d-1},y$.  Again, this does not affect $t$-simplicity since $|B_{x_i}|<t$ for each $i\in\{1,\ldots,d-2\}$ and the the $t$-element subset $B_{x_{d-1}}$ appears is contained only in $B_{x_{d-1}}$ and $B_y$.
-
-    Finally, if $|B_y|=t+1$ and $B_{}
-
-    , then there is at most one child $z$ of $y$ that contains $x_1,\ldots,x_{d-1}.
-
-
-    Next we would like to tranform $\mathcal{T}$ so that, for every parent-child edge $xy\in E(T)$, $|B_y\setminus B_x|=1$.
-
-
-    Next, consider some edge $xy\in E(T)$ joining node $x$ to its child $y$.  Suppose $B_y\setminus B_x = v_1,\ldots,v_d$ for $d>1$.   we can replace the edge $xy$ with
-    edges $xx_1$, $x_1y$ and $x_1
-
-
-     a path $x,x_1,\ldots,x_{d-1},y$ in which $B_{x_i}$ contains $(B_x\cap B_y)\cup\{v_1,\ldots,v_i\}$.   The only possible violation of $t$-simplicity here comes from the node $v_{d-1}$, since $B_{v_{d-1}}$ is the only newly introduced node whose bag has size at least $t$.  The danger is that $B_{v_{d-1}}\subseteq B_z$ for some node $z\neq y$.  This could only occur if $B_z\supseteq B_x\cap B_y$.  Since $\mathcal{T}$ is maximally deep, any such $z$ must be a strict $T$-descendant of $y$.  However, ..........
-
-     is not a child of (or descendant of) $x$.  The only possibility is that $z$ is a strict $T$-descendant of $y$.    Otherwise, we can replace $
-
-
-
-    [TODO]
-    % Let $\mathcal{T}:=(B_x:x\in V(T))$ be a $t$-simple tree decomposition of $G$.  By a standard argument we may assume there are no two distinct nodes $x,y\in V(T)$ such that $B_x\subseteq B_y$.  We may further assume that, for each node $x\in V(T)$, the vertices of $B_x$ form a clique in $G$.
-    %
-    % The proof is by induction on $|T|$.  If $|T|=1$, so that $T$ has only one node $r$, then $G$ is contained in a clique of size $|G|$.
-    %
-    % If $|T|>1$, $|B_x|=t+1$ for each $x\in V(T)$, and $|B_x\cap B_y|=t$ for each edge $xy\in E(T)$, then $G$ is a simple $t$-tree and there is nothing to prove.
-    % \begin{enumerate}
-    %     \item If there exists a non-leaf node $x\in V(T)$ such that $|B_x|<t+1$, then consider two graphs formed by $G-B_x$ and $G-x
-    %
-    % If there exists a leaf $x\in V(T)$ such that $|B_x|<t+1$ then take vertices from $B_y$ where $y$ is the parent of $x$.
+    % If $|B_y|=t+1$ then, let $C:=(B_x\cap B_y)\cup \{v\}$ where $v$ is defined as above (so $v$ does not appear in the bag of the parent of $x$).  Let $\{v_1,\ldots,v_d\}:=B_y\setminus B_x$.  Since $|B_x\cap B_y|<t$, $d\ge 2$.
     %
     %
-    % $B_x$  graph $G-B_x$.
+    %  There are some cases to consider:
     %
-    %  remove   Otherwise, there exists an edge $xy\in E(T)$ such that $|B_x\cap B_y|<t$.
+    % \begin{compactenum}
+    %
+    %     \item If $y$ has a child $z$ such that $v_1\cup (B_x\cap B_y)\not\subseteq B_z$, then we replace $xy$ with a path $xx'y$ where $B_{x'}:C\cup\{v_1\}$.  This preserves $t$-simplicity since the only new $t$-clique to worry about is $v_1\cup (B_x\cap B_y)$ but this only appears in $B_y$ (and now in $B_{x'}$).
+    %
+    %     \item Otherwise, $y$ has exactly one child $z$ such that $v_1\in B_z$.  Now, observe that $C':=(B_x\cap B_y)\cup\{v_1\}$ is contained in $B_y$ and $B_z$.  Therefore,
     %
     %
-    % TODO: Or find a reference.
+    % arguing as above, there is a vertex $v$ that appears only in $B_x$.
 \end{proof}
 
 \begin{lem}\label{simple-bfs-layers}
