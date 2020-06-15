@@ -284,66 +284,20 @@ We work with simple $t$-trees because they arise naturally:
 
 Simple treewidth and treewidth are closely related:
 
-\begin{lem}\label{simple-treewidth-vs-treewidth}\cite{knauer.ueckerdt:simple}
+\begin{lem}[\cite{knauer.ueckerdt:simple}]\label{simple-treewidth-vs-treewidth}
     For every graph $G$, $\tw(G)\le \stw(G)\le \tw(G)+1$.
 \end{lem}
 
-The following two results are easy, but we are unable to find a reference that proves them, so we include proofs for completeness.  The case $t=2$ of the following lemma is well known: Every outerplanar graph is a subgraph of some edge-maximal outerplanar graph.  The case $t=3$ was proven by \citet{kratochvil.vaner:note}, who note that it is also implicit in earlier work of \citet{elmallah.colbourn:on}.
+The following two results show that, although not immediately obvious, simple treewidth and simple $t$-trees behave very much like treewidth and $t$-trees.
 
-\begin{lem}\label{simple-subgraph}
+\begin{lem}[\cite{dujmovic.morin.ea:notes}]\label{simple-subgraph}
     For any graph $G$ with $\stw(G)\le t$, there exists a simple $t$-tree $H$ with $V(G)= V(H)$ and $E(G)\subseteq E(H)$.
 \end{lem}
 
-\begin{proof}
-    If $|G|\le t+1$, then the result is trivial, so suppose that $|G|>t+1$.
-    Let $\mathcal{T}:=(B_x:x\in V(T))$ be a $t$-simple tree decomposition of $G$.  We will transform $\mathcal{T}$ into a canonical decomposition of $H$.
 
-    We say that a node $x\in V(T)$ is \emph{redundant} if it has a neighbour $y$ such that $B_x\subseteq B_y$.  We say that $\mathcal{T}$ is \emph{concise} if $T$ has no redundant nodes.  We may assume that $\mathcal{T}$ is concise since,  if $B_x\subseteq B_y$ for some $xy\in E(T)$ then we can contract $x$ into $y$ without affecting $t$-simplicity.  Repeating this exhaustively ensures that $\mathcal{T}$ is concise.
-
-    Next, we do transformations on $T$ (if necessary) so that $|B_r|=t+1$ for at least one node $r\in V(T)$. Let $r$ be a node in $T$ that maximizes $|B_r|$. As long as $|B_r|<t+1$ we find a neighbour $x$ of $r$ and add an element of $B_x\setminus B_r$ to $B_r$.  If this causes $B_x$ to become redundant (because $B_x\subset B_r$) the we contract $x$ into $r$.  To see that this operation maintains $t$-simplicity, suppose that, after the operation some $t$-element subset of $V(G)$ appears in $B_r$, $B_x$, and $B_y$ for some node $y$ adjacent to $x$.  Since $B_y$ and $B_x$ are not changed by the operation, $C\subseteq B_x\cap B_y$.  But $|B_y|\le t$ and $\mathcal{T}$ is concise, so $|C|\le|B_x\cap B_y|\le|B_y|-1= t-1$, a contradiction. Thus we may assume that $T$ is rooted at a node $r$ with $|B_r|=t+1$.
-
-    Now, we say that $\mathcal{T}$ is \emph{maximally deep} if no node $x$ has two children $y$ and $z$ with $B_y\cap B_x\subseteq B_z\cap B_x$.  If such a configuration of nodes exists, then we can remove the edge $xy$ and add the edge $zy$, to make $y$ a child of $z$.  This does not affect $t$-simplicity and increases the total path length of $T$, which is upper bounded by $(|T|^2+|T|)/2$ and, since $T$ is concise and has at least one node $r$ with $|B_r|=t+1$, $|T|\le n-t$.  Therefore after a finite number of such operations, $\mathcal{T}$ is maximally deep.
-
-    We say that a node $x\in V(T)$ with parent $p$ is \emph{incremental} if $|B_x\setminus B_y|=1$ and use the convention that the root $r$ is always incremental.  We say that $x$ is \emph{maximal} if $|B_x|=t+1$.  We say that $\mathcal{T}$ is \emph{uniform} if, for each $x\in V(T)\setminus\{r\}$, $x$ is incremental and maximal.  Observe that, if $\mathcal{T}$ is uniform then $\mathcal{T}$ is a canonical tree decomposition of a simple $t$-tree $H$, and we are done.
-
-    If $\mathcal{T}$ is not uniform, then there exists $x\in V(T)$ such that every $T$-ancestor of $x$, including $x$, is incremental and maximal, but some child $y$ of $x$ is not incremental or not maximal.  Observe that $|B_x\cap B_y| < t$, otherwise $y$ is redundant (because $|B_y|\le t$ so $B_y=B_x\cap B_y$) or $y$ is maximal and incremental (because $|B_y|=t+1$ so $|B_y\setminus B_x|=|B_y|-|B_x\cap B_y|=1$).
-
-    If $|B_y|\le t$ then take some element $v$ from $B_x\setminus B_y$ and add it to $B_y$.  We claim that, if we choose the correct element $v$, then this preserves the $t$-simplicity of $\mathcal{T}$.  Suppose otherwise, so that  $C:=(B_x\cap B_y)\cup\{v\}$ is contained $B_z$ for some node $z\in V(T)\setminus\{x,y\}$.  There are three cases to consider:
-    \begin{compactenum}
-        \item $z$ is a child of $x$:  This is not possible since $\mathcal{T}$ is maximally deep, so $B_x\cap B_y\not\subseteq B_z$.
-        \item $z$ is a child of $y$:  This is not possible since, before the operation, $v\not\in B_y$, and $v\in B_x$, so $v\not\in B_z$.
-        \item $z$ is the parent of $x$:  Since $|B_x|=t+1$ and $|B_x\cap B_y|<t$, there exists two elements $v,w\in B_x\setminus B_y$.  Since $x$ and $z$ are maximal and incremental $|B_x\setminus B_z|=1$. Therefore, at least one of $v$ or $w$ is not contained in $B_z$ and, without loss of generality we assume it is $v$.  But then $v\not\in B_z$ so $C\not\subseteq B_z$.
-    \end{compactenum}
-
-    If $|B_y|=t+1$ then consider the subtree $T_y$ of $T$ containing all $T$-descendants of $y$, including $y$.  $T_y$ has a subtree $T_y'$ containing all nodes $z$ such that $B_z\supseteq B_x\cap B_y$.  The tree $T_y'$ is non-empty and therefore contains some node $z$ that has no children in $T_y'$.  We replace the edge $xy$ in $T$ with $xz$.  This does not change the fact that $\mathcal{T}$ is a $t$-simple tree decomposition of $G$.  The point now is that 
-
-    If $T_y'$ contains a node $z$ with $|B_z|<t+1$, then we do this and the algorithm continues.  Otherwise, $T_y'$
-    %
-    %
-    % (Assume that $|B_x\cap B_y|=t-1$, otherwise things are easy.)
-    %
-    % If $|B_y|=t+1$ then, let $C:=(B_x\cap B_y)\cup \{v\}$ where $v$ is defined as above (so $v$ does not appear in the bag of the parent of $x$).  Let $\{v_1,\ldots,v_d\}:=B_y\setminus B_x$.  Since $|B_x\cap B_y|<t$, $d\ge 2$.
-    %
-    %
-    %  There are some cases to consider:
-    %
-    % \begin{compactenum}
-    %
-    %     \item If $y$ has a child $z$ such that $v_1\cup (B_x\cap B_y)\not\subseteq B_z$, then we replace $xy$ with a path $xx'y$ where $B_{x'}:C\cup\{v_1\}$.  This preserves $t$-simplicity since the only new $t$-clique to worry about is $v_1\cup (B_x\cap B_y)$ but this only appears in $B_y$ (and now in $B_{x'}$).
-    %
-    %     \item Otherwise, $y$ has exactly one child $z$ such that $v_1\in B_z$.  Now, observe that $C':=(B_x\cap B_y)\cup\{v_1\}$ is contained in $B_y$ and $B_z$.  Therefore,
-    %
-    %
-    % arguing as above, there is a vertex $v$ that appears only in $B_x$.
-\end{proof}
-
-\begin{lem}\label{simple-bfs-layers}
+\begin{lem}[\cite{dujmovic.morin.ea:notes}]\label{simple-bfs-layers}
     Let $H$ be a simple $t$-tree, let $n:=|H|$, let $v_1,\ldots,v_n$ be a construction order for $H$, and let $L_0,\ldots,L_m$ be the BFS ordering of $H$ with $L_0:=v_1,\ldots,v_{\min\{t,n\}}$.   Then, for each $i\in\{1,\ldots,m\}$, $\stw(H[L_i])\le t-1$.
 \end{lem}
-
-\begin{proof}
-    Delete BFS layers $L_{i+1},\ldots,L_m$ and contract BFS layers $L_0,\ldots,L_{i-1}$ into a single vertex $v_0$ to obtain a minor $H'$ of $H$ in which $v_0$ is a dominant vertex.  By \cref{simple-minor-closed}, $\stw(H')\le t$, so $H'$ has a $t$-simple tree decomposition $\mathcal{T}':=(B_x:x\in V(T))$.  Since $v_0$ is a dominant vertex, $v_0$ appears in every bag of $\mathcal{T}'$.  Therefore $\mathcal{T}:=(B_x\setminus\{v_0\}:x\in V(T))$ is a $(t-1)$-simple tree decomposition of $H'-\{v_0\}=H[L_i]$.
-\end{proof}
 
 
 \subsection{Product Structure}
