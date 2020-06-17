@@ -315,7 +315,7 @@ The following two results are easy, but we are unable to find a reference that p
         \item $z$ is the parent of $x$:  Since $|B_x|=t+1$ and $|B_x\cap B_y|<t$, there exists two elements $v,w\in B_x\setminus B_y$.  Since $x$ and $z$ are maximal and incremental $|B_x\setminus B_z|=1$. Therefore, at least one of $v$ or $w$ is not contained in $B_z$ and, without loss of generality we assume it is $v$.  But then $v\not\in B_z$ so $C\not\subseteq B_z$.
     \end{compactenum}
 
-    If $|B_y|=t+1$ then consider the subtree $T_y$ of $T$ containing all $T$-descendants of $y$, including $y$.  $T_y$ has a subtree $T_y'$ containing all nodes $z$ such that $B_z\supseteq B_x\cap B_y$.  The tree $T_y'$ is non-empty and therefore contains some node $z$ that has no children in $T_y'$.  We replace the edge $xy$ in $T$ with $xz$.  This does not change the fact that $\mathcal{T}$ is a $t$-simple tree decomposition of $G$.  The point now is that 
+    If $|B_y|=t+1$ then consider the subtree $T_y$ of $T$ containing all $T$-descendants of $y$, including $y$.  $T_y$ has a subtree $T_y'$ containing all nodes $z$ such that $B_z\supseteq B_x\cap B_y$.  The tree $T_y'$ is non-empty and therefore contains some node $z$ that has no children in $T_y'$.  We replace the edge $xy$ in $T$ with $xz$.  This does not change the fact that $\mathcal{T}$ is a $t$-simple tree decomposition of $G$.  The point now is that
 
     If $T_y'$ contains a node $z$ with $|B_z|<t+1$, then we do this and the algorithm continues.  Otherwise, $T_y'$
     %
@@ -479,33 +479,34 @@ For a graph $U$ and integers $h,m\ge 0$, we define the \emph{$(h,m)$-boost} $U^{
 
 
 \begin{lem}\label{treewidth-lower-bound}
-    For each integer $t\ge 1$ and each integer $r\ge \tau(t)$, there exists a graph $G$, with $|G|\le (\log^{(t-1)}r)^{t r}$, $\tw(G)\le t$, and $\trn(G)\ge r$.
+    For each integer $t\ge 1$ and any integer $r\ge \tau(t)$, there exists a graph $G$, with $|G|\le (\log^{(t-1)}r)^{tr + o(r)}$, $\tw(G)\le t$, and $\trn(G)\ge r$.
 \end{lem}
 
 \begin{proof}
     The proof is by induction on $t$.  The base case $t=1$ has already been established by \citet{karpas.neiman.ea:on} who show that the complete $(r+1)$-ary tree $T$ of height $r-1$ has $\trn(T)\ge r$.  The tree $T$ has size $\sum_{i=0}^{r-1} (r+1)^i \le r^r=(\log^{(0)}r)^{r}$.  This establishes the result for $t=1$.
 
-    For $t>1$ we can apply the inductive hypothesis to obtain a graph $U$,     with $\tw(U)\le t-1$, $|U|=(\log^{(t-2)} h)^{(t-1)h}$ and $\trn(U)\ge h$.
+    Let $h:=\lceil\log r\rceil$ and $m:=\lceil r/\log r\rceil$ so that $hm\ge r$.  For $t>1$ we can apply the inductive hypothesis to obtain a graph $U$,     with $\tw(U)\le t-1$, $|U|=(\log^{(t-2)} h)^{(t-1)h}$ and $\trn(U)\ge h$.
     Now we take the graph $G:=U^{(h,m)}$.  By \cref{boost-treewidth}, $\tw(G)\le \tw(U)+1\le t$.  By \cref{boost},
-    $\trn(G)\ge hm+1 > hm$.
+    $\trn(G)\ge hm+1 > hm \ge r$.
 
-   By \cref{boost-size},
-   \begin{align*}
+    % In the following calculation we ignore the ceilings in the definitions of $h$ and $m$.
+    By \cref{boost-size},
+    \begin{align*}
         |G| & \le (|U|\cdot m\cdot h)^{m} \\
-        & \le \left((\log^{(t-2)} h)^{(t-1)h}\cdot m\cdot h\right)^{m} \\
-        & = (\log^{(t-2)} h)^{(t-1)hm}\cdot (hm)^{m} \\
-        & = (\log^{(t-1)} r)^{(t-1)m\log r}\cdot (m\log r)^{m}
-        & \text{(for $h=\log r$)}\\
-        & = (\log^{(t-1)} r)^{(t-1)r}\cdot r^{r/\log r}
-        & \text{(for $m = r/\log r$)}\\
-        & = (\log^{(t-1)} r)^{(t-1)r}\cdot e^{r} \\
-        & \le (\log^{(t-1)} r)^{tr} & \text{(since $r\ge \tau(t)$, so $\log^{(t-1)} r\ge e$).} & \qedhere
-   \end{align*}
+        & \le \left((\log^{(t-2)} h)^{(t-1)h + o(h)}\cdot m\cdot h\right)^{m} \\
+        & = (\log^{(t-2)} h)^{(t-1)r + o(r)}\cdot r^{m} \\
+        & = (\log^{(t-1)} r)^{(t-1)r + o(r)}\cdot r^{r/log r+o(r)} \\
+        % & \text{(since $h:=\log r$)}\\
+        % & = (\log^{(t-1)} r)^{(t-1)r + o(r)}\cdot r^{r/\log r}
+        % & \text{(since $m:=r/\log r$)}\\
+        & = (\log^{(t-1)} r)^{(t-1)r + o(r)}\cdot e^{r+o(r)} \\
+        & \le (\log^{(t-1)} r)^{tr + o(r)} & \text{(since $r\ge \tau(t)$, so $\log^{(t-1)} r\ge e$).} & \qedhere
+    \end{align*}
 \end{proof}
 
 \begin{proof}[Proof of \cref{t-trees} (lower bound)]
-    \Cref{treewidth-lower-bound} produces a graph $G$ of size $n \le (\log^{(t-1)} r)^{tr}$ and $\trn(G)\ge r$.  So,
-    \[  \log n \le tr\log^{(t)} r = t\cdot\trn(G)\log^{(t)} \trn(G)\]
+    \Cref{treewidth-lower-bound} produces a graph $G$ of size $n \le (\log^{(t-1)} r)^{tr+o(r)}$ and $\trn(G)\ge r$.  So,
+    \[  \log n \le (tr+o(r))\log^{(t)} r = t\cdot(1+o(1))\trn(G)\log^{(t)} \trn(G)\]
     and attempting to solve for $\trn(G)$ shows that $\trn(G)\in \Omega(\log n/\log^{(t+1)} n)$.
 \end{proof}
 
