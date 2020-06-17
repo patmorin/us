@@ -137,6 +137,8 @@ In addition to planar graphs, there are product structure theorems for a number 
     there exists an integer $c=c(\mathcal{G})$ such that, for every $n$-vertex graph $G\in\mathcal{G}$, $\trn(G)\in O(\log n/\log^{(c)} n)$.
 \end{thm}
 
+
+
 \subsection{Related Work}
 
 For a graph $G$, a vertex $\infty$-ranking is known as a \emph{vertex ranking} \cite{bodlaender.deogun.ea:rankings} or \emph{ordered colouring} of $G$ \cite{katchalski.mccuaig.ea:ordered}.  Finding a vertex ranking $\varphi$ that uses exactly $\chi_\infty(G)$ colours is equivalent to finding a minimum-height elimination tree of $G$ \cite{torre.greenlaw.ea:optimal,deogun.kloks.ea:on}.  This measure has applications to parallel Cholesky factorization of matrices \cite{bodlaender.gilbert.ea:approximating,duff.reid:multifrontal,liu:role,dereniowski.kubale:cholesky} and in VLSI layout \cite{leiserson:area,sen.deng.ea:on}.  More recently, \citet{even.smorodinsky:hitting} showed that $\chi_\infty(G)$ determines the competitive ratio of the best algorithm for the online hitting set problem in $G$.
@@ -260,6 +262,24 @@ The following simple result is used several times in the (fairly involved) proof
     \caption{The proof of \cref{up-clique}}
     \label{up-clique-figure}
 \end{figure}
+
+An incredibly useful property of graphs of small treewidth is that they have small separators. We will make use of the following well-known and easy to prove vertex-weighted separator lemma.
+
+\begin{lem}\label{weighted-separator}
+    Let $H$ be a graph of treewidth $t$, let $\mathcal{T}:=(B_x:x\in V(T))$ be a width-$t$ tree decomposition of $H$, and let $\xi:V(H)\to\R$ be a function that is positive on $V(H)$.  Then, for any integer $c>1$, there exists $S_T\subseteq V(T)$ of size $|S_T|\le c$ such that, for each component $X$ of $H-(\bigcup_{x\in S_T} B_x)$, $\sum_{v\in V(X)} \xi(v) \le \tfrac{1}{c}\cdot\sum_{v\in V(H)} \xi(v)$
+\end{lem}
+
+\begin{proof}
+    (This proof is only included for the sake of being self-contained.)
+    Define $n_0:=\tfrac{1}{c}\cdot\sum_{v\in V(H)} \xi(v)$ and, for a subtree $T'$ of $T$, let $n_{T'}:=\sum_{y\in \bigcup_{x\in V(T')}B_x]} B_y$.  Let $T^{(0)}:=T$, let $i:=0$ and repeat the following steps until $n_{T^{(i)}} < n_0$:
+    \begin{compactenum}
+        \item Find a node $x_{i}\in V(T^{(i)})$ of maximal $T^{(i)}$-depth such that the subtree $T^{(i)}_{x_i}$ of $T^{(i)}$ containing $x_i$ and its $T^{(i)}$-descendants has $n_{T^{(i)}_{x_i}} > n_0$.
+
+        \item Set $T^{(i+1)}$ to be the component of $T^i-\{x_i\}$ containing $r$ and set $i:=i+1$.
+    \end{compactenum}
+    The key observation is that, since $x_i$ is of maximal depth, each component $X$ of $T^{(i)}-\{x_i\}$ other than $T^{(i+1)}$ has $n_X\le n_0$.
+    This procedure certainly terminates after at most $n_T/n_0 = O(c)$ steps and the set $S_T:=\{x_0,\ldots,x_r\}$ has the required properties.
+\end{proof}
 
 \subsection{Simple Treewidth}
 
@@ -733,17 +753,7 @@ The next lemma helps deal with the case where we don't necessarily have the slac
     \begin{equation}
         n_H/n_0 \in O(c) \enspace . \label{heavy-size}
     \end{equation}
-
-    For a subtree $T'$ of $T$, let $n_{T'}:=n_{H[\bigcup_{x\in V(T')}B_x]}$ and observe that $n_T=n_H$.
-    Let $T^{(0)}:=T$, let $i:=0$ and repeat the following steps until
-    $n_{T^{(i)}} < n_0$:
-    \begin{compactenum}
-        \item Find a node $x_{i}\in V(T^{(i)})$ of maximal $T^{(i)}$-depth such that the subtree $T^{(i)}_{x_i}$ of $T^{(i)}$ containing $x_i$ and its $T^{(i)}$-descendants has $n_{T^{(i)}_{x_i}} > n_0$.
-
-        \item Set $T^{(i+1)}$ to be the component of $T^i-\{x_i\}$ containing $r$ and set $i:=i+1$.
-    \end{compactenum}
-    The key observation is that, since $x_i$ is of maximal depth, each component $X$ of $T^{(i)}-\{x_i\}$ other than $T^{(i+1)}$ has $n_X\le n_0$.
-    This procedure certainly terminates after $r\le n_T/n_0 = n_H/n_0 \in O(c)$ steps and the set $S_T:=\{x_0,\ldots,x_r\}$ has the required properties.
+    The result now follows by applying \cref{weighted-separator} with the weight function $\xi:V(H)\to\R$ defined by $\xi(v):=(\log^{(t-2)} k)^k/(\log^{(t-2)} c)^{c}$.
 \end{proof}
 
 We are now ready to prove the technical statement that implies \weirdref{simple-t-trees}{a}. Note that in the following statement $H$ is a $t$-tree, no longer a $(t-1)$-tree.  This is the whole enchilada:
