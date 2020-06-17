@@ -777,20 +777,17 @@ The next lemma helps deal with the case where we don't necessarily have the slac
     The result now follows by applying \cref{weighted-separator} with the weight function $\xi:V(H)\to\R$ defined by $\xi(v):=(\log^{(t-2)} k)^k/(\log^{(t-2)} c)^{c}$.
 \end{proof}
 
-We are now ready to prove the technical statement that implies \weirdref{simple-t-trees}{a}. Note that in the following statement $H$ is a $t$-tree, no longer a $(t-1)$-tree.  This is the whole enchilada:
-
+We are now ready to prove the technical statement that implies \weirdref{simple-t-trees}{a}.
+% Note that in the following statement $H$ is a $t$-tree, no longer a $(t-1)$-tree.  This is the whole enchilada:
 
 \begin{lem}\label{two-tree-technical}
-    For every fixed positive integer $t$ there exist an integer constant $a>0$ such that, for every integer $k\ge \tau(t)$, every $n\le (\log^{(t-2)} k)^{k}$, and every $n$-vertex simple $t$-tree $H$, $\trn(H)\le ak$.
+    For every fixed positive integer $t$ there exist an integer constant $a>0$ such that, for every integer $k\ge \tau(t)$, every $n\le (\log^{(t-2)} k)^{k}$, and every graph $H$ with $\stw(H)\le t$, $\trn(H)\le ak$.
 \end{lem}
 
 \begin{proof}
     Assume $n\ge t+1$, otherwise the result is obtained trivially for any $a\ge t+1$ by colouring each vertex of $H$ with a distinct colour.
 
-    Let $v_1,\ldots,v_n$ be a construction order for $H$ and let $L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0=\{v_1,\ldots,v_{t}\}$.
-    For each $v\in V(H)$, let $\ell(v)$ be such that $v\in L_{\ell(v)}$.
-    For each $t$-clique $C$ in $H[L_i]$, we use $H_C$ to denote the connected component of $H[C\cup\bigcup_{j=i+1}^m L_j]$ that contains $C$.
-    For each vertex $v\in L_i$, let $N_i(v)$ denote the set of $t$-cliques in $H[L_i]$ that contain $v$ and let $H^+_v:=H[\bigcup_{C\in N_i(v)} H_C]-L_i$.  In words, $H^+_v$ is the set of all $t$-trees hanging off all the $t$-cliques of $H_i$ that contain $v$.  Let $n_v:=\tau(t-1)+|H^+_v|$.  For each $v\in L_i$, we set $\gamma(v)$ to be the solution to the equation $(\log^{(t-2)} k)^k/(\log^{(t-2)} \gamma(v))^{\gamma(v)} = n_v$.
+    By \cref{simple-subgraph} we may assume, without loss of generality, that $H$ is a simple $t$-tree.  Let $v_1,\ldots,v_n$ be a construction order for $H$ and let $L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0=\{v_1,\ldots,v_{t}\}$. For each $v\in V(H)$, let $\ell(v)$ be such that $v\in L_{\ell(v)}$. For each $t$-clique $C$ in $H[L_i]$, we use $H_C$ to denote the connected component of $H[C\cup\bigcup_{j=i+1}^m L_j]$ that contains $C$. For each vertex $v\in L_i$, let $N_i(v)$ denote the set of $t$-cliques in $H[L_i]$ that contain $v$ and let $H^+_v:=H[\bigcup_{C\in N_i(v)} H_C]-L_i$.  In words, $H^+_v$ is the set of all $t$-trees hanging off all the $t$-cliques of $H_i$ that contain $v$.  Let $n_v:=\tau(t-1)+|H^+_v|$.  For each $v\in L_i$, we set $\gamma(v)$ to be the solution to the equation $(\log^{(t-2)} k)^k/(\log^{(t-2)} \gamma(v))^{\gamma(v)} = n_v$.
 
     \begin{clm}\label{size-claim}
         For each $i\in\{1,\ldots,m\}$ and each component $H'$ of $H[\bigcup_{j=i}^m L_j]$,
@@ -816,7 +813,7 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
         \]
     \end{proof}
 
-    The following technical claim essentially implies \cref{two-tree-technical}, that is suitable for induction the layer.
+    The following technical claim essentially implies \cref{two-tree-technical}, but is suitable for induction on the layer $i$.
 
     \begin{clm}\label{main-claim}
         Let $H'$ be the union of one or more connected components of $H[\bigcup_{j=i}^m L_i]$. There exists a constant $a$ such that, if
@@ -833,9 +830,10 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
     \end{clm}
 
     \begin{proof}[Proof of \cref{main-claim}]
-        In all cases, (P2) requires setting $\psi(v)=0$ for all $v\in V(H'[L_i])$, so we do this now and will not mention it again.  Since $H$ is a simple $t$-tree, \cref{simple-bfs-layers} implies that $\stw(H'[L_i])\le \stw(H[L_i])\le t-1$.  By \cref{simple-subgraph}, we may assume that $H'[L_i]$ is a simple $(t-1)$-tree.
+        In all cases, (P2) requires setting $\psi(v)=0$ for all $v\in V(H'[L_i])$, so we do this now and will not mention it again.  Since $H$ is a simple $t$-tree, \cref{simple-bfs-layers} implies that $\stw(H'[L_i])\le \stw(H[L_i])\le t-1$.
+        % By \cref{simple-subgraph}, we may assume that $H'[L_i]$ is a simple $(t-1)$-tree.
 
-        The proof is by induction on $m-i$. In the base case $m-i=0$ and $H'$ is a $(t-1)$-forest.  Then, for each $v\in L_i$, $n_v=\tau(t-1)$.  Then
+        The proof is by induction on $m-i$. In the base case $m-i=0$, so $H'$ is a subgraph of $H[L_m]$, so $\stw(H')\le t-1$.  Then, for each $v\in L_i$, $n_v=\tau(t-1)$.  Then
         \begin{align*}
             \sum_{v\in V(H')} \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} \gamma(v))^{\gamma(v)}}
             & = \sum_{v\in V(H')} n_v \\
@@ -843,7 +841,7 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
             % & \le \sum_{v\in V(H'[L_i])} n_v  & \text{(by \cref{size-claim})}\\
             & \le \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} c)^c} & \text{(by \cref{main-size})} \enspace .
         \end{align*}
-        Applying \cref{t-tree-slack} to $H'[L_i]$ gives a colouring $\varphi: V(H')\to\{1,\ldots,ak\}$ that satisfies (P1) and (P3).  This handles the case $m=i$.
+        Applying \cref{t-tree-slack} to $H'$ gives a colouring $\varphi: V(H')\to\{1,\ldots,ak\}$ that satisfies (P1) and (P3).  This handles the case $m=i$.
 
         For the inductive step, $m-i\ge 1$.
         Now,
@@ -852,7 +850,7 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
             = \sum_{v\in V(H'[L_i])} n_v
             \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} (c+s))^{c+s}} \enspace .
         \]
-       Therefore $\gamma$ satisfies the requirements for \cref{t-tree-slack}, so we can find a 2-ranking of the $(t-1)$-forest $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in V(H'[L_i])$.  It remains to show that we can extend $\varphi$ to a complete colouring of $H'$.
+       Therefore $\gamma$ satisfies the requirements for \cref{t-tree-slack}, so we can find a 2-ranking of $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in V(H'[L_i])$.  It remains to show that we can extend $\varphi$ to a complete colouring of $H'$.
 
        The next step is use \cref{t-tree-no-slack-separator} to break $H'-L_i$ into sufficiently small components.  For any $v\in H'[L_{i]}]$, define
        \begin{align*}
