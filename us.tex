@@ -263,23 +263,24 @@ The following simple result is used several times in the (fairly involved) proof
     \label{up-clique-figure}
 \end{figure}
 
-An incredibly useful property of graphs of small treewidth is that they have small separators. We will make use of the following well-known and easy to prove vertex-weighted separator lemma.
+% An incredibly useful property of graphs of small treewidth is that they have small separators.
+We will make use of the following well-known vertex-weighted separator lemma \cite{Citation}.
 
 \begin{lem}\label{weighted-separator}
-    Let $H$ be a graph of treewidth $t$, let $\mathcal{T}:=(B_x:x\in V(T))$ be a width-$t$ tree decomposition of $H$, and let $\xi:V(H)\to\R$ be a function that is positive on $V(H)$.  Then, for any integer $c>1$, there exists $S_T\subseteq V(T)$ of size $|S_T|\le c$ such that, for each component $X$ of $H-(\bigcup_{x\in S_T} B_x)$, $\sum_{v\in V(X)} \xi(v) \le \tfrac{1}{c}\cdot\sum_{v\in V(H)} \xi(v)$
+    Let $H$ be a graph; let $\mathcal{T}:=(B_x:x\in V(T))$ be a tree decomposition of $H$; and let $\xi:V(H)\to\R$ be a function that is positive on $V(H)$.  Then, for any integer $c>1$, there exists $S_T\subseteq V(T)$ of size $|S_T|\le c$ such that, for each component $X$ of $H-(\bigcup_{x\in S_T} B_x)$, $\sum_{v\in V(X)} \xi(v) \le \tfrac{1}{c}\cdot\sum_{v\in V(H)} \xi(v)$
 \end{lem}
 
-\begin{proof}
-    (This proof is only included for the sake of being self-contained.)
-    Define $n_0:=\tfrac{1}{c}\cdot\sum_{v\in V(H)} \xi(v)$ and, for a subtree $T'$ of $T$, let $n_{T'}:=\sum_{y\in \bigcup_{x\in V(T')}B_x]} B_y$.  Let $T^{(0)}:=T$, let $i:=0$ and repeat the following steps until $n_{T^{(i)}} < n_0$:
-    \begin{compactenum}
-        \item Find a node $x_{i}\in V(T^{(i)})$ of maximal $T^{(i)}$-depth such that the subtree $T^{(i)}_{x_i}$ of $T^{(i)}$ containing $x_i$ and its $T^{(i)}$-descendants has $n_{T^{(i)}_{x_i}} > n_0$.
-
-        \item Set $T^{(i+1)}$ to be the component of $T^i-\{x_i\}$ containing $r$ and set $i:=i+1$.
-    \end{compactenum}
-    The key observation is that, since $x_i$ is of maximal depth, each component $X$ of $T^{(i)}-\{x_i\}$ other than $T^{(i+1)}$ has $n_X\le n_0$.
-    This procedure certainly terminates after at most $n_T/n_0 = O(c)$ steps and the set $S_T:=\{x_0,\ldots,x_r\}$ has the required properties.
-\end{proof}
+% \begin{proof}
+%     (This proof is only included for the sake of being self-contained.)
+%     Define $n_0:=\tfrac{1}{c}\cdot\sum_{v\in V(H)} \xi(v)$ and, for a subtree $T'$ of $T$, let $n_{T'}:=\sum_{y\in \bigcup_{x\in V(T')}B_x]} B_y$.  Let $T^{(0)}:=T$, let $i:=0$ and repeat the following steps until $n_{T^{(i)}} < n_0$:
+%     \begin{compactenum}
+%         \item Find a node $x_{i}\in V(T^{(i)})$ of maximal $T^{(i)}$-depth such that the subtree $T^{(i)}_{x_i}$ of $T^{(i)}$ containing $x_i$ and its $T^{(i)}$-descendants has $n_{T^{(i)}_{x_i}} > n_0$.
+%
+%         \item Set $T^{(i+1)}$ to be the component of $T^i-\{x_i\}$ containing $r$ and set $i:=i+1$.
+%     \end{compactenum}
+%     The key observation is that, since $x_i$ is of maximal depth, each component $X$ of $T^{(i)}-\{x_i\}$ other than $T^{(i+1)}$ has $n_X\le n_0$.
+%     This procedure certainly terminates after at most $n_T/n_0 = O(c)$ steps and the set $S_T:=\{x_0,\ldots,x_r\}$ has the required properties.
+% \end{proof}
 
 \subsection{Simple Treewidth}
 
@@ -565,11 +566,11 @@ With this proof sketch complete, we now begin with the actual proof.
     Property~(iii) implies that we can therefore inductively colour $H-\{v_1,\ldots,v_m\}$ using colours $\{1,\ldots,3\pw(H)-2\}$ and then colour each $v_i$ with colour $3\pw(H)-1+i\bmod 3$.  Property~(i) ensures that this gives a 2-ranking of $H[v_1,\ldots,v_m]$.  Property~(ii) and the fact that $v_1,\ldots,v_m$ are coloured using larger colours than those used to colour $H-\{v_1,\ldots,v_m\}$ ensures that the resulting colouring is a 2-ranking of $H$.
 \end{proof}
 
-A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$. For a graph $H$ with a rooted tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$, we define the $\mathcal{T}$-skeleton $\hat{H}$ of $H$ as the graph with vertex set $V(\hat{H}):=\bigcup_{x\in \Lambda(T)} B_x$ and containing the edge $vw$ if there exists $x,y\in V(T)$ with $v\in B_x$, $w\in B_y$ such that the path in $T$ from $x$ to $y$ contains no branching node in its interior.  It is worth noting that the skeleton $\hat{H}$ of $H$ is a minor of $H$ since it can be obtained from $H$ by repeatedly contracting an edge $vw$ with $v\in V(\hat{H})$ and $w\not\in V(\hat{H})$ into $v$. By \cref{simple-minor-closed} this implies that, if $H$ is a simple $t$-tree then $\hat{H}$ is also a simple $t$-tree.
+A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$. For a graph $H$ with a rooted tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$, we define the $\mathcal{T}$-skeleton $\hat{H}$ of $H$ as the graph with vertex set $V(\hat{H}):=\bigcup_{x\in \Lambda(T)} B_x$ and containing the edge $vw$ if there exists $x,y\in V(T)$ with $v\in B_x$, $w\in B_y$ such that the path in $T$ from $x$ to $y$ contains no branching node in its interior.  It is worth noting that the skeleton $\hat{H}$ of $H$ is a minor of $H$ since it can be obtained from $H$ by repeatedly contracting an edge $vw$ with $v\in V(\hat{H})$ and $w\not\in V(\hat{H})$ into $v$. By \cref{simple-minor-closed} this implies that, $\stw(\hat{H})\le\stw(H)$.
 
-\begin{obs}\label{skeleton-size}
-    Let $H$ be a (simple) $t$-tree and let $\mathcal{T}:=(B_x:x\in V(T))$ be a simple width-$t$ tree decomposition of $H$.  Then the $\mathcal{T}$-skeleton $\hat{H}$ of $H$ is also a simple $t$-tree and has a simple tree decomposition $(B_x:x\in V(\hat{T}))$ where $|\hat{T}|=|\Lambda(T)|$ and therefore $|\hat{H}|\le (t+1)|\Lambda(T)|$.
-\end{obs}
+% \begin{obs}\label{skeleton-size}
+%     Let $H$ be a (simple) $t$-tree and let $\mathcal{T}:=(B_x:x\in V(T))$ be a (simple) width-$t$ tree decomposition of $H$.  Then the $\mathcal{T}$-skeleton $\hat{H}$ of $H$ is also a (simple) $t$-tree and has a ($t$-simple) tree decomposition $(B_x:x\in V(\hat{T}))$ where $|\hat{T}|=|\Lambda(T)|$ and therefore $|\hat{H}|\le (t+1)|\Lambda(T)|$.
+% \end{obs}
 
 \begin{lem}\label{skeleton-colour}
     Let $H$ be a graph having a width-$t$ tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$, and let $\hat{H}$ be the $\mathcal{T}$-skeleton of $H$.  Then $\trn(H)\le \trn(\hat{H}) + 3t+1$.
@@ -596,7 +597,7 @@ let $\gamma:V(H)\to\{z\in\R: z\ge \tau(t-1)\}$; and let
 Then there exists an integer constant $a>0$ such that,
 if
 \begin{equation}
-     n_r \le \frac{(\log^{(t-2)} k)^k}{\left(\log^{(t-2)} (c + s)\right)^{c+s}} \enspace ,
+     n_H \le \frac{(\log^{(t-2)} k)^k}{\left(\log^{(t-2)} (c + s)\right)^{c+s}} \enspace ,
  \label{total-weight-i}
 \end{equation}
 where
@@ -616,7 +617,7 @@ then $H$ has a 2-ranking $\varphi:V(H)\to a(k-c-1)$ such that $\varphi(v)> a(k-\
     % Recall that, for $x\neq r$, $B_x$ contains exactly one vertex $v_1'$ that is not present in $B_p$ where $p$ is the $T$-parent of $x$.
     For any subgraph $X$ of $H$, define
     \[
-        n_{X}:=\sum_{v\in V(H')}\frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}} \enspace .
+        n_{X}:=\sum_{v\in V(X)}\frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}} \enspace .
     \]
     Note that this coincides with the definition of $n_H$ in the statement of the lemma.
 
@@ -637,10 +638,10 @@ then $H$ has a 2-ranking $\varphi:V(H)\to a(k-c-1)$ such that $\varphi(v)> a(k-\
             & \qquad\qquad\text{(by \cref{logi-ratio})}\\
         & = (\log^{(t-2)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
             \left(1 + \tfrac{1}{(c+s)\cdot\left(\prod_{j=2}^{t-1}\log^{(j)}(c+s)\right)\log^{(t-1)}(c+s)}\right)} \\
-            & \qquad\qquad\text{(for $t\ge 2$)}\\
+            & \qquad\qquad\text{(since $t\ge 2$)}\\
         & \le (\log^{(t-2)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
             \left(1 + \tfrac{1}{(c+s)\cdot \log^{(t-1)}(c+s)}\right)} \\
-            & \qquad\qquad\text{($c\ge \tau(t-1)$, so $\textstyle \prod_{j=2}^{t-1}\log^{(j)}c\ge 1$)} \\
+            & \qquad\qquad\text{(since $c\ge \tau(t-1)$, so $\textstyle \prod_{j=2}^{t-1}\log^{(j)}c\ge 1$)} \\
         & = (\log^{(t-2)}(c+s))^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)} +
             \tfrac{1}{\log^{(t-1)}(c+s)} + \tfrac{\log(c+s)}{(c+s)(\log^{(t-1)}(c+s))^2}}  \\
         & = (\log^{(t-2)}(c+s))^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)} + O\left(\frac{1}{\log^{(t-1)}(c+s)}\right)}  \\
@@ -916,7 +917,7 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
 
           \item If $u,w\in V(H_{p}-H^-_{p})$ for some $p\in V(H'[L_i])$ then $\varphi(u)$ and $\psi(u)$ were assigned by some vertex $p'\in V(H'[L_i])$ such that $v\in S_{p'}$.  Similarly, $\varphi(w)$ and $\psi(w)$ were assigned by some vertex $q'\in V(H'[L_i])$ such that $w\in S_{q'}$.  There are two subcases to consider:
           \begin{compactenum}
-            \item If $p'=q'$ then $\varphi(u)\neq\varphi(q)$ since every vertex in $S_{p'}$ is assigned a unique colour by $\varphi$.
+            \item If $p'=q'$ then $\varphi(u)\neq\varphi(w)$ since every vertex in $S_{p'}$ is assigned a unique colour by $\varphi$.
             \item If $p'\neq q'$ then, by \cref{up-clique}, $p'q'\in E(H'[L_i])$ so that $\psi(u)=\zeta(p')\neq\zeta(q')=\psi(w)$.
         \end{compactenum}
         In either case $\theta(u)\neq\theta(w)$.
