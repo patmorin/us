@@ -835,6 +835,8 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
     \end{clm}
 
     \begin{proof}[Proof of \cref{main-claim}]
+        [TODO: The lemma wants $H'$ to be the union of connected components of $H[\bigcup_{j=i}^m L_i]$, but when we recurse, we give it $H^-_v:=H_v-\bigcup_{v'\in V(H'[L_i])} S_{v'}$.]
+
         In all cases, (P2) requires setting $\psi(v)=0$ for all $v\in V(H'[L_i])$, so we do this now and will not mention it again.  Since $H$ is a simple $t$-tree, \cref{simple-bfs-layers} implies that $\stw(H'[L_i])\le \stw(H[L_i])\le t-1$.
         % By \cref{simple-subgraph}, we may assume that $H'[L_i]$ is a simple $(t-1)$-tree.
 
