@@ -33,6 +33,7 @@
 \DeclareMathOperator{\lhptw}{lhp-tw}
 \DeclareMathOperator{\lhppw}{lhp-pw}
 
+\newcommand{\ellt}{{\lfloor\ell/2\rfloor}}
 
 \title{\MakeUppercase{Asymptotically Optimal Vertex 2-Ranking of Planar Graphs}}
 \author{Prosenjit Bose, Vida Dujmović, Mehrnoosh Javarsineh, and Pat Morin}
@@ -826,9 +827,9 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
             \sum_{v\in V(H'[L_i])} n_v\le \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} (c+s))^{c+s}} \enspace , \label{main-size}
         \end{equation}
         where $s:=\log c/\log^{(t-1)} c$,
-        then there exists $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,\ldots,t-1\}$ such that
+        then there exists $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,\ldots,t^{\ellt}-1\}$ such that
         \begin{compactenum}[(P1)]
-            \item The function $\theta:V(H')\to\{1,\ldots,3tak\}$ defined by $\theta(v)=3t\varphi(v) - 3\psi(v) -(\ell(v)\bmod 3)$ is a 2-ranking of $H'$;
+            \item The function $\theta:V(H')\to\{1,\ldots,3t^{\ellt}ak\}$ defined by $\theta(v)=3t^{\ellt}\varphi(v) - 3\psi(v) -(\ell(v)\bmod 3)$ is a 2-ranking of $H'$;
             \item for each $v\in V(H'[L_i])$, $\psi(v)=0$; and
             \item for each $v\in V(H'[L_i])$, $\varphi(v)\le a(k-c-1)$.
         \end{compactenum}
@@ -837,7 +838,7 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
     \begin{proof}[Proof of \cref{main-claim}]
         [TODO: The lemma wants $H'$ to be the union of connected components of $H[\bigcup_{j=i}^m L_i]$, but when we recurse, we give it $H^-_v:=H_v-\bigcup_{v'\in V(H'[L_i])} S_{v'}$.]
 
-        In all cases, (P2) requires setting $\psi(v)=0$ for all $v\in V(H'[L_i])$, so we do this now and will not mention it again.
+        % In all cases, (P2) requires setting $\psi(v)=0$ for all $v\in V(H'[L_i])$, so we do this now and will not mention it again.
         % By \cref{simple-subgraph}, we may assume that $H'[L_i]$ is a simple $(t-1)$-tree.
 
         The proof is by induction on $m-i$. In the base case $m-i=0$, so $H'$ is a subgraph of $H[L_m]=H[L_i]$. By \cref{simple-bfs-layers} $\stw(H')\le \stw(H[L_i])\le t-1$.  Then, for each $v\in L_i$, $n_v=\tau(t-1)$.  Then
@@ -848,16 +849,26 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
             % & \le \sum_{v\in V(H'[L_i])} n_v  & \text{(by \cref{size-claim})}\\
             & \le \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} c)^c} & \text{(by \cref{main-size})} \enspace .
         \end{align*}
-        Applying \cref{t-tree-slack} to $H'$ gives a colouring $\varphi: V(H')\to\{1,\ldots,ak\}$ that satisfies (P1) and (P3).  This handles the case $m=i$.
+        Applying \cref{t-tree-slack} to $H'$ gives a colouring $\varphi: V(H')\to\{1,\ldots,ak\}$ that satisfies (P1) and (P3).  To satisfy (P2) we set $\psi(v):=0$ for each $v\in V(H')$.  This handles the case $i=m$.
 
-        For the inductive step, $m-i\ge 1$.
+        Before proceeding with the inductive step, we give some intuition and definitions for the secondary colouring $\psi$. For each $i\in\{1,\ldots,m\}$, $\tw(H[L_i])\le \stw(H[L_i])\le t$. Therefore, there exists a colouring $\zeta:V(H)\to\{0,\ldots,t-1\}$ such that $\zeta$ is a proper colouring of $H[L_i]$ for each $i\in\{1,\ldots,m\}$. For each $j\in\{1,\ldots,\ellt\}$, each $v\in H'[L_{i+j}]$, and each $s\in\{1,\ldots,j\}$, we will associate the vertex $v$ with a specific vertex $p_s(v)\in V(H'[L_{i+j-s}])$.  In this way, $v$ gets a $\ellt$-vector of colours $(\psi_1(v),\ldots,\psi_{\ellt-1}(v))$, where
+        \[
+            \psi_s(v) :=
+                \begin{cases}
+                    \zeta(p_s(v)) & \text{if $s\in\{1,\ldots,j\}$} \\
+                    0             & \text{if $s\in\{j+1,\ldots,\ellt\}$.}
+                \end{cases}
+        \]
+        This vector then defines the colour $\psi(v):=\sum_{s=1}^\ellt t^{i-1}\psi_s(v)$.
+
+        We now proceed with the inductive step, so $i\in\{0,\ldots,m-1\}$.
         Now,
         \[
             \sum_{v\in V(H'[L_i])}\frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} \gamma(v))^{\gamma(v)}}
             = \sum_{v\in V(H'[L_i])} n_v
             \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} (c+s))^{c+s}} \enspace .
         \]
-       Therefore $\gamma$ satisfies the requirements for \cref{t-tree-slack}, so we can find a 2-ranking of $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in V(H'[L_i])$.  It remains to show that we can extend $\varphi$ to a complete colouring of $H'$.
+       Therefore $\gamma$ satisfies the requirements for \cref{t-tree-slack}, so we can find a 2-ranking of $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in V(H'[L_i])$.  We will show how to can extend $\varphi$ to a complete colouring of $H'$.
 
        The next step is use \cref{t-tree-no-slack-separator} to break $H'-L_i$ into sufficiently small components.  For any $v\in H'[L_{i]}]$, define
        \begin{align*}
