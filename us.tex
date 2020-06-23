@@ -859,7 +859,8 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
 
         For the inductive step, $i\in\{0,\ldots,m-1\}$.  By applying \cref{t-tree-slack}, we obtain a 2-ranking $\varphi:X\to\{1,\ldots,a(k-c-1)\}$ of $H[X]$ that satisfies (P3). In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in X$.  It remains to show that we can extend $\varphi$ to a complete colouring of $H_X$.
 
-        The next step is use \cref{t-tree-no-slack-separator} to break $H_X-X$ into sufficiently small components. Let $Y:= V(H_X[L_{i+1}])$, for each $v\in X$, let $Y_v:=V(X^+_v)\cap Y$, and observe that $H_{Y_v}=X^+_v$.  For each $w\in Y_v$, let $\gamma(w)$ be the solution to $(\log^{(t-2)}k)^k/(\log^{(t-2)}\gamma(w))^{\gamma(w)} = n_{Y_v}(w)$.  Then,
+        % The next step is use \cref{t-tree-no-slack-separator} to break $H_X-X$ into sufficiently small components.
+        Let $Y:= V(H_X[L_{i+1}])$ for each $v\in X$, let $Y_v:=V(X^+_v)\cap Y$, and observe that $H_{Y_v}=X^+_v$.  For each $w\in Y_v$, let $\gamma(w)$ be the solution to $(\log^{(t-2)}k)^k/(\log^{(t-2)}\gamma(w))^{\gamma(w)} = n_{Y_v}(w)$.  Then,
         \begin{align*}
                 \sum_{w\in Y_v}\frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}\gamma(w))^{\gamma(w)}}  & = \sum_{w\in Y_v} n_{Y_v}(w) \\
                     & \le t\cdot|H_{Y_v}| & \text{(by \cref{size-claim}, $\eqref{ineq-a}\le\eqref{ineq-b}$)} \\
@@ -869,7 +870,15 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
                     & \text{(by definition of $\gamma(v)$)} \\
                     & \in O\left(\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}}\right) &\text{(for $t\in O(1)$)}
         \end{align*}
-        Therefore, $\gamma:Y_v\to\R$ satisifies the conditions for applying \cref{t-tree-no-slack-separator} to $H[Y_v]=X^+_v[L_{i+1}]$ with the value $c=\gamma(v)$.  Therefore, there exists a set $S_v'\subseteq X^+_v[L_{i+1}]$ of size $O(\gamma(v))$ such that each component $I$ of $X^+_v-S_v'$ has $\sum_{w\in V(I)} n_{Y_x}(w)\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$, where $s(v):=\log\gamma(v)/\log^{(t-1)}\gamma(v)$.  Let $S:=\bigcup_{v\in X} S_v'$ and let $\{S_v:v\in X\}$ be a partition of $S$ such that $S_v\subseteq S_v'$ for each $v\in X$.
+        Therefore, $\gamma:Y_v\to\R$ satisifies the conditions for applying \cref{t-tree-no-slack-separator} to $H[Y_v]=X^+_v[L_{i+1}]$ with the value $c=\gamma(v)$.  Our goal is to do this, eventually, but not quite yet.
+
+        For each $d\in\{1,\ldots,t\}$, let $Y_d:=\{v\in Y: |N_H(v)\cap L_i|=d\}$, so that each $w\in Y_d$ has a parent clique $C_w$ with $|C_w\cap L_{i}|=d$ and $|C_w\cap L_{i+1}|=t-d$.  By \cref{simple-layers}, $\stw(Y_d)\le t-d$ for each $d\in\{1,\ldots,t\}$ [TODO: upgrade \cref{simple-layers}].  For each $d\in\{2,\ldots,t\}$, \cref{t-tree-slack} implies that $H[Y_d]$ has a 2-ranking $\varphi:Y_d\to \{\lfloor a(k-c-1)\rfloor-c_d,\ldots,\lfloor a(k-c-1)-c_{d+1}\rfloor\}$ where $c_t=0$ and, for $d\in\{2,\ldots,t-1\}$ $c_{d+1}-c_d\in O((k-c)\log^{(t-d)} (k-c)/\log^{(t-d-1)}(k-c))$. [TODO: Boring calculation.]  In particular, we individually colour each $H[Y_d]$ starting with $d=t$ and working down to $d=2$, using smaller colours each time. (TODO: Does this really work?)
+
+
+
+
+
+        Finally, we are ready to Therefore, there exists a set $S_v'\subseteq X^+_v[L_{i+1}]$ of size $O(\gamma(v))$ such that each component $I$ of $X^+_v-S_v'$ has $\sum_{w\in V(I)} n_{Y_x}(w)\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$, where $s(v):=\log\gamma(v)/\log^{(t-1)}\gamma(v)$.  Let $S:=\bigcup_{v\in X} S_v'$ and let $\{S_v:v\in X\}$ be a partition of $S$ such that $S_v\subseteq S_v'$ for each $v\in X$.
 
         Apply the inductive hypothesis to each component $I$ of $H_Y-S$ to obtain a 2-ranking $\varphi$ and colouring $\psi$ of $H_Y-S$.  For each component $I$ of $H_Y-S$, there is a maximal clique $C_I$ in $H[X]$ whose removal disconnects $I$ from the rest of $H_X$. For any $v\in C_I$, and any $w\in V(I[Y])$, $\varphi(w)\le a(k-\gamma(v)-1)$.
 
