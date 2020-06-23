@@ -857,7 +857,7 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
 
         The proof is by induction on $m-i$. In the base case $i=m$, so $H_X$ is a subgraph of $H[L_m]=H[L_i]$. By \cref{simple-bfs-layers,simple-minor-closed}, $\stw(H_X)\le \stw(H[L_i])\le t-1$.  Applying \cref{t-tree-slack} to $H'$ gives a 2-ranking $\varphi: V(H_X)\to\{1,\ldots,a(k-c-1)\}$ that satisfies conditions (P1) and (P3).  This handles the case $m=i$.
 
-        For the inductive step, $i\in\{0,\ldots,m-1\}$.  By applying \cref{t-tree-slack}, we obtain a 2-ranking $\varphi:X\to\{1,\ldots,a(k-c-1)\}$ of $H[X]$ that satisfies (P3) and satisfies (P1), at least for the graph $H[X]$. In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in X$.  It remains to show that we can extend $\varphi$ to a complete colouring of $H_X$.
+        For the inductive step, $i\in\{0,\ldots,m-1\}$.  By applying \cref{t-tree-slack}, we obtain a 2-ranking $\varphi:X\to\{1,\ldots,a(k-c-1)\}$ of $H[X]$ that satisfies (P3). In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in X$.  It remains to show that we can extend $\varphi$ to a complete colouring of $H_X$.
 
         The next step is use \cref{t-tree-no-slack-separator} to break $H_X-X$ into sufficiently small components. Let $Y:= V(H_X[L_{i+1}])$, for each $v\in X$, let $Y_v:=V(X^+_v)\cap Y$, and observe that $H_{Y_v}=X^+_v$.  For each $w\in Y_v$, let $\gamma(w)$ be the solution to $(\log^{(t-2)}k)^k/(\log^{(t-2)}\gamma(w))^{\gamma(w)} = n_{Y_v}(w)$.  Then,
         \begin{align*}
