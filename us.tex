@@ -874,11 +874,7 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
 
         For each $d\in\{1,\ldots,t\}$, let $Y_d:=\{v\in Y: |N_H(v)\cap L_i|=d\}$, so that each $w\in Y_d$ has a parent clique $C_w$ with $|C_w\cap L_{i}|=d$ and $|C_w\cap L_{i+1}|=t-d$.  By \cref{simple-layers}, $\stw(Y_d)\le t-d$ for each $d\in\{1,\ldots,t\}$ [TODO: upgrade \cref{simple-layers}].  For each $d\in\{2,\ldots,t\}$, \cref{t-tree-slack} implies that $H[Y_d]$ has a 2-ranking $\varphi:Y_d\to \{\lfloor a(k-c-1)\rfloor-c_d,\ldots,\lfloor a(k-c-1)-c_{d+1}\rfloor\}$ where $c_t=0$ and, for $d\in\{2,\ldots,t-1\}$ $c_{d+1}-c_d\in O((k-c)\log^{(t-d)} (k-c)/\log^{(t-d-1)}(k-c))$. [TODO: Boring calculation.]  In particular, we individually colour each $H[Y_d]$ starting with $d=t$ and working down to $d=2$, using smaller colours each time. (TODO: Does this really work?)
 
-
-
-
-
-        Finally, we are ready to Therefore, there exists a set $S_v'\subseteq X^+_v[L_{i+1}]$ of size $O(\gamma(v))$ such that each component $I$ of $X^+_v-S_v'$ has $\sum_{w\in V(I)} n_{Y_x}(w)\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$, where $s(v):=\log\gamma(v)/\log^{(t-1)}\gamma(v)$.  Let $S:=\bigcup_{v\in X} S_v'$ and let $\{S_v:v\in X\}$ be a partition of $S$ such that $S_v\subseteq S_v'$ for each $v\in X$.
+        Finally, we are ready to use \cref{t-tree-no-slack-separator}.  Using it, we conclude that there exists a set $S_v'\subseteq X^+_v[L_{i+1}]$ of size $O(\gamma(v))$ such that each component $I$ of $X^+_v-S_v'$ has $\sum_{w\in V(I)} n_{Y_x}(w)\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$, where $s(v):=\log\gamma(v)/\log^{(t-1)}\gamma(v)$.  Let $S:=\bigcup_{v\in X} S_v'$ and let $\{S_v:v\in X\}$ be a partition of $S$ such that $S_v\subseteq S_v'$ for each $v\in X$.
 
         Apply the inductive hypothesis to each component $I$ of $H_Y-S$ to obtain a 2-ranking $\varphi$ and colouring $\psi$ of $H_Y-S$.  For each component $I$ of $H_Y-S$, there is a maximal clique $C_I$ in $H[X]$ whose removal disconnects $I$ from the rest of $H_X$. For any $v\in C_I$, and any $w\in V(I[Y])$, $\varphi(w)\le a(k-\gamma(v)-1)$.
 
