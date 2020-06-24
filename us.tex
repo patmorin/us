@@ -907,18 +907,18 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
 
           \item If $uw\in E(I)$ or $u,v,w\in V(I)$ for some component $I$ of $H_Y-S$, then the inductive hypothesis ensures that $\theta$ was already a 2-ranking of $I$ and the subsequent modifications to $\psi(w)$ for $w\in V(I[Y])$ do not change this. In fact, these modifications do not change the relative order of $\theta(u)$ and $\theta(w)$, unless $\theta(u)=\theta(w)$, in which case they do not change the relative order of $\theta(u)$ and $\theta(v)$.
 
-          \item If $u,w\in V(I)$ for some component $I$ of $H_Y-S$ and $v\in X$ then $v$ is contained in some maximal clique $C_I$ that separates $I$ from the rest of $H_X$.  Therefore $\varphi(u) \le \gamma(v) < \varphi(v)$.
+          \item If $u,w\in V(I)$ for some component $I$ of $H_Y-S$ and $v\in X$ then $v$ is contained in some maximal clique $C_I$ of $H[X]$ that separates $I$ from the rest of $H_X$.  Therefore $\varphi(u) \le \gamma(v) < \varphi(v)$.
 
           \item If $u\in V(I)$, $v\in X$ and $w\in V(J)$ for distinct components $I$ and $J$ of $H_Y\setminus S$, then let $p:=p_\mathcal{R}(u)$ and let $q:=p_\mathcal{R}(w)$.  By \cref{up-clique}, $pq\in E(H[L_i])$.  Therefore, $\psi(u)=\zeta(p)\neq\zeta(q)=\psi(w)$ since $\zeta$ is a proper colouring of $H[L_i]$.
 
           \item If $u\in S_p$ and $w\in S_q$ for some $p,q\in X$ then there are two cases to consider:
           \begin{compactenum}
-            \item If $p=q$ then $\varphi(u)\neq\varphi(w)$ since every vertex in $S_{p}$ is assigned a distinct colour $\varphi$.
-            \item If $p\neq q$ then, by \cref{up-clique}, $pq\in E(H[X])$ so  $\psi(u)=\zeta(p)\neq\zeta(q)=\psi(w)$.
+            \item If $p=q$ then $\varphi(u)\neq\varphi(w)$ since every vertex in $S_{p}$ is assigned a distinct colour by $\varphi$.
+            \item If $p\neq q$ then, by \cref{up-clique}, $pq\in E(H[X])$ so  $\psi(u)=\zeta(p)\neq\zeta(q)=\psi(w)$. [TODO: Missing something, up-clique doesn't do it.]
         \end{compactenum}
         In either case $\theta(u)\neq\theta(w)$.
 
-        \item If $u\in V(I)$ for some component $I$ of $H_Y-S$ and $w\in S_q$ for some $q\in X$, then $\varphi(w)>a(k-\gamma(q)-1)$. On the other hand, $I$ is separated from the rest of $H_X$ by some maximal clique $C_I$ in $H[X]$ that contains $v$ and $q$.  Therefore, $\varphi(u) \le a(k-\gamma(q)-1)$.  Therefore $\varphi(u)\le a(k-\gamma(q)-1)<\varphi(w)$ so $\theta(u)\neq\theta(w)$.
+        \item If $u\in V(I)$ for some component $I$ of $H_Y-S$ and $w\in S_q$ for some $q\in X$, then $\varphi(w)>a(k-\gamma(q)-1)$. On the other hand, $I$ is separated from the rest of $H_X$ by some maximal clique $C_I$ in $H[X]$ that contains $v$ and $q$ [TODO: shadow completness on the path $q\rightsquigarrow wv$].  Therefore, $\varphi(u) \le a(k-\gamma(q)-1)$.  Therefore $\varphi(u)\le a(k-\gamma(q)-1)<\varphi(w)$ so $\theta(u)\neq\theta(w)$.
       \end{compactenum}
       This completes the proof of \cref{main-claim}.
     \end{proof}
