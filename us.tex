@@ -261,6 +261,16 @@ The following simple result is used several times in the (fairly involved) proof
     \label{up-clique-figure}
 \end{figure}
 
+The following property is referred to as \emph{shadow completeness} by \citet{kundgen.pelsmajer:non-repetitive}.
+
+\begin{lem}[\cite{kundgen.pelsmajer:non-repetitive}]\label{shadow-completeness}
+    Let $H$ be a $t$-tree with construction order $\mathcal{R}:=(v_1,\ldots,v_n)$, let $\mathcal{L}:=(L_0,\ldots,L_m)$ be a BFS layering of $H$ with $L_0:=\{v_1,\ldots,v_{\min\{t,n\}}\}$, let $i\in\{0,\ldots,m-1\}$, let $u_0,\ldots,u_r$ be a path in $H$ with $\{u_0,u_r\}\subseteq L_{i}$, and $\{u_1,\ldots,r_{r-1}\}\subseteq \bigcup_{j=i+1}^m L_j$.  $u_0u_r\in E(H)$.
+\end{lem}
+
+
+
+
+
 % An incredibly useful property of graphs of small treewidth is that they have small separators.
 We will make use of the following well-known vertex-weighted separator lemma:
 
@@ -319,6 +329,19 @@ A proof of the following lemma, using minor-monotonicity, is due to \citet{wood:
 \begin{lem}[\cite{wood:personal}]\label{simple-bfs-layers}
     Let $H$ be a simple $t$-tree, let $n:=|H|$, let $v_1,\ldots,v_n$ be a construction order for $H$, and let $L_0,\ldots,L_m$ be the BFS ordering of $H$ with $L_0:=\{v_1,\ldots,v_{\min\{t,n\}}\}$.   Then, for each $i\in\{1,\ldots,m\}$, $\stw(H[L_i])\le t-1$.
 \end{lem}
+
+\Cref{simple-bfs-layers} uses the property of BFS layerings that, for each $i\in\{1,\ldots,m\}$, each vertex in $L_i$ has at least one neighbour in $L_{i-1}$.  The following extension gives an extension of this result to subsets of $L_i$ consisting of vertices with exactly $d$ neighbours in $L_{i-1}$.
+
+\begin{lem}[\cite{wood:personal}]\label{simple-bfs-layers-ii}
+    Let $H$ be a simple $t$-tree, let $n:=|H|$, let $v_1,\ldots,v_n$ be a construction order for $H$, let $L_0,\ldots,L_m$ be the BFS ordering of $H$ with $L_0:=\{v_1,\ldots,v_{\min\{t,n\}}\}$, and let $d\in\{1,\ldots,t\}$.   Then, for each $i\in\{1,\ldots,m\}$, $\stw(H[\{v\in L_i:|N_H(v)\cap L_{i-1}|=d\}])\le t-d$.
+\end{lem}
+
+Finally, we have a special case for simple $3$-trees.
+
+\begin{lem}[\cite{wood:personal}]\label{simple-bfs-layers-iii}
+    Let $H$ be a simple $3$-tree, let $n:=|H|$, let $v_1,\ldots,v_n$ be a construction order for $H$, let $L_0,\ldots,L_m$ be the BFS ordering of $H$ with $L_0:=\{v_1,\ldots,v_{\min\{t,n\}}\}$.  Then, for each $i\in\{1,\ldots,m\}$, the graph $H[\{v\in L_i:|N_H(v)\cap L_{i-1}|\ge 2\}]$ is a forest of trees, each of which has at most $3$ leaves.
+\end{lem}
+
 
 
 \subsection{Product Structure}
@@ -589,7 +612,7 @@ Recall that we are working on a proof of \weirdref{simple-t-trees}{a} that works
 The next two lemmata will eventually be applied to (subgraphs of) BFS layers of $H$, which is why they are stated in terms of $(t-1)$-trees.  The first lemma gives a \emph{slackness} condition that makes it possible to find a colouring that does not use \emph{any} colour larger than $a(k-c-1)$.
 
 \begin{lem}\label{t-tree-slack}
-Let $t,k\in\N$ and $c\in\R$ with $t\ge 2$ and $\tau(t)\le c\le k-1$; let $H$ be a graph with $\stw(H)\le t-1$;
+Let $t,k,g\in\N$ and $c\in\R$ with $t\ge 2$ and $\tau(t)\le c\le k-1$; let $H$ be a graph with $\stw(H)\le t-1$;
 % a simple $(t-1)$-tree;
 % let $t':=\min\{t, |H|\}$; let $v_1,\ldots,v_{|H|}$ be a construction order for $H$ generating a canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ rooted at $r\in V(T)$;
 let $\gamma:V(H)\to\{z\in\R: z\ge \tau(t-2)\}$; and let
@@ -607,7 +630,7 @@ where
     s := \frac{\log c}{\log^{(t-1)} c}
 \]
 % and if $\phi_1,\ldots,\phi_t'$ are distinct integers, each greater than $a(k-c-1)$,
-then $H$ has a 2-ranking $\varphi:V(H)\to a(k-c-1)$ such that $\varphi(v)> a(k-\gamma(v)-1)$ for each $v\in V(H)$.
+then $H$ has a 2-ranking $\varphi:V(H)\to a(k-c-1)$ such that $\varphi(v)> a(k-\gamma(v)-1)-g$ for each $v\in V(H)$.
 % \begin{compactenum}[(P1)]
     % \item for each $i\in\{1,\ldots,{t'}\}$, $\varphi(v_i)=\phi_i$; and
     % \item for each $v\in V(H)\setminus B_r$, $a(k-\gamma(v)-1) < \varphi(v) \le a(k-c-1)$.
@@ -673,16 +696,16 @@ then $H$ has a 2-ranking $\varphi:V(H)\to a(k-c-1)$ such that $\varphi(v)> a(k-\
        \subseteq O\left(\frac{\log c}{\log^{(t-1)} c}\right) = O(s) \enspace .
     \]
     Therefore, by \cref{skeleton-colour} $\trn(H')\in O(s)$, so
-    $H'$ has a 2-ranking $\varphi:V(H')\to \{\lceil a(k-c-1)\rceil-r,\ldots,\lceil a(k-c-1)\rceil-1\}$ for some $r\in O(s)$.
+    $H'$ has a 2-ranking $\varphi:V(H')\to \{\lceil a(k-c-1)\rceil-g-r,\ldots,\lceil a(k-c-1)\rceil-1-g\}$ for some $r\in O(s)$.
     % Modifying $\varphi$ so that it colours $\varphi(v_i):=\phi_i$ for each $i\in\{1,\ldots,t\}$ preserves the fact that $\varphi$ is a 2-ranking, since $\phi_1,\ldots,\phi_t$ are all distinct and each greater than $a(k-c-1)$.
     The colouring $\varphi$ of $H'$ is a partial colouring of $H$.
     % By definition, $\varphi$ satisifies requirement (P1).
-    For a sufficiently large constant $a$, $\lceil a(k-c-1)\rceil-r >  a(k-c-s-1)+1$, so each vertex in $H'$ receives a colour larger than $a(k-c-s-1)+1$.  For any vertex $v\in V(H)$,
+    For a sufficiently large constant $a$, $as > r+g+1$, so $\lceil a(k-c-1)\rceil-g-r >  a(k-c-s-1)+1$, so each vertex in $H'$ receives a colour larger than $a(k-c-s-1)+1$.  For any vertex $v\in V(H)$,
     \[ \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}}
          \le n_H
          \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}(c+s))^{(c+s)}}
     \]
-    so $\gamma(v)\ge c+s$, so $\varphi(v)> (\log^{(t-2)} k)^k/(\log^{(t-2)}\gamma(v))^{\gamma(v)}$ for each $v\in V(H')$, as required.
+    so $\gamma(v)\ge c+s$. Therefore $\varphi(v)> (\log^{(t-2)} k)^k/(\log^{(t-2)}\gamma(v))^{\gamma(v)}$ for each $v\in V(H')$, as required.
 
     Since $S'\supseteq S_T$, each component $X$ of $H-S'$ has
    % Now, $T-T'$ is a forest of trees $T_1,\ldots,T_m$ rooted at nodes $r_1,\ldots,r_m$, respectively.
@@ -784,7 +807,7 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
 % Note that in the following statement $H$ is a $t$-tree, no longer a $(t-1)$-tree.  This is the whole enchilada:
 
 \begin{lem}\label{two-tree-technical}
-    For every fixed positive integer $t$ there exist an integer constant $a>0$ such that, for every integer $k\ge \tau(t)$, every $n\le (\log^{(t-2)} k)^{k}$, and every graph $H$ with $\stw(H)\le t$, $\trn(H)\le ak$.
+    For each fixed positive integer $t$ there exist an integer constant $a>0$ such that, for every integer $k\ge \tau(t)$, every $n\le (\log^{(t-2)} k)^{k}$, and every graph $H$ with $\stw(H)\le t$, $\trn(H)\le ak$.
 \end{lem}
 
 \begin{proof}
@@ -827,7 +850,7 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
     The following technical claim essentially implies \cref{two-tree-technical}, but is suitable for induction on the layer $i$.
 
     \begin{clm}\label{main-claim}
-        There exists a constant $a$ such that, for any $X\subseteq L_i$, if
+        For every fixed integer $g\ge 0$, there exists a constant $a$ such that, for any $X\subseteq L_i$, if
         \begin{equation}
             \sum_{v\in X} n_X(v)\le \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} (c+s))^{c+s}} \enspace , \label{main-size}
         \end{equation}
@@ -836,7 +859,7 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
         \begin{compactenum}[(P1)]
             \item The function $\theta:V(H_X)\to\{1,\ldots,3tak\}$ defined by $\theta(v)=3t\varphi(v) - 3\psi(v) -(\ell(v)\bmod 3)$ is a 2-ranking of $H_X$;
             \item for each $v\in X$, $\psi(v)=0$; and
-            \item for each $v\in X$, $\varphi(v)\le a(k-c-1)$.
+            \item for each $v\in X$, $\varphi(v)\le a(k-c-1)-g$.
         \end{compactenum}
     \end{clm}
 
@@ -855,9 +878,9 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
         \]
         In particular, the function $\gamma$ satisfies the requirements for \cref{t-tree-slack}.
 
-        The proof is by induction on $m-i$. In the base case $i=m$, so $H_X$ is a subgraph of $H[L_m]=H[L_i]$. By \cref{simple-bfs-layers,simple-minor-closed}, $\stw(H_X)\le \stw(H[L_i])\le t-1$.  Applying \cref{t-tree-slack} to $H'$ gives a 2-ranking $\varphi: V(H_X)\to\{1,\ldots,a(k-c-1)\}$ that satisfies conditions (P1) and (P3).  This handles the case $m=i$.
+        The proof is by induction on $m-i$. In the base case $i=m$, so $H_X$ is a subgraph of $H[L_m]=H[L_i]$. By \cref{simple-bfs-layers,simple-minor-closed}, $\stw(H_X)\le \stw(H[L_i])\le t-1$.  Applying \cref{t-tree-slack} to $H'$ gives a 2-ranking $\varphi: V(H_X)\to\{1,\ldots,a(k-c-1)-g\}$ that satisfies conditions (P1) and (P3).  This handles the case $m=i$.
 
-        For the inductive step, $i\in\{0,\ldots,m-1\}$.  By applying \cref{t-tree-slack}, we obtain a 2-ranking $\varphi:X\to\{1,\ldots,a(k-c-1)\}$ of $H[X]$ that satisfies (P3). In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in X$.  It remains to show that we can extend $\varphi$ to a complete colouring of $H_X$.
+        For the inductive step, $i\in\{0,\ldots,m-1\}$.  By applying \cref{t-tree-slack}, we obtain a 2-ranking $\varphi:X\to\{1,\ldots,a(k-c-1)-g\}$ of $H[X]$ that satisfies (P3). In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in X$.  It remains to show that we can extend $\varphi$ to a complete colouring of $H_X$.
 
         % The next step is use \cref{t-tree-no-slack-separator} to break $H_X-X$ into sufficiently small components.
         Let $Y:= V(H_X[L_{i+1}])$ for each $v\in X$, let $Y_v:=V(X^+_v)\cap Y$, and observe that $H_{Y_v}=X^+_v$.  For each $w\in Y_v$, let $\gamma(w)$ be the solution to $(\log^{(t-2)}k)^k/(\log^{(t-2)}\gamma(w))^{\gamma(w)} = n_{Y_v}(w)$.  Then,
@@ -872,15 +895,17 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
         \end{align*}
         Therefore, $\gamma:Y_v\to\R$ satisifies the conditions for applying \cref{t-tree-no-slack-separator} to $H[Y_v]=X^+_v[L_{i+1}]$ with the value $c=\gamma(v)$.  Our goal is to do this, eventually, but not quite yet.
 
-        For each $d\in\{1,\ldots,t\}$, let $Y_d:=\{v\in Y: |N_H(v)\cap L_i|=d\}$, so that each $w\in Y_d$ has a parent clique $C_w$ with $|C_w\cap L_{i}|=d$ and $|C_w\cap L_{i+1}|=t-d$.  By \cref{simple-layers}, $\stw(Y_d)\le t-d$ for each $d\in\{1,\ldots,t\}$ [TODO: upgrade \cref{simple-layers}].  For each $d\in\{2,\ldots,t\}$, \cref{t-tree-slack} implies that $H[Y_d]$ has a 2-ranking $\varphi:Y_d\to \{\lfloor a(k-c-1)\rfloor-c_d,\ldots,\lfloor a(k-c-1)-c_{d+1}\rfloor\}$ where $c_t=0$ and, for $d\in\{2,\ldots,t-1\}$ $c_{d+1}-c_d\in O((k-c)\log^{(t-d)} (k-c)/\log^{(t-d-1)}(k-c))$. [TODO: Boring calculation.]  In particular, we individually colour each $H[Y_d]$ starting with $d=t$ and working down to $d=2$, using smaller colours each time. (TODO: Does this really work?)
+        For each $d\in\{1,\ldots,t\}$, let $Y_d:=\{v\in Y: |N_H(v)\cap L_i|=d\}$, so that each $w\in Y_d$ has a parent clique $C_w$ with $|C_w\cap L_{i}|=d$ and $|C_w\cap L_{i+1}|=t-d$.  Let $Y_{\ge d}:=\bigcup_{j=d}^t Y_j$. [TODO: This only works for $t=3$.] By \cref{simple-bfs-layers-iii}, the graph $H[Y_{\ge 2}]$ is a forest of trees, each of which has at most $3$ leaves.  It is easy to see that each component in such a forest has a 2-ranking using any 3 colours $c_0>c_1>c_2$.\footnote{If a tree $T$ in this forest has a node $r$ of degree 3, then root $T$ at $r$. Otherwise root $T$ at any of its nodes.  Then set $\varphi(v):=c_{d_T(v)\bmod 3}$ for each $v\in V(T)$.} Now, for each component $Z$ of $H[Y_{\ge 2}]$ there are two nodes $p,q\in L_{i}$ that each dominate $V(Z)$.  Let $\phi:=\lfloor a(k-\max\{\gamma(p),\gamma(q)\}-1)\rfloor$.  We colour the component $Z$ using colours $c_0,c_1,c_2$ where $c_j=\phi-j$ for each $j\in\{0,1,2\}$.
 
-        Finally, we are ready to use \cref{t-tree-no-slack-separator}.  Using it, we conclude that there exists a set $S_v'\subseteq X^+_v[L_{i+1}]$ of size $O(\gamma(v))$ such that each component $I$ of $X^+_v-S_v'$ has $\sum_{w\in V(I)} n_{Y_x}(w)\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$, where $s(v):=\log\gamma(v)/\log^{(t-1)}\gamma(v)$.  Let $S:=\bigcup_{v\in X} S_v'$ and let $\{S_v:v\in X\}$ be a partition of $S$ such that $S_v\subseteq S_v'$ for each $v\in X$.
+        % By \cref{simple-bfs-layers-ii}, $\stw(Y_d)\le t-d$ for each $d\in\{1,\ldots,t\}$ [TODO: upgrade \cref{simple-bfs-layers}].  For each $d\in\{2,\ldots,t\}$, \cref{t-tree-slack} implies that $H[Y_d]$ has a 2-ranking $\varphi:Y_d\to \{\lfloor a(k-c-1)\rfloor-c_d,\ldots,\lfloor a(k-c-1)-c_{d+1}\rfloor\}$ where $c_t=0$ and, for $d\in\{2,\ldots,t-1\}$ $c_{d+1}-c_d\in O((k-c)\log^{(t-d)} (k-c)/\log^{(t-d-1)}(k-c))$. [TODO: Boring calculation.]  In particular, we individually colour each $H[Y_d]$ starting with $d=t$ and working down to $d=2$, using smaller colours each time. (TODO: Does this really work?)
 
-        Apply the inductive hypothesis to each component $I$ of $H_Y-S$ to obtain a 2-ranking $\varphi$ and colouring $\psi$ of $H_Y-S$.  For each component $I$ of $H_Y-S$, there is a maximal clique $C_I$ in $H[X]$ whose removal disconnects $I$ from the rest of $H_X$. For any $v\in C_I$, and any $w\in V(I[Y])$, $\varphi(w)\le a(k-\gamma(v)-1)$.
+        Thus far, the colouring $\varphi$ is defined for $X$ and for $Y_{\ge 2}$.  The next step is to use \cref{t-tree-no-slack-separator} on $X^+_v[L_{i+1}]=H[Y_v]$.  Using it, we conclude that there exists a set $S_v'\subseteq X^+_v[L_{i+1}]$ of size $O(\gamma(v))$ such that each component $I$ of $X^+_v-S_v'$ has $\sum_{w\in V(I)} n_{Y_v}(w)\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$, where $s(v):=\log\gamma(v)/\log^{(t-1)}\gamma(v)$.  Let $S:=\bigcup_{v\in X} S_v'\setminus Y_{\ge 2}$ and let $\{S_v:v\in X\}$ be a partition of $S$ such that $S_v\subseteq S_v'$ for each $v\in X$.
+
+        Apply the inductive hypothesis to each component $I$ of $H_Y-S-Y_{\ge 2}$ with gap $g:=3$ to obtain a 2-ranking $\varphi$ and colouring $\psi$ of $H_Y-S-Y_{\ge 2}$.  For each component $I$ of $H_Y-S-Y_{\ge 2}$, there is a maximal clique $C_I$ in $H[X]$ whose removal disconnects $I$ from the rest of $H_X$. For each $v\in C_I$, the component $I$ is contained $H[Y_v]$, so $\sum_{w\in V(I)} n_{Y_v}(w)\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$.  The inductive hypothesis therefore ensures that, for each $w\in V(I[Y])$, $\varphi(w)\le a(k-\gamma(v)-1)-3$.
 
         Thus far we have defined $\varphi$ over the set $X\cup (Y\setminus S)\cup V(H_X-X-Y)$.  We now complete the definition of $\varphi$ by defining it over $S$.  For each $v\in X$ we let $\varphi:S_v\to\{\lfloor a(k-\gamma(v)-1)\rfloor+1,\ldots,ak\}$ be any injective function, so that $\varphi$ assigns a distinct colour, greater than $a(k-\gamma(v)-1)$ to each element of $S_v$.
 
-        What remains is to complete the definition of $\psi$ which, thus far, has only been defined over $V(H_X-Y)$.\footnote{A little more precisely, the inductive hypothesis has defined $\psi(w)=0$ for each $w\in Y\setminus S$ and we are now redefining $\psi$ for these vertices.}  Let $\zeta:X\to\{0,\ldots,t-1\}$ be a proper colouring of $H[L_i]$. For each $v\in X$, assign $\psi(w):=\zeta(v)$ for each $w\in S_v$.  This defines $\varphi(w)$ and $\psi(w)$ for each $w\in S$. Recall that, for each $w\in L_{i+1}$, the \emph{dominant parent} $p_\mathcal{R}(w)$ of $w$ is in $L_i$ (\cref{dominant-parent}).  For each $w\in Y\setminus S$, we define $\psi(w):=\zeta(p_\mathcal{R}(w))$.  This defines $\psi(w)$ for each $w\in Y$ and completes the definition of $\varphi$ and $\psi$.
+        What remains is to complete the definition of $\psi$ which, thus far, has only been defined over $V(H_X-Y)$.\footnote{A little more precisely, the inductive hypothesis has defined $\psi(w)=0$ for each $w\in Y\setminus S$ and we are now redefining $\psi$ for these vertices.}  Let $\zeta:X\to\{0,\ldots,t-1\}$ be a proper colouring of $H[L_i]$. For each $v\in X$, and each $w\in S_v$, assign $\psi(w):=\zeta(v)$.  This defines $\psi(w)$ for each $w\in S$. Recall that, for each $w\in L_{i+1}$, the \emph{dominant parent} $p_\mathcal{R}(w)$ of $w$ is in $L_i$ (\cref{dominant-parent}).  For each $w\in Y\setminus S$, we define $\psi(w):=\zeta(p_\mathcal{R}(w))$.  This defines $\psi(w)$ for each $w\in Y$ and completes the definition of $\varphi$ and $\psi$.
 
         By definition $\psi$ satisfies Condition (P2).  By the application of \cref{t-tree-slack} to $H[X]$, $\varphi$ Condition (P3). All that remains is to ensure that, together $\varphi$ and $\psi$ satisfy (P1).  To do this, consider some path $uvw$ in $H_X$.  We must show that $\theta(u)\neq\theta(w)$ or $\theta(u)<\theta(v)$.  There are a few cases to consider (see \cref{cases}):
         \begin{figure}
@@ -903,27 +928,82 @@ We are now ready to prove the technical statement that implies \weirdref{simple-
             \caption{Cases in the proof of \cref{main-claim}.}
             \label{cases}
         \end{figure}
+
+        [TODO: Add an additional lower order colour to reduce cases, so we only need consider paths where $uvw$ where $u$ and $w$ have the same type.]
        \begin{compactenum}
           \item If $u\in L_j$ and $w\in L_{j'}$ for $j\neq j'$ then $j\bmod 3\neq j'\bmod 3$, so $\theta(u)\neq\theta(w)$.
 
-          \item If $u,w\in X$ and $v\in Y$ then, by \cref{order-relation} $u,w<_R v$, so $u$ and $w$ are both contained in the parent clique $C_v$ of $v$.  In particular, $uw\in E(H[X])$ so $\varphi(u)\neq\varphi(w)$ since \cref{t-tree-slack} produces a 2-ranking (which is a proper colouring) $\varphi$ of $H[X]$.
-
           \item If $u,v,w\in X$ then the path $uvw$ is in $H[X]$ and $\varphi(u)\neq\varphi(w)$ or $\varphi(u)<\varphi(v)$ because \cref{t-tree-slack} produces a 2-ranking $\varphi$ of $H[X]$.
 
-          \item If $uw\in E(I)$ or $u,v,w\in V(I)$ for some component $I$ of $H_Y-S$, then the inductive hypothesis ensures that $\theta$ was already a 2-ranking of $I$ and the subsequent modifications to $\psi(w)$ for $w\in V(I[Y])$ do not change this. In fact, these modifications do not change the relative order of $\theta(u)$ and $\theta(w)$, unless $\theta(u)=\theta(w)$, in which case they do not change the relative order of $\theta(u)$ and $\theta(v)$.
+          \item If $u,w\in X$ and $v\in Y$ then, by \cref{shadow-completeness},  $uw\in E(H[X])$ so $\varphi(u)\neq\varphi(w)$ since \cref{t-tree-slack} produces a 2-ranking (which is a proper colouring) $\varphi$ of $H[X]$.
 
-          \item If $u,w\in V(I)$ for some component $I$ of $H_Y-S$ and $v\in X$ then $v$ is contained in some maximal clique $C_I$ of $H[X]$ that separates $I$ from the rest of $H_X$.  Therefore $\varphi(u) \le \gamma(v) < \varphi(v)$.
-
-          \item If $u\in V(I)$, $v\in X$ and $w\in V(J)$ for distinct components $I$ and $J$ of $H_Y\setminus S$, then let $p:=p_\mathcal{R}(u)$ and let $q:=p_\mathcal{R}(w)$.  By \cref{up-clique}, $pq\in E(H[L_i])$.  Therefore, $\psi(u)=\zeta(p)\neq\zeta(q)=\psi(w)$ since $\zeta$ is a proper colouring of $H[L_i]$.
-
-          \item If $u\in S_p$ and $w\in S_q$ for some $p,q\in X$ then there are two cases to consider:
+          \item If $u,w\in V(I)$ for some component $I$ of $H_Y-S-Y_{\ge 2}$, then let $C_I$ be the maximal clique in $H[X]$ that separates $I$ from the rest of $H_X-C_I$ and let $\phi:=a(k-\max_{z\in C_I} \gamma(z)-1)$.  Recall that $\varphi(z)>\phi$ for each $z\in C_I$ and $\varphi(z) \le \phi-3$ for each $z\in V(I)$.
+          Several cases are possible:
           \begin{compactenum}
-            \item If $p=q$ then $\varphi(u)\neq\varphi(w)$ since every vertex in $S_{p}$ is assigned a distinct colour by $\varphi$.
-            \item If $p\neq q$ then, by \cref{up-clique}, $pq\in E(H[X])$ so  $\psi(u)=\zeta(p)\neq\zeta(q)=\psi(w)$. [TODO: Missing something, up-clique doesn't do it.]
-        \end{compactenum}
-        In either case $\theta(u)\neq\theta(w)$.
+              \item If $v\in X$ then $v\in C_I$, so $\varphi(u) \le \phi < \varphi(v)$.
 
-        \item If $u\in V(I)$ for some component $I$ of $H_Y-S$ and $w\in S_q$ for some $q\in X$, then $\varphi(w)>a(k-\gamma(q)-1)$. On the other hand, $I$ is separated from the rest of $H_X$ by some maximal clique $C_I$ in $H[X]$ that contains $v$ and $q$ [TODO: shadow completness on the path $q\rightsquigarrow wv$].  Therefore, $\varphi(u) \le a(k-\gamma(q)-1)$.  Therefore $\varphi(u)\le a(k-\gamma(q)-1)<\varphi(w)$ so $\theta(u)\neq\theta(w)$.
+              \item If $v\in V(I)$ then the inductive hypothesis ensures that $\theta$ was already a 2-ranking of $I$ and the subsequent modifications to $\psi(w)$ for $w\in V(I[Y])$ do not change this. In fact, these modifications do not change the relative order of $\theta(u)$ and $\theta(w)$, unless $\theta(u)=\theta(w)$, in which case they do not change the relative order of $\theta(u)$ and $\theta(v)$.  Therefore $\theta(u)\neq\theta(w)$ or $\theta(u)>\theta(v)$.
+
+              \item If $v\in Y_{\ge 2}$ then $\varphi(u) \le \phi-3 < \phi-2 \le \varphi(v)$.
+
+              \item If $v\in S$ then $v\in S_z$ for some $z\in C_I$, so $\varphi(u) < \phi < \varphi(z) < \varphi(v)$.
+
+              \item If $v\in L_{i+1}$ then, by \cref{shadow-completeness}, $uw\in E(I)$ so, by the inductive hypothesis $\varphi(u)\neq\varphi(w)$.
+          \end{compactenum}
+
+          \item If $u\in V(I)$ and $w\in V(J)$ for distinct components $I$ and $J$ of $H_Y\setminus S-Y_{\ge 2}$, then let $C_I$ and $C_J$ denote the maximal cliques in $H[X]$ that separate $I$ and $J$, respectively, from the rest of $H_X$.  Observe that $v\not\in V(I)\cup V(J)$, by definition.  There are some cases to consider:
+
+          \begin{compactenum}
+              \item If $v\in X$, then let $p:=p_\mathcal{R}(u)$ and let $q:=p_\mathcal{R}(w)$.  By \cref{up-clique}, $pq\in E(H[L_i])$.  Therefore, $\psi(u)=\zeta(p)\neq\zeta(q)=\psi(w)$ since $\zeta$ is a proper colouring of $H[L_i]$.
+
+              \item If $v\in S$ then $v\in S_z$ for some $z\in C_I$.
+
+              \item If $v\in Y_{\ge 2}$
+
+              \item If $v\in L_{i+2}$.
+          \end{compactenum}
+
+          \item If $u\in S$ and $w\in S$ then there are some cases to consider:
+          \begin{compactenum}
+              \item If $v\in X$ then $v\in C$ for some maximal clique $C$ of $H[X]$ that separates $\{u,w\}$ from the rest of $H_X$.  Since neither $u$ nor $w$ is is $Y_{\ge 2}$, this implies that $u,w\in S_v$, so $\varphi(u)\neq\varphi(w)$.
+
+              \item $v\in Y\setminus (S\cup Y_{\ge 2})$, then .
+              \item $v\in S$
+              \item $v\in Y_{\ge 2}$
+              \item $v\in L_{i+2}$
+          \end{compactenum}
+
+          \item If $u,w\in Y_{\ge 2}$ then we may assume that $uw\not\in E(H[Y_{\ge 2}])$ since, otherwise $\varphi(u)\neq\varphi(w)$.
+          \begin{compactenum}
+              \item If $v\in X$ then $v\in C$ for some maximal clique $C$ of $H[X]$ that separates $\{u,w\}$ from the rest of $H_X$.  Then $\varphi(u) \le \phi_C - 3 < \varphi(v)$
+
+              \item If $v\in Y\setminus (S\cup Y_{\ge 2})$, then consider the maximal clique $C$ of $H[X]$ that separates $\{u,v,w\}$ from the rest of $H_X$. Since $u,w\in Y_{\ge 2}$, $C$ contains two vertices $p,q$ each adjacent to both $u$ and $w$.
+
+
+              Since $uw\not\in E(H[Y_{\ge 2}])$
+
+
+
+              \item $v\in S$
+              \item $v\in Y_{\ge 2}$
+              \item $v\in L_{i+2}$
+          \end{compactenum}
+
+
+
+          \item If $u\in S_p$ and $w\in S_q$ for some $p,q\in X$ then there are some cases to consider:
+          \begin{compactenum}
+              \item If $p=q$ then $\varphi(u)\neq\varphi(w)$ since every vertex in $S_{p}$ is assigned a distinct colour by $\varphi$.
+
+              \item If $p\neq q$ and $v\in L_{i+j}$ for some $j\in\{1,2\}$ then $pq\in E(H)$ [TODO: by shadow-completeness].  Therefore,  $\psi(u)=\zeta(p)\neq\zeta(q)=\psi(w)$.
+
+              \item If $p\neq q$ and $v\in X$ then, without loss of generality, $v\neq p$. Therefore $w\in L_{\ge 2}$ since $N_H(w)\cap L_{i-1}\supseteq\{v,q\}$. But this contradicts the assumption (for this case) that $w\in S\supseteq S_q$.
+          \end{compactenum}
+        In either of the first two cases $\theta(u)\neq\theta(w)$, and the third case does not occur.
+
+        \item If $u\in V(I)$ for some component $I$ of $H_Y-S$ and $w\in S_q$ for some $q\in X$, then $\varphi(w)>a(k-\gamma(q)-1)$.
+
+        On the other hand, $I$ is separated from the rest of $H_X$ by some maximal clique $C_I$ in $H[X]$ that contains $v$ and $q$ [TODO: shadow completness on the path $q\rightsquigarrow wv$].  Therefore, $\varphi(u) \le a(k-\gamma(q)-1)$.  Therefore $\varphi(u)\le a(k-\gamma(q)-1)<\varphi(w)$ so $\theta(u)\neq\theta(w)$.
       \end{compactenum}
       This completes the proof of \cref{main-claim}.
     \end{proof}
