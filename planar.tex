@@ -198,7 +198,11 @@ It is not hard to see that any colouring $\varphi$ of $G$ is a vertex $\ell$-ran
     \begin{compactenum}[(i)]
         \item For each $i\in\{0,\ldots,m\}$, $G[L_i]$ is an outerplanar graph;
         \item For each $i\in\{1,\ldots,m\}$, $G[\{v:\in L_i:|N_G(v)\cap L_{i-1}|\ge 2\}]$ is a forest in which each tree has at most 3 leaves.
-        \item For each $i\in\{1,\ldots,m\}$, if $u_0,\ldots,u_r$ is a path in $G$ with $\{u_0,u_r\}\subseteq L_i$ and $\{u_1,\ldots,u_{r-1}\}\subseteq \bigcup_{j=i+1}^m L_i$ then $u_0u_r\in E(G)$.
+        \item For each $i\in\{1,\ldots,m\}$, if $u_0,\ldots,u_r$ is a path in $G$ with $\{u_0,u_r\}\subseteq L_i$ and $\{u_1,\ldots,u_{r-1}\}\subseteq \bigcup_{j=i+1}^m L_i$ then
+        \begin{compactenum}
+            \item $u_0u_r\in E(G)$ and
+            \item there exists $j\in\{1,\ldots,r-1\}$ such that $\{u_0u_j,u_ju_r\}\subseteq E(G)$.
+        \end{compactenum}
     \end{compactenum}
 \end{lem}
 
@@ -217,16 +221,20 @@ It is not hard to see that any colouring $\varphi$ of $G$ is a vertex $\ell$-ran
 
 \begin{lem}\label{three-tree-technical}
     For any integers $\ell\ge 2$, $g\ge 0$, there exists an integer $a\ge 1$ such that the following is true:
-    Let $G$ be a planar 3-tree with construction order $\mathbb{R}:=v_1,\ldots,v_n$ and let $\mathcal{L}:=L_0,\ldots,L_m$ be a BFS layering of $G$ with $L_0:=\{v_1,\ldots,v_t\}$, let $X\subset L_i$ and let $G_X$ be the graph containing precisely the connected components of $H[X\cup\bigcup_{j=i+1}^m L_j]$ that contain elements of $X$.  If
+    Let $G$ be a planar 3-tree with construction order $\mathbb{R}:=v_1,\ldots,v_n$ and let $\mathcal{L}:=L_0,\ldots,L_m$ be a BFS layering of $G$ with $L_0:=\{v_1,\ldots,v_t\}$, let $X\subset L_i$, let $Y:=N_G(X)\cap L_{i+1}$, and let $G_X$ be the graph containing precisely the connected components of $H[Y\cup\bigcup_{j=i+2}^m L_j]$ that contain elements of $Y$.  If
     \begin{equation}
         |G_X| \le \frac{(\log k)^k}{(\log(c+\log c/\log\log c))^{c+\log c/\log\log c}}
         \enspace , \label{input-size}
     \end{equation}
-    then there exists an $\ell$-ranking $\varphi:V(G_X)\to\{1,\ldots,ak\}$ of $G$ such that $\varphi(v) \le a(k-c-1)-g$ for each $v\in X$.
+    then there exists a function $\varphi^+:V(G_X)\to\{1,\ldots,ak\}\times\{0,\ldots,\ell\}\times\{1,\ldots,t\}\times\{1,2,3\}$ defined by $\varphi^+(v):=(\varphi(v),\delta(v),\tau(v),\psi(v))$ of $G$ such that
+    \begin{compactenum}
+        \item $\varphi(v) \le a(k-c-1)-g$ for each $v\in X$;
+        \item for each path $u_0,\ldots,u_r$ in $G$ of length at most $\ell$, $\varphi^+(u_0)\neq\varphi^+(u_r)$ or $\varphi(u_0)<\max\{\varphi(u_1),\ldots,\varphi(u_{r-1})\}$.
+    \end{compactenum}
 \end{lem}
 
 \begin{proof}
-    The proof is by induction on $m-i$.  For each vertex $v\in V(H[X])$, let $G_v$ be the graph containing exactly the components of $H[\bigcup{j=i+2}^m]$ having at least one vertex $w$ adjacent to an element of $N_G(v)\cap L_{i+1}$.
+    The proof is by induction on $m-i$, and the base case occurs when $i=m$.  For each vertex $v\in V(H[X])$, let $G_v$ be the graph containing exactly the components of $H[\bigcup_{j=i+2}^m]$ having at least one vertex $w$ adjacent to an element of $N_G(v)\cap L_{i+1}$.
 
     \begin{clm}\label{size-claim}
         $\sum_{v\in X}(1+|G_v|) \le 3\cdot |H_X|$.
@@ -238,28 +246,35 @@ It is not hard to see that any colouring $\varphi$ of $G$ is a vertex $\ell$-ran
 
     For each $v\in X$, define $\gamma(v)$ to be the solution to the equation $(\log k)^k/(\log\gamma(v))^{\gamma(v)}=1+|G_v|$.  The value of $\gamma(v)$ is well defined and $e\le \gamma(v)\le k$, for the following reasons:  The left hand side is a continuous strictly decreasing function of $\gamma(v)$. Setting $\gamma(v)=e$, the left hand side becomes $(\log k)^k \ge |H_X|\ge 1+|G_v|$. Setting $\gamma(v)=k$, the left hand side becomes $1\le 1+|G_v|$.
 
-    By \cref{three-tree-layers}(i), $G[X]\subseteq G[L_i]$ is an outerplanar graph. Let $s:=\log c/\log\log c$. By \cref{size-claim,input-size}, $\sum_{v\in X}(\log k)^k/(\log\gamma(v))^{\gamma(v)} \le 3(\log k)^k/(\log(c+s))^{c+s}$.  Therefore, the graph $G[X]$ and the weight function $\gamma$ satisfy the requirements for \cref{outerplanar-lemma} with $\alpha =3$. Applying \cref{outerplanar-lemma} with $g=\ell+1$, we obtain an $\ell$-ranking  $\varphi:X\to\{1,\ldots,a(k-c-1)\}$ of $G[X]$ such that $\varphi(v)>a(k-\gamma(v)-1)-\ell-1$ for each $v\in X$.
+    By \cref{three-tree-layers}(i), $G[X]\subseteq G[L_i]$ is an outerplanar graph. Let $s:=\log c/\log\log c$. By \cref{size-claim,input-size}, $\sum_{v\in X}(\log k)^k/(\log\gamma(v))^{\gamma(v)} \le 3(\log k)^k/(\log(c+s))^{c+s}$.  Therefore, the graph $G[X]$ and the weight function $\gamma$ satisfy the requirements for \cref{outerplanar-lemma} with $\alpha =3$. Applying \cref{outerplanar-lemma}, we obtain an $\ell$-ranking  $\varphi:X\to\{1,\ldots,a(k-c-1)\}$ of $G[X]$ such that
+    $a(k-\gamma(v)-1) < \varphi(v) \le a(k-c-1)-g$ for each $v\in X$.  The second inequality ensures that $\varphi$ satifies requirement 1 of the lemma.
 
-    In the base case, $i=m$, we are done; $\varphi$ is a complete colouring of $G_X$ that satisfies the requirements of the lemma.
+    In the base case, $i=m$, we are done; the functions $\delta$, $\tau$, $\psi$ are irrelevant, since $\varphi$ is an $\ell$-ranking of $G_X$ and therefore it satisfies requirement 2 of the lemma.
 
     If $i\in\{0,\ldots,m-1\}$, let $Y:=V(G_X[L_{i+1}])$ and partition $Y$ into $Y_1:=\{w\in Y:|N_G(w)\cap L_{i}|=1\}$ and $Y_{\ge 2}:=Y\setminus Y_1$.  By \cref{three-tree-layers}, each component $K$ of $G[Y_{\ge 2}]$ is a tree with at most 3 leaves and therefore $K$ has an $\ell$-ranking $\varphi:V(K)\to\{c_0,c_1\ldots,c_{\ell}\}$ for any $c_0>c_1>\cdots>c_{\ell}$.  For each such component $K$, there is a set $C\subseteq L_i$ of size $|C|=3$ such that $K$ is a component of $G-C$.  Let $\phi=\min_{v\in C\cap X}(\lfloor a(k-\gamma(v)-1)\rfloor)$.  We colour the component $K$ with the colours $\{\phi-j: j\in\{0,\ldots,\ell\}$.
 
     For any $\alpha >0$ and each $v\in X$, there exists $S_v'\subset G_v[Y]$ such that $|S_v'|\in O(\gamma(v)/\beta)$ and, for each component $H$ of $G_Y-S_v'$ at least one of the following is true:
-    \begin{compactenum}
-        \item $|H|\le \beta|G_v|/\gamma(v)$; or
-        \item $V(H)\cap Y=\emptyset$.
+    \begin{compactenum}[(S1)]
+        \item $|H|\le \beta|G_v|/\gamma(v)$; or \label{sep-shrink}
+        \item $V(H)\cap Y=\emptyset$. \label{sep-biggies}
     \end{compactenum}
     The existence of such a set $S_v'$ can be proven using the fact that $G_v[Y]$ has bounded treewidth.  [TODO: Prove it.]
 
     A boring calculation shows that, for a sufficiently small constant $\beta>0$
-    \[  \frac{\beta|G_v|}{\gamma(v)} \le \frac{(\log k)^k}{\log (\gamma(v)+s(v))^{\gamma(v)+s(v)}}
-    \]
+    \begin{equation}
+        \frac{\beta|G_v|}{\gamma(v)} \le \frac{(\log k)^k}{\log (\gamma(v)+s(v))^{\gamma(v)+s(v)}} \label{sizer}
+    \end{equation}
     where $s(v):=\log\gamma(v)/\log\log\gamma(v)$. The constant $\beta$ is universal, so $|S_v|\in O(\gamma(v))$.
 
-    Let $S:=\bigcup_{v\in X} S_v'$ and let $\{S_v: v\in X\}$ be partition of $S-Y_{\ge 2}$ such that $S_v\subseteq S_v'$ for each $v\in X$.  We colour the vertices in $S$ as follows:  For each $v\in X$, we colour $S_v$ with $|S_v|$ distinct colours from the set $\{\lfloor a(k-\gamma(v)-1)\rfloor+1,\ldots,ak\}$.  Since $|S_v|\le |S_v|\in O(\gamma(v))$, this is always possible, provided that $a$ is a sufficiently large constant.
+    Let $S:=\bigcup_{v\in X} S_v'$ and let $\{S_v: v\in X\}$ be partition of $S-Y_{\ge 2}$ such that $S_v\subseteq S_v'$ for each $v\in X$. For each $v\in X$, we colour $S_v$ with $|S_v|$ distinct colours from the set $\{\lfloor a(k-\gamma(v)-1)\rfloor+1,\ldots,ak\}$, so that $\varphi:S_v\to\{\lfloor a(k-\gamma(v)-1)\rfloor+1,\ldots,ak\}$ is injective.  Since $|S_v|\le |S_v|\in O(\gamma(v))$, this is always possible, provided that $a$ is a sufficiently large constant.
 
     % Now, consider the graph $G_v-S_v$.
-    Finally, let $Q:=G_Y-S-Y_{\ge 2}$.  We apply induction on each component $I$ of $Q$ to obtain an $\ell$-ranking $\varphi:V(I)\to\{1,\ldots,ak\}$ of $I$ such that, for each $w\in I[Y]$, $\varphi(w) \le a(k-\gamma(I)-1)$, where $\gamma(I)$ is the solution to the equation $(\log k)^k/(\log\gamma(I))^{\gamma} = |I|$.  Notice that there is a set $C_I\subset L_i$ of size 3 such that $\gamma(I)\ge \max\{\gamma(v):v\in C_I\cap X\}$. Indeed, for each $v\in C_I\cap X$, $I$ is contained in a component of $G_v-S_v$ and, as argued above, each such component has size at most $(\log k)^k/\log (\gamma(v)+s(v))^{\gamma(v)+s(v)}$.
+    Finally, let $Q:=G_Y-S-Y_{\ge 2}$.  We apply induction with the value $g:=\ell+1$ on each component $I$, of $Q$ to obtain an $\ell$-ranking $\varphi:V(I)\to\{1,\ldots,ak\}$ of $I$ such that, for each $w\in I[Y]$, $\varphi(w) \le a(k-\gamma(I)-1)-\ell-1$, where $\gamma(I)$ is the solution to the equation $(\log k)^k/(\log\gamma(I))^{\gamma} = |I|$.
+
+    Notice that, if $V(I)\cap Y\neq\emptyset$ then there is a set $C_I\subseteq L_i$ of size 3 such that $\gamma(I)\ge \max\{\gamma(v)+s(v):v\in C_I\cap X\}$. Indeed, for each $v\in C_I\cap X$, $I$ is contained in a component $H$ of $G_v-S_v$ so by (S\ref{sep-shrink}) and \cref{sizer}, $|I|\le|H|\le (\log k)^k/\log (\gamma(v)+s(v))^{\gamma(v)+s(v)}$.  Therefore, the inductive hypothesis ensures the following:
+    \begin{compactenum}[(P1)]\setcounter{enumi}{-1}
+        \item For each $w\in I[Y]$, $\varphi(w)\le a(k-\gamma(v)-1)$.\label{p-upper-bound}
+    \end{compactenum}
 
     The colouring we use has several lower order terms:
     \begin{compactenum}
@@ -278,21 +293,22 @@ It is not hard to see that any colouring $\varphi$ of $G$ is a vertex $\ell$-ran
         \end{compactenum}
     \end{compactenum}
 
-    All that remains is verify that this produces an $\ell$-ranking $G_X$.  Specifically, we will show that for any path $u_0,\ldots,u_r$ in $G_X$ of length $r\le\ell$, at least one of the following conditions holds:
+    All that remains is verify that this produces an $\ell$-ranking $G_X$.  We will show that for any path $u_0,\ldots,u_r$ in $G_X$ of length $r\le\ell$, at least one of the following conditions holds:
     \begin{compactenum}[(i)]
-        \item $\varphi(u_0)\neq\varphi(u_r)$, $\delta(u_0)\neq\delta(u_r)$, $\tau(u_0)\neq\tau(u_r)$; or
-        \item $\varphi(u_0) < \varphi(u_j)$ for some $j\in\{1,\ldots,r-1\}$
+        \item $\varphi(u_0)\neq\varphi(u_r)$, $\delta(u_0)\neq\delta(u_r)$, $\tau(u_0)\neq\tau(u_r)$; or \label{ranking-endpoints}
+        \item $\varphi(u_0) < \varphi(u_j)$ for some $j\in\{1,\ldots,r-1\}$ \label{ranking-middle}
     \end{compactenum}
-    Assume, for the sake of contradiction that $u_0,\ldots,u_r$ is a minimum-length path that does not satisfy Condition~(i) or (ii).
+    This requires some case analysis, which we try to streamline as much as possible.
+
+    Assume, for the sake of contradiction that $u_0,\ldots,u_r$ is a path $G_X$ that does not satisfy Condition~(\ref{ranking-endpoints}) or (\ref{ranking-middle}) and has minimum length, so that every path of length less than $r$ in $G_X$ satisifies at least one of Condition~(\ref{ranking-endpoints}) or (\ref{ranking-middle}).
     % We assume that Condition~(i), on the pair $(u_0,u_r)$ is not satisfied and that $u_0,\ldots,u_r$ is a minimal-length path that does not satisfy Condition~(ii).
-
-    This has some immediate implications:
+    This implies that $u_0,\ldots,u_r$ has several useful properties:
     \begin{compactenum}[(P1)]
-        \item $u_0,\ldots,u_r$ is an induced path since, otherwise, the shorter path from $u_0$ to $u_r$ contained in $u_0,\ldots,u_r$ does not satisfy Conditions~(i) or (ii), contradicting the minimality of $u_0,\ldots,u_r$.
+        \item $u_0,\ldots,u_r$ is an induced path, i.e., $G[\{u_0,\ldots,u_r\}]$ is a path.  Otherwise, the shortest path from $u_0$ to $u_r$ in $G[\{u_0,\ldots,u_r\}]$ does not satisfy Conditions~(i) or (ii), contradicting the minimality of $u_0,\ldots,u_r$.\label{p-induced}
 
-        \item $\{u_0,u_r\}\subseteq L_p$ for some $p\in\{i,\ldots,m\}$ since, otherwise $\delta(u_0)\neq\delta(u_r)$.
+        \item $u_0,\ldots,u_r$ begins and ends at the same layer, i.e., $\{u_0,u_r\}\subseteq L_p$ for some $p\in\{i,\ldots,m\}$. Otherwise, since $r\le\ell$, $\delta(u_0)\neq\delta(u_r)$.\label{p-endpoints}
 
-        \item $\{u_1,\ldots,u_{r-1}\}\subseteq V(G_X[\bigcup_{j=i}^p L_p])$ since, otherwise, \cref{three-tree-layers}(iii) implies $u_0,\ldots,u_r$ is not an induced path.
+        \item $u_0,\ldots,u_r$ is sandwiched between layers $i$ and $P$, i.e., $\{u_1,\ldots,u_{r-1}\}\subseteq V(G_X[\bigcup_{j=i}^p L_p])$. Otherwise, (P\ref{p-endpoints}) and \cref{three-tree-layers}(iii)(a) implies $u_0,\ldots,u_r$ is not an induced path.\label{p-sandwhiched}
 
         % \item There exists some $j\in\{1,\ldots,r-1\}$ such that $\tau(u_0)=\cdots=\tau(u_{j-1})\neq \tau(u_j)$ since, otherwise, $u_0,\ldots,u_r$ is entirely contained one of $G_X[X]$, $G_X[Y_{\ge 2}]$, $G_X[S]$, or some component $I$ of $Q$.  By definition $\varphi$ is an $\ell$-ranking of each of $G_X[X]$, $G_X[Y_{\ge 2}]$, and each component $I$ of $Q$.
 
@@ -301,41 +317,46 @@ It is not hard to see that any colouring $\varphi$ of $G$ is a vertex $\ell$-ran
         % \item $\{u_0,u_r\}\subseteq L_p$ for some $p\in\{i,\ldots,\lfloor\ell/2\rfloor+1\}$ since, otherwise $u_0,\ldots,u_r$ contains no vertices of $X$ or $Y$, so $u_0,\ldots,u_r$ is contained in $I$ for some component $I$ of $G_X-S-Y_{\ge 2}$.
     \end{compactenum}
 
-    We say that $u_0,\ldots,u_r$ is $\tau$-uniform if $\tau(u_0)=\tau(u_1)=\cdots=\tau(u_r)$.
-
-    Since $\tau(u_0)=\tau(u_r)$, there are four major cases to distinguish:
+    We say that $u_0,\ldots,u_r$ is \emph{$\tau$-uniform} if $\tau(u_0)=\tau(u_1)=\cdots=\tau(u_r)$.  Since $\tau(u_0)=\tau(u_r)$, there are four major cases to distinguish:
     \begin{inparaenum}[(1)]
-        \item $u_0,u_r\in X$;
-        \item $u_0,u_r\in S$;
-        \item $u_0,u_r\in Y_{\ge 2}$; or
-        \item $u_0,u_r\in V(Q)$.
+        \item $\{u_0,u_r\}\subseteq X$;
+        \item $\{u_0,u_r\}\subseteq S$;
+        \item $\{u_0,u_r\}\subseteq Y_{\ge 2}$; or
+        \item $\{u_0,u_r\}\subseteq V(Q)$.
     \end{inparaenum}
     We now consider each case:
     \begin{compactenum}[(1)]
-        \item $u_0,u_r\in X$. Then, by (P3), $u_0,\ldots,u_r$ is $\tau$-uniform. This is a contradiction since $\varphi$ is an $\ell$-ranking of $G_X[X]$ by the application of \cref{outerplanar-lemma}.
+        \item $\{u_0,u_r\}\subseteq X$. Then, by (P3), $\{u_0,\ldots,u_r\}\subseteq X$. This is a contradiction since $\varphi$ is an $\ell$-ranking of $G_X[X]$ by the application of \cref{outerplanar-lemma}.
 
-        \item $u_0,u_r\in S$. There are several subcases to consider.
+        \item $\{u_0,u_r\}\subseteq S$. There are several subcases to consider.
         \begin{compactenum}
-            \item $u_0,u_r\in S_v$ for some $v\in X$.  In this case $\varphi(u_0)\neq\varphi(u_r)$.
+            \item $\{u_0,u_r\}\subseteq S_v$ for some $v\in X$.  This is a contradiction since the elements in $S_v$ are assigned distinct colours, so $\varphi(u_0)\neq\varphi(u_r)$.
 
-            \item $u_0\in S_v$, $u_r\in S_w$ for some disinct $u,w\in X$. This is the hard part.!!!!  For $\ell=2$, we can prove that $\psi(u_0)\neq\psi(u_r)$ \emph{or} that one of $u_0$ or $u_r$ is in
+            \item $u_0\in S_v$, $u_r\in S_w$ for some distinct $u,w\in X$. This is the hard part.!!!!  For $\ell=2$, we can prove that $\psi(u_0)\neq\psi(u_r)$ \emph{or} that one of $u_0$ or $u_r$ is in $Y_{\ge 2}$.
         \end{compactenum}
 
-        \item $u_0,u_r\in Y_{\ge 2}$.
-
-        In this case, $u_0,\ldots,u_r$ is not $\tau$-uniform since, otherwise, $u_0,\ldots,u_r$ is contained in $G[Y_{\ge 2}]$, a contradiction since $\varphi$ is a $\ell$-ranking of $G[Y_{\ge 2}]$.  Therefore there exists some
-        $j\in\{1,\ldots,r-1\}$ such that $\tau(u_0)=\cdots=\tau(u_{j-1})\neq \tau(u_j)$.  There are three cases to consider:
+        \item $\{u_0,u_r\}\subseteq Y_{\ge 2}$. In this case, $u_0,\ldots,u_r$ is not $\tau$-uniform since, otherwise, $u_0,\ldots,u_r$ is a path in $G[Y_{\ge 2}]$, a contradiction since $\varphi$ is a $\ell$-ranking of $G[Y_{\ge 2}]$.  Therefore, there exists some
+        $j\in\{1,\ldots,r-1\}$ such that $\tau(u_0)=\cdots=\tau(u_{j-1})\neq \tau(u_j)$.  There are two cases to consider:
         \begin{compactenum}
-            \item $u_j\in X$: then $\varphi(u_0)<\varphi(u_j)$
+            \item $u_j\in X$. This is a contradiction since $\varphi(u_j)>a(k-\gamma(u_j)-1)\ge\phi$ and $\varphi(u_0)\in \{\phi-1,\phi-2,\phi-3\}$, so $\varphi(u_0)<\varphi(u_j)$.
+
             \item $u_j\not\in X$: Then consider the smallest $j'>j$ such that $u_{j'}\in X\cup Y_{\ge 2}$.  (Such a $j'$ exists since $u_r\in Y_{\ge 2}$.)  If $u_{j'}\in X$ then $\varphi(u_0)<\varphi(u_{j'})$. If $u_{j'}\in Y_{\ge 2}$, then $u_{j-1}u_{j'}$ is an edge of $u_0,\ldots,u_r$, contradicting (P1).
-            \item X
         \end{compactenum}
 
-        \item $u_0,u_r\in V(Q)$.
+        \item $\{u_0,u_r\}\in V(Q)\cap Y$.  In this case, $u_0,\ldots,u_r$ is not $\tau$-uniform since, otherwise, $u_0,\ldots,u_r$ is a path in $Q$, contradicting the inductive hypothesis.
+        Therefore, there exists some $j\in\{1,\ldots,r-1\}$ such that $\tau(u_0)=\cdots=\tau(u_{j-1})\neq \tau(u_j)$.
+        % By (P\ref{p-endpoints}), $\{u_0,\ldots,u_{j-1}\}\subseteq L_{i+1}$
         \begin{compactenum}
-            \item $u_1,\ldots,u_r$ contains a vertex of $L_{p-1}$.
-            \item $u_1,\ldots,u_r$
+            \item $u_j\in X$. In this case, we claim that $u_0u_j\in E(G)$. Therefore $\varphi(u_0) \le a(k-\gamma(u_j)-1) < \varphi(u_j)$.
+
+            To see why $u_0u_j\in E(G)$ observe that, since none of $u_0,\ldots,u_j$ are in $Y_{\ge 2}$, $u_d$ has exactly one neighbour $v_d$ in $X$, for each $d\in\{0,\ldots,j-1\}$. By \cref{three-tree-layers}(iii)(b), $v_0=\cdots=v_{j-1}=v$ since, otherwise at least one of $u_0,\ldots,u_d\in Y_{\ge 2}$.
+
+            \item $u_j\in S$.  In this case $u_j\in S_v$ for some $v\in X$.  By the same argument used in the previous case, $u_0v\in E(G)$, so $\varphi(u_0)<a(k-\gamma(v)-1)<\varphi(u_j)$.
+
+            \item $u_j\in Y_{\ge 2}$. Let $C=N_G(u_j)\cap X$.  By the same argument used in the previous two cases, $u_0v\in E(G)$ for each $v\in C$.  Therefore $\varphi(u_0) \le a(k-\gamma(v)-1)-\ell-1 < \lfloor a(k-\gamma(v)-1)\rfloor-\ell \le \varphi(u_j)$.
         \end{compactenum}
+
+        \item $\{u_0,u_r\}\in V(Q)\cap L_{i'}$ for some $i'\ge i+2$.  This is another hard case that doesn't occur when $\ell=2$.
 
     \end{compactenum}
      % and  and let $I$ be some component of $Q$.  Then, there exists a set $C_I\subset X$, $|C_I|\le 1$ such that $I$ is contained in a component of $G_X-Y_{\ge 2}-C_I$.
