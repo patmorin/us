@@ -54,27 +54,50 @@
 \begin{document}
 \maketitle
 
+\section{Preliminaries}
+
 For positive numbers $n,k$ with $1\le n \le k^k$, let $\gamma_0(n)$ be the solution to $k^k/(\gamma_0(n))^{\gamma_0(n)} = n$.
 
 For positive numbers $n,k$ with $e< n \le (\log k)^k$, let $\gamma_1(n)$ be the solution to $(\log k)^k/(\log \gamma_0(n))^{\gamma_0(n)} = n$.
 
-Let $G$ be an $n$-vertex planar 3-tree with $n\ge 3$;  let $A:=\{v_1,v_2,v_3\}$ be the vertices of a 3-clique in $G$ that is contained in at most one $4$-clique of $G$; let $B:=N_G(A)$; for each $i\in\{1,2,3\}$, let $B_i:=B\cap N_G(v_i)$ and let $V_i:=B_i\cup \bigcup_X V(X)$, where $X$ ranges over the components of $G-A-B$ incident to $B_i$ in $G$;\footnote{For two sets $I,J\subset V(G)$ we say that $I$ is \emph{incident} to $J$ (in $G$) if there exists an edge $vw\in E(G)$ with $v\in I$ and $w\in J$.}; let $n_i:=|V_i|$; and let $\gamma(v_i):=\gamma_1(|V_i|)$.
+\section{Outerplanar Graphs}
+
+\begin{lem}\label{outerplanar-lemma}
+    For any integers $\ell\ge 2$, $g\ge 0$, $\alpha\ge 1$, there exists a positive integer $a=a(\ell,g,\alpha)$ such that the following is true:
+    Let $G$ be an outerplanar graph and let $\gamma:V(G)\to\R$ be a weight function with $\gamma(v)\ge e$ for each $v\in V(G)$ and such that
+    \[  \sum_{v\in V(G)} (\log \gamma(v))^{\gamma(v)} \le \alpha\cdot\frac{(\log k)^k}{(\log    (c+s))^{c+s}} \enspace ,
+    \]
+    with $s=\log c/\log\log c$.
+    Then there exists an $\ell$-ranking $\varphi:V(G)\to\N$ of $G$ such that $a(k-\gamma(v)-1) < \varphi(v) \le a(k-c-1)-g$ for each $v\in V(G)$.
+\end{lem}
+
+
+
+\section{3-Trees}
+
+In this section, the statements of lemmas are not self-contained. They all include the definitions in this paragraph. See \cref{y} Let $G$ be an $n$-vertex planar 3-tree with $n\ge 3$;  let $A:=\{v_1,v_2,v_3\}$ be the vertices of a 3-clique in $G$ that is contained in at most one $4$-clique of $G$; let $B:=N_G(A)$; for each $i\in\{1,2,3\}$, let $B_i:=B\cap N_G(v_i)$ and let $V_i:=B_i\cup \bigcup_X V(X)$, where $X$ ranges over the components of $G-A-B$ incident to $B_i$ in $G$;\footnote{For two sets (or subgraphs) $I,J\subseteq V(G)$ we say that $I$ is \emph{incident} to $J$ in $G$ if there exists an edge $vw\in E(G)$ with $v\in I$ (or $v\in V(I)$) and $w\in J$ (or $w\in V(J)$).} let $n_i:=|V_i|$; and let $\gamma(v_i):=\gamma_1(|V_i|)$.
+
+\begin{figure}[htbp]
+    \centering{\includegraphics{figs/y}}
+    \caption{Definitions of $A:=\{v_1,v_2,v_3\}$, $Y$, and $G_K$}
+    \label{y}
+\end{figure}
 
 \begin{lem}
-    There exists an integer $a$ (not depending on $n$) such that, for any $c\ge e^e$ and any integer $k$ such that $n\le (\log k)^k/(\log c+s)^{c+s}$, where $s:=\log c/\log\log c$, there exists $\varphi:V(G)\to\{1,\ldots,ak+3\}$ and $\psi:V(G)\to\{1,\ldots,O(1)\}$ such that
+    There exists an integer $a$ (not depending on $n$) such that, for any $c\ge e^e$ and any integer $k$ such that $n\le (\log k)^k/(\log c+s)^{c+s}$, where $s:=\log c/\log\log c$, there exists $\varphi:V(G-A)\to\N$ and $\psi:V(G)\to\{1,\ldots,O(1)\}$ such that, for any choice of distinct $\varphi(v_1),\varphi(v_2),\varphi(v_3)$ with $\varphi(v_i)>a(k-\gamma(v_i)-1)$,
     \begin{compactenum}[(R1)]
-        \item $\varphi(v_i)=\lfloor a(k-c-1)\rfloor+i$ for each $i\in\{1,2,3\}$ and $\varphi(v)\le ak$ for each $v\in V(G)\setminus A$; \label{outer-triangle}
+        \item $1\le\varphi(v)\le ak$ for each $v\in V(G-A)$; \label{range}
         \item for any path $uvw$ in $G$ with $d_G(u,A)=d_G(w,A)$, $\varphi(u)\neq\varphi(w)$ or $\psi(u)\neq\psi(w)$ or $\varphi(u)<\varphi(v)$.\label{ranking}
     \end{compactenum}
 \end{lem}
 
 \begin{proof}
-    The proof is by induction on $|G|$.  The base case $|G|=3$ is trivial. The function $\varphi$ is completely defined by (R\ref{outer-triangle}) and satisfies (R\ref{ranking}).  The function $\psi$ is irrelevant.  Now assume $|G|\ge 4$.
+    The proof is by induction on $|G|$.  The base case $|G|=3$ is trivial. The function $\varphi$ is completely defined by the statement of the lemma and the fact that $\varphi(v_1),\varphi(v_2),\varphi(v_3)$ are distinct ensures that $\varphi$ satisfies (R\ref{ranking}).  The requirement (R\ref{range}) is vacuous since $V(G-A)$ is an empty set.  The function $\psi$ is irrelevant.  Now assume $|G|\ge 4$.
 
     For each $3$-clique $K$ in $G[B]$, let $G_K$ be the subgraph of $G$ induced by $K$ and the component (if any) of $G-K$ that does not contain $A$.
     % We say that $K$ is \emph{heavy} if $|G_K| > \alpha|G|/c$ for some fixed constant $\alpha$ to be discussed shortly.
     % Let $G'$ be the subgraph of $G$ obtained by removing $A$ and removing $V(G_K)\setminus K$ for each heavy 3-clique in $G[B]$.
-    Let $C:=N_G(B)\setminus A$.  For each $w\in B$, define $V_w:=\{w\}\cup \bigcup_X V(X)$, where $X$ ranges over the components of $G[V(G)\setminus A\setminus B\setminus C]$ that are incident to $N_G(w)$ in $G$ and let $n_w=1+|V_w|$.  For each $i\in\{1,2,3\}$, let $n_i:=\sum_{w\in B_i} n_w$
+    Let $C:=N_G(B)\setminus A$.  For each $w\in B$, define $V_w:=\{w\}\cup \bigcup_X V(X)$, where $X$ ranges over the components of $G[V(G)\setminus A\setminus B\setminus C]$ that are incident to $N_G(w)$ in $G$ and let $n_w:=|V_w|$.  For each $i\in\{1,2,3\}$, let $n_i:=\sum_{w\in B_i} n_w$
 
     \begin{clm}\label{size-claim}
         For each $i\in\{1,\ldots,3\}$, $|V_i|\le n_i\le 3|V_i|$.
@@ -84,11 +107,12 @@ Let $G$ be an $n$-vertex planar 3-tree with $n\ge 3$;  let $A:=\{v_1,v_2,v_3\}$ 
         [TODO] This completes the proof of \cref{size-claim}.
     \end{proof}
 
-    Let $Y:=(B_1\cap B_2)\cup(B_2\cap B_3)\cup(B_3\cap B_1)$.  The graph $G[Y]$ is a tree with at most 3-leaves rooted at the unique node $r\in B_1\cap B_2\cap B_3$ and root-to-leaf paths $P_{i,j}$ corresponding to $B_i\cap B_j$ for each distinct pair $i,j\in\{1,2,3\}$. We first define the colouring $\varphi$ over the vertices in $Y$.  The root $r$ of $G[Y]$ is coloured with $\varphi(r):=ak$. The path $P_{i,j}$ is coloured with the three values $\{\phi_{i,j}-p: p\in\{0,1,2\}\}$, where $\phi_{i,j}:=a(k-\max\{\gamma(v_i),\gamma(v_j)\}-1)$.  Now that we have coloured $Y$, we move on to colouring $G-A-Y$.
+    Let $Y:=(B_1\cap B_2)\cup(B_2\cap B_3)\cup(B_3\cap B_1)$.  The graph $G[Y]$ is a tree with at most 3 leaves rooted at the unique node $r\in B_1\cap B_2\cap B_3$ and root-to-leaf paths $P_{i,j}$ corresponding to $B_i\cap B_j$ for each distinct pair $i,j\in\{1,2,3\}$. We first define the colouring $\varphi$ over the vertices in $Y$.  The root $r$ of $G[Y]$ is coloured with $\varphi(r):=a(k-c-1)$. The path $P_{i,j}$ is coloured with the three values $\{\phi_{i,j}-p: p\in\{0,1,2\}\}$, where $\phi_{i,j}:=\lfloor a(k-\max\{\gamma(v_i),\gamma(v_j)\}-1)\rfloor$.
+    Note that, for any $i\in\{1,2,3\}$ and any edge $wv_i\in E(G)$ with $w\in Y$, $\varphi(w)<\varphi(v_i)$.
 
-    Since $\tw(G[B_i])\le 2$, for any $d_i\ge 1$, there exists a \emph{separator} $S_i'\subseteq B_i$, $|S_i'|\le 9d_i$ such that, for each component $I$ of $G[B_i]-S_i'$, $\sum_{w\in V(I)} n_w \le n_i/d_i$. A boring calculation shows that, for some $d_i\in O(\gamma_1(n_i))$,
+    Now that we have coloured $Y$, we move on to colouring $G-A-Y$. Since $\tw(G[B_i])\le 2$, for any $d_i\ge 1$, there exists a \emph{separator} $S_i'\subseteq B_i$, $|S_i'|\le 9d_i$ such that, for each component $I$ of $G[B_i]-S_i'$, $\sum_{w\in V(I)} n_w \le n_i/d_i$. A boring calculation shows that, for some $d_i\in O(\gamma_1(n_i))$,
     \[  \frac{n_i}{d_i} = \frac{(\log k)^k}{d_i(\log \gamma_1(n_i))^{\gamma_1(n_i)}} \le
-        \frac{(\log k)^k}{(\log (\gamma_1(n_i)+s_i))^{\gamma_(n_i+s_i)}}
+        \frac{(\log k)^k}{(\log (\gamma_1(n_i)+s_i))^{\gamma_(n_i)+s_i}}
     \]
     where $s_i:=\log \gamma_1(n_i)/\log\log \gamma_1(n_i)$.
 
