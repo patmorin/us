@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.18">
-<info created="D:20200626052402" modified="D:20200626055618"/>
+<info created="D:20200626052402" modified="D:20200626081905"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -309,6 +309,17 @@ h
 <tiling name="falling" angle="-60" step="4" width="1"/>
 <tiling name="rising" angle="30" step="4" width="1"/>
 </ipestyle>
+<ipestyle>
+<opacity name="10%" value="0.1"/>
+<opacity name="30%" value="0.3"/>
+<opacity name="50%" value="0.5"/>
+<opacity name="20%" value="0.2"/>
+<opacity name="40%" value="0.4"/>
+<opacity name="60%" value="0.6"/>
+<opacity name="70%" value="0.7"/>
+<opacity name="80%" value="0.8"/>
+<opacity name="90%" value="0.9"/>
+</ipestyle>
 <page>
 <layer name="A"/>
 <layer name="Y"/>
@@ -319,8 +330,10 @@ h
 <layer name="G_K"/>
 <layer name="blobs"/>
 <layer name="big-labels"/>
-<view layers="A Y AY B-Y A(B-Y) Y(B-Y) G_K blobs big-labels" active="big-labels"/>
-<view layers="A Y" active="A"/>
+<layer name="G[V3]"/>
+<layer name="Y-labels"/>
+<view layers="A Y AY B-Y A(B-Y) Y(B-Y) G_K blobs big-labels Y-labels" active="Y-labels"/>
+<view layers="A Y AY B-Y A(B-Y) Y(B-Y) blobs big-labels G[V3]" active="Y-labels"/>
 <path layer="big-labels" fill="lightgreen">
 286.898 579.618 m
 271.879 587.791
@@ -782,7 +795,7 @@ h
 265.801 599.317
 271.042 618.885 c
 </path>
-<text layer="Y" matrix="1 0 0 1 -7 -3" transformations="translations" pos="338.134 609.101" stroke="red" type="label" width="7.998" height="6.808" depth="0" valign="baseline" style="math">Y</text>
+<text layer="Y-labels" matrix="1 0 0 1 -7 -3" transformations="translations" pos="338.134 609.101" stroke="red" type="label" width="7.998" height="6.808" depth="0" valign="baseline" style="math">Y</text>
 <use layer="B-Y" name="mark/disk(sx)" pos="222.296 575.031" size="small" stroke="black"/>
 <use name="mark/disk(sx)" pos="223.17 562.975" size="small" stroke="black"/>
 <use name="mark/disk(sx)" pos="239.943 563.849" size="small" stroke="black"/>
@@ -799,7 +812,7 @@ h
 239.943 563.849 m
 263.355 571.711 l
 </path>
-<path layer="Y" stroke="black">
+<path stroke="black">
 239.943 563.849 m
 235.924 573.284
 222.296 575.031 c
@@ -817,8 +830,60 @@ h
 <text layer="big-labels" matrix="1 0 0 1 0 -5" transformations="translations" pos="284.398 628.915" stroke="black" type="label" width="12.026" height="6.812" depth="1.49" halign="center" valign="baseline" style="math">B_1</text>
 <text matrix="1 0 0 1 42.1873 -68.63" transformations="translations" pos="284.398 628.915" stroke="black" type="label" width="12.026" height="6.812" depth="1.49" halign="center" valign="baseline" style="math">B_2</text>
 <text matrix="1 0 0 1 -49.9428 -70.0897" transformations="translations" pos="284.398 628.915" stroke="black" type="label" width="12.026" height="6.812" depth="1.49" halign="center" valign="top" style="math">B_3</text>
-<text matrix="0.903137 0.429352 -0.429352 0.903137 280.473 -77.6199" transformations="rigid" pos="304 592" stroke="red" type="label" width="17.203" height="6.808" depth="2.85" halign="center" valign="bottom" style="math">P_{1,2}</text>
+<text layer="Y-labels" matrix="0.903137 0.429352 -0.429352 0.903137 280.473 -77.6199" transformations="rigid" pos="304 592" stroke="red" type="label" width="17.203" height="6.808" depth="2.85" halign="center" valign="bottom" style="math">P_{1,2}</text>
 <text matrix="0.884884 -0.465811 0.465811 0.884884 -279.304 206.811" transformations="rigid" pos="304 592" stroke="red" type="label" width="17.203" height="6.808" depth="2.85" halign="center" valign="top" style="math">P_{3,1}</text>
 <text matrix="-0.00278061 -0.999996 0.999996 -0.00278061 -303.421 857.584" transformations="rigid" pos="304 592" stroke="red" type="label" width="17.203" height="6.808" depth="2.85" halign="center" valign="bottom" style="math">P_{2,3}</text>
+<path layer="G[V3]" stroke="black" fill="orange" opacity="50%" stroke-opacity="opaque">
+285.573 532.573 m
+296.603 534.407 l
+299.397 566.537 l
+286.898 579.618 l
+310.09 590.22 l
+290.116 593.794 l
+288.346 587.464 l
+287.756 584.638 l
+286.898 579.618 l
+285.05 592.787 l
+279.651 594.368 l
+274.173 595.672 l
+269.333 597.371 l
+264.753 599.456 l
+260.592 601.701 l
+255.564 604.794 l
+247.805 610.324 l
+241.841 604.135 l
+243.421 610.138 l
+243.86 630.274 l
+225.584 619.634 l
+221.3 615.399 l
+217.806 608.501 l
+214.53 601.389 l
+212.341 595.848 l
+210.461 587.895 l
+212.484 584.047 l
+216.697 584.859 l
+222.489 588.172 l
+226.233 590.859 l
+230.406 594.146 l
+241.841 604.135 l
+222.296 575.031 l
+223.17 562.975 l
+239.943 563.849 l
+263.355 571.711 l
+286.898 579.618 l
+279.633 574.741 l
+273.175 570.086 l
+266.496 564.773 l
+260.988 559.712 l
+256.008 553.868 l
+253.06 547.619 l
+252.958 544.597 l
+255.326 540.22 l
+260.509 536.966 l
+268.45 534.586 l
+277.347 533.221 l
+285.573 532.573 l
+</path>
+<text matrix="1 0 0 1 -3 -2" transformations="translations" pos="246.987 582.135" stroke="darkorange" type="label" width="23.649" height="7.473" depth="2.49" valign="baseline" style="math">G[V_3]</text>
 </page>
 </ipe>
