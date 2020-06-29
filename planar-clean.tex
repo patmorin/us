@@ -75,8 +75,14 @@ For positive numbers $n,k$ with $e< n \le (\log k)^k$, let $\gamma_1(n)$ be the 
 
 \section{3-Trees}
 
-In this section, the statements of lemmas are not self-contained. They all include the definitions in this paragraph. See \cref{y} Let $G$ be an $n$-vertex planar 3-tree with $n\ge 3$;  let $A:=\{v_1,v_2,v_3\}$ be the vertices of a 3-clique in $G$ that is contained in at most one $4$-clique of $G$; for each $3$-clique $K$ in $G-A$, let $G_K$ be the subgraph of $G$ induced by $K$ and the component (if any) of $G-K$ that does not contain $A$; let $B:=N_G(A)$; for each $i\in\{1,2,3\}$, let $B_i:=B\cap N_G(v_i)$; let $V_i:=\bigcup_{K\in G[B_i]} V(G_K)$ where $K$ ranges over all 3-cliques in $G[B]$ that are incident to $v_i$;\footnote{A 3-clique $k$ is incident to $v_i$ if and only if $G$ contains an edge $wv_i$ with $w\in K$.}
-let $n_i:=|V_i|$; and let $\gamma(v_i):=\gamma_1(|V_i|)$. Notice that $V_1,V_2,v_3$ is almost a partition of $V(G-A)$ in the sense that $V_i\cap V_j\subset Y$ for distinct $i,j\in\{1,2,3\}$.
+In this section, the statements of lemmas are not self-contained. They all include the definitions in this paragraph. See \cref{y}.
+Let $G$ be an $n$-vertex planar 3-tree with $n\ge 3$;
+let $A:=\{v_1,v_2,v_3\}$ be the vertices of a 3-clique in $G$ that is contained in at most one $4$-clique of $G$;
+for each $3$-clique $K$ in $G-A$, let $G_K$ be the subgraph of $G$ induced by $K$ and the component (if any) of $G-K$ that does not contain $A$;
+let $B:=N_G(A)$;
+let $Y:=\{w\in B: |N_G(w)\cap A|\ge 2\}$;
+for each $i\in\{1,2,3\}$, let $B_i:=B\cap N_G(v_i)$;
+let $V_i:=\{v_i\}\cup\bigcup_{K\in G[B_i]} V(G_K)$ where $K$ ranges over all 3-cliques in $G[B]$ that are incident to $v_i$;\footnote{A 3-clique $k$ is incident to $v_i$ if and only if $G$ contains an edge $wv_i$ with $w\in K$.} and let $\gamma(v_i):=\gamma_1(|V_i|)$.
 
 \begin{figure}[htbp]
     \centering{
@@ -89,133 +95,107 @@ let $n_i:=|V_i|$; and let $\gamma(v_i):=\gamma_1(|V_i|)$. Notice that $V_1,V_2,v
     \label{y}
 \end{figure}
 
-Note, as illustrated on the right hand side of \cref{y}, the definition of $V_i$ is not completely intuitive.  The subgraphs that take part in $G[V_i]$ bleed over into parts of the drawing that not contained in the drawing of $G[B_i]$.
+Note, as illustrated on the right hand side of \cref{y},that $\{V_1,V_2,v_3\}$ is not a partition of $V(G)$ and this is the source of extra work.  Even in a planar drawing of $G$ with $A$ on the outer face, the vertices in $V_i$ are not all drawn in the inner faces of $G[B_i]$.
+
+Let $C:=N_G(B)\setminus A$.  For each $w\in B$, define $V_w:=\{w\}\cup \bigcup_{K} V(G_K)$, where $K$ ranges over all 3-cliques in $G[C]$ that are incident to $w$.
+
+\begin{clm}\label{size-claim}
+    For each $i\in\{1,\ldots,3\}$, $|V_i|\le \sum_{w\in B_i}|V_w| \le 3|V_i|-3$.
+\end{clm}
+
+\begin{proof}[Proof of \cref{size-claim}]
+    The vertex $v_i$ it not counted in the sum.
+    Each vertex $w\in B_i$ is counted exactly once by the sum, as part of $|V_w|$. Each vertex $x\in V_i\cap C$ is incident to at most 3 vertices in $B_i$, so appears in $V_w$ for at most three vertices $w\in B_i$.   Each vertex $y\in V_i\setminus B\setminus C$ appears in $G_{K_y}$ for exactly one 3-clique $K_y$ of $G[C]$. Each $3$-clique of $G[C]$ is incident to at most 3 vertices of $B_i$, so $y$ appears in $V_w$ for at most three vertices $w\in B_i$. Therefore $n_i=\sum_{w\in B_i}|V_w|\le |B_i| + 3|C\cap V_i| + 3|V_i\setminus C\setminus B_i|\le 3|V_i|-3$. This completes the proof of \cref{size-claim}
+\end{proof}
 
 
 \begin{lem}
     There exists an integer $a$ (not depending on $n$) such that, if all the following preconditions hold:
     \begin{compactenum}[(P1)]
-        \item $c\in\R$ and $c\ge e^e$;
-        \item $k\in N$ and $n\le (\log k)^k/(\log c)^{c}$;
-        \item for each $i\in\{1,2,3\}$, $S_i \subset B_i$ and, for each component $I$ of $G[B_i]-S_i$, $\sum_{w\in V(I)} n_w \le (\log k)^k/(\log(c+s))^{c+s}$, where $s:=\log c/\log\log c$; and
+        \item $c_1,c_2,c_3\in\R$ and $c_1,c_2,c_3> e$;
+        % \item $k\in\N$ and $n\le (\log k)^k/(\log c)^{c}$;
+        \item for each $i\in\{1,2,3\}$, $S_i \subseteq B_i\setminus Y$ and, for each component $I$ of $G[B_i]-Y-S_i$, $\sum_{w\in V(I)} |V_w| \le (\log k)^k/(\log(c_i+s_i))^{c_i+s_i}$, where $s_i:=\log c_i/\log\log c_i$; and
         \item $\varphi:A\cup S_1\cup S_2\cup S_3\to\N$ has the following properties:
         \begin{compactenum}
             \item\label{distinct-outer} $|\{\varphi(v_i): i\in\{1,2,3\}|=3$;
-            \item for each $i\in\{1,2,3\}$, $|\{\varphi(v_i)\}\cup \{\varphi(w): w\in S_i\}|=1+|S_i|$; and
-            \item for each $i\in\{1,2,3\}$ and each $w\in \{v_i\}\cup S_i$, $\varphi(w)>a(k-\gamma(v_i)-1)$
+            \item\label{distinct-separator} for each $i\in\{1,2,3\}$, $|\{\varphi(w): w\in S_i\}|=|S_i|$; and
+            \item\label{input-range}for each $i\in\{1,2,3\}$ and each $w\in \{v_i\}\cup S_i$, $a(k-\gamma(v_i)-1)-3< \varphi(w)\le ak$
         \end{compactenum}
     \end{compactenum}
     % , where $s:=\log c/\log\log c$,
-    then there exists $\varphi:V(G-A-S_1-S_2-S_3)\to\N$ and $\psi:V(G-A)\to\{1,\ldots,O(1)\}$ such that
+    then there exists $\varphi:V(G-A-S_1-S_2-S_3)\to\N$, $\psi:V(G-A)\to\{1,\ldots,3\}$,  and $\eta:V(G-A-B)\to\{1,\ldots,3\}$  such that
     \begin{compactenum}[(R1)]
-        \item $\varphi$ is a proper colouring of $G$; \label{proper}
+        % \item $\varphi$ is a proper colouring of $G$; \label{proper}
         \item $1\le\varphi(v)\le ak$ for each $v\in V(G)$; \label{range}
-        \item\label{ranking} for each $i\in\{1,2,3\}$ and each path $uvw$ in $G$ with $u,w\subseteq V_i$ and $d_G(u,A)=d_G(w,A)$,
+        \item\label{ranking} for each $i\in\{1,2,3\}$ and each induced path $uvw$ in $G$ with $u,w\subseteq V_i$ and $d_G(u,A)=d_G(w,A)$,
         \begin{compactenum}[(i)]
-            \item $\varphi(u)\neq\varphi(w)$ or $\psi(u)\neq\psi(w)$; or
+            \item $\varphi(u)\neq\varphi(w)$, $\psi(u)\neq\psi(w)$, $\eta(u)\neq\eta(w)$, or
             \item $\varphi(u)<\varphi(v)$.
         \end{compactenum}
     \end{compactenum}
 \end{lem}
 
 \begin{proof}
-    The proof is by induction on $|G|$.  The base case $|G|=3$ is trivial. The function $\varphi$ is completely defined by the statement of the lemma and the fact that $\varphi(v_1),\varphi(v_2),\varphi(v_3)$ (P\ref{distinct-outer}) are distinct ensures that $\varphi$ satisfies (R\ref{ranking}).  The requirement (R\ref{range}) is vacuous since $V(G-A)$ is an empty set.  The function $\psi$ is irrelevant.  Now assume $|G|\ge 4$.
-
+    The proof is by induction on $|G|$.  The base case $|G|=3$ is trivial. The function $\varphi$ is completely defined by the statement of the lemma and the fact that $\varphi(v_1),\varphi(v_2),\varphi(v_3)$ (P\ref{distinct-outer}) are distinct ensures that $\varphi$ satisfies (R\ref{proper}) and (R\ref{ranking}).  The requirement (R\ref{range}) follows from (P\ref{input-range}).  The function $\psi$ is irrelevant.  Now assume $|G|\ge 4$.
 
     % We say that $K$ is \emph{heavy} if $|G_K| > \alpha|G|/c$ for some fixed constant $\alpha$ to be discussed shortly.
     % Let $G'$ be the subgraph of $G$ obtained by removing $A$ and removing $V(G_K)\setminus K$ for each heavy 3-clique in $G[B]$.
-    Let $C:=N_G(B)\setminus A$.  For each $w\in B$, define $V_w:=\{w\}\cup \bigcup_{K} V(G_K)$, where $K$ ranges over all 3-cliques in $G[C]$ that are incident to $w$ and let
-    % ranges over the components of $G[V(G)\setminus A\setminus B\setminus C]$ that are incident to $N_G(w)$ in $G$ and let
-    $n_w:=|V_w|$.  For each $i\in\{1,2,3\}$, let $n_i:=\sum_{w\in B_i} n_w$
 
-    \begin{clm}\label{size-claim}
-        For each $i\in\{1,\ldots,3\}$, $|V_i|\le n_i\le 3|V_i|$.
-    \end{clm}
+    % The idea behind the colouring is the following.  Each vertex $w$ in $B$ is incident to a subset $A_w\subset A$ of $\{v_1,v_2,v_3\}$.  In most cases, $w$ will receive a colour $\varphi(w)\le \lfloor a(k-\max\{\gamma(v):v\in A_v\}-1)\rfloor$. In this way most vertices in BFS level $i+1$ (vertices in $B$) receive a colour smaller than any of their parents in BFS level $i$ (vertices in $A$).
 
-    \begin{proof}[Proof of \cref{size-claim}]
-        [TODO] This completes the proof of \cref{size-claim}.
-    \end{proof}
+    % The strategy for assigning colours differs depending on whether $w$ has one or two neighbors in $A$.
 
-    Let $Y:=(B_1\cap B_2)\cup(B_2\cap B_3)\cup(B_3\cap B_1)$.  The graph $G[Y]$ is a tree with at most 3 leaves rooted at the unique node $r\in B_1\cap B_2\cap B_3$ and root-to-leaf paths $P_{i,j}$ corresponding to $B_i\cap B_j$ for each distinct pair $i,j\in\{1,2,3\}$. We first define the colouring $\varphi$ over the vertices in $Y$.  The root $r$ of $G[Y]$ is coloured with $\varphi(r):=a(k-c-1)$. The path $P_{i,j}$ is coloured with the three values $\{\phi_{i,j}-p: p\in\{0,1,2\}\}$, where $\phi_{i,j}:=\lfloor a(k-\max\{\gamma(v_i),\gamma(v_j)\}-1)\rfloor$.
-    Note that, for any $i\in\{1,2,3\}$ and any edge $wv_i\in E(G)$ with $w\in Y$, $\varphi(w)<\varphi(v_i)$.
+    Each vertex in $B$ is incident to a non-empty subset $A_w\subset A$ and we let $\phi_w:=\lfloor a(k-\max\{\gamma(v):v\in A_w\}-1)\rfloor$, so that $\phi_w$ is smaller than $\varphi(v)$ for each parent $v$ of $w$ in $A$.  Most vertices $w\in B$ will be coloured with a colour smaller than $\phi_w$.
 
-    Now that we have coloured $Y$, we move on to colouring $G-A-Y$.
+    The graph $G[Y]$ is a tree with at most 3 leaves rooted at the unique node $r\in B_1\cap B_2\cap B_3$ and root-to-leaf paths $P_{i,j}$ corresponding to $B_i\cap B_j$ for each distinct pair $i,j\in\{1,2,3\}$.  Without loss of generality, assume $\gamma(v_1)\ge \gamma(v_2)\ge \gamma(v_3)$.  We first colour the paths $P_{1,2}$ and $P_{3,1}$ using the three colours $\{\phi_r,\phi_{r-1},\phi_{r-2}\}$.  Next we colour the path $P_{2,3}$ using the colours $\{\phi,\phi-1,\phi-2\}$ where $\phi=\lfloor a(k-\gamma(v_2)-1)\rfloor$.
 
+    Now that we have coloured $Y$, we move on to colouring $G-A-Y$. Let $S:=S_1\cup S_2\cup S_3$.  Consider some component $I$ of $G[B]-S-Y$. The vertices in $I$ are all incident to exactly one vertex $v_i\in A$. The component $I$ is contained in some component of $G[B_i]-S_i$ so, by (P3), $\sum_{w\in V(I)}|V_w|\le (\log k)^k/(\log(c_i+s_i))^{c_i+s_i}$.    Therefore, the graph $I$ with the weight function $\gamma$ satisfies the requirements for \cref{outerplanar-lemma}. Applying \cref{outerplanar-lemma} with $g=3$ gives a 2-ranking $\varphi:V(I)\to \{1,\ldots,a(k-c_i-1)-3\}$ of $I$ such that $\varphi(w)> a(k-\gamma(w)-1)$ for each $w\in V(I)$.
 
+    Thus far, we have defined $\gamma$ for all $A\cup B$ and now we extend it to the rest of $V(G)$ by applying induction on each subgraph $G_K$ attached to each $3$-clique $K$ in $G[B]$.  This requires that, for each $3$-clique $K=\{w_1,w_2,w_3\}$ in $G[B]$, we define three separators $S_{w_1}$, $S_{w_2}$ and $S_{w_3}$ that satisfy (P1)--(P4).
 
-    Since $\tw(G[B_i])\le 2$, for any $d_i\ge 1$, there exists a \emph{separator} $S_i'\subseteq B_i$, $|S_i'|\le 9d_i$ such that, for each component $I$ of $G[B_i]-S_i'$, $\sum_{w\in V(I)} n_w \le n_i/d_i$. A boring calculation shows that, for some $d_i\in O(\gamma_1(n_i))$,
-    \[  \frac{n_i}{d_i} = \frac{(\log k)^k}{d_i(\log \gamma_1(n_i))^{\gamma_1(n_i)}} \le
-        \frac{(\log k)^k}{(\log (\gamma_1(n_i)+s_i))^{\gamma_(n_i)+s_i}}
-    \]
-    where $s_i:=\log \gamma_1(n_i)/\log\log \gamma_1(n_i)$.
+    Define $D:=N_G(C)\setminus B$. For each $x\in C$, define $V_x:=\{x\}\cup \bigcup_{K} V(G_K)$, where $K$ ranges over all 3-cliques in $G[D]$ that are incident to $x$.  Observe that, if $x\in V_w$ for some $w\in B$, then $V_x\subseteq V_w$.  Therefore, by \cref{size-claim}, $\sum_{x\in V_w\cap C}|V_x|\le 3|V_w|$.  Let $\gamma(w):=\gamma_1(|V_w|)$.
 
-    For each $i\in\{1,2,3\}$, let $S_i=S_i'\setminus Y$.  Notice that $\{Y,S_1,S_2,S_3\}$ is a partition of $Y\cup S$.    For each $i\in\{1,2,3\}$, we set $\varphi:S_i\to\{\lfloor a(k-\gamma(n_i)-1)\rfloor+1,\ldots,ak-1\}$ to be any injective function, so that each vertex in $S_i$ gets a distinct colour greater than $a(k-\gamma(n_i)-1)$.
+    For each $w\in B$, $\tw(G[V_w\cap C])\le 2$.  Therefore, for any $d_w\ge 1$, there exists a \emph{separator} $S_w'\subseteq V_w\cap C$, $|S_w'|\le 2d_w$ such that, for each component $I$ of $G[V_w\cap C]-S_w'$, $\sum_{x\in V(I)} |V_x| \le \sum_{x\in V_w\cap C}|V_x|/d_w \le 3|V_w|/d_w$. A boring calculation shows that, for some $d_w\in O(\gamma(w))$,
+    \begin{equation}
+        \frac{3|V_w|}{d_w} = \frac{3(\log k)^k}{d_w(\log \gamma(w)^{\gamma(w)}} \le
+        \frac{(\log k)^k}{(\log (\gamma(w)+s_w))^{\gamma(w))+s_w}}
+        \label{s_w-size}
+    \end{equation}
+    where $s_w:=\log \gamma(w)/\log\log \gamma(w)$.
 
-    For each $w\in B$, define $\gamma(w):=\gamma_1(n_w)$.  By, \cref{size-claim}, $\sum_{w\in B_i}n_w\le 3|V_i|$.  Therefore, the graph $G[B]$ with the weight function $\gamma$ satisfies the requirements for \cref{outerplanar-lemma}. Applying \cref{outerplanar-lemma} with $g=3$ gives a 2-ranking $\varphi':V(G)\to \{1,\ldots,a(k-c-1)-3\}$ of $G[B]$ such that $\varphi'(w)> a(k-\gamma(w)-1)$ for each $w\in B$.  For each $w\in B\setminus Y\setminus S$, we set $\varphi(w):=\varphi'(w)$.
+    Let $Y_C:=\{x\in C: |N_G(x)\cap B|\ge 2\}$. For each $w\in B$, let $S_w=S_w'\setminus Y_C$.  Observe that, for distinct $u,w\in B$, the sets $S'_u$ and $S'_w$ may overlap, but $S_u\cap S_{w}=\emptyset$.  For each $w\in B$, we let $\varphi:S_w\to \{\lfloor a(k-\gamma(w)-1)\rfloor+1,\ldots,ak\}$ be any injective function so that each element of $S_w$ gets a distinct colour.  For a sufficiently large constant $a$, this is always possible since $|S_w|\le 2d_w\in O(\gamma(w))$.
 
-    Thus far, we have defined $\varphi$ for $A\cup B$.  We now use induction to extend $\varphi$ to $G-A-B$.  Let $K$ be a 3-clique in $G[B]$.  We distinguish between two kinds of cliques:
+    Finally, we are ready to apply induction.  For each 3-clique $K:=\{w_1,w_2,w_3\}$ in $B$, define $S_{K,i}:= S_{w_i}\cap V(G_K)$ for each $i\in\{1,2,3\}$ and $c_{K,i}:=\gamma(w_i)$.  We claim that $K$, $G_K$, $c_{K,1},c_{K,2},c_{K,3}$, and $S_{K,1},S_{K,2},S_{K,3}$ satisfy the requirements (P1)--(P3) for the sets $A$, $G$, $c_1,c_2,c_3$ and $S_1,S_2,S_3$, respectively.  That these satisfy (P1) is obvious. That these satisfy (P2) follows from the definition of $S_w$ for each $w\in K$ (see \cref{s_w-size}).  That these satisfy (P3a) comes fromt the fact that $\varphi$ is a proper colouring of $G[B]$ [TODO: Justify]. That these satisfy (P3b) comes from the definition of $\varphi$ over $S_w$ as a injective function.    The requirement (P3c) actually has two parts.  The first part requires that, for each $i\in\{1,2,3\}$ and each $x\in S_w$, $\varphi(x)>a(k-\gamma(w_i)-1)$ and is true by the definition of $\varphi$ over the set $S_w$.  The second part requires that, for each $i\in\{1,2,3\}$, $\varphi(w_i)>a(k-\gamma(w_i)-1)$.  That this second part is satisified can be verified by considering the three ways in which $w_i$ might have received its colour:
+
+    \begin{compactenum}[(i)]
+        \item If $w_i\in S_j$ for some $j\in\{1,2,3\}$ then, by (P3c) $\varphi(w_i)>a(k-\gamma(v_j)-1)-3\ge a(k-\gamma(w_i)-1)-3$ since $|V_j|>|V_{w_i}|$.
+
+        \item If $w_i\in Y$ then $\varphi(w_i)>\lfloor a(k-\max\{v\in A_w:\gamma(v)\}-1)\rfloor-2 \ge a(k-\gamma(w_i)-1)-3$.
+
+        \item Otherwise $w_i\in B\setminus S\setminus Y$, so $w_i$ received its colour $\varphi(w_i)$ through an application of \cref{outerplanar-lemma}, which guarantees that $\varphi(w_i)>a(k-\gamma(w_i)-1)$.
+    \end{compactenum}
+
+    Therefore, apply induction on $G_K$ yields colourings $\varphi$ and $\psi$ that satisfy (R1)--(R3).  This completes the description of $\varphi$ over all vertices of $G$, completes the description of $\psi$ over all vertices of $G-A-B$, and completes the description of $\eta$ over all vertices of $G-A-B-C$.  To complete the description of $\psi$, for $w\in B$, we set $\psi(w)$ to one of $\{1,2,3\}$ indicating that $w$ is adjacent to $v_{\psi(w)}$. In case $w\in Y$.  To complete the description of $\eta$, for each $i\in\{1,2,3\}$, each 3-clique $K$ in $G[B_i]$ and each vertex $x\in V(G_K[C])$, we set $\eta(x):=i$.
+
+    All that remains is to prove that $\varphi$, $\psi$ and $\eta$ satisfy (R1) and (R2).  Condition (R1) is obvious from definitions. For Condition (R2) there are several cases to consider.
     \begin{enumerate}
-        \item $K\not\subseteq S$. Recall that $|G_K|\le n_w$ for each $w\in K$.  Therefore, for each $w\in K$, if $w\in B_i$, then
-        \[
-            |G_K| \le n_w
-                  % \le \sum_{w\in V(I)} n_w
-                  \le n_i/d_i
-                  \le \frac{(\log k)^k}{(\log (\gamma_1(n_i)+s_i))^{\gamma_1(n_i)+s_i}} \enspace .
-        \]
-        Therefore, applying induction on $G_K$ yields functions $\varphi':V(G_K)\to\{1,\ldots,\lfloor a(k-\gamma_1(n_i)-1)\rfloor\}$ and $\psi':V(G_K)\to\{1,2,3\}$.
+        \item $\{u,v,w\}=A$: This case is ruled out by the assumption that $uvw$ is an induced path.
+        \item $\{u,w\}\subset A$, $v\in B$; or $\{u,w\}\subset B$, $v\in C$.  These cases are ruled out by shadow completeness and the assumption that $uvw$ is an induced path.
+        \item $\{u,v,w\}\subseteq B$
+        \begin{compactenum}
+            \item $\{u,w\}\in Y$. (then $uw\in E(G[Y])$ by shadow completeness so $\varphi(u)\neq\varphi(w)$)
+            \item $\{u,w\}\in S$. (then $v\in Y$ or $\varphi(u)\neq\varphi(w)$)
+            \item $\{u,w\}\in B-\setminus S\setminus Y$. (then $v\in S\cup Y$ or $\{u,v,w\}\in V(I)$ for some component $I$ of $G[B]-A-Y-S$.)
+        \end{compactenum}
+        \item $\{u,w\}\subseteq B$, $v\in A$:
+        \begin{compactenum}
+            \item $\{u,w\}\in Y$. (then $\varphi(u)<\varphi(v)$)
+            \item $\{u,w\}\in S$. (then $v=v_i$ and $\{u,w\}\subseteq S_i$ for some $i\in\{1,2,3\}$ so $\varphi(u)\neq \varphi(w)$)
+            \item $\{u,w\}\in B-\setminus S\setminus Y$. (then $\varphi(u)<\varphi(v)$)
+        \end{compactenum}
+        \item $\{u,w\}\subseteq C$, $v\in B$: This is identical to the preceding case with one exception.  If $u\in S_x$ and $w\in S_y$ for some distinct $x,y\in B$. Then $v\in Y_C$ and $\eta(u)\neq\eta(w)$.
 
-        \item $K\subseteq S$. In this case, applying induction on $G_K$ yields
-        $\varphi':V(G_K)\to\{1,\ldots,\lfloor a(k-c-1)\rfloor\}$ and $\psi':V(G_K)\to\{1,2,3\}$.
     \end{enumerate}
-    In either case, we set $\varphi(w):=\varphi'(w)$ and $\psi(w):=\psi'(w)$ for each $w\in V(G_K-K)$.
-
-    At this point, $\varphi$ is completely defined for all of $G$ and $\psi(w)$ is defined (inductively) for each $w\in V(G-A-B)$.  All that remains is to define $\psi(w)$ for $A\bigcup B$.  For each $w\in B$, we define $\psi(w):=\min\{i:v_iw\in E(G)\}$.  We leave $\psi(v_1)$, $\psi(v_2)$, and $\psi(v_3)$ undefined since these will not be needed.
-
-
-
-
-
-
-
-    % \begin{enumerate}
-    %     \item $K\cap Y=\emptyset$ and $K\not\subseteq S$.  In this case,
-    %     % $K$ is contained in some component $I$ of $G[B]-Y$ and, indeed
-    %     $K\subset B_i$ for exactly one $i\in\{1,2,3\}$.  Since $K\not\subseteq S$ and $|G_K|\le n_w$ for each $w\in K$,
-    %     \[
-    %         |G_K| \le n_w
-    %               \le \sum_{w\in V(I)} n_w
-    %               \le n_i/d_i
-    %               \le \frac{(\log k)^k}{(\log (\gamma_1(n_i)+s_i))^{\gamma_1(n_i)+s_i}} \enspace .
-    %     \]
-    %     In this case, \cref{outerplanar-lemma} gives a 2-ranking $\varphi:V(G_K)\to\{1,\ldots,\lfloor a(k-\gamma_1(n_i)-1)\rfloor\}$.
-    %
-    %     \item $K\cap Y=\emptyset$ and $K\subseteq S$. In this case, $K\subseteq B_i$ for one $i\in\{1,2,3\}$, so $|G_K|\le |V_i|$, so \cref{outerplanar-lemma} gives a 2-ranking $\varphi:V(G_K)\to\{1,\ldots,\lfloor a(k-\gamma_1(n_i)-1)\rfloor\}$.
-    %
-    %     \item $|K\cap Y|\neq\emptyset$.
-    %
-    %
-    %
-    %     There are two cases to distinguish between:
-    %     \begin{compactenum}
-    %         \item $K\subseteq S_i$ for some $i\in\{1,2,3\}$.
-    %         \item $K\subset$
-    %     \end{compactenum}
-    % \end{enumerate}
-
-
-
-    % By \cref{outerplanar}, each component $I$ of $G-S$ has a $2$-ranking $\varphi:V(G)
-    %
-    %
-    %
-    % , and let $\gamma(v_i):=\gamma_1(|V_i|)$
-    %
-    %
-    % For each 3-clique $K:=\{w_1,w_2,w_3\}$, $G_K$ is a planar 3-tree.
-    %
-    %
-    % For each $i\in\{1,2,3\}$, define $B_{C,i}$ and $V_{C,i}$ with respect to $G_C$ analogously to way in which $B_i$ and $V_i$ are defined with respect to $G$.  For each $w\in B$, define
-
 \end{proof}
 
 
