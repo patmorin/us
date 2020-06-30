@@ -25,6 +25,7 @@
 \title{\MakeUppercase{(Layered) Partitions versus Decompositions}}
 \author{}
 
+\DeclareMathOperator{\diam}{diam}
 \DeclareMathOperator{\tw}{tw}
 \DeclareMathOperator{\stw}{stw}
 \DeclareMathOperator{\ltw}{ltw}
@@ -39,6 +40,7 @@
 \author{Prosenjit Bose, Vida Dujmović, Mehrnoosh Javarsineh, and Pat Morin}
 
 \newcommand{\trn}{\chi_2}
+\newcommand{\lrn}{\chi_{\ell}}
 \newcommand{\dtcn}{\bar{\chi}_2}
 \newcommand{\htrn}{\hat{\chi}_2}
 \newcommand{\scn}{\chi_{\star}}
@@ -530,33 +532,34 @@ This section is devoted to proving the upper bound in \cref{simple-t-trees}:
     Without loss of generality, we may assume that $G$ is edge-maximal so, by \cref{simple-small-cases}{(ii)}, $G$ is a simple $2$-tree and, by \cref{simple-t-trees} $\trn(G)\in O(\log n/\log^{(2)} n)$.
 \end{proof}
 
+The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part of the paper and is the subject of most of this section.
 
-The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part of the paper, so we give a brief overview of the proof strategy before delving into the details.  The proof is by induction on the value of $t$.  The base, $t=1$, is easy: By \cref{simple-small-cases}(i), every simple 1-tree is forest of paths, which has a 2-ranking using 3 colours.  In the general case, we need to prove that $H$ has a 2-ranking using colours $\{1,\ldots,ak\}$ for some constant $a$ and some $k\in O(\log n/\log^{(t)} n)$.  An asymptotically equivalent statement of this is: If $n \le (\log^{(t-2)}k)^k$, then $H$ has a 2-ranking using colours $\{1,\ldots,ak\}$, and this is the version of the statement that we prove.
-
-We use a BFS layering $L_1,\ldots,L_m$ of $H$ and use the fact (\cref{simple-bfs-layers}) that each layer $L_i$ induces a simple $(t-1)$-forest $H[L_i]$, on which we can apply \weirdref{simple-t-trees}{a} inductively.\footnote{Here, and throughout, we make use of the fact $\trn(H)$ is monotone: it does not decrease when edges are added to $H$ and the fact (\cref{simple-subgraph}) that any graph $H$ with $\stw(H)\le t$ is a subgraph of some simple $t$-tree $H'$ with $V(H')=V(H)$ and $E(H')\supseteq E(H)$.}  The main difficulty with this approach is that a vertex $v$ in $H[L_i]$ dominates an entire simple $(t-1)$-forest $F$ in $H[L_{i+1}]$.  If some colour $\phi$ is used more than once in the colouring of $F$, then $v$ must be assigned a colour larger than $\phi$.
-
-To account for this, we use a strengthening of \weirdref{simple-t-trees}{a} that applies to any graph $H'$ contained in $H[L_{i+1}\cup\cdots\cup L_m]$.  This strengthening shows that, if $H'$ has size at most $(\log^{(t-2)} k)^k/(\log^{(t-2)} c)^c$ then $H'$ has a 2-ranking using colours $\{1,\ldots,ak\}$ in which no colour larger than $a(k-c-1)$ appears more than once in the first layer, $H'[L_{i+1}]$.
-% In essence, the size of $H'$ provides a lower bound, $a(k-c-1)$, on the colour assigned to some vertex $v$ in $L_i$.
-
-It turns out to be easier to forget about $L_{i+1},\ldots,L_{m}$ and to work, instead, with an induced subgraph $H'$ of $H[L_{i+1}]$, in which each vertex $v$ is assigned a lower bound $a(k-\gamma(v)-1)$ on its colour.  This lower bound can also be interpreted as a weight, $(\log^{(t-2)}k)^k/(\log^{(t-2)}\gamma(v))^{\gamma(v)}$, that describes the size of the graph $H_v$ in $H[L_{i+1}\cup\cdots\cup L_m]$ whose first layer $H_v[L_{i+1}]$ is dominated by $v$.  The condition that $H'$ has size at most $(\log^{(t-2)} k)^k/(\log^{(t-2)} c)^c$ translates roughly into the condition
-\[
-   \sum_{v\in V(H')}\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)}\gamma(v)^{\gamma(v)}} \le \frac{(k\log^{(t-2)} k)^k}{(c\log^{(t-2)} c)^c}
-\]
-We are able to show that $H'$ has a special kind of separator $S$ of size $O(c)$ such that
-\begin{compactenum}
-    \item $H'[S]$ can be 2-ranked using $O(c)$ large colours in $\{a(k-c-1)+1,\ldots,ak\}$ that are each used only once; and
-    \item Each component of $H'-S$ can be 2-ranked using $O(k-c)$ small colours $\{1,\ldots,a(k-c-1)\}$.
-\end{compactenum}
-Each of these colourings respect the lower bounds given by $\gamma(v)$ for each vertex $v$ of $H'$.
-
-The preceding proof sketch ignores a difficulty caused by the fact that the components in $H[L_{i+1}\cup\cdots\cup L_m]$ are attached to $t$-cliques in $H[L_i]$ rather than individual vertices of $H[L_i]$. When we treat each of these forests individually, we run into the problem that there may be two $t$-cliques $C_1$ and $C_2$ of $H[L_i]$ with a vertex $v$ in common.  A simple $(t-1)$-forest $F_1$ attached to $C_1$ may avoid using colours larger than $a(k-c)$ more than once and a forest $F_2$ attached to $C_2$ may avoid using colours larger than $a(k-c-1)$ more than once.  Nevertheless, $F_1$ may have one vertex $u$ of colour $\phi >a(k-c-1)$ and $F_2$ may also have one vertex $w$ of colour $\phi$.  Since $uvw$ is a path in $H$, $v$'s colour must be larger than $\phi$.  We get around this by using an auxilliary colouring $\zeta$ of the $t$-cliques in $H[L_i]$ so that if two $t$-cliques $C_1$ and $C_2$ have a vertex in common and the preceding situation occurs, then $\zeta(C_1)\neq \zeta(C_2)$.  The vertices in $F_1$ receive the secondary colour $\zeta(C_1)$ and the vertices in $F_2$ receive the secondary colour $\zeta(C_2)$.  In this way, the vertices $u$ and $w$ described above receive different colours.
-
-With this proof sketch complete, we now begin with the actual proof.
+% The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part of the paper, so we give a brief overview of the proof strategy before delving into the details.  The proof is by induction on the value of $t$.  The base, $t=1$, is easy: By \cref{simple-small-cases}(i), every simple 1-tree is forest of paths, which has a 2-ranking using 3 colours.  In the general case, we need to prove that $H$ has a 2-ranking using colours $\{1,\ldots,ak\}$ for some constant $a$ and some $k\in O(\log n/\log^{(t)} n)$.  An asymptotically equivalent statement of this is: If $n \le (\log^{(t-2)}k)^k$, then $H$ has a 2-ranking using colours $\{1,\ldots,ak\}$, and this is the version of the statement that we prove.
+%
+% We use a BFS layering $L_1,\ldots,L_m$ of $H$ and use the fact (\cref{simple-bfs-layers}) that each layer $L_i$ induces a simple $(t-1)$-forest $H[L_i]$, on which we can apply \weirdref{simple-t-trees}{a} inductively.\footnote{Here, and throughout, we make use of the fact $\trn(H)$ is monotone: it does not decrease when edges are added to $H$ and the fact (\cref{simple-subgraph}) that any graph $H$ with $\stw(H)\le t$ is a subgraph of some simple $t$-tree $H'$ with $V(H')=V(H)$ and $E(H')\supseteq E(H)$.}  The main difficulty with this approach is that a vertex $v$ in $H[L_i]$ dominates an entire simple $(t-1)$-forest $F$ in $H[L_{i+1}]$.  If some colour $\phi$ is used more than once in the colouring of $F$, then $v$ must be assigned a colour larger than $\phi$.
+%
+% To account for this, we use a strengthening of \weirdref{simple-t-trees}{a} that applies to any graph $H'$ contained in $H[L_{i+1}\cup\cdots\cup L_m]$.  This strengthening shows that, if $H'$ has size at most $(\log^{(t-2)} k)^k/(\log^{(t-2)} c)^c$ then $H'$ has a 2-ranking using colours $\{1,\ldots,ak\}$ in which no colour larger than $a(k-c-1)$ appears more than once in the first layer, $H'[L_{i+1}]$.
+% % In essence, the size of $H'$ provides a lower bound, $a(k-c-1)$, on the colour assigned to some vertex $v$ in $L_i$.
+%
+% It turns out to be easier to forget about $L_{i+1},\ldots,L_{m}$ and to work, instead, with an induced subgraph $H'$ of $H[L_{i+1}]$, in which each vertex $v$ is assigned a lower bound $a(k-\gamma(v)-1)$ on its colour.  This lower bound can also be interpreted as a weight, $(\log^{(t-2)}k)^k/(\log^{(t-2)}\gamma(v))^{\gamma(v)}$, that describes the size of the graph $H_v$ in $H[L_{i+1}\cup\cdots\cup L_m]$ whose first layer $H_v[L_{i+1}]$ is dominated by $v$.  The condition that $H'$ has size at most $(\log^{(t-2)} k)^k/(\log^{(t-2)} c)^c$ translates roughly into the condition
+% \[
+%    \sum_{v\in V(H')}\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)}\gamma(v)^{\gamma(v)}} \le \frac{(k\log^{(t-2)} k)^k}{(c\log^{(t-2)} c)^c}
+% \]
+% We are able to show that $H'$ has a special kind of separator $S$ of size $O(c)$ such that
+% \begin{compactenum}
+%     \item $H'[S]$ can be 2-ranked using $O(c)$ large colours in $\{a(k-c-1)+1,\ldots,ak\}$ that are each used only once; and
+%     \item Each component of $H'-S$ can be 2-ranked using $O(k-c)$ small colours $\{1,\ldots,a(k-c-1)\}$.
+% \end{compactenum}
+% Each of these colourings respect the lower bounds given by $\gamma(v)$ for each vertex $v$ of $H'$.
+%
+% The preceding proof sketch ignores a difficulty caused by the fact that the components in $H[L_{i+1}\cup\cdots\cup L_m]$ are attached to $t$-cliques in $H[L_i]$ rather than individual vertices of $H[L_i]$. When we treat each of these forests individually, we run into the problem that there may be two $t$-cliques $C_1$ and $C_2$ of $H[L_i]$ with a vertex $v$ in common.  A simple $(t-1)$-forest $F_1$ attached to $C_1$ may avoid using colours larger than $a(k-c)$ more than once and a forest $F_2$ attached to $C_2$ may avoid using colours larger than $a(k-c-1)$ more than once.  Nevertheless, $F_1$ may have one vertex $u$ of colour $\phi >a(k-c-1)$ and $F_2$ may also have one vertex $w$ of colour $\phi$.  Since $uvw$ is a path in $H$, $v$'s colour must be larger than $\phi$.  We get around this by using an auxilliary colouring $\zeta$ of the $t$-cliques in $H[L_i]$ so that if two $t$-cliques $C_1$ and $C_2$ have a vertex in common and the preceding situation occurs, then $\zeta(C_1)\neq \zeta(C_2)$.  The vertices in $F_1$ receive the secondary colour $\zeta(C_1)$ and the vertices in $F_2$ receive the secondary colour $\zeta(C_2)$.  In this way, the vertices $u$ and $w$ described above receive different colours.
+%
+% With this proof sketch complete, we now begin with the actual proof.
 
 \subsubsection{Some Combination Lemmas}
 
 \begin{lem}\label{pathwidth}
-    For any graph $H$, $\trn(H)\le 3\pw(H) + 1$
+    For any graph $H$, $\lrn(H)\le (\ell+1)\pw(H) + 1$.
 \end{lem}
 
 \begin{proof}
@@ -568,7 +571,7 @@ With this proof sketch complete, we now begin with the actual proof.
         \item $H$ contains no path $v_iw v_j$ with $w\not\in\{v_1,\ldots,v_m\}$ and $|i-j|>1$; and
         \item $\pw(H-\{v_1,\ldots,v_m\})\le \pw(H)-1$.
     \end{inparaenum}
-    Property~(iii) implies that we can therefore inductively colour $H-\{v_1,\ldots,v_m\}$ using colours $\{1,\ldots,3\pw(H)-2\}$ and then colour each $v_i$ with colour $3\pw(H)-1+i\bmod 3$.  Property~(i) ensures that this gives a 2-ranking of $H[v_1,\ldots,v_m]$.  Property~(ii) and the fact that $v_1,\ldots,v_m$ are coloured using larger colours than those used to colour $H-\{v_1,\ldots,v_m\}$ ensures that the resulting colouring is a 2-ranking of $H$.
+    Property~(iii) implies that we can therefore inductively colour $H-\{v_1,\ldots,v_m\}$ using colours $\{1,\ldots,(\ell+1)(\pw(H)-1)\}$ and then colour each $v_i$ with colour $(\ell+1)(\pw(H)-1)+1+i\bmod 3$.  Property~(i) ensures that this gives a 2-ranking of $H[v_1,\ldots,v_m]$.  Property~(ii) and the fact that $v_1,\ldots,v_m$ are coloured using larger colours than those used to colour $H-\{v_1,\ldots,v_m\}$ ensures that the resulting colouring is an $\ell$-ranking of $H$.
 \end{proof}
 
 A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$. For a graph $H$ with a rooted tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$, we define the $\mathcal{T}$-skeleton $\hat{H}$ of $H$ as the graph with vertex set $V(\hat{H}):=\bigcup_{x\in \Lambda(T)} B_x$ and containing the edge $vw$ if there exists $x,y\in V(T)$ with $v\in B_x$, $w\in B_y$ such that the path in $T$ from $x$ to $y$ contains no branching node in its interior.  It is worth noting that the skeleton $\hat{H}$ of $H$ is a minor of $H$ since it can be obtained from $H$ by repeatedly contracting an edge $vw$ with $v\in V(\hat{H})$ and $w\not\in V(\hat{H})$ into $v$. By \cref{simple-minor-closed} this implies that, $\stw(\hat{H})\le\stw(H)$.
@@ -578,28 +581,23 @@ A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least t
 % \end{obs}
 
 \begin{lem}\label{skeleton-colour}
-    Let $H$ be a graph having a width-$t$ tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$, and let $\hat{H}$ be the $\mathcal{T}$-skeleton of $H$.  Then $\trn(H)\le \trn(\hat{H}) + 3t+1$.
+    Let $H$ be a graph having a width-$t$ tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$, and let $\hat{H}$ be the $\mathcal{T}$-skeleton of $H$.  Then $\lrn(H)\le \lrn(\hat{H}) + (\ell+1)t+1$.
 \end{lem}
 
 \begin{proof}
-    Let $\varphi:V(\hat{H})\to \{3t+2,\ldots,\trn(\hat{H})+3t+1\}$ be a 2-ranking of $\hat{H}$. The graph $P:=T-\Lambda(T)$ consists of disjoint paths and, for any edge $vw\in E(H-V(\hat{H}))$ there is a node $x\in V(P)$ such that $\{v,w\}\subseteq B_x$.  Therefore $(B_x:x\in V(P))$ is a width-$t$ path decomposition of $H-V(\hat{H})$, so $\pw(H-V(\hat{H}))\le t$.  Therefore, by \cref{pathwidth}, $H-V(\hat{H})$ has a 2-ranking $\varphi:V(H-V(\hat{H}))\to\{1,\ldots,3t+1\}$.  This gives the desired colouring $\varphi: V(H)\to\{1,\ldots,\trn(\hat{H})+3t+1\}$.  To see why $\varphi$ is a 2-ranking of $H$ observe that for any path $uvw$ with $u,w\in V(\hat{H})$ and $v\in V(H)\setminus V(\hat{H})$, the edge $uw\in\hat{H}$, so $\varphi(u)\neq\varphi(w)$.
+    Let $\varphi:V(\hat{H})\to \{3t+2,\ldots,\trn(\hat{H})+3t+1\}$ be a 2-ranking of $\hat{H}$. The graph $P:=T-\Lambda(T)$ consists of disjoint paths and, for any edge $vw\in E(H-V(\hat{H}))$ there is a node $x\in V(P)$ such that $\{v,w\}\subseteq B_x$.  Therefore $(B_x:x\in V(P))$ is a width-$t$ path decomposition of $H-V(\hat{H})$, so $\pw(H-V(\hat{H}))\le t$.  Therefore, by \cref{pathwidth}, $H-V(\hat{H})$ has a 2-ranking $\varphi:V(H-V(\hat{H}))\to\{1,\ldots,(\ell+1)t+1\}$.  This gives the desired colouring $\varphi: V(H)\to\{1,\ldots,\trn(\hat{H})+(\ell+1)t+1\}$.  To see why $\varphi$ is an $\ell$-ranking of $H$ observe that for any path $u_0,\ldots,u_r$ with $r\le\ell$ $u_0,u_r\in V(\hat{H})$ and $u_i\in V(H-\hat{H})$ for some $i\in\{1,\ldots,r-1\}$, the edge $uw\in\hat{H}$, so $\varphi(u)\neq\varphi(w)$.
 \end{proof}
 
 \subsubsection{The Meat}
 
-Recall that we are working on a proof of \weirdref{simple-t-trees}{a} that works by induction on $t$ and the base case $t=1$ is easy ($H$ is a path so $\trn(H)\le 3$). \Cref{simple-bfs-layers,simple-subgraph} says that each BFS layer $H[L_i]$ is contained in a simple $(t-1)$-tree.  Before working directly with $t$-trees we will work with vertex-weighted $(t-1)$-trees and $(t-1)$-forests in which each node $v$ is given a lower bound $a(k-\lambda(v)-1)+1$ on its colour.
-
-The next two lemmata will eventually be applied to (subgraphs of) BFS layers of $H$, which is why they are stated in terms of $(t-1)$-trees.  The first lemma gives a \emph{slackness} condition that makes it possible to find a colouring that does not use \emph{any} colour larger than $a(k-c-1)$.
+% Recall that we are working on a proof of \weirdref{simple-t-trees}{a} that works by induction on $t$ and the base case $t=1$ is easy ($H$ is a path so $\trn(H)\le 3$). \Cref{simple-bfs-layers,simple-subgraph} says that each BFS layer $H[L_i]$ is contained in a simple $(t-1)$-tree.  Before working directly with $t$-trees we will work with vertex-weighted $(t-1)$-trees and $(t-1)$-forests in which each node $v$ is given a lower bound $a(k-\lambda(v)-1)+1$ on its colour.
+%
+% The next two lemmata will eventually be applied to (subgraphs of) BFS layers of $H$, which is why they are stated in terms of $(t-1)$-trees.  The first lemma gives a \emph{slackness} condition that makes it possible to find a colouring that does not use \emph{any} colour larger than $a(k-c-1)$.
 
 \begin{lem}\label{t-tree-slack}
-Let $t,k\in\N$ and $c\in\R$ with $t\ge 2$ and $\tau(t)\le c\le k-1$; let $H$ be a graph with $\stw(H)\le t-1$;
-% a simple $(t-1)$-tree;
-% let $t':=\min\{t, |H|\}$; let $v_1,\ldots,v_{|H|}$ be a construction order for $H$ generating a canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ rooted at $r\in V(T)$;
-let $\gamma:V(H)\to\{z\in\R: z\ge \tau(t-1)\}$; and let
-\[
-    n_H:=\sum_{v\in V(H)} \frac{\left(\log^{(t-2)} k\right)^k}{\left(\log^{(t-2)} \gamma(v)\right)^{\gamma(v)}} \enspace .
-\]
-Then there exists an integer constant $a>0$ such that,
+
+Let $t,k,d,\ell,g\in\N$ and $c\in\R$ with $t\ge 2$ and $\tau(t)\le c\le k-1$; let $H$ be a graph with $\diam(H)\le d$ and $\stw(H)\le t$ in which each vertex $v\in V(H)$ is assigned a real-valued weight $n_v\ge 1$; and let $n_H=\sum_{v\in V(H) n_v}$.
+Then there exists an integer constant $a:=a(t,\ell,d,g)$ such that,
 if
 \begin{equation}
      n_H \le \frac{(\log^{(t-2)} k)^k}{\left(\log^{(t-2)} (c + s)\right)^{c+s}} \enspace ,
@@ -610,7 +608,7 @@ where
     s := \frac{\log c}{\log^{(t-1)} c}
 \]
 % and if $\phi_1,\ldots,\phi_t'$ are distinct integers, each greater than $a(k-c-1)$,
-then $H$ has a 2-ranking $\varphi:V(H)\to a(k-c-1)$ such that $\varphi(v)> a(k-\gamma(v)-1)$ for each $v\in V(H)$.
+then $H$ has an $\ell$-ranking $\varphi:V(H)\to a(k-c-1)-g$ such that $\varphi(v)> a(k-\gamma_{t-2,k}(n_v)-1)$ for each $v\in V(H)$.
 % \begin{compactenum}[(P1)]
     % \item for each $i\in\{1,\ldots,{t'}\}$, $\varphi(v_i)=\phi_i$; and
     % \item for each $v\in V(H)\setminus B_r$, $a(k-\gamma(v)-1) < \varphi(v) \le a(k-c-1)$.
@@ -620,18 +618,21 @@ then $H$ has a 2-ranking $\varphi:V(H)\to a(k-c-1)$ such that $\varphi(v)> a(k-\
 \begin{proof}
     % For each node $x\in V(T)\setminus\{r\}$, let $T_x$ denote the subtree of $T$ induced by $x$ and all its $T$-descendants and let $H_x:=H[\bigcup_{y\in V(T_x)} B_y]-B_p$ where $p$ is the parent of $x$ in $T$.
     % Recall that, for $x\neq r$, $B_x$ contains exactly one vertex $v_1'$ that is not present in $B_p$ where $p$ is the $T$-parent of $x$.
-    For any subgraph $X$ of $H$, define
-    \[
-        n_{X}:=\sum_{v\in V(X)}\frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}} \enspace .
-    \]
-    Note that this coincides with the definition of $n_H$ in the statement of the lemma.
+
+    By \cref{simple-subgraph}, we may assume that $H$ is a simple $t$-tree.   let $v_1,\ldots,v_{|H|}$ be a construction order for $H$ generating a canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ rooted at $r\in V(T)$; let $L_0,\ldots,L_h$ be a BFS layering of $H$ with $L_0:=\{v_1,\ldots,v_{\min\{t,|H|\}}\}$.  Note that $h\le\diam(H)\le d$.
 
     The proof is by induction on $|H|$.  In the base case, $|H|=0$ and there is nothing to prove.
     % $1\le|H|\le t$, in which case $T$ has only one node $r$. For each $i\in\{1,\ldots,t'\}$, we set $\varphi(v_i):=\phi_i$, in order to satisfy (P1).  In this case Condition (P2) is vacuous since it does not apply to vertices in $B_r$.
-    Now assume $|H|\ge 1$.  Let
+    Now assume $|H|\ge 1$.  For each subgraph $X$ of $H$, define
+    $
+        n_{X}:=\sum_{v\in V(X)} n_v
+        % \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}} \enspace .
+    $.
+    Note that this coincides with the definition of $n_H$ in the statement of the lemma.  For $v\in V(H)$ we use the shorthand $\gamma_v:=\gamma_{t-2,k}(n_v)$ and for any subgraph $X$ of $H$ we use the shorthand $\gamma_X := \gamma_{t-2,k}(n_X)$.   Let
     \begin{equation}
         n_0 := \frac{(\log^{(t-2)} k)^k}{\left(\log^{(t-2)}\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)\right)^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}}} \enspace , \label{heavy-def}
     \end{equation}
+    so that $\gamma_{t-2,k}(n_0)= c+s$.
     We say that a subgraph $X$ of $T$ is \emph{heavy} if $n_X>n_0$ and $X$ is \emph{light} otherwise.  For a heavy subgraph $X$,
     \begin{align*}
         (\log^{(t-2)} k)^k/n_X & < \left(\log^{(t-2)}\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)\right)^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}} \\
@@ -656,38 +657,33 @@ then $H$ has a 2-ranking $\varphi:V(H)\to a(k-c-1)$ such that $\varphi(v)> a(k-\
     \end{align*}
     since $c+s\in O(c)$.
 
-    Let $\mathcal{T}:=(B_x:x\in V(T))$ be a $(t-1)$-simple tree decomposition of $H$.  By \cref{weighted-separator} with the weight function $\xi(v):=(\log^{(t-2)} k)^k/(\log^{(t-2)} \gamma(v))^{\gamma(v)}$, there exists $S_T\subset V(T)$ of size $O(c)$ defining a separator $S:=\bigcup_{x\in S_T} B_x$ such that each component $X$ of $H-S$ is light.  Let $T'$ be the subtree of $T$ induced by $S_T$ and every $T$-ancestor of every node in $S_T$, i.e., $T':=T[\bigcup_{x\in S_T} V(P_T(x))]$.
-    % Let
-    % Let $T'$ be the subtree of $T$ induced by the set of heavy nodes and let
-    % $L$ be the set of leaves in $T'$ and
-    Observe that each leaf of $T'$ is an element of $S_T$ so $T'$ has at most $|S_T|\in O(c)$ leaves.
-    % Observe that, for any two distinct leaves $x,y\in L$, $V(H_x)\cap V(H_y)=B_x\cap B_y$.  If follows that $n_r\ge \sum_{x\in L} n_x\ge |L|\cdot(\ref{heavy-def})$.  Therefore the number of leaves in $T'$ is
-    % \[
-    %     |L| \le \frac{n_v}{(\ref{heavy-def})} \le \frac{(\ref{sizer})}{\left(\log^{(t-2)}(c+s)\right)^{c+s}} = O(c)
-    % \]
+    By \cref{weighted-separator} with the weight function $\xi(v):=n_v$, there exists $S\subset H$ of size $O(c)$ such that each component $X$ of $H-S$ is light.
+     % Let $T'$ be the subtree of $T$ induced by $S_T$ and every $T$-ancestor of every node in $S_T$, i.e., $T':=T[\bigcup_{x\in S_T} V(P_T(x))]$. Let $H':=H[\bigcup x\in V(T') B_x]$.  Observe that $\mathcal{T'}:=(B_x:x\in V(T'))$ is a $t$-simple tree decomposition of $H'$, so $\stw(H')\le t$.
+    For each $i\in\{0,\ldots,h\}$, $\stw(H[L_i])\le t-1$ (by \cref{simple-bfs-layers}) so let $\mathcal{T}_i:=(B_x:x\in V(T_i))$ be a $(t-1)$-simple tree decomposition of $H[L_i]$.  For each $v\in S\cap L_i$, let $x_v$ be a node in $T_i$ such that $v\in B_{x_v}$.  Let $S_{T_i}:\{x_v:v\in S\}$ and let $T_i'$ be the subtree of $T_i$ induced by each $T_i$-ancestor of each node in $S_{T_i}$, i.e., $T_i':=T_i[\bigcup_{x\in S_{T_i}} V(P_{T_i}(x))]$.
 
-    Let $S':=\bigcup_{x\in V(T')} B_x$ and let $H'$ be the supergraph of $H[S']$ with vertex set $V(H'):=S'$ and edge set $E(H'):=\bigcup_{a\in V(T')}\{uw:u,w\in B_a,\, u\neq w\}$. Observe that $\mathcal{T}':=(B_x:x\in V(T'))$ is a $(t-1)$-simple tree decomposition of $H'$, so $\stw(H')\le t-1$. Since $T'$ has $O(c)$ leaves, it has $O(c)$ branching nodes.
-    % By \cref{skeleton-size}, the $\mathcal{T}'$-skeleton $\hat{H'}$ of $H'$ has $\stw(H')\le 1is a simple $(t-1)$-tree and $|\hat{H}'|\in O(c)$.
-    Therefore, the $\mathcal{T}'$-skeleton $\hat{H'}$ of $H'$ has size $|\hat{H}'|\in O(c)$.
+    Let $H_i':=H[\bigcup x\in V(T_i') B_x]$.  Observe that $\mathcal{T}_i':=(B_x:x\in V(T_i'))$ is a $(t-1)$-simple tree decomposition of $H_i'$.  For each leaf $x$ of $T_i'$, $x=x_v$ for some node $v\in S$.  Therefore the number of leaves of $T_i'$ is at most $|S|\in O(c)$. Since $T_i'$ has $O(c)$ leaves, it has $O(c)$ branching nodes.  Therefore, the $\mathcal{T}_i'$-skeleton $\hat{H}_i'$ of $H_i'$ has size $|\hat{H_i}'|\in O(c)$.
     By \weirdref{simple-t-trees}{a} applied to $\hat{H}'$,
     \[
-       \trn(\hat{H}')\in
-       O\left(\frac{\log|\hat{H}'|}{\log^{(t-1)}|\hat{H}'|}\right)
+       \lrn(\hat{H_i}')\in
+       O\left(\frac{\log|\hat{H_i}'|}{\log^{(t-1)}|\hat{H_i}'|}\right)
        \subseteq O\left(\frac{\log c}{\log^{(t-1)} c}\right) = O(s) \enspace .
     \]
-    Therefore, by \cref{skeleton-colour} $\trn(H')\in O(s)$, so
-    $H'$ has a 2-ranking $\varphi:V(H')\to \{\lceil a(k-c-1)\rceil-r,\ldots,\lceil a(k-c-1)\rceil-1\}$ for some $r\in O(s)$.
+    Therefore, by \cref{skeleton-colour} $\lrn(H_i')\in O(s)$, so
+    $H_i'$ has an $\ell$-ranking $\varphi:V(H_i')\to \{\lceil a(k-c-1)\rceil-(i+1)r-g,\ldots,\lceil a(k-c-1)\rceil-ir-g\}$ for some $r\in O(s)$.
+
+
+
     % Modifying $\varphi$ so that it colours $\varphi(v_i):=\phi_i$ for each $i\in\{1,\ldots,t\}$ preserves the fact that $\varphi$ is a 2-ranking, since $\phi_1,\ldots,\phi_t$ are all distinct and each greater than $a(k-c-1)$.
-    The colouring $\varphi$ of $H'$ is a partial colouring of $H$.
+    Let $H':=H[\bigcup_{i=0}^h V(H_i')]$. In the preceding paragraphs, we have defined a colouring $\varphi: V(H')\to \{a(k-c-1)-(h+1)r-g,\ldots,a(k-c-1)-g\}$.
     % By definition, $\varphi$ satisifies requirement (P1).
-    For a sufficiently large constant $a$, $\lceil a(k-c-1)\rceil-r >  a(k-c-s-1)+1$, so each vertex in $H'$ receives a colour larger than $a(k-c-s-1)+1$.  For any vertex $v\in V(H)$,
-    \[ \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}}
+    For a sufficiently large constant $a:=a(t,\ell,d,g)$, $\lceil a(k-c-1)\rceil-(h+1)r >  a(k-c-s-1)+1$, so each vertex in $H'$ receives a colour larger than $a(k-c-s-1)+1$.  For any vertex $v\in V(H)$,
+    \[ n_v=\frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}\gamma_v)^{\gamma_v}}
          \le n_H
          \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}(c+s))^{(c+s)}}
     \]
     so $\gamma(v)\ge c+s$, so $\varphi(v)> (\log^{(t-2)} k)^k/(\log^{(t-2)}\gamma(v))^{\gamma(v)}$ for each $v\in V(H')$, as required.
 
-    Since $S'\supseteq S_T$, each component $X$ of $H-S'$ has
+    Since $S':=V(H')\supseteq S$, each component $X$ of $H-V(H')$ is light, so
    % Now, $T-T'$ is a forest of trees $T_1,\ldots,T_m$ rooted at nodes $r_1,\ldots,r_m$, respectively.
    % For each $i\in\{1,\ldots,m\}$, $r_i$ is light, so
    \[
@@ -702,16 +698,16 @@ then $H$ has a 2-ranking $\varphi:V(H)\to a(k-c-1)$ such that $\varphi(v)> a(k-\
        \right)}
        }
    \]
-   Therefore, we can apply \cref{t-tree-slack} inductively on each component $X$ of $H-S'$ since $|X|<|H|$ and $X$ satisfies \cref{total-weight-i} with the value $c'=c+s$.  This gives a 2-ranking $\varphi:V(X)\to\{1,\ldots,a(k-c-s-1)\}$ in which $\varphi(v)> a(k-\gamma(v)-1)$ for each $v\in V(X)$, as required.
+   Therefore, we can apply \cref{t-tree-slack} inductively on each component $X$ of $H-S'$ since $|X|<|H|$ and $X$ satisfies \cref{total-weight-i} with the value $c'=c+s$.  This gives an $\ell$-ranking $\varphi:V(X)\to\{1,\ldots,a(k-c-s-1)-g\}$ in which $\varphi(v)> a(k-\gamma_v-1)$ for each $v\in V(X)$, as required.
    % Consider one particular such graph $H_{r_j}$ and let $v_1',\ldots,v_t'$ denote the vertices of $B_{r_j}$.  The vertices $v_2',\ldots,v_t'$ appear in $H'$ and have already received colours $\phi_2',\ldots,\phi_t':=\varphi(v_2'),\ldots,\varphi(v_t')$ each greater than $a(k-c'-1)+1$.  The vertex $v_1'$ has not been assigned a colour yet and it can receive colour $\phi_1':=\lceil a(k-c'-1)\rceil+1$.  Applying the inductive hypothesis colours the remaining vertices $V(H_{r_i})\setminus B_{r_i}$ using colours no greater than $a(k-c'-1)$.
    Doing this for each component $X$ of $H-S'$ completes the colouring $\varphi$ to a total colouring of $H$.
 
-   All that remains is to verify that $\varphi$ is a 2-ranking of $H$. To do this, consider any length-2 path $uvw$ in $H$.  We must show that $\varphi(u)\neq \varphi(w)$ or $\varphi(v)>\varphi(u)$.  There are a few cases to consider:
+   All that remains is to verify that $\varphi$ is an $\ell$-ranking of $H$. To do this, consider any path $u_0,\ldots,u_r$ in $H$.  We must show that $\varphi(u_0)\neq \varphi(u_r)$ or $\varphi(u_0)<\varphi(u_i)$ for some $i\in\{1,\ldots,r-1\}$.  There are a few cases to consider:
    \begin{enumerate}
-    \item If $\varphi(u)=\varphi(w) \ge a(k-c'-1)$ then $\{u,w\}\subseteq V(H')$. Either
+    \item If $\varphi(u_0)=\varphi(u_r) \ge a(k-c'-1)$ then $\{u_0,u_r\}\subseteq V(H')$. Either
     \begin{enumerate}
-       \item $v\in V(H')$ in which case $\varphi(v)>\varphi(u)$ since $\varphi$ is a 2-ranking of $H'$ (by the application of \weirdref{simple-t-trees}{a}) to $H'$; or
-       \item $v\in V(X)$ for some component $X$ of $H-S'$. This case is not possible.  Since $v\not\in V(H')$, there is no $x\in V(T')$ with $v\in B_x$.  But this implies that $\{u,w,v\}\subseteq B_y$ for some $y\in V(T)-V(T')$.  The node $y$ has a $T$-ancestor $a\in V(T')$ such that $\{u,w\}\subseteq B_a$. This implies that $uw\in E(H')$, so $\varphi(u)\neq\varphi(w)$ since $\varphi$ is a 2-ranking and therefore a proper colouring of $H'$.
+       \item $\{u_1,\ldots,u_{r-1}\}\subseteq V(H')$ in which case $\varphi(v)>\varphi(u)$ since $\varphi$ is a 2-ranking of $H'$ (by the application of \weirdref{simple-t-trees}{a}) to $H'$; or
+       \item $u_i\in V(X)$ for some component $X$ of $H-S'$ and some $i\in\{1,\ldots,r-1\}$. This case is not possible.  Since $u_i\not\in V(H')$, [TODO: Continue here.] there is no $x\in V(T')$ with $v\in B_x$.  But this implies that $\{u,w,v\}\subseteq B_y$ for some $y\in V(T)-V(T')$.  The node $y$ has a $T$-ancestor $a\in V(T')$ such that $\{u,w\}\subseteq B_a$. This implies that $uw\in E(H')$, so $\varphi(u)\neq\varphi(w)$ since $\varphi$ is a 2-ranking and therefore a proper colouring of $H'$.
    \end{enumerate}
    \item If $\varphi(u)=\varphi(w) < a(k-c'-1)$ then $u\in V(X)$ and $w\in V(Y)$ for some components $X$ and $Y$ of $H-S'$.  Either
    \begin{enumerate}
