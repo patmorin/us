@@ -72,8 +72,9 @@ For positive numbers $n,k$ with $e< n \le (\log k)^k$, let $\gamma_1(n)$ be the 
 \end{lem}
 
 
-
 \section{3-Trees}
+
+
 
 In this section, the statements of lemmas are not self-contained. They all include the definitions in this paragraph. See \cref{y}.
 Let $G$ be an $n$-vertex planar 3-tree with $n\ge 3$;
@@ -96,6 +97,14 @@ let $V_i:=\{v_i\}\cup\bigcup_{K\in G[B_i]} V(G_K)$ where $K$ ranges over all 3-c
 \end{figure}
 
 Note, as illustrated on the right hand side of \cref{y},that $\{V_1,V_2,v_3\}$ is not a partition of $V(G)$ and this is the source of extra work.  Even in a planar drawing of $G$ with $A$ on the outer face, the vertices in $V_i$ are not all drawn in the inner faces of $G[B_i]$.
+
+
+\begin{lem}[Shadow Completeness \cite{kundgen.pelsmajer:nonrepetitive}]
+    \label{shadow-completeness}
+    Let $u_0,\ldots,u_r$ be a path in $G$ such that $d_G(A,u_0)=d_G(A,u_r)$ and such that $d_G(A,u_i)>d_G(A,u_0)$ for each $i\in\{1,\ldots,r-1\}$.  Then $u_0u_1\in E(G)$.
+\end{lem}
+
+
 
 Let $C:=N_G(B)\setminus A$.  For each $w\in B$, define $V_w:=\{w\}\cup \bigcup_{K} V(G_K)$, where $K$ ranges over all 3-cliques in $G[C]$ that are incident to $w$.
 
@@ -179,9 +188,9 @@ Let $C:=N_G(B)\setminus A$.  For each $w\in B$, define $V_w:=\{w\}\cup \bigcup_{
 
     All that remains is to prove that $\varphi$, $\psi$ and $\eta$ satisfy (R1) and (R2).  Condition (R1) is obvious from definitions. For Condition (R2) there are several cases to consider.
     \begin{enumerate}
-        \item $\{u,v,w\}=A$: This case is ruled out by the assumption that $uvw$ is an induced path.
-        \item $\{u,w\}\subset A$, $v\in B$; or $\{u,w\}\subset B$, $v\in C$.  These cases are ruled out by shadow completeness and the assumption that $uvw$ is an induced path.
-        \item $\{u,v,w\}\subseteq B$
+        \item $\{u,v,w\}=A$. This case is ruled out by the assumption that $uvw$ is an induced path.
+        \item $\{u,w\}\subset A$, $v\in B$; or $\{u,w\}\subset B$, $v\in C$.  These cases are ruled out by \cref{shadow-completeness} and the assumption that $uvw$ is an induced path.
+        \item $\{u,v,w\}\subseteq B$. There are three subcases to consider:
         \begin{compactenum}
             \item $\{u,w\}\in Y$. (then $uw\in E(G[Y])$ by shadow completeness so $\varphi(u)\neq\varphi(w)$)
             \item $\{u,w\}\in S$. (then $v\in Y$ or $\varphi(u)\neq\varphi(w)$)
