@@ -574,18 +574,48 @@ The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part
     Property~(iii) implies that we can therefore inductively colour $H-\{v_1,\ldots,v_m\}$ using colours $\{1,\ldots,(\ell+1)(\pw(H)-1)\}$ and then colour each $v_i$ with colour $(\ell+1)(\pw(H)-1)+1+i\bmod 3$.  Property~(i) ensures that this gives a 2-ranking of $H[v_1,\ldots,v_m]$.  Property~(ii) and the fact that $v_1,\ldots,v_m$ are coloured using larger colours than those used to colour $H-\{v_1,\ldots,v_m\}$ ensures that the resulting colouring is an $\ell$-ranking of $H$.
 \end{proof}
 
-A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$. For a graph $H$ with a rooted tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$, we define the $\mathcal{T}$-skeleton $\hat{H}$ of $H$ as the graph with vertex set $V(\hat{H}):=\bigcup_{x\in \Lambda(T)} B_x$ and containing the edge $vw$ if there exists $x,y\in V(T)$ with $v\in B_x$, $w\in B_y$ such that the path in $T$ from $x$ to $y$ contains no branching node in its interior.  It is worth noting that the skeleton $\hat{H}$ of $H$ is a minor of $H$ since it can be obtained from $H$ by repeatedly contracting an edge $vw$ with $v\in V(\hat{H})$ and $w\not\in V(\hat{H})$ into $v$. By \cref{simple-minor-closed} this implies that, $\stw(\hat{H})\le\stw(H)$.
+A node $x$ in a tree $T$ is a \emph{branching node} if $x$ has degree at least 3.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$.  Let $H$ be a $t$-tree with a rooted canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$.  For each node $x\in V(T)$, define the parent-set $P_x:=\{x_T(v):v\in B_x\}$.  Define the $\mathcal{T}$-skeleton} of $H$ as the graph $H[\bigcup_{x\in\Lambda(T)}\bigcup_{y\in P_x} B_y]$.
+
+% ; and
+     % \item the \emph{closed $\mathcal{T}$-skeleton} $\hat{H}^+$ with vertex set $V(\hat{H}_\mathcal{T}^+):=V(\hat{H}_\mathcal{T})$ and that contains an edge $vw$ if and only if there exists $x,y\in \Lambda(T)$ with $v\in B_x$, $w\in B_y$ and the path in $T$ from $x$ to $y$ contains no other branching node of $T$.
+ % \end{itemize}
+ % In words, $H[S_T]^+$ contains every path between every pair of vertices $v,w\in V(H)$.
+ % It is worth noting that $\hat{H}_\mathcal{T}$ is a subgraph of $H$ so $\stw(\hat{H}) \le \stw(H)$, but this is not necessarily the case for $\hat{H}^+$.  Indeed, $\hat{H}^+$ may contain a complete bipartite graphs of size $2(t+1)$, which has treewidth $t+1$.
+
+\begin{lem}\label{skeleton-colour}
+     For any simple $t$-tree $H$ with a canonical decomposition $\mathcal{T}:=(B_x:x\in V(T))$ defining a $\mathcal{T}$-skeleton $\hat{H}$,  $\lrn(H)\in O(\lrn(\hat{H}))$.
+\end{lem}
+
+
+ % we define the $\mathcal{T}$-skeleton $\hat{H}$ of $H$ as the induced subgraph $H[\bigcup_{x\in \Lambda(T)} B_x]$.
+
+% and containing the edge $vw$ if there exists $x,y\in V(T)$ with $v\in B_x$, $w\in B_y$ such that the path in $T$ from $x$ to $y$ contains no branching node in its interior.  [TODO: Absolutely not true!] It is worth noting that the skeleton $\hat{H}$ of $H$ is a minor of $H$ since it can be obtained from $H$ by repeatedly contracting an edge $vw$ with $v\in V(\hat{H})$ and $w\not\in V(\hat{H})$ into $v$. By \cref{simple-minor-closed} this implies that, $\stw(\hat{H})\le\stw(H)$.
 
 % \begin{obs}\label{skeleton-size}
 %     Let $H$ be a (simple) $t$-tree and let $\mathcal{T}:=(B_x:x\in V(T))$ be a (simple) width-$t$ tree decomposition of $H$.  Then the $\mathcal{T}$-skeleton $\hat{H}$ of $H$ is also a (simple) $t$-tree and has a ($t$-simple) tree decomposition $(B_x:x\in V(\hat{T}))$ where $|\hat{T}|=|\Lambda(T)|$ and therefore $|\hat{H}|\le (t+1)|\Lambda(T)|$.
 % \end{obs}
 
-\begin{lem}\label{skeleton-colour}
-    Let $H$ be a graph having a width-$t$ tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$, and let $\hat{H}$ be the $\mathcal{T}$-skeleton of $H$.  Then $\lrn(H)\le \lrn(\hat{H}) + (\ell+1)t+1$.
-\end{lem}
+% \begin{lem}\label{skeleton-colour}
+%     Let $H$ be a graph having a width-$t$ tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$, and let $\hat{H}$ be the $\mathcal{T}$-skeleton of $H$.  Then $\lrn(H)\le 2(t+1)\lrn(\hat{H}) + (\ell+1)t+1$.
+% \end{lem}
 
 \begin{proof}
-    Let $\varphi:V(\hat{H})\to \{3t+2,\ldots,\trn(\hat{H})+3t+1\}$ be a 2-ranking of $\hat{H}$. The graph $P:=T-\Lambda(T)$ consists of disjoint paths and, for any edge $vw\in E(H-V(\hat{H}))$ there is a node $x\in V(P)$ such that $\{v,w\}\subseteq B_x$.  Therefore $(B_x:x\in V(P))$ is a width-$t$ path decomposition of $H-V(\hat{H})$, so $\pw(H-V(\hat{H}))\le t$.  Therefore, by \cref{pathwidth}, $H-V(\hat{H})$ has a 2-ranking $\varphi:V(H-V(\hat{H}))\to\{1,\ldots,(\ell+1)t+1\}$.  This gives the desired colouring $\varphi: V(H)\to\{1,\ldots,\trn(\hat{H})+(\ell+1)t+1\}$.  To see why $\varphi$ is an $\ell$-ranking of $H$ observe that for any path $u_0,\ldots,u_r$ with $r\le\ell$ $u_0,u_r\in V(\hat{H})$ and $u_i\in V(H-\hat{H})$ for some $i\in\{1,\ldots,r-1\}$, the edge $uw\in\hat{H}$, so $\varphi(u)\neq\varphi(w)$.
+    Let $\varphi:V(\hat{H})\to \{3t+2,\ldots,\lrn(\hat{H})+(\ell+1)t+1\}$ be an $\ell$-ranking of $\hat{H}$. The graph $P:=T-\Lambda(T)$ consists of disjoint paths and, for any edge $vw\in E(H-\hat{H}))$ there is a node $x\in V(P)$ such that $\{v,w\}\subseteq B_x$.  Therefore $(B_x:x\in V(P))$ is a width-$t$ path decomposition of $H-V(\hat{H})$, so $\pw(H-V(\hat{H}))\le t$.  Therefore, by \cref{pathwidth}, $H-V(\hat{H})$ has an $\ell$-ranking $\varphi:V(H-V(\hat{H}))\to\{1,\ldots,(\ell+1)t+1\}$.  This gives a colouring $\varphi: V(H)\to\{1,\ldots,\trn(\hat{H})+(\ell+1)t+1\}$.
+
+    We claim that $\varphi$ is an $\ell$-ranking of $\hat{H}$.  To see this, consider some path $u_0,\ldots,u_r$ with $\varphi(u_0)=\varphi(u_r)$.  We must show that $\varphi(u_i)>\varphi(u_0)$ for some $i\in\{1,\ldots,r-1\}$.
+    Without loss of generality, we may assume that $u_0,\ldots,u_r$ is an induced path. There are a few cases to consider:
+    \begin{compactenum}
+        \item $\{u_0,u_r\}\subseteq V(H-V(\hat{H}))$. There are two subcases:
+        \begin{compactenum}
+            \item $\{u_1,\ldots,u_r\}\subseteq V(H-V(\hat{H}))$.  In this case, $u_0,\ldots,r_r$ is a path in $H-V(\hat{H})$, so $\varphi(u_0)\neq \varphi(u_r)$ or $\varhpi(u_0)<\varphi(u_i)$ for some $i\in\{1,\ldots,r-1\}$ since $\varphi$ is an $\ell$-ranking of $H-V(\hat{H})$.
+
+            \item $v_i\in V(\hat{H})$ for some $i\in\{1,\ldots,r\}$. In this case, $\varphi(u_0)\le 3t+1 < \varphi(u_i)$.
+        \end{compactenum}
+        \item $\{u_0,u_r\}\subseteq V(\hat{H})$. We claim that, in this case $u_1,\ldots,u_r\in V(\hat{H})$.  To see this, consider the sequence of nodes $x_0,\ldots,x_r:=x_T(u_0),\ldots,x_T(u_r)$.  
+
+
+        Since $u_0$ and $u_r$ are in $V(\hat{H})$,
+    \end{compactenum}
 \end{proof}
 
 \subsubsection{The Meat}
@@ -657,7 +687,9 @@ then $H$ has an $\ell$-ranking $\varphi:V(H)\to a(k-c-1)-g$ such that $\varphi(v
     \end{align*}
     since $c+s\in O(c)$.
 
-    By \cref{weighted-separator} with the weight function $\xi(v):=n_v$, there exists $S\subset H$ of size $O(c)$ such that each component $X$ of $H-S$ is light.
+    By \cref{weighted-separator} with the weight function $\xi(v):=n_v$, there exists $S_T\subseteq V(T)$ of size $O(c)$ that defines $S:=\bigcup_{x\in V(T)} B_x$ such that each component $X$ of $H-S$ is light.  Consider the graph $I$ obtained from $H[S]$ by repeatedly finding an edge $vw$ with $v\in S$ and $w\not\in S$ and contracting $w$ into $v$.\footnote{In a  graph $G$, when \emph{contracting $w$ into $v$} we introduce the edges $\{vx: wx\in E(G)\}$ and then delete the vertex $w$.}  Observe that, if $G$ contains a path
+
+
      % Let $T'$ be the subtree of $T$ induced by $S_T$ and every $T$-ancestor of every node in $S_T$, i.e., $T':=T[\bigcup_{x\in S_T} V(P_T(x))]$. Let $H':=H[\bigcup x\in V(T') B_x]$.  Observe that $\mathcal{T'}:=(B_x:x\in V(T'))$ is a $t$-simple tree decomposition of $H'$, so $\stw(H')\le t$.
     For each $i\in\{0,\ldots,h\}$, $\stw(H[L_i])\le t-1$ (by \cref{simple-bfs-layers}) so let $\mathcal{T}_i:=(B_x:x\in V(T_i))$ be a $(t-1)$-simple tree decomposition of $H[L_i]$.  For each $v\in S\cap L_i$, let $x_v$ be a node in $T_i$ such that $v\in B_{x_v}$.  Let $S_{T_i}:\{x_v:v\in S\}$ and let $T_i'$ be the subtree of $T_i$ induced by each $T_i$-ancestor of each node in $S_{T_i}$, i.e., $T_i':=T_i[\bigcup_{x\in S_{T_i}} V(P_{T_i}(x))]$.
 
