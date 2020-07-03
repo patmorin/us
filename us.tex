@@ -36,7 +36,7 @@
 
 \newcommand{\ellt}{{\lfloor\ell/2\rfloor}}
 
-\title{\MakeUppercase{Asymptotically Optimal Vertex 2-Ranking of Planar Graphs}}
+\title{\MakeUppercase{Asymptotically Optimal Vertex Ranking of Planar Graphs}}
 \author{Prosenjit Bose, Vida Dujmović, Mehrnoosh Javarsineh, and Pat Morin}
 
 \newcommand{\trn}{\chi_2}
@@ -213,7 +213,13 @@ A graph $H$ is a \emph{$t$-tree} if $H$ is a clique of size at most $t$ or if it
 
 The recursive definition of $t$-trees implies that there is a permutation $\mathcal{R}:=(v_1,\ldots,v_n)$ of $V(H)$ such that, for each $i\in\{1,\ldots,n\}$, $H[N_H(v_i)\cap \{v_1,\ldots,v_{i-1}\}]$ is a clique of size $\min\{t,i-1\}$.  We call $\mathcal{R}$ a \emph{construction order} for $H$.  A construction order $\mathcal{R}$ induces a total order on $V(H)$ that we denote by $<_{\mathcal{R}}$.
 
+The following lemma is due to \citet{pilipczuk.siebertz:polynomial}.
+\begin{lem}[\cite{pilipczuk.siebertz:polynomial}]
+    Let $H$ be a $t$-tree with construction order $\mathcal{R}$.  Then, for each integer $\ell\ge 0$ and each $u_0\in V(H)$, the number of paths $u_0,\ldots,u_r$ in $H$ such that $r\le\ell$ and $u_0>_\mathcal{R} \cdots>_\mathcal{R} u_r$ is at most $\binom{\ell+t}{t}$.
+\end{lem}
+
 When a construction order $\mathcal{R}:=(v_1,\ldots,v_n)$ of $H$ is given, we call $C_{v_i}:=N_H(v_i)\cap \{v_1,\ldots,v_{i-1}\}$ the \emph{parent clique} of $v_i$ (with respect to the order $v_1,\ldots,v_n$).  The \emph{dominant parent} of $v_i$ (w.r.t. $v_1,\ldots,v_n$) is the vertex $v_j\in C_{v_i}$ that minimizes $j$. Note that the parent clique and dominant parent of any vertex $v_i$, is determined by the choice of the \emph{root clique} $v_1,\ldots,v_{t}$.
+
 
 For two graphs $H$ and $X$, an \emph{$X$-decomposition} of $H$ is a sequence $\mathcal{X}:=(B_x:x\in V(X))$ of subsets of $V(H)$ called \emph{bags} indexed by the nodes of $X$ and such that
  \begin{inparaenum}[(i)]
@@ -574,7 +580,30 @@ The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part
     Property~(iii) implies that we can therefore inductively colour $H-\{v_1,\ldots,v_m\}$ using colours $\{1,\ldots,(\ell+1)(\pw(H)-1)\}$ and then colour each $v_i$ with colour $(\ell+1)(\pw(H)-1)+1+i\bmod 3$.  Property~(i) ensures that this gives a 2-ranking of $H[v_1,\ldots,v_m]$.  Property~(ii) and the fact that $v_1,\ldots,v_m$ are coloured using larger colours than those used to colour $H-\{v_1,\ldots,v_m\}$ ensures that the resulting colouring is an $\ell$-ranking of $H$.
 \end{proof}
 
-A node $x$ in a tree $T$ is a \emph{branching node} if $x$ has degree at least 3.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$.  Let $H$ be a $t$-tree with a rooted canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$.  For each node $x\in V(T)$, define the parent-set $P_x:=\{x_T(v):v\in B_x\}$.  Define the $\mathcal{T}$-skeleton} of $H$ as the graph $H[\bigcup_{x\in\Lambda(T)}\bigcup_{y\in P_x} B_y]$.
+A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$.  Let $H$ be a $t$-tree with a construction order $\mathcal{R}$ that generates a canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$.  Define vertex sets $V_0\subseteq V_1\subseteq\cdots\subseteq V_t$ as follows:
+\begin{itemize}
+    \item $V_0:=\bigcup_{x\in\Lambda(T)} B_x$.
+    \item For each $i\in\{1,\ldots,t\}$, $V_i$ contains every vertex of every path $w_0,\ldots,w_q$ such that
+    \begin{compactenum}
+        \item $\{w_0,w_q\}\subseteq V_{i-1}$;
+        \item $q\in\{0,\ldots,\ell\}$; and
+        \item $w_0\prec_\mathcal{T} w_1\prec_{\mathcal{T}} \cdots \prec_\mathcal{T} w_q$.
+    \end{compactenum}
+\end{itemize}
+
+\begin{lem}
+    There exists a function $f:\N^2\to\N$ such that
+    $|V_t|\le f(t,\ell)\cdot |\Lambda(T)|
+\end{lem}
+
+
+
+We define the $(\mathcal{T},\ell)$-skeleton $\hat{H}$ of $H$ as the subgraph of $H$ induced by each vertex $w_r$ such that
+\begin{inparalist}[(i)]
+    \item $r\le\ell$,
+    \item $w_0,\ldots,w_r$ is a path in $H$ with $w_0>_\mathcal{R}\cdots >_\mathcal{R} w_r$;
+    \item $w_0\in \bigcup_{x\in\Lamba(T)} B_x$.
+\end{enumerate}
 
 % ; and
      % \item the \emph{closed $\mathcal{T}$-skeleton} $\hat{H}^+$ with vertex set $V(\hat{H}_\mathcal{T}^+):=V(\hat{H}_\mathcal{T})$ and that contains an edge $vw$ if and only if there exists $x,y\in \Lambda(T)$ with $v\in B_x$, $w\in B_y$ and the path in $T$ from $x$ to $y$ contains no other branching node of $T$.
@@ -607,11 +636,21 @@ A node $x$ in a tree $T$ is a \emph{branching node} if $x$ has degree at least 3
     \begin{compactenum}
         \item $\{u_0,u_r\}\subseteq V(H-V(\hat{H}))$. There are two subcases:
         \begin{compactenum}
-            \item $\{u_1,\ldots,u_r\}\subseteq V(H-V(\hat{H}))$.  In this case, $u_0,\ldots,r_r$ is a path in $H-V(\hat{H})$, so $\varphi(u_0)\neq \varphi(u_r)$ or $\varhpi(u_0)<\varphi(u_i)$ for some $i\in\{1,\ldots,r-1\}$ since $\varphi$ is an $\ell$-ranking of $H-V(\hat{H})$.
+            \item $\{u_1,\ldots,u_r\}\subseteq V(H-V(\hat{H}))$.  In this case, $u_0,\ldots,r_r$ is a path in $H-V(\hat{H})$, so $\varphi(u_0)\neq \varphi(u_r)$ or $\varphi(u_0)<\varphi(u_i)$ for some $i\in\{1,\ldots,r-1\}$ since $\varphi$ is an $\ell$-ranking of $H-V(\hat{H})$.
 
             \item $v_i\in V(\hat{H})$ for some $i\in\{1,\ldots,r\}$. In this case, $\varphi(u_0)\le 3t+1 < \varphi(u_i)$.
         \end{compactenum}
-        \item $\{u_0,u_r\}\subseteq V(\hat{H})$. We claim that, in this case $u_1,\ldots,u_r\in V(\hat{H})$.  To see this, consider the sequence of nodes $x_0,\ldots,x_r:=x_T(u_0),\ldots,x_T(u_r)$.  
+        \item $\{u_0,u_r\}\subseteq V(\hat{H})$. We claim that, in this case $u_1,\ldots,u_r\in V(\hat{H})$. Otherwise, there exists $0\le i\le j-2\le r$ such that $\{u_i,u_j\}\subseteq V(\hat{H})$ but $\{u_{i+1},\ldots,u_{j-1}\subseteq V(H-\hat{H})$.  Since $u_i\in V(\hat{H})$, there exists a branching node $x$ of $T$ and a path $w_0,\ldots,w_p$ such that $w\in B_x$ and $w_0>_\mathcal{R}\cdots>_\mathcal{R} w_p$.
+
+
+        some $u\in B_x$ such that $u_0
+
+
+        Consider the sequence $x_i,\ldots,x_j:=x_T(u_i),\ldots,x_T(u_j)$.
+
+
+
+        To see this, consider the sequence of nodes $x_0,\ldots,x_r:=x_T(u_0),\ldots,x_T(u_r)$.
 
 
         Since $u_0$ and $u_r$ are in $V(\hat{H})$,
