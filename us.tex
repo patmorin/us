@@ -213,13 +213,7 @@ A graph $H$ is a \emph{$t$-tree} if $H$ is a clique of size at most $t$ or if it
 
 The recursive definition of $t$-trees implies that there is a permutation $\mathcal{R}:=(v_1,\ldots,v_n)$ of $V(H)$ such that, for each $i\in\{1,\ldots,n\}$, $H[N_H(v_i)\cap \{v_1,\ldots,v_{i-1}\}]$ is a clique of size $\min\{t,i-1\}$.  We call $\mathcal{R}$ a \emph{construction order} for $H$.  A construction order $\mathcal{R}$ induces a total order on $V(H)$ that we denote by $<_{\mathcal{R}}$.
 
-The following lemma is due to \citet{pilipczuk.siebertz:polynomial}.
-\begin{lem}[\cite{pilipczuk.siebertz:polynomial}]
-    Let $H$ be a $t$-tree with construction order $\mathcal{R}$.  Then, for each integer $\ell\ge 0$ and each $u_0\in V(H)$, the number of paths $u_0,\ldots,u_r$ in $H$ such that $r\le\ell$ and $u_0>_\mathcal{R} \cdots>_\mathcal{R} u_r$ is at most $\binom{\ell+t}{t}$.
-\end{lem}
-
 When a construction order $\mathcal{R}:=(v_1,\ldots,v_n)$ of $H$ is given, we call $C_{v_i}:=N_H(v_i)\cap \{v_1,\ldots,v_{i-1}\}$ the \emph{parent clique} of $v_i$ (with respect to the order $v_1,\ldots,v_n$).  The \emph{dominant parent} of $v_i$ (w.r.t. $v_1,\ldots,v_n$) is the vertex $v_j\in C_{v_i}$ that minimizes $j$. Note that the parent clique and dominant parent of any vertex $v_i$, is determined by the choice of the \emph{root clique} $v_1,\ldots,v_{t}$.
-
 
 For two graphs $H$ and $X$, an \emph{$X$-decomposition} of $H$ is a sequence $\mathcal{X}:=(B_x:x\in V(X))$ of subsets of $V(H)$ called \emph{bags} indexed by the nodes of $X$ and such that
  \begin{inparaenum}[(i)]
@@ -243,6 +237,35 @@ The following observation relates construction orders, orders induced by BFS lay
     Let $H$ be a $t$-tree with construction order $\mathcal{R}:=(v_1,\ldots,v_n)$ that generates a canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$, and let $\mathcal{L}:=(L_0,\ldots,L_m)$ be a BFS layering of $H$ with $L_0:=\{v_1,\ldots,v_{\min\{t,n\}}\}$.  For any $v,w\in V(H)$,
     if $v\prec_{\mathcal{T}} w$ or $v\prec_{\mathcal{L}} w$ then $v<_{\mathcal{R}} w$.
 \end{obs}
+
+We say that a path $w_0,\ldots,w_q$ in $H$ is \emph{$\mathcal{T}$-downward} if $w_0\succ_\mathcal{T}w_{1}\succ_\mathcal{T}\cdots\succ_\mathcal{T} w_q$. If $w_0,\ldots,w_q$ is $\mathcal{T}$-downward then $w_q,\ldots,w_0$ is \emph{$\mathcal{T}$-upward}.  The following lemma, due to \citet{pilipczuk.siebertz:polynomial} bounds the number of vertices that can be reached from $v\in V(H)$ by $\mathcal{T}$-upward paths of length at most $\ell$.
+
+\begin{lem}[\cite{pilipczuk.siebertz:polynomial}]\label{upward-count}
+    Let $H$ be a $t$-tree with a construction order $\mathcal{R}$ generating a canonical tree decomposition $\mathcal{T}$.  Then, for each integer $\ell\ge 0$ and each $v\in V(H)$, the number of vertices in $H$ that can be reached by $\mathcal{T}$-upward paths beginning at $v$ is at most $\binom{\ell+t}{t}$.
+\end{lem}
+
+A path $u_0,\ldots,u_r$ in $H$ is \emph{$\mathcal{T}$-unimodal} if there exists $m\in\{0,\ldots,r\}$ such that $u_0,\ldots,u_m$ is $\mathcal{T}$-upward and $u_{m+1},\ldots,u_r$ is $\mathcal{T}$-downward.
+
+\begin{lem}\label{induced-unimodal}
+    Let $H$ be a $t$-tree with a construction order $\mathcal{R}$ generating a canonical tree decomposition $\mathcal{T}$ and let $u_0,\ldots,u_r$ be an induced path in $H$.  Then $P$ is $\mathcal{T}$-unimodal.
+\end{lem}
+
+\begin{proof}
+    For the sake of contradiction, suppose otherwise.  First note that $x_T:V(H)\to V(T)$ is bijective, except for vertices in $B_r$.  Next observe that, for any edge $u_iu_{i+1}\in E(H)$, $x_T(u_i)\preceq_T x_T(u_{i+1})$ or $x_T(u_{i+1})\preceq_T x_T(u_{i})$.  There are a few cases to consider:
+    \begin{enumerate}
+        \item There exists $i\in\{1,\ldots,r-1\}$ such that $x_T(u_{i-1})= x_T(u_i)= u_{i+1}$.  But this implies the existence of the edge $u_{i-1}u_i$, a contradiction.
+
+        \item There exists $i\in\{1,\ldots,r-1\}$ such that $x_T(u_{i-1})\prec_\mathcal{T} x_T(u_i)= u_{i+1}$.  This implies that $x_T(u_{i-1})=x_T(u_{i})=r$.  But this contradicts $x_T(u_{i-1})\prec_\mathcal{T} x_T(u_i)$ since $r\prec_T x$ for every $x\in V(T)$.
+
+        \item There exists $i\in\{1,\ldots,r-1\}$ such that $x_T(u_{i-1})= x_T(u_i)\succ_\mathcal{T} u_{i+1}$.  This is a contradiction for the same reason as the previous case.
+
+        \item There exists $i\in\{1,\ldots,r-1\}$ such that $x_T(u_{i-1}) \prec_\mathcal{T} x_T(u_i)\succ_\mathcal{T} u_{i+1}$.  This implies that $x_T(u_{i-1})\preceq_T x_T(u_{i+1}) \prec_T(u_{i})$ or that
+        $x_T(u_{i+1})\prec_T x_T(u_{i-1}) \prec_T(u_{i})$.  In the former case, the presence of the edge $u_{i-1}u_i$ implies the existence of the edge $u_iu_{i+1}$. In the latter case, the presence of the edge $u_{i}u_{i+1}$ implies the existence of the edge $u_{i+1}u_i$.
+    \end{enumerate}
+\end{proof}
+
+
+
 
 \begin{obs}\label{dominant-parent}
     Let $H$ be a $t$-tree with construction order $\mathcal{R}:=(v_1,\ldots,v_n)$ and let $\mathcal{L}:=(L_0,\ldots,L_m)$ be a BFS layering of $H$ with $L_0:=\{v_1,\ldots,v_{\min\{t,n\}}\}$.  Then, for any $i\in\{1,\ldots,m\}$ and any vertex $v\in L_{i}$ with dominant parent $p$, $p\in L_{i-1}$.
@@ -580,53 +603,63 @@ The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part
     Property~(iii) implies that we can therefore inductively colour $H-\{v_1,\ldots,v_m\}$ using colours $\{1,\ldots,(\ell+1)(\pw(H)-1)\}$ and then colour each $v_i$ with colour $(\ell+1)(\pw(H)-1)+1+i\bmod 3$.  Property~(i) ensures that this gives a 2-ranking of $H[v_1,\ldots,v_m]$.  Property~(ii) and the fact that $v_1,\ldots,v_m$ are coloured using larger colours than those used to colour $H-\{v_1,\ldots,v_m\}$ ensures that the resulting colouring is an $\ell$-ranking of $H$.
 \end{proof}
 
-A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$.  Let $H$ be a $t$-tree with a construction order $\mathcal{R}$ that generates a canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$.  Define vertex sets $V_0\subseteq V_1\subseteq\cdots\subseteq V_t$ as follows:
+A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$.  Let $H$ be a $t$-tree with a construction order $\mathcal{R}$ that generates a canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$.  Define a sequence of pairwise-disjoint vertex sets $V_0,\ldots V_t$ as follows:
 \begin{itemize}
     \item $V_0:=\bigcup_{x\in\Lambda(T)} B_x$.
-    \item For each $i\in\{1,\ldots,t\}$, $V_i$ contains every vertex of every path $w_0,\ldots,w_q$ such that
-    \begin{compactenum}
-        \item $\{w_0,w_q\}\subseteq V_{i-1}$;
-        \item $q\in\{0,\ldots,\ell\}$; and
-        \item $w_0\prec_\mathcal{T} w_1\prec_{\mathcal{T}} \cdots \prec_\mathcal{T} w_q$.
-    \end{compactenum}
-\end{itemize}
 
-\begin{lem}
-    There exists a function $f:\N^2\to\N$ such that
-    $|V_t|\le f(t,\ell)\cdot |\Lambda(T)|
+    \item For each $i\in\{1,\ldots,t\}$, $V_i$ contains $w_1,\ldots,w_{q-1}$ for each $\mathcal{T}$-downward path $w_0,\ldots,w_q$ such that $q\le\ell$; $\{w_0,w_q\}\subseteq \bigcup_{j=0}^{i-1} V_j$; and $w_1,\ldots,w_{q-1}\cap \bigcup_{j=0}^{i-1} V_i=\emptyset$
+\end{itemize}
+We call $H[\bigcup_{i=0}^t V_t]$ the $(\mathcal{T},\ell)$-skeleton of $H$ and we will always denote it by $\hat{H}$.
+
+\begin{lem}\label{skeleton-size}
+    $|\bigcup_{j=0}^t V_t|\le \binom{t+\ell}{t}^t\cdot (t+1)\cdot|\Lambda(T)|$.
 \end{lem}
 
+\begin{proof}
+    By \cref{upward-count}, $|\bigcup_{j=0}^{i} V_j|\le \binom{t+\ell}{t}\cdot |\bigcup_{j=0}^{i-1} V_{j}|$, so $|\bigcup_{j=0}^{t} V_j|\le \binom{t+\ell}{t}^t\cdot|V_0| \le \binom{t+\ell}{t}^t\cdot (t+1)\cdot|\Lambda(T)|$.
+\end{proof}
+
+\begin{lem}\label{skeleton-paths}
+    Let $w_0,\ldots,w_q$ be an induced $\mathcal{T}$-downward path in $H$ of length at most $\ell$ and with endpoints $\{u_0,u_r\}\subseteq V_t$. Then $\{u_1,\ldots,u_{r-1}\}\subseteq V_t$.
+\end{lem}
+
+\begin{proof}
+    % Let $H_0:=H[V_0]$ and, for each $i\in\{1,\ldots,t+1\}$, let $H_i$ denote the subgraph of $H$ obtained by removing
+    % \begin{enumerate}
+    %     \item every edge of $H[V_{i-1}]$;
+    %
+    %     \item any vertex $v\in V(H-V_{i-1})$ that is not part of some induced $\mathcal{T}$-upward path, in $H$, of length at most $\ell$ with endpoints in $V_{i-1}$.
+    % \end{enumerate}
+    % By definition, $V(H_i)=V_i$.
+
+    Let $w_0,\ldots,w_q$ be a path satisfying the second criteria.
+    % $\mathcal{T}$-downward path in $H$ of length $q\le\ell$ with $\{w_0,w_q\}\subseteq \bigcup_{j=0}^{i-1} V_{j}$ and $w_1,\ldots,w_{q-1}\in V_{i}\setminus \bigcup_{j=0}^{i-1} V_{j}$.
+    and let $x_0,\ldots,x_q:=x_T(u_0),\ldots,x_T(u_q)$.   We claim that, for each $i\in\{1,\ldots,q-1\}$, $|B_{x_i}\setminus \bigcup_{j=0}^{i-1} V_{j}|\le t+2-i$ and prove this by induction on $i$.  The base case $i=1$ is trivial, since $\mathcal{T}$ is a width-$t$ decomposition, so $B_x\le t+1$ for each $x\in V(T)$.
+
+    Now assume $i\ge 2$.  Since $w_0,w_q\in \bigcup_{j=0}^{i-1} V_{j}$ but $w,
 
 
-We define the $(\mathcal{T},\ell)$-skeleton $\hat{H}$ of $H$ as the subgraph of $H$ induced by each vertex $w_r$ such that
-\begin{inparalist}[(i)]
-    \item $r\le\ell$,
-    \item $w_0,\ldots,w_r$ is a path in $H$ with $w_0>_\mathcal{R}\cdots >_\mathcal{R} w_r$;
-    \item $w_0\in \bigcup_{x\in\Lamba(T)} B_x$.
-\end{enumerate}
+    Since $w_0,\ldots,w_q$ is $\mathcal{T}$-downward, $x_0\prec_T\cdots\prec_T x_q$.
 
-% ; and
-     % \item the \emph{closed $\mathcal{T}$-skeleton} $\hat{H}^+$ with vertex set $V(\hat{H}_\mathcal{T}^+):=V(\hat{H}_\mathcal{T})$ and that contains an edge $vw$ if and only if there exists $x,y\in \Lambda(T)$ with $v\in B_x$, $w\in B_y$ and the path in $T$ from $x$ to $y$ contains no other branching node of $T$.
- % \end{itemize}
- % In words, $H[S_T]^+$ contains every path between every pair of vertices $v,w\in V(H)$.
- % It is worth noting that $\hat{H}_\mathcal{T}$ is a subgraph of $H$ so $\stw(\hat{H}) \le \stw(H)$, but this is not necessarily the case for $\hat{H}^+$.  Indeed, $\hat{H}^+$ may contain a complete bipartite graphs of size $2(t+1)$, which has treewidth $t+1$.
+
+    Consider some pair of vertices $v,w\in V_{i-1}$ with $x_T(v)\prec_T x_T(w)$
+
+
+    We claim that, for any two vertices $v,w\in V_{i-1}$ with $w\prec_\mathcal{T} v$, $H_i$ contains at most $t-i-1$ internally vertex-disjoint $\mathcal{T}$-upward paths from $v$ to $w$ and prove this by induction on $t$.  The base case, $t=1$ is immediate...
+
+    Next, consider two vertices $v,w\in V_{i-1}$
+
+
+    , since $H_1$ is a subgraph of the $t$-tree $H$ and every $t$-tree is not $(t+1)$-vertex connected.
+
+    We claim that $\tw(H_i)\le t-i+1$ and, more specifically, $(B_x\cap V_i:x\in V(T))$ is a width-$(t-i+1)$ tree decomposition of $H_i$.  To see why this is so, consider the tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$.
+
+\end{proof}
+
 
 \begin{lem}\label{skeleton-colour}
      For any simple $t$-tree $H$ with a canonical decomposition $\mathcal{T}:=(B_x:x\in V(T))$ defining a $\mathcal{T}$-skeleton $\hat{H}$,  $\lrn(H)\in O(\lrn(\hat{H}))$.
 \end{lem}
-
-
- % we define the $\mathcal{T}$-skeleton $\hat{H}$ of $H$ as the induced subgraph $H[\bigcup_{x\in \Lambda(T)} B_x]$.
-
-% and containing the edge $vw$ if there exists $x,y\in V(T)$ with $v\in B_x$, $w\in B_y$ such that the path in $T$ from $x$ to $y$ contains no branching node in its interior.  [TODO: Absolutely not true!] It is worth noting that the skeleton $\hat{H}$ of $H$ is a minor of $H$ since it can be obtained from $H$ by repeatedly contracting an edge $vw$ with $v\in V(\hat{H})$ and $w\not\in V(\hat{H})$ into $v$. By \cref{simple-minor-closed} this implies that, $\stw(\hat{H})\le\stw(H)$.
-
-% \begin{obs}\label{skeleton-size}
-%     Let $H$ be a (simple) $t$-tree and let $\mathcal{T}:=(B_x:x\in V(T))$ be a (simple) width-$t$ tree decomposition of $H$.  Then the $\mathcal{T}$-skeleton $\hat{H}$ of $H$ is also a (simple) $t$-tree and has a ($t$-simple) tree decomposition $(B_x:x\in V(\hat{T}))$ where $|\hat{T}|=|\Lambda(T)|$ and therefore $|\hat{H}|\le (t+1)|\Lambda(T)|$.
-% \end{obs}
-
-% \begin{lem}\label{skeleton-colour}
-%     Let $H$ be a graph having a width-$t$ tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$, and let $\hat{H}$ be the $\mathcal{T}$-skeleton of $H$.  Then $\lrn(H)\le 2(t+1)\lrn(\hat{H}) + (\ell+1)t+1$.
-% \end{lem}
 
 \begin{proof}
     Let $\varphi:V(\hat{H})\to \{3t+2,\ldots,\lrn(\hat{H})+(\ell+1)t+1\}$ be an $\ell$-ranking of $\hat{H}$. The graph $P:=T-\Lambda(T)$ consists of disjoint paths and, for any edge $vw\in E(H-\hat{H}))$ there is a node $x\in V(P)$ such that $\{v,w\}\subseteq B_x$.  Therefore $(B_x:x\in V(P))$ is a width-$t$ path decomposition of $H-V(\hat{H})$, so $\pw(H-V(\hat{H}))\le t$.  Therefore, by \cref{pathwidth}, $H-V(\hat{H})$ has an $\ell$-ranking $\varphi:V(H-V(\hat{H}))\to\{1,\ldots,(\ell+1)t+1\}$.  This gives a colouring $\varphi: V(H)\to\{1,\ldots,\trn(\hat{H})+(\ell+1)t+1\}$.
@@ -636,24 +669,43 @@ We define the $(\mathcal{T},\ell)$-skeleton $\hat{H}$ of $H$ as the subgraph of 
     \begin{compactenum}
         \item $\{u_0,u_r\}\subseteq V(H-V(\hat{H}))$. There are two subcases:
         \begin{compactenum}
-            \item $\{u_1,\ldots,u_r\}\subseteq V(H-V(\hat{H}))$.  In this case, $u_0,\ldots,r_r$ is a path in $H-V(\hat{H})$, so $\varphi(u_0)\neq \varphi(u_r)$ or $\varphi(u_0)<\varphi(u_i)$ for some $i\in\{1,\ldots,r-1\}$ since $\varphi$ is an $\ell$-ranking of $H-V(\hat{H})$.
+            \item $\{u_1,\ldots,u_r\}\subseteq V(H-V(\hat{H}))$.  In this case, $u_0,\ldots,r_r$ is a path in $H-V(\hat{H})$, so  $\varphi(u_0)<\varphi(u_i)$ for some $i\in\{1,\ldots,r-1\}$ since $\varphi$ is an $\ell$-ranking of $H-V(\hat{H})$.
 
             \item $v_i\in V(\hat{H})$ for some $i\in\{1,\ldots,r\}$. In this case, $\varphi(u_0)\le 3t+1 < \varphi(u_i)$.
         \end{compactenum}
-        \item $\{u_0,u_r\}\subseteq V(\hat{H})$. We claim that, in this case $u_1,\ldots,u_r\in V(\hat{H})$. Otherwise, there exists $0\le i\le j-2\le r$ such that $\{u_i,u_j\}\subseteq V(\hat{H})$ but $\{u_{i+1},\ldots,u_{j-1}\subseteq V(H-\hat{H})$.  Since $u_i\in V(\hat{H})$, there exists a branching node $x$ of $T$ and a path $w_0,\ldots,w_p$ such that $w\in B_x$ and $w_0>_\mathcal{R}\cdots>_\mathcal{R} w_p$.
+        \item $\{u_0,u_r\}\subseteq V(\hat{H})$. In this case, \cref{induced-unimodal} implies that $u_0,\ldots,u_r$ is $\mathcal{T}$-unimodal, so  \cref{skeleton-paths} implies that $u_0,\ldots,u_r\in V(\hat{H})$.
+        % Since $u_0,\ldots,u_r$ is an induced path in $H$, \cref{induced-unimodal} implies that there exists $m\in\{0,\ldots,r-1\}$ such that $u_0,\ldots,u_m$ is $\mathcal{T}$-upward and $u_{m+1},\ldots,u_m$ is $\mathcal{T}$-downward. If $m\not\in\{0,m-1\}$, then $x_T(u_m)$ is a branching node of $T$, so $u_m\in V_0\subeteq V_{t-1}$.
+        Therefore $u_0,\ldots,r_r$ is a path in $\hat{H}$, so  $\varphi(u_0)<\varphi(u_i)$ for some $i\in\{1,\ldots,r-1\}$ since $\varphi$ is an $\ell$-ranking of $\hat{H}$.
+        %
+        %   Indeed,
+        %
+        %
+        % Since $u_0,\ldots,u_r$ is an induced path in $H$, \cref{induced-unimodal} implies that there exists $m\in\{0,\ldots,r-1\}$ such that $u_0,\ldots,u_m$ is $\mathcal{T}$-upward and $u_{m+1},\ldots,u_m$ is $\mathcal{T}$-downward. If $m\not\in\{0,m-1\}$, then $x_T(u_m)$ is a branching node of $T$,
+        %
+        %
+        %
+        %
+        % This follows from the next claim and \cref{upward-paths}.
+        % To see this, first observe that, because $u_0,\ldots,u_r$ is an induced path, $u_0,\ldots,u_r$ is \emph{$\mathcal{T}$-unimodal}, i.e., There exists $m\in\{1,\ldots,r\}$ such that $u_0,\ldots,u_m$ is $\mathcal{T}$-upward and $u_m,\ldots,u_r$ is $\mathcal{T}$-downward.
+        % %
+        %
+        % $u_m\prec_\mathcal{T} u_{m-1}\prec_\mathcal{T}\cdots\prec_\mathcal{T} u_0$ and $u_m\prec_{T}u_{m+1}\prec_\mathcal{T}\cdots\prec_\mathcal{T} u_r$.
 
-
-        some $u\in B_x$ such that $u_0
-
-
-        Consider the sequence $x_i,\ldots,x_j:=x_T(u_i),\ldots,x_T(u_j)$.
-
-
-
-        To see this, consider the sequence of nodes $x_0,\ldots,x_r:=x_T(u_0),\ldots,x_T(u_r)$.
-
-
-        Since $u_0$ and $u_r$ are in $V(\hat{H})$,
+        %
+        % Otherwise, there exists $0\le i\le j-2\le r$ such that $\{u_i,u_j\}\subseteq V(\hat{H})$ but $\{u_{i+1},\ldots,u_{j-1}\subseteq V(H-\hat{H})$.  Since $u_i\in V(\hat{H})$, there exists a branching node $x$ of $T$ and a path $w_0,\ldots,w_p$ such that $w\in B_x$ and $w_0>_\mathcal{R}\cdots>_\mathcal{R} w_p$.
+        %
+        %
+        % some $u\in B_x$ such that $u_0
+        %
+        %
+        % Consider the sequence $x_i,\ldots,x_j:=x_T(u_i),\ldots,x_T(u_j)$.
+        %
+        %
+        %
+        % To see this, consider the sequence of nodes $x_0,\ldots,x_r:=x_T(u_0),\ldots,x_T(u_r)$.
+        %
+        %
+        % Since $u_0$ and $u_r$ are in $V(\hat{H})$,
     \end{compactenum}
 \end{proof}
 
