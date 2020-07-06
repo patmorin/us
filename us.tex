@@ -251,7 +251,7 @@ A path $u_0,\ldots,u_r$ in $H$ is \emph{$\mathcal{T}$-unimodal} if there exists 
 \end{lem}
 
 \begin{proof}
-    For the sake of contradiction, suppose otherwise.  First note that $x_T:V(H)\to V(T)$ is bijective, except for vertices in $B_r$.  Next observe that, for any edge $u_iu_{i+1}\in E(H)$, $x_T(u_i)\preceq_T x_T(u_{i+1})$ or $x_T(u_{i+1})\preceq_T x_T(u_{i})$.  There are a few cases to consider:
+    For the sake of contradiction, suppose otherwise.  First note that $x_T:V(H)\to V(T)$ is bijective, except for vertices in $B_r$ (each $v\in B_r$ has $x_T(v)=r$).  Next observe that, for any edge $u_iu_{i+1}\in E(H)$, $x_T(u_i)\preceq_T x_T(u_{i+1})$ or $x_T(u_{i+1})\preceq_T x_T(u_{i})$.  There are a few cases to consider:
     \begin{enumerate}
         \item There exists $i\in\{1,\ldots,r-1\}$ such that $x_T(u_{i-1})= x_T(u_i)= u_{i+1}$.  But this implies the existence of the edge $u_{i-1}u_i$, a contradiction.
 
@@ -262,6 +262,7 @@ A path $u_0,\ldots,u_r$ in $H$ is \emph{$\mathcal{T}$-unimodal} if there exists 
         \item There exists $i\in\{1,\ldots,r-1\}$ such that $x_T(u_{i-1}) \prec_\mathcal{T} x_T(u_i)\succ_\mathcal{T} u_{i+1}$.  This implies that $x_T(u_{i-1})\preceq_T x_T(u_{i+1}) \prec_T(u_{i})$ or that
         $x_T(u_{i+1})\prec_T x_T(u_{i-1}) \prec_T(u_{i})$.  In the former case, the presence of the edge $u_{i-1}u_i$ implies the existence of the edge $u_iu_{i+1}$. In the latter case, the presence of the edge $u_{i}u_{i+1}$ implies the existence of the edge $u_{i+1}u_i$.
     \end{enumerate}
+    If none of the preceding four cases occurs, then $u_0,\ldots,u_r$ is $\mathcal{T}$-unimodal.
 \end{proof}
 
 
@@ -603,24 +604,74 @@ The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part
     Property~(iii) implies that we can therefore inductively colour $H-\{v_1,\ldots,v_m\}$ using colours $\{1,\ldots,(\ell+1)(\pw(H)-1)\}$ and then colour each $v_i$ with colour $(\ell+1)(\pw(H)-1)+1+i\bmod 3$.  Property~(i) ensures that this gives a 2-ranking of $H[v_1,\ldots,v_m]$.  Property~(ii) and the fact that $v_1,\ldots,v_m$ are coloured using larger colours than those used to colour $H-\{v_1,\ldots,v_m\}$ ensures that the resulting colouring is an $\ell$-ranking of $H$.
 \end{proof}
 
-A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$.  Let $H$ be a $t$-tree with a construction order $\mathcal{R}$ that generates a canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$.  Define a sequence of pairwise-disjoint vertex sets $V_0,\ldots V_t$ as follows:
-\begin{itemize}
-    \item $V_0:=\bigcup_{x\in\Lambda(T)} B_x$.
+We say that a path decomposition $\mathcal{P}:=(B_x:x\in V(P))$ is \emph{normal} if, for each edge $xy\in E(P)$, $|B_x\setminus B_y|\le 1$ and $|B_y\setminus B_x|\le 1$.  We say that a graph $G$ is \emph{edge-maximal} with respect to an $T$-decomposition $\mathcal{T}:=(B_x:x\in V(T))$ if, for each $x\in V(T)$, $B_x$ forms a clique in $G$.
 
-    \item For each $i\in\{1,\ldots,t\}$, $V_i$ contains $w_1,\ldots,w_{q-1}$ for each $\mathcal{T}$-downward path $w_0,\ldots,w_q$ such that $q\le\ell$; $\{w_0,w_q\}\subseteq \bigcup_{j=0}^{i-1} V_j$; and $w_1,\ldots,w_{q-1}\cap \bigcup_{j=0}^{i-1} V_i=\emptyset$
-\end{itemize}
-We call $H[\bigcup_{i=0}^t V_t]$ the $(\mathcal{T},\ell)$-skeleton of $H$ and we will always denote it by $\hat{H}$.
 
-\begin{lem}\label{skeleton-size}
-    $|\bigcup_{j=0}^t V_t|\le \binom{t+\ell}{t}^t\cdot (t+1)\cdot|\Lambda(T)|$.
+\begin{lem}
+    Let $P=x_1,\ldots,x_m$ be a path, let $G$ be a graph that is edge-maximal with respect to a width-$t$ normal $P$-decomposition $\mathcal{P}:=(B_x:x\in V(P))$ of $G$.  Then there exists a set $U$, $B_{x_1}\cup B_{x_m}\subseteq U \subseteq V(G)$, $|U|=O(\ell^t)$, such that, if $w_0,\ldots,w_q$ is an induced $\mathcal{P}$-downward path of length at most $\ell$ in $G$, $w_0\in B_{x_1}$, and $w_q\in B_{x_m}$, then $\{w_0,\ldots,w_q\}\subseteq U$.
 \end{lem}
 
 \begin{proof}
-    By \cref{upward-count}, $|\bigcup_{j=0}^{i} V_j|\le \binom{t+\ell}{t}\cdot |\bigcup_{j=0}^{i-1} V_{j}|$, so $|\bigcup_{j=0}^{t} V_j|\le \binom{t+\ell}{t}^t\cdot|V_0| \le \binom{t+\ell}{t}^t\cdot (t+1)\cdot|\Lambda(T)|$.
+    Assume, without loss of generality, that $G$ is edge maximal with respect to $\mathcal{P}$ in the sense that the elements of $B_x$ form a clique in $G$, for each $x\in V(P)$.    For each $v\in V(G)$, let $r(v):=\max\{i\in\{1,\ldots,m\}:v\in B_i\}$.
+
+    The proof is by induction on $t$. In the base case, $t=0$, $G$ has no edges and the lemma is satisfied by taking $U:=B_{x_1}\cup B_{x_m}$.  Now assume that $t\ge 1$. To eliminate a level of subscripts, let $x_i=i$ for each $i\in\{1,\ldots,m\}$.
+
+    Consider a \emph{greedy path} $u_0,\ldots,q_p$ that begins at $u_0\in B_{1}$ and ends at $u_0\in B_{m}$ and is defined as follows: $u_0$ is a vertex in $B_{1}$ that maximizes $r(u_0)$.  For $i\ge 1$, $u_i$ is a vertex in $B_{r(u_{i-1})}$ that maximizes $r(u_i)$.  If $u_p\not\in B_{x_m}$, then $G$ is disconnected and $B_{x_1}$ and $B_{x_m}$ are in different components of $G$, in which case the lemma is trivially satisified by taking $U:=B_{1}\cup B_{m}$.
+
+    Otherwise, it is well known that $u_0,\ldots,u_p$ is a shortest path from $B_{1}$ to $B_{m}$, i.e., $p=\min\{d_H(w_0,w_q): w_0\in B_1,\, w_q\in B_m\}$.  Therefore, if $p>\ell$, the lemma is again trivially satisified by taking $U:=B_{x_1}\cup B_{x_m}$.
+
+    Otherwise, $u_0,\ldots,u_p$ defines a sequence $y_0,y_1,\ldots,y_p$ of nodes in $P$, where $y_0:=x_1$ and $y_{i}:=r(u_{i-1})$ for each $i\in\{1,\ldots,p\}$.
+    Observe that $(B_x\setminus \{u_0,\ldots,u_p\}:x\in V(P))$ is a width-$(t-1)$ path decomposition of $G-\{u_0,\ldots,u_p\}$.
+
+    Observe that, since $\mathcal{P}$ is a normal decomposition of $G$, $B_{y_{i-1}}\cap B_{y_{i}}=\{u_{i-1}\}$ for each $i\in\{1,\ldots.p\}$.  Let $G'$ be the graph obtained from $G-\{u_0,\ldots,u_p\}$ by contracting $B_{y_i}\setminus\{u_0,\ldots,u_p\}$ to obtain a vertex $z_i$ for each $i\in\{0,\ldots,p\}$ and let $(B'_x:x\in v(P))$ be the natural path decomposition of $G'$. By the observation at the beginning of this paragraph $z_0,\ldots,z_p$ are distinct.
+
+    For each $i\in\{1,\ldots,p\}$, apply the lemma inductively to the graph $G'_i:=G'[B_{y_{i-1}}\cup\cdots\cup B_{y_i}]$ to obtain a set $U'_i$ of size $O(\ell^{t-1})$ that satisfies the requirements of the lemma for the graph $G'_i$ and let $U_i:=U'_i\setminus \{z_{i-1},z_i\}$.  Finally, let $U:=\bigcup_{j=0}^p B_{y_j}\cup\bigcup_{j=1}^p U_j$.
+
+    The size of $U$ is at most $2t+O(p\ell^{t-1})\le 2t+O(\ell^{t})=O(\ell^{t})$.  Now, consider some induced $\mathcal{P}$-downward path $W:=w_0,\ldots,w_q$ of length at most $\ell$ with $w_0\in B_1$ and $w_q\in B_m$.  We want to show that $\{w_0,\ldots,w_q\}\subseteq U$.  Let $w_0',\ldots,w_q'$ be the walk in $G'$ obtained by mapping each vertex of $W$ to its corresponding vertex in $G'$ (so that each vertex in $B_{y_i)}$ maps to $z_i$).  For each $i\in\{0,\ldots,p\}$, let $\kappa_i=\max\{j\in\{0,\ldots,q\}:w_j\in B_{y_j}\}$.  Note that, for each $i\in\{0,\ldots,p-1\}$, $w_{\kappa_i}\neq u_{i-1}$.  By the inductive hypothesis, $\{w'_{\kappa_{i-1}},\ldots,w'_{\kappa_{i}}\}\subseteq U'_i$,  The only vertices in $U'_i$ not present in $U_i$ (and hence $u$) are $z_{i-1}$ and $z_i$.  However, each occurrence of $z_{i-1}$ or $z_i$ in $w'_{\kappa_{i-1}},\ldots,w'_{\kappa_{i}}$ corresponds to a vertex in $B_{y_{i-1}}$ or $B_{y_i}$, so $\{w_{\kappa_{i-1}},\ldots,w_{\kappa_i}\}\subseteq B_{y_{y-1}}\cup B_{y_i}\cup U_i\subseteq U$, as required.
 \end{proof}
 
+
+A \emph{greedy path} $w_1,\ldots,w_q$ is any path in which, for each $i\in\{2,\ldots,q\}$, $w_i$ is the vertex adjacent to $w_{i-1}$ that maximizes $\max\{i:w_i\in B_j\}$.
+
+
+
+Consider the following sequence of vertex sets $V_0\subseteq V_1\subseteq\cdots\subseteq V_t\subseteq V(G)$.
+\begin{compactenum}
+    \item $V_0:= B_{x_1}\cup B_{x_m}$.
+    \item For each $i\in\{1,\ldots,t\}$, $V_i$ contains the vertices of every induced upward path of length at most $\ell$ with both endpoints in $V_{i-1}$.
+\end{compactenum}
+
+\begin{lem}
+    If $w_0,\ldots,w_q$ is an induced upward path in $G$ of length at most $\ell$ and $w_0,w_q\in V_t$, then $w_1,\ldots,w_{q-1}\in V_t$.
+\end{lem}
+
+
+\begin{proof}
+    Without loss of generality, we may assume that $w_0,w_q\in V_{i-1}$ and $w_1,\ldots,w_{q-1}\in V_i\setminus V_{i-1}$ since, otherwise $w_0,\ldots,w_q$ is covered by two or more paths, each of which has endpoints in $V_{i-1}$ and no internal vertices in $V_i\setminus V_{i-1}$.  By a standard technique, we may assume that $|B_{x_i}\cap B_{x_{i+1}}||=t$ for each $i\in\{1,\ldots,m\}$.
+    % $\mathcal{T}$-downward path in $H$ of length $q\le\ell$ with $\{w_0,w_q\}\subseteq \bigcup_{j=0}^{i-1} V_{j}$ and $w_1,\ldots,w_{q-1}\in V_{i}\setminus \bigcup_{j=0}^{i-1} V_{j}$.
+
+    We claim that, if $v, w$
+
+
+    for each $x\in V(P)$, $|B_{x}\setminus V_{i-1}|\le t+2-i$ and prove this by induction on $i$.  The base case $i=1$ is trivial, since $\mathcal{P}$ is a width-$t$ decomposition, so $B_x\le t+1$ for each $x\in V(T)$.
+
+    Now assume $i\ge 2$.  Since $w_0,w_q\in V_{i-1}$ but $w_1,\ldots,w_{q-1}\not\in V_{i-1}$, at least one of $w_0$ or $w_q$ is in $V_{i-1}\setminus V_{i-2}$.  Without loss of generality, assume $w_0\in V_{i-1}\setminus V_{i-2}$.  Then, there exists $u_0,u_r\in V_{i-2}$ such that $w_0$ is part of a $\mathcal{T}$-upward path $u_0,\ldots,u_r$ of length at most $\ell$ that begins at $u_0$ and ends at $u_r$ and such that $\{u_1,\ldots,u_{r-1}\}\subseteq V_{i-1}\setminus V_{i-2}$, so $w_0=u_j$ for some $j\in\{1,\ldots,r-1\}$.  We claim that $u_{j+1}\prec_T w_q$.  To see this, consider the following two cases:
+\end{proof}
+
+
+
+A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$.  Let $H$ be a $t$-tree with a construction order $\mathcal{R}$ that generates a canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$.  Define a sequence $V_0\subseteq V_1\subseteq\cdots\subseteq V_t\subseteq V(H)$ as follows:
+\begin{compactenum}[(V1)]
+    \item $V_0:=\bigcup_{x\in\Lambda(T)} B_x$.
+
+    \item\label{v-def-paths} For each $i\in\{1,\ldots,t\}$, $V_i$ contains the vertices of every induced $\mathcal{T}$-downward path of length at most $\ell$ whose endpoints are both in $V_{i-1}$.
+     % $w_1,\ldots,w_{q-1}$ for each $\mathcal{T}$-downward path $w_0,\ldots,w_q$ such that $q\le\ell$; $\{w_0,w_q\}\subseteq \bigcup_{j=0}^{i-1} V_j$; and $w_1,\ldots,w_{q-1}\cap \bigcup_{j=0}^{i-1} V_i=\emptyset$
+\end{compactenum}
+We call $H[V_t]$ the $(\mathcal{T},\ell)$-skeleton of $H$ and we will always denote it by $\hat{H}$.
+
+
 \begin{lem}\label{skeleton-paths}
-    Let $w_0,\ldots,w_q$ be an induced $\mathcal{T}$-downward path in $H$ of length at most $\ell$ and with endpoints $\{u_0,u_r\}\subseteq V_t$. Then $\{u_1,\ldots,u_{r-1}\}\subseteq V_t$.
+    Let $w_0,\ldots,w_q$ be an induced $\mathcal{T}$-upward path in $H$ of length at most $\ell$ and with endpoints $\{w_0,w_q\}\subseteq V_t$. Then $\{u_1,\ldots,u_{r-1}\}\subseteq V_t$.
 \end{lem}
 
 \begin{proof}
@@ -631,13 +682,13 @@ We call $H[\bigcup_{i=0}^t V_t]$ the $(\mathcal{T},\ell)$-skeleton of $H$ and we
     %     \item any vertex $v\in V(H-V_{i-1})$ that is not part of some induced $\mathcal{T}$-upward path, in $H$, of length at most $\ell$ with endpoints in $V_{i-1}$.
     % \end{enumerate}
     % By definition, $V(H_i)=V_i$.
-
-    Let $w_0,\ldots,w_q$ be a path satisfying the second criteria.
+    Let $w_0,\ldots,w_q$ be a path satisfying \cref{v-def-paths}. Without loss of generality, we may assume that $w_0,w_q\in V_{i-1}$ and $w_1,\ldots,w_{q-1}\in V_i\setminus V_{i-1}$ since, otherwise $w_0,\ldots,w_q$ is covered by two or more paths, each of which has endpoints in $V_{i-1}$ and no internal vertices in $V_i\setminus V_{i-1}$.
     % $\mathcal{T}$-downward path in $H$ of length $q\le\ell$ with $\{w_0,w_q\}\subseteq \bigcup_{j=0}^{i-1} V_{j}$ and $w_1,\ldots,w_{q-1}\in V_{i}\setminus \bigcup_{j=0}^{i-1} V_{j}$.
-    and let $x_0,\ldots,x_q:=x_T(u_0),\ldots,x_T(u_q)$.   We claim that, for each $i\in\{1,\ldots,q-1\}$, $|B_{x_i}\setminus \bigcup_{j=0}^{i-1} V_{j}|\le t+2-i$ and prove this by induction on $i$.  The base case $i=1$ is trivial, since $\mathcal{T}$ is a width-$t$ decomposition, so $B_x\le t+1$ for each $x\in V(T)$.
+    Let $P:=P_T(x_0,x_q)$.   We claim that, for each $x\in V(P)$, $|B_{x}\setminus V_{i-1}|\le t+2-i$ and prove this by induction on $i$.  The base case $i=1$ is trivial, since $\mathcal{T}$ is a width-$t$ decomposition, so $B_x\le t+1$ for each $x\in V(T)$.
 
-    Now assume $i\ge 2$.  Since $w_0,w_q\in \bigcup_{j=0}^{i-1} V_{j}$ but $w,
-
+    Now assume $i\ge 2$.  Since $w_0,w_q\in V_{i-1}$ but $w_1,\ldots,w_{q-1}\not\in V_{i-1}$, at least one of $w_0$ or $w_q$ is in $V_{i-1}\setminus V_{i-2}$.  Without loss of generality, assume $w_0\in V_{i-1}\setminus V_{i-2}$.  Then, there exists $u_0,u_r\in V_{i-2}$ such that $w_0$ is part of a $\mathcal{T}$-upward path $u_0,\ldots,u_r$ of length at most $\ell$ that begins at $u_0$ and ends at $u_r$ and such that $\{u_1,\ldots,u_{r-1}\}\subseteq V_{i-1}\setminus V_{i-2}$, so $w_0=u_j$ for some $j\in\{1,\ldots,r-1\}$.  We claim that $u_{j+1}\prec_T w_q$.  To see this, consider the following two cases:
+    % \begin{compactenum}
+    %     \item $w_q\in V_{i-2}$: In this case, there is a $\mathcal{T}$-upward path from $u_{j+1}\in V_{i-2}$ to $w_q$ of length at most $q\le \ell$, so then $w_
 
     Since $w_0,\ldots,w_q$ is $\mathcal{T}$-downward, $x_0\prec_T\cdots\prec_T x_q$.
 
@@ -657,6 +708,15 @@ We call $H[\bigcup_{i=0}^t V_t]$ the $(\mathcal{T},\ell)$-skeleton of $H$ and we
 \end{proof}
 
 
+\begin{lem}\label{skeleton-size}
+    $|V_t|\le \binom{t+\ell}{t}^t\cdot (t+1)\cdot|\Lambda(T)|$.
+\end{lem}
+
+\begin{proof}
+    By \cref{upward-count}, $|V_i|\le \binom{t+\ell}{t}\cdot |V_{i-1}|$, so $|V_t|\le \binom{t+\ell}{t}^t\cdot|V_0| \le \binom{t+\ell}{t}^t\cdot (t+1)\cdot|\Lambda(T)|$.
+\end{proof}
+
+
 \begin{lem}\label{skeleton-colour}
      For any simple $t$-tree $H$ with a canonical decomposition $\mathcal{T}:=(B_x:x\in V(T))$ defining a $\mathcal{T}$-skeleton $\hat{H}$,  $\lrn(H)\in O(\lrn(\hat{H}))$.
 \end{lem}
@@ -673,9 +733,9 @@ We call $H[\bigcup_{i=0}^t V_t]$ the $(\mathcal{T},\ell)$-skeleton of $H$ and we
 
             \item $v_i\in V(\hat{H})$ for some $i\in\{1,\ldots,r\}$. In this case, $\varphi(u_0)\le 3t+1 < \varphi(u_i)$.
         \end{compactenum}
-        \item $\{u_0,u_r\}\subseteq V(\hat{H})$. In this case, \cref{induced-unimodal} implies that $u_0,\ldots,u_r$ is $\mathcal{T}$-unimodal, so  \cref{skeleton-paths} implies that $u_0,\ldots,u_r\in V(\hat{H})$.
-        % Since $u_0,\ldots,u_r$ is an induced path in $H$, \cref{induced-unimodal} implies that there exists $m\in\{0,\ldots,r-1\}$ such that $u_0,\ldots,u_m$ is $\mathcal{T}$-upward and $u_{m+1},\ldots,u_m$ is $\mathcal{T}$-downward. If $m\not\in\{0,m-1\}$, then $x_T(u_m)$ is a branching node of $T$, so $u_m\in V_0\subeteq V_{t-1}$.
-        Therefore $u_0,\ldots,r_r$ is a path in $\hat{H}$, so  $\varphi(u_0)<\varphi(u_i)$ for some $i\in\{1,\ldots,r-1\}$ since $\varphi$ is an $\ell$-ranking of $\hat{H}$.
+        \item $\{u_0,u_r\}\subseteq V(\hat{H})$. In this case, \cref{induced-unimodal} implies that $u_0,\ldots,u_r$ is $\mathcal{T}$-unimodal, i.e., $u_0,\ldots,u_r$ is the concatenation of two paths, one upward and one downward.  By \cref{skeleton-paths} each of these paths is contained in $\hat{H}$, so $u_0,\ldots,u_r\in V(\hat{H})$.
+        % Since $u_0,\ldots,u_r$ is an inducedGG path in $H$, \cref{induced-unimodal} implies that there exists $m\in\{0,\ldots,r-1\}$ such that $u_0,\ldots,u_m$ is $\mathcal{T}$-upward and $u_{m+1},\ldots,u_m$ is $\mathcal{T}$-downward. If $m\not\in\{0,m-1\}$, then $x_T(u_m)$ is a branching node of $T$, so $u_m\in V_0\subeteq V_{t-1}$.
+        Therefore $u_0,\ldots,u_r$ is a path in $\hat{H}$, so  $\varphi(u_0)<\varphi(u_i)$ for some $i\in\{1,\ldots,r-1\}$ since $\varphi$ is an $\ell$-ranking of $\hat{H}$.
         %
         %   Indeed,
         %
