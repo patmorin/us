@@ -631,6 +631,8 @@ The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part
     \end{compactenum}
 \end{lem}
 
+[TODO: Look for an easier proof that uses graph powers in the graph that has the edge $uv$ if the intervals for $u$ and $v$ properly overlap.]
+
 \begin{proof}
     To eliminate a level of subscripts, let $x_i:=i$ for each $i\in\{1,\ldots,m\}$.  The proof is by induction on $t$. In the base case, $t=0$, $G$ has no edges and, unless $m=1$, there are no paths $w_0,\ldots,w_q$ with $w_0\in B_{1}$ and $w_q\in B_m$. The lemma is satisfied by taking $U:=B_{1}\cup B_{m}$.  In this case $|U|\le 2t= 2t\ell^0=O(\ell^0)$.
 
@@ -938,165 +940,218 @@ The next lemma helps deal with the case where we don't necessarily have the slac
 We are now ready to prove the technical statement that implies \weirdref{simple-t-trees}{a}.
 % Note that in the following statement $H$ is a $t$-tree, no longer a $(t-1)$-tree.  This is the whole enchilada:
 
+% \begin{lem}\label{two-tree-technical}
+%
+%     For every fixed positive integer $t$ there exist an integer constant $a>0$ such that, for every integer $k\ge \tau(t)$, every $n\le (\log^{(t-2)} k)^{k}$, and every graph $H$ with $\stw(H)\le t$, $\trn(H)\le ak$.
+% \end{lem}
+%
+% \begin{proof}
+%     Assume $n\ge t+1$, otherwise the result is obtained trivially for any $a\ge t+1$ by colouring each vertex of $H$ with a distinct colour.
+%
+%     By \cref{simple-subgraph} we may assume, without loss of generality, that $H$ is a simple $t$-tree.
+
+Let $v_1,\ldots,v_n$ be a construction order for $H$ and let $L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0=\{v_1,\ldots,v_{t}\}$.
+For each $t$-clique $C$ in $H[L_i]$, we use $H_C$ to denote the connected component of $H[C\cup\bigcup_{j=i+1}^m L_j]$ that contains $C$. For each vertex $v\in L_i$, let $N_i(v)$ denote the set of $t$-cliques in $H[L_i]$ that contain $v$ and let $H^+_v:=H[\bigcup_{C\in N_i(v)} H_C]-L_i$.  In words, $H^+_v$ is the set of all $t$-trees hanging off all the $t$-cliques of $H[L_i]$ that contain $v$.  Let $n_v:=1+|H^+_v|$.
+% For each $v\in L_i$, we set $\gamma_v:=\gamma_{t-2,k}(n_v)$.
+     % to be the solution to the equation $(\log^{(t-2)} k)^k/(\log^{(t-2)} \gamma(v))^{\gamma(v)} = n_v$.
+
+\begin{clm}\label{size-claim}
+    Let $H$ be a $t$-tree
+    For each $i\in\{1,\ldots,m\}$ and each component $H'$ of $H[\bigcup_{j=i}^m L_j]$,
+    \[
+        |H'| \le \sum_{v\in V(H'[L_i])} n_v = |H'[L_i]| + t\cdot|H'-L_i|
+        \le t\cdot|H'| \enspace .
+    \]
+\end{clm}
+
+\begin{proof}
+    The two inequalities in the result are obvious, so we need only show the equality in the middle.
+    Each vertex of $H'-L_i$ is contained $H_C$ for exactly one $t$-clique $C$ of $H'[L_i]$.  Therefore,
+    \begin{align*}
+        |H'-L_i|
+        & = \sum_{C\in H'[L_i]} |H_C-L_i| \\
+        & = \sum_{C\in H'[L_i]}\sum_{v\in C} |H_C-L_i|/t \\
+        & = \sum_{v\in V(H'[L_i])}\sum_{C\in N_i(v)} |H_C-L_i|/t \\
+        & = \sum_{v\in V(H'[L_i])}|H^+_v|/t \enspace ,
+    \end{align*}
+    so
+    \[  \sum_{v\in V(H'[L_i])} n_v = \sum_{v\in V(H'[L_i])}(1+|H^+_v|)
+      = |H'[L_i]| + t\cdot|H'-L_i| \enspace . \qedhere
+    \]
+\end{proof}
+
 \begin{lem}\label{two-tree-technical}
-    For every fixed positive integer $t$ there exist an integer constant $a>0$ such that, for every integer $k\ge \tau(t)$, every $n\le (\log^{(t-2)} k)^{k}$, and every graph $H$ with $\stw(H)\le t$, $\trn(H)\le ak$.
+    Let $n,k,t,\ell\in N$ and $c\in\R$ be such that $n\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (c+s))^(c+s)$ where $s:=\log c/\log^{(t-1)} c$;
+    let $H$ be an $n$-vertex graph that is edge maximal with respect to some $t$-simple tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ rooted at $r\in V(T)$; and
+    let $B_r:=\{v_1,\ldots,v_{t}\}$; and
+    let $L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0:=B_r$.
+
+    Then, there exists an integer $a:=a(t,\ell)$ such that, for any distinct $\phi_0,\ldots,\phi_{t'}\in \{\lfloor a(k-c-1)\rfloor+1,\ldots,ak\}$ there exists an $\ell$-ranking $\varphi:V(G)\to\{1,\ldots,ak\}$ such that
+    \begin{compactenum}[R1]
+        \item $\varphi(v_i)=\phi_i$ for each $i\in\{1,\ldots,t'\}$; and
+        \item $\varphi(v)<a(k-c-1)$ for each $v\in\bigcup_{j=1}^{\ell} L_i$.
+    \end{compactenum}
 \end{lem}
 
 \begin{proof}
-    Assume $n\ge t+1$, otherwise the result is obtained trivially for any $a\ge t+1$ by colouring each vertex of $H$ with a distinct colour.
+    The proof is by induction on $n$. If $n=t$, then there is nothing to do.
 
-    By \cref{simple-subgraph} we may assume, without loss of generality, that $H$ is a simple $t$-tree.  Let $v_1,\ldots,v_n$ be a construction order for $H$ and let $L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0=\{v_1,\ldots,v_{t}\}$. For each $v\in V(H)$, let $\ell(v)$ be such that $v\in L_{\ell(v)}$. For each $t$-clique $C$ in $H[L_i]$, we use $H_C$ to denote the connected component of $H[C\cup\bigcup_{j=i+1}^m L_j]$ that contains $C$. For each vertex $v\in L_i$, let $N_i(v)$ denote the set of $t$-cliques in $H[L_i]$ that contain $v$ and let $H^+_v:=H[\bigcup_{C\in N_i(v)} H_C]-L_i$.  In words, $H^+_v$ is the set of all $t$-trees hanging off all the $t$-cliques of $H_i$ that contain $v$.  Let $n_v:=\tau(t-1)+|H^+_v|$.  For each $v\in L_i$, we set $\gamma(v)$ to be the solution to the equation $(\log^{(t-2)} k)^k/(\log^{(t-2)} \gamma(v))^{\gamma(v)} = n_v$.
+    Otherwise, consider the subgraph $I:=H[L_{\ell+1}]$.  By \cref{simple-bfs-layers}, $\stw(I)\le t-1$.  We say that a maximal clique $C$ in $I$ is \emph{dangerous} if $|H_C|\ge (\log^{(t-2)} k)^/(\log^{(t-2)} c')^{c'}$, where $c':=c+s+\log(c+s)/\log^{(t-1)}(c+s)$ and $C$ is \emph{safe} otherwise.  The same computation used in the proof of \cref{t-trees-slack} shows that the number of dangerous cliques in $I$ is $O(c)$.
 
-    \begin{clm}\label{size-claim}
-        For each $i\in\{1,\ldots,m\}$ and each component $H'$ of $H[\bigcup_{j=i}^m L_j]$,
-        \[
-            |H'| \le \sum_{v\in V(H'[L_i])} n_v = \tau(t-1)\cdot|H'[L_i] |+ t\cdot|H'-L_i|
-            \le \tau(t-1)\cdot|H'| \enspace .
-        \]
-    \end{clm}
+    For each $v\in\bigcup_{j=0}^\ell L_j$, set $n_v:=1$.  For each each $v\in L_{\ell+1}= V(I)$, set $n_v:=1+\sum_{C\in N_{\ell+1}(v)} |H_C|$.  Let $H_{0}:=H[\bigcup_{j=0}^\ell L_j]$  By \cref{size-claim}, $\sum_{v\in V(H_{\le\ell})} n_v \le t\cdot |H|\le \cdot t\cdot (\log^{(t-2)} k)^k/(\log^{(t-2)}(c+s))^{(c+s)}$.  By \cref{t-tree-slack}, $H_{0}$ has an $\ell$-ranking $\varphi:V(H_0)\to\{1,\ldots,\lfloor a(k-c-1)\rfloor\}$ in which $\varphi(v)> a(k-\gamma_v-1)$ for each $v\in V(H_0)$.  We make the following modifications to $\varphi$.
 
-    \begin{proof}
-        The two inequalities in the result are obvious, so we need only show the equality in the middle.
-        Each vertex of $H'-L_i$ is contained $H_C$ for exactly one $t$-clique $C$ of $H'[L_i]$.  Therefore,
-        \begin{align*}
-            |H'-L_i|
-            & = \sum_{C\in H'[L_i]} |H_C-L_i| \\
-            & = \sum_{C\in H'[L_i]}\sum_{v\in C} |H_C-L_i|/t \\
-            & = \sum_{v\in V(H'[L_i])}\sum_{C\in N_i(v)} |H_C-L_i|/t \\
-            & = \sum_{v\in V(H'[L_i])}|H^+_v|/t \enspace ,
-        \end{align*}
-        so
-        \[  \sum_{v\in V(H'[L_i])} n_v = \sum_{v\in V(H'[L_i])}(\tau(t-1)+|H^+_v|)
-          = \tau(t-1)\cdot|H'[L_i]| + t\cdot|H'-L_i| \enspace . \qedhere
-        \]
-    \end{proof}
+    \begin{compactenum}
+        \item We set $\varphi(v_i):=\phi_i$ for each $i\in\{1,\ldots,t\}$.
+        \item For each vertex $v$ that takes part in a dangerous clique $C$ of $I$, we set $\varphi(v)$ to a distinct value in $\{\lfloor a(k-c-1)\rfloor+1,\ldots,ak\}\setminus\{\phi_1,\ldots,\phi_t\}$.
+    \end{compactenum}
+    These modifications ensure that $\varphi$ satisfies requirements (R1) and (R2) and, since it only introduces new unique colours larger than any existing colour, it preserves the fact that $\varphi$ is an $\ell$-ranking of $H_0$.
 
-    The following technical claim essentially implies \cref{two-tree-technical}, but is suitable for induction on the layer $i$.
+    Next, we apply induction on $H_C$ for each maximal clique $C$ in $I$.  Let us verify that this is possible.  If $C$ is a dangerous clique, then $\varphi(v)>a(k-c-1)$ for each $v\in C$ and $|H_C|\le |H|\le(\log^{(t-2)}k)^k/(\log^{(t-2)}(c+s))^{c+s}$.  
 
-    \begin{clm}\label{main-claim}
-        Let $H'$ be the union of one or more connected components of $H[\bigcup_{j=i}^m L_i]$. There exists a constant $a$ such that, if
-        \begin{equation}
-            \sum_{v\in V(H'[L_i])} n_v\le \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} (c+s))^{c+s}} \enspace , \label{main-size}
-        \end{equation}
-        where $s:=\log c/\log^{(t-1)} c$,
-        then there exists $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,\ldots,t^{\ellt}-1\}$ such that
-        \begin{compactenum}[(P1)]
-            \item The function $\theta:V(H')\to\{1,\ldots,3t^{\ellt}ak\}$ defined by $\theta(v)=3t^{\ellt}\varphi(v) - 3\psi(v) -(\ell(v)\bmod 3)$ is a 2-ranking of $H'$;
-            \item for each $v\in V(H'[L_i])$, $\psi(v)=0$; and
-            \item for each $v\in V(H'[L_i])$, $\varphi(v)\le a(k-c-1)$.
-        \end{compactenum}
-    \end{clm}
 
-    \begin{proof}[Proof of \cref{main-claim}]
-        [TODO: The lemma wants $H'$ to be the union of connected components of $H[\bigcup_{j=i}^m L_i]$, but when we recurse, we give it $H^-_v:=H_v-\bigcup_{v'\in V(H'[L_i])} S_{v'}$.]
 
-        % In all cases, (P2) requires setting $\psi(v)=0$ for all $v\in V(H'[L_i])$, so we do this now and will not mention it again.
-        % By \cref{simple-subgraph}, we may assume that $H'[L_i]$ is a simple $(t-1)$-tree.
 
-        The proof is by induction on $m-i$. In the base case $m-i=0$, so $H'$ is a subgraph of $H[L_m]=H[L_i]$. By \cref{simple-bfs-layers} $\stw(H')\le \stw(H[L_i])\le t-1$.  Then, for each $v\in L_i$, $n_v=\tau(t-1)$.  Then
-        \begin{align*}
-            \sum_{v\in V(H')} \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} \gamma(v))^{\gamma(v)}}
-            & = \sum_{v\in V(H')} n_v \\
-            % & = \tau(t-1)\cdot|H'| \\
-            % & \le \sum_{v\in V(H'[L_i])} n_v  & \text{(by \cref{size-claim})}\\
-            & \le \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} c)^c} & \text{(by \cref{main-size})} \enspace .
-        \end{align*}
-        Applying \cref{t-tree-slack} to $H'$ gives a colouring $\varphi: V(H')\to\{1,\ldots,ak\}$ that satisfies (P1) and (P3).  To satisfy (P2) we set $\psi(v):=0$ for each $v\in V(H')$.  This handles the case $i=m$.
+    %
+    % H[L_\e]
+    %
+    %
+    % If $m<\ell$ then, by \cref{t-trees-slack}, with the weight function $w$
+    %
+    %
+    %  then $H=H[L_0]$ is a $t$-clique
 
-        Before proceeding with the inductive step, we give some intuition and definitions for the secondary colouring $\psi$. For each $i\in\{1,\ldots,m\}$, $\tw(H[L_i])\le \stw(H[L_i])\le t$. Therefore, there exists a colouring $\zeta:V(H)\to\{0,\ldots,t-1\}$ such that $\zeta$ is a proper colouring of $H[L_i]$ for each $i\in\{1,\ldots,m\}$. For each $j\in\{1,\ldots,\ellt\}$, each $v\in H'[L_{i+j}]$, and each $s\in\{1,\ldots,j\}$, we will associate the vertex $v$ with a specific vertex $p_s(v)\in V(H'[L_{i+j-s}])$.  In this way, $v$ gets a $\ellt$-vector of colours $(\psi_1(v),\ldots,\psi_{\ellt-1}(v))$, where
-        \[
-            \psi_s(v) :=
-                \begin{cases}
-                    \zeta(p_s(v)) & \text{if $s\in\{1,\ldots,j\}$} \\
-                    0             & \text{if $s\in\{j+1,\ldots,\ellt\}$.}
-                \end{cases}
-        \]
-        This vector then defines the colour $\psi(v):=\sum_{s=1}^\ellt t^{i-1}\psi_s(v)$.
-
-        We now proceed with the inductive step, so $i\in\{0,\ldots,m-1\}$.
-        Now,
-        \[
-            \sum_{v\in V(H'[L_i])}\frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} \gamma(v))^{\gamma(v)}}
-            = \sum_{v\in V(H'[L_i])} n_v
-            \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} (c+s))^{c+s}} \enspace .
-        \]
-       Therefore $\gamma$ satisfies the requirements for \cref{t-tree-slack}, so we can find a 2-ranking of $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in V(H'[L_i])$.  We will show how to can extend $\varphi$ to a complete colouring of $H'$.
-
-       The next step is use \cref{t-tree-no-slack-separator} to break $H'-L_i$ into sufficiently small components.  For any $v\in H'[L_{i]}]$, define
-       \begin{align*}
-          n_{H^+_v} & := \sum_{w\in V(H^+_v)[L_{i+1}]} n_w \\
-                    & \le \tau(t-1)\cdot|H^+_v| & \text{(by \cref{size-claim})} \\
-                    & \le \tau(t-1)\cdot n_v & \text{(by \cref{size-claim})} \\
-                    & = \tau(t-1)\cdot\left(\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}}\right)
-                    & \text{(by definition of $\gamma(v)$)} \\
-                    & \in O\left(\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}}\right) &\text{(for $t\in O(1)$)}
-       \end{align*}
-       Therefore, $\gamma$ satisifies the conditions for applying \cref{t-tree-no-slack-separator} to $H^+_v[L_{i+1}]$.  Therefore, there exists a set $S_v\subseteq H^+_v[L_{i+1}]$ of size $O(\gamma(v)+1)$ such that each component $X$ of $H^+_v-S_v$ has $n_X\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$, where $s(v):=\log\gamma(v)/\log^{(t-1)}\gamma(v)$.
-
-       Let $\zeta:V(H'[L_i])\to\{0,\ldots,t-1\}$ be a proper colouring of $H'[L_i]$.  Assign each of the vertices in $S_v$ a distinct colour $\varphi(w)$ from the set $\{\lfloor a(k-\gamma(v))\rfloor+1,\ldots,ak\}$.  In addition, assign $\psi(w):=\zeta(v)$.  Note that, if we do this for each $v\in V(H'[L_i])$ there may be some vertices $w\in L_{i+1}$ that are assigned colours $\varphi(w)$ and $\psi(w)$ more than once.  In this case, we arbitrarily choose one of the vertices $v\in H'[L_i]$ such that $w\in S_v$ and use the colours $\varphi(w)$ and $\psi(w)$ assigned to $w$ by $v$.
-
-       Recall that, for each vertex $w$ in $L_{i+1}$, the \emph{dominant parent} $p(w)$ of $w$ is in $L_i$ (\cref{dominant-parent}).  In particular, for any $w\in V(H'[L_{i+1}])$, $p(w)\in V(H'[L_{i}])$.
-       For each vertex $v$ in $H'[L_i]$ we define $D_v:=\{w\in H'[L_{i+1}]: p(w)=v\}$.  For each $v\in V(H'[L_i])$, define the graph $H_v$ to be the component of $H'[D_v\cup \bigcup_{j=i+2}^m L_j]$ that contains $D_v$.  Note that $H_v$ is a subgraph of $H^+_v$.
-
-       There are some vertices $w$ in $H_v[L_{i+1}]$ that have already been assigned colours $\varphi(w)$ and $\psi(w)$ because $w\in S_{v'}$ for some $v'\in V(H'[L_i])$.  Consider the \emph{uncoloured graph} $H^-_v:=H_v-\bigcup_{v'\in V(H'[L_i])} S_{v'}$.  Since $H^-_v\subseteq H_v\subseteq H^+_v$, any component $Y$ of $H^-_v$ has $n_Y\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$.  Furthermore, if $Y$ is a subgraph of $H_C$ for some $t$-clique $C$ in $H'[L_i]$, then
-       \begin{equation}
-        n_Y \le \min_{v'\in C}\left(\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)} (\gamma(v'))+s(v'))^{\gamma(v')+s(v')}} \right) \enspace . \label{min}
-        \end{equation}
-       Again, this is because $Y\subseteq Y^+$ where $Y^+$ is a component of $H_C\subseteq H^+_{v'}$ and each component $Y'$ of $H^+_{v'}-S_{v'}$ has $n_{Y'}\le (\log^{(t-2)}k)^k/(\log^{(t-2)} (\gamma(v'))+s(v'))^{\gamma(v')+s(v')}$.
-
-       We apply the inductive hypothesis to each component $Y$ of $H^-_v$ and we obtain $\varphi:V(H^-_v)\to\{1,\ldots,ak\}$ and $\psi:V(H_w)\to\{0,1\}$ that satisfy the conditions of the claim.  We do this to colour $H^-_v$ for each $v\in V(H'[L_i])$.
-
-       At this point colourings $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,1\}$ are completely defined.  We must, however, make one small modification to $\psi$.  Since each vertex in $H'[L_{i+1}]$ is coloured by induction on some component of $H^-_v$ for some $v\in V(H'[L_i])$, $\psi(w)=0$ for each $w\in V(H'[L_{i+1}])$, and we are free to change this.
-       % Now, the graph $H'[L_i]$ is a $(t-1)$-forest and therefore has a proper $t$-colouring $\zeta:V(H'[L_i])\to\{0,\ldots,t-1\}$.
-       Recall that $\zeta:V(H'[L_i])\to\{0,\ldots,t-1\}$ is a proper $t$-colouring of $H'[L_i]$.  For each vertex $v$ in $H'[L_i]$ and each vertex $w$ in $H^-_v[L_{i+1}]$ we set $\psi(w):=\zeta(v)=\zeta(p(w))$.  This completes the description of the colourings $\varphi$ and $\psi$.
-
-       We have already ensured that $\varphi$ and $\psi$ satisfy (P2) and (P3). All that remains is to ensure that they satisfy (P1).  To do this, consider some path $uvw$ in $H'$.  We must show that $\theta(u)\neq\theta(w)$ or $\theta(u)<\theta(v)$.  There are a few cases to consider (see \cref{cases}):
-       \begin{figure}
-            \centering{
-                \begin{tabular}{|c|c|c|}\hline & & \\[.1mm]
-                    \includegraphics{figs/cases-1} &
-                    \includegraphics{figs/cases-2} &
-                    \includegraphics{figs/cases-3} \\
-                    (1) & (2) & (3) \\ \hline & & \\[.1mm]
-                    \includegraphics{figs/cases-4} &
-                    \includegraphics{figs/cases-5} &
-                    \includegraphics{figs/cases-6} \\
-                    (4) & (5) & (6) \\ \hline & & \\[.1mm]
-                    \includegraphics{figs/cases-7} &
-                    \includegraphics{figs/cases-8} &
-                    \includegraphics{figs/cases-9} \\
-                    (7(a)) & (7(b)) & (8) \\ \hline
-                \end{tabular}
-            }
-            \caption{Cases in the proof of \cref{main-claim}.}
-            \label{cases}
-       \end{figure}
-       \begin{compactenum}
-          \item If $u\in L_i$ and $w\in L_j$ for $i\neq j$ then $i\bmod 3\neq j\bmod 3$, so $\theta(u)\neq\theta(w)$.
-
-          \item If $u,w\in L_i$ and $v\in L_{i+1}$ then $u,w$ is contained in the parent clique $C_v$ of $v$.  In particular, $uw\in E(H'[L_i])$ so $\varphi(u)\neq\varphi(w)$ since \cref{t-tree-slack} produces a 2-ranking (which is a proper colouring) $\varphi$ of $H'[L_i]$.
-
-          \item If $u,v,w\in L_i$ then $uvw$ is completely contained in $H'[L_i]$ and $\varphi(u)\neq\varphi(w)$ or $\varphi(u)<\varphi(v)$ because \cref{t-tree-slack} produces a 2-ranking $\varphi$ of $H'[L_i]$.
-
-          \item If $uw\in E(H^-_p)$ or the path $u,v,w\in V(H^-_p)$ for some vertex $p$ in $H'[L_i]$ then the inductive hypothesis ensures that $\theta$ was already a 2-ranking of $H^-_v$ and the subsequent modifications to $\psi(w)$ for $w\in H^-_v[L_{i+1}]$ do not change this. In fact, these modifications do not change the relative order of $\theta(u)$ and $\theta(w)$ or the relative order of $\theta(u)$ and $\theta(v)$.
-
-          \item If $u,w\in V(H^-_p)$ for some $p\in V(H'[L_i])$, $v$ is in $H'[L_i]$, and $v\neq p$ then, by \cref{up-clique}, $pv\in E(H'[L_i])$.  Therefore, there exists a $t$-clique $C$ in $H'[L_i]$ with $\{p,v\}\subseteq C_u$ such that $u\in V(H_{C})$.  The vertex $u$ is contained in some component $Y$ of $H^-_v$. By \cref{min} and the application of \cref{t-tree-slack} to $Y$, $\varphi(u)\le a(k-\gamma(v)-1) < \varphi(v)$ so $\theta(u) < \theta(v)$.
-
-          \item If $u\in V(H^-_{p})$, $v\in V(H'[L_i])$ and $w\in V(H^-_q)$ for some $p\neq q$, then $p=p(v)$ and $q=p(w)$.  By \cref{up-clique}, the edge $pq\in E(H[L_i])$, so $\psi(u)=\zeta(p)\neq\zeta(q)=\psi(w)$ since $\zeta$ is a proper colouring of $H'[L_i]$.
-
-          \item If $u,w\in V(H_{p}-H^-_{p})$ for some $p\in V(H'[L_i])$ then $\varphi(u)$ and $\psi(u)$ were assigned by some vertex $p'\in V(H'[L_i])$ such that $v\in S_{p'}$.  Similarly, $\varphi(w)$ and $\psi(w)$ were assigned by some vertex $q'\in V(H'[L_i])$ such that $w\in S_{q'}$.  There are two subcases to consider:
-          \begin{compactenum}
-            \item If $p'=q'$ then $\varphi(u)\neq\varphi(w)$ since every vertex in $S_{p'}$ is assigned a unique colour by $\varphi$.
-            \item If $p'\neq q'$ then, by \cref{up-clique}, $p'q'\in E(H'[L_i])$ so that $\psi(u)=\zeta(p')\neq\zeta(q')=\psi(w)$.
-        \end{compactenum}
-        In either case $\theta(u)\neq\theta(w)$.
-
-        \item If $u,w\in H_p[L_{i+1}]$, $u\in V(H^-_{p})$ and $w\not\in V(H^-_{p})$ for some $p\in V(H'[L_i])$ then $w\in S_{q'}$ for some $q'\in V(H'[L_i])$ and $\varphi(w)$ (and $\psi(w)$) was assigned by $q'$, so $\varphi(w)>a(k-\gamma(q')-1)$. On the other hand, by \cref{min}, $\varphi(u) \le a(k-\gamma(q')-1)$.  Therefore $\varphi(u)<\varphi(w)$ so $\theta(u)\neq\theta(w)$.
-      \end{compactenum}
-      This completes the proof of \cref{main-claim}.
-    \end{proof}
-    Finally, to complete the proof of \cref{two-tree-technical} we apply \cref{main-claim} with $i=0$ and $H'=H$.  By \cref{size-claim} we can do this with any value $k$ such that $\tau(t-1)\cdot n \le (\log k)^{k}$ to show that $\trn(H)\le \tau(t-1)\cdot a\cdot k$ for some constant $a$.
 \end{proof}
+
+%
+%     let $L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0:=B_r$; and .
+% \end{lem}
+%
+%     The following technical claim essentially implies \cref{two-tree-technical}, but is suitable for induction on the layer $i$.
+%
+%     \begin{clm}\label{main-claim}
+%         Let $H'$ be the union of one or more connected components of $H[\bigcup_{j=i}^m L_i]$. There exists a constant $a$ such that, if
+%         \begin{equation}
+%             \sum_{v\in V(H'[L_i])} n_v\le \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} (c+s))^{c+s}} \enspace , \label{main-size}
+%         \end{equation}
+%         where $s:=\log c/\log^{(t-1)} c$,
+%         then there exists $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,\ldots,t^{\ellt}-1\}$ such that
+%         \begin{compactenum}[(P1)]
+%             \item The function $\theta:V(H')\to\{1,\ldots,3t^{\ellt}ak\}$ defined by $\theta(v)=3t^{\ellt}\varphi(v) - 3\psi(v) -(\ell(v)\bmod 3)$ is a 2-ranking of $H'$;
+%             \item for each $v\in V(H'[L_i])$, $\psi(v)=0$; and
+%             \item for each $v\in V(H'[L_i])$, $\varphi(v)\le a(k-c-1)$.
+%         \end{compactenum}
+%     \end{clm}
+%
+%     \begin{proof}[Proof of \cref{main-claim}]
+%         [TODO: The lemma wants $H'$ to be the union of connected components of $H[\bigcup_{j=i}^m L_i]$, but when we recurse, we give it $H^-_v:=H_v-\bigcup_{v'\in V(H'[L_i])} S_{v'}$.]
+%
+%         % In all cases, (P2) requires setting $\psi(v)=0$ for all $v\in V(H'[L_i])$, so we do this now and will not mention it again.
+%         % By \cref{simple-subgraph}, we may assume that $H'[L_i]$ is a simple $(t-1)$-tree.
+%
+%         The proof is by induction on $m-i$. In the base case $m-i=0$, so $H'$ is a subgraph of $H[L_m]=H[L_i]$. By \cref{simple-bfs-layers} $\stw(H')\le \stw(H[L_i])\le t-1$.  Then, for each $v\in L_i$, $n_v=\tau(t-1)$.  Then
+%         \begin{align*}
+%             \sum_{v\in V(H')} \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} \gamma(v))^{\gamma(v)}}
+%             & = \sum_{v\in V(H')} n_v \\
+%             % & = \tau(t-1)\cdot|H'| \\
+%             % & \le \sum_{v\in V(H'[L_i])} n_v  & \text{(by \cref{size-claim})}\\
+%             & \le \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} c)^c} & \text{(by \cref{main-size})} \enspace .
+%         \end{align*}
+%         Applying \cref{t-tree-slack} to $H'$ gives a colouring $\varphi: V(H')\to\{1,\ldots,ak\}$ that satisfies (P1) and (P3).  To satisfy (P2) we set $\psi(v):=0$ for each $v\in V(H')$.  This handles the case $i=m$.
+%
+%         Before proceeding with the inductive step, we give some intuition and definitions for the secondary colouring $\psi$. For each $i\in\{1,\ldots,m\}$, $\tw(H[L_i])\le \stw(H[L_i])\le t$. Therefore, there exists a colouring $\zeta:V(H)\to\{0,\ldots,t-1\}$ such that $\zeta$ is a proper colouring of $H[L_i]$ for each $i\in\{1,\ldots,m\}$. For each $j\in\{1,\ldots,\ellt\}$, each $v\in H'[L_{i+j}]$, and each $s\in\{1,\ldots,j\}$, we will associate the vertex $v$ with a specific vertex $p_s(v)\in V(H'[L_{i+j-s}])$.  In this way, $v$ gets a $\ellt$-vector of colours $(\psi_1(v),\ldots,\psi_{\ellt-1}(v))$, where
+%         \[
+%             \psi_s(v) :=
+%                 \begin{cases}
+%                     \zeta(p_s(v)) & \text{if $s\in\{1,\ldots,j\}$} \\
+%                     0             & \text{if $s\in\{j+1,\ldots,\ellt\}$.}
+%                 \end{cases}
+%         \]
+%         This vector then defines the colour $\psi(v):=\sum_{s=1}^\ellt t^{i-1}\psi_s(v)$.
+%
+%         We now proceed with the inductive step, so $i\in\{0,\ldots,m-1\}$.
+%         Now,
+%         \[
+%             \sum_{v\in V(H'[L_i])}\frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} \gamma(v))^{\gamma(v)}}
+%             = \sum_{v\in V(H'[L_i])} n_v
+%             \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} (c+s))^{c+s}} \enspace .
+%         \]
+%        Therefore $\gamma$ satisfies the requirements for \cref{t-tree-slack}, so we can find a 2-ranking of $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in V(H'[L_i])$.  We will show how to can extend $\varphi$ to a complete colouring of $H'$.
+%
+%        The next step is use \cref{t-tree-no-slack-separator} to break $H'-L_i$ into sufficiently small components.  For any $v\in H'[L_{i]}]$, define
+%        \begin{align*}
+%           n_{H^+_v} & := \sum_{w\in V(H^+_v)[L_{i+1}]} n_w \\
+%                     & \le \tau(t-1)\cdot|H^+_v| & \text{(by \cref{size-claim})} \\
+%                     & \le \tau(t-1)\cdot n_v & \text{(by \cref{size-claim})} \\
+%                     & = \tau(t-1)\cdot\left(\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}}\right)
+%                     & \text{(by definition of $\gamma(v)$)} \\
+%                     & \in O\left(\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}}\right) &\text{(for $t\in O(1)$)}
+%        \end{align*}
+%        Therefore, $\gamma$ satisifies the conditions for applying \cref{t-tree-no-slack-separator} to $H^+_v[L_{i+1}]$.  Therefore, there exists a set $S_v\subseteq H^+_v[L_{i+1}]$ of size $O(\gamma(v)+1)$ such that each component $X$ of $H^+_v-S_v$ has $n_X\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$, where $s(v):=\log\gamma(v)/\log^{(t-1)}\gamma(v)$.
+%
+%        Let $\zeta:V(H'[L_i])\to\{0,\ldots,t-1\}$ be a proper colouring of $H'[L_i]$.  Assign each of the vertices in $S_v$ a distinct colour $\varphi(w)$ from the set $\{\lfloor a(k-\gamma(v))\rfloor+1,\ldots,ak\}$.  In addition, assign $\psi(w):=\zeta(v)$.  Note that, if we do this for each $v\in V(H'[L_i])$ there may be some vertices $w\in L_{i+1}$ that are assigned colours $\varphi(w)$ and $\psi(w)$ more than once.  In this case, we arbitrarily choose one of the vertices $v\in H'[L_i]$ such that $w\in S_v$ and use the colours $\varphi(w)$ and $\psi(w)$ assigned to $w$ by $v$.
+%
+%        Recall that, for each vertex $w$ in $L_{i+1}$, the \emph{dominant parent} $p(w)$ of $w$ is in $L_i$ (\cref{dominant-parent}).  In particular, for any $w\in V(H'[L_{i+1}])$, $p(w)\in V(H'[L_{i}])$.
+%        For each vertex $v$ in $H'[L_i]$ we define $D_v:=\{w\in H'[L_{i+1}]: p(w)=v\}$.  For each $v\in V(H'[L_i])$, define the graph $H_v$ to be the component of $H'[D_v\cup \bigcup_{j=i+2}^m L_j]$ that contains $D_v$.  Note that $H_v$ is a subgraph of $H^+_v$.
+%
+%        There are some vertices $w$ in $H_v[L_{i+1}]$ that have already been assigned colours $\varphi(w)$ and $\psi(w)$ because $w\in S_{v'}$ for some $v'\in V(H'[L_i])$.  Consider the \emph{uncoloured graph} $H^-_v:=H_v-\bigcup_{v'\in V(H'[L_i])} S_{v'}$.  Since $H^-_v\subseteq H_v\subseteq H^+_v$, any component $Y$ of $H^-_v$ has $n_Y\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$.  Furthermore, if $Y$ is a subgraph of $H_C$ for some $t$-clique $C$ in $H'[L_i]$, then
+%        \begin{equation}
+%         n_Y \le \min_{v'\in C}\left(\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)} (\gamma(v'))+s(v'))^{\gamma(v')+s(v')}} \right) \enspace . \label{min}
+%         \end{equation}
+%        Again, this is because $Y\subseteq Y^+$ where $Y^+$ is a component of $H_C\subseteq H^+_{v'}$ and each component $Y'$ of $H^+_{v'}-S_{v'}$ has $n_{Y'}\le (\log^{(t-2)}k)^k/(\log^{(t-2)} (\gamma(v'))+s(v'))^{\gamma(v')+s(v')}$.
+%
+%        We apply the inductive hypothesis to each component $Y$ of $H^-_v$ and we obtain $\varphi:V(H^-_v)\to\{1,\ldots,ak\}$ and $\psi:V(H_w)\to\{0,1\}$ that satisfy the conditions of the claim.  We do this to colour $H^-_v$ for each $v\in V(H'[L_i])$.
+%
+%        At this point colourings $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,1\}$ are completely defined.  We must, however, make one small modification to $\psi$.  Since each vertex in $H'[L_{i+1}]$ is coloured by induction on some component of $H^-_v$ for some $v\in V(H'[L_i])$, $\psi(w)=0$ for each $w\in V(H'[L_{i+1}])$, and we are free to change this.
+%        % Now, the graph $H'[L_i]$ is a $(t-1)$-forest and therefore has a proper $t$-colouring $\zeta:V(H'[L_i])\to\{0,\ldots,t-1\}$.
+%        Recall that $\zeta:V(H'[L_i])\to\{0,\ldots,t-1\}$ is a proper $t$-colouring of $H'[L_i]$.  For each vertex $v$ in $H'[L_i]$ and each vertex $w$ in $H^-_v[L_{i+1}]$ we set $\psi(w):=\zeta(v)=\zeta(p(w))$.  This completes the description of the colourings $\varphi$ and $\psi$.
+%
+%        We have already ensured that $\varphi$ and $\psi$ satisfy (P2) and (P3). All that remains is to ensure that they satisfy (P1).  To do this, consider some path $uvw$ in $H'$.  We must show that $\theta(u)\neq\theta(w)$ or $\theta(u)<\theta(v)$.  There are a few cases to consider (see \cref{cases}):
+%        \begin{figure}
+%             \centering{
+%                 \begin{tabular}{|c|c|c|}\hline & & \\[.1mm]
+%                     \includegraphics{figs/cases-1} &
+%                     \includegraphics{figs/cases-2} &
+%                     \includegraphics{figs/cases-3} \\
+%                     (1) & (2) & (3) \\ \hline & & \\[.1mm]
+%                     \includegraphics{figs/cases-4} &
+%                     \includegraphics{figs/cases-5} &
+%                     \includegraphics{figs/cases-6} \\
+%                     (4) & (5) & (6) \\ \hline & & \\[.1mm]
+%                     \includegraphics{figs/cases-7} &
+%                     \includegraphics{figs/cases-8} &
+%                     \includegraphics{figs/cases-9} \\
+%                     (7(a)) & (7(b)) & (8) \\ \hline
+%                 \end{tabular}
+%             }
+%             \caption{Cases in the proof of \cref{main-claim}.}
+%             \label{cases}
+%        \end{figure}
+%        \begin{compactenum}
+%           \item If $u\in L_i$ and $w\in L_j$ for $i\neq j$ then $i\bmod 3\neq j\bmod 3$, so $\theta(u)\neq\theta(w)$.
+%
+%           \item If $u,w\in L_i$ and $v\in L_{i+1}$ then $u,w$ is contained in the parent clique $C_v$ of $v$.  In particular, $uw\in E(H'[L_i])$ so $\varphi(u)\neq\varphi(w)$ since \cref{t-tree-slack} produces a 2-ranking (which is a proper colouring) $\varphi$ of $H'[L_i]$.
+%
+%           \item If $u,v,w\in L_i$ then $uvw$ is completely contained in $H'[L_i]$ and $\varphi(u)\neq\varphi(w)$ or $\varphi(u)<\varphi(v)$ because \cref{t-tree-slack} produces a 2-ranking $\varphi$ of $H'[L_i]$.
+%
+%           \item If $uw\in E(H^-_p)$ or the path $u,v,w\in V(H^-_p)$ for some vertex $p$ in $H'[L_i]$ then the inductive hypothesis ensures that $\theta$ was already a 2-ranking of $H^-_v$ and the subsequent modifications to $\psi(w)$ for $w\in H^-_v[L_{i+1}]$ do not change this. In fact, these modifications do not change the relative order of $\theta(u)$ and $\theta(w)$ or the relative order of $\theta(u)$ and $\theta(v)$.
+%
+%           \item If $u,w\in V(H^-_p)$ for some $p\in V(H'[L_i])$, $v$ is in $H'[L_i]$, and $v\neq p$ then, by \cref{up-clique}, $pv\in E(H'[L_i])$.  Therefore, there exists a $t$-clique $C$ in $H'[L_i]$ with $\{p,v\}\subseteq C_u$ such that $u\in V(H_{C})$.  The vertex $u$ is contained in some component $Y$ of $H^-_v$. By \cref{min} and the application of \cref{t-tree-slack} to $Y$, $\varphi(u)\le a(k-\gamma(v)-1) < \varphi(v)$ so $\theta(u) < \theta(v)$.
+%
+%           \item If $u\in V(H^-_{p})$, $v\in V(H'[L_i])$ and $w\in V(H^-_q)$ for some $p\neq q$, then $p=p(v)$ and $q=p(w)$.  By \cref{up-clique}, the edge $pq\in E(H[L_i])$, so $\psi(u)=\zeta(p)\neq\zeta(q)=\psi(w)$ since $\zeta$ is a proper colouring of $H'[L_i]$.
+%
+%           \item If $u,w\in V(H_{p}-H^-_{p})$ for some $p\in V(H'[L_i])$ then $\varphi(u)$ and $\psi(u)$ were assigned by some vertex $p'\in V(H'[L_i])$ such that $v\in S_{p'}$.  Similarly, $\varphi(w)$ and $\psi(w)$ were assigned by some vertex $q'\in V(H'[L_i])$ such that $w\in S_{q'}$.  There are two subcases to consider:
+%           \begin{compactenum}
+%             \item If $p'=q'$ then $\varphi(u)\neq\varphi(w)$ since every vertex in $S_{p'}$ is assigned a unique colour by $\varphi$.
+%             \item If $p'\neq q'$ then, by \cref{up-clique}, $p'q'\in E(H'[L_i])$ so that $\psi(u)=\zeta(p')\neq\zeta(q')=\psi(w)$.
+%         \end{compactenum}
+%         In either case $\theta(u)\neq\theta(w)$.
+%
+%         \item If $u,w\in H_p[L_{i+1}]$, $u\in V(H^-_{p})$ and $w\not\in V(H^-_{p})$ for some $p\in V(H'[L_i])$ then $w\in S_{q'}$ for some $q'\in V(H'[L_i])$ and $\varphi(w)$ (and $\psi(w)$) was assigned by $q'$, so $\varphi(w)>a(k-\gamma(q')-1)$. On the other hand, by \cref{min}, $\varphi(u) \le a(k-\gamma(q')-1)$.  Therefore $\varphi(u)<\varphi(w)$ so $\theta(u)\neq\theta(w)$.
+%       \end{compactenum}
+%       This completes the proof of \cref{main-claim}.
+%     \end{proof}
+%     Finally, to complete the proof of \cref{two-tree-technical} we apply \cref{main-claim} with $i=0$ and $H'=H$.  By \cref{size-claim} we can do this with any value $k$ such that $\tau(t-1)\cdot n \le (\log k)^{k}$ to show that $\trn(H)\le \tau(t-1)\cdot a\cdot k$ for some constant $a$.
+% \end{proof}
 
 Rewriting \cref{two-tree-technical} in terms of $n$ yields \weirdref{simple-t-trees}{a}:
 
