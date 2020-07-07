@@ -764,13 +764,12 @@ A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least t
 % The next two lemmata will eventually be applied to (subgraphs of) BFS layers of $H$, which is why they are stated in terms of $(t-1)$-trees.  The first lemma gives a \emph{slackness} condition that makes it possible to find a colouring that does not use \emph{any} colour larger than $a(k-c-1)$.
 
 \begin{lem}\label{t-tree-slack}
-
 Let $t,k,d,\ell,g\in\N$ and $c\in\R$ with $t\ge 2$ and $\tau(t)\le c\le k-1$; let $H$ be a graph with $\diam(H)\le d$ and $\stw(H)\le t$ in which each vertex $v\in V(H)$ is assigned a real-valued weight $n_v\ge 1$. Then there exists an integer constant $a:=a(t,\ell,d,g)$ such that, if
 \begin{equation}
-     n_H := \sum_{v\in V(H)} n_v \le \frac{(\log^{(t-2)} k)^k}{\left(\log^{(t-2)} (c + s)\right)^{c+s}} \enspace ,
+     n_H := \sum_{v\in V(H)} n_v \le \frac{(\log^{(t-2)} k)^k}{\left(\log^{(t-2)} c\right)^{c}} \enspace ,
  \label{total-weight-i}
 \end{equation}
-where $s := \log c/\log^{(t-1)} c$,
+% where $s := \log c/\log^{(t-1)} c$,
 % and if $\phi_1,\ldots,\phi_t'$ are distinct integers, each greater than $a(k-c-1)$,
 then $H$ has an $\ell$-ranking $\varphi:V(H)\to a(k-c-1)-g$ such that $\varphi(v)> a(k-\gamma_{t-2,k}(n_v)-1)$ for each $v\in V(H)$.
 % \begin{compactenum}[(P1)]
@@ -794,32 +793,37 @@ then $H$ has an $\ell$-ranking $\varphi:V(H)\to a(k-c-1)-g$ such that $\varphi(v
     $.
     Note that this coincides with the definition of $n_H$ in the statement of the lemma.  For $v\in V(H)$ we use the shorthand $\gamma_v:=\gamma_{t-2,k}(n_v)$ and for any subgraph $X$ of $H$ we use the shorthand $\gamma_X := \gamma_{t-2,k}(n_X)$.   Let
     \begin{equation}
-        n_0 := \frac{(\log^{(t-2)} k)^k}{\left(\log^{(t-2)}\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)\right)^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}}} \enspace . \label{heavy-def}
+        n_0 := \frac{(\log^{(t-2)} k)^k}{\left(\log^{(t-2)}(c+s)\right)^{c+s}} \enspace . \label{heavy-def}
     \end{equation}
+    where $s:=(\log c)/\log^{(t-1)} c$.
     % so that $\gamma_{t-2,k}(n_0)= c+s+\log(c+s)/\log^{(t-1)}(c+s)$.
     We say that a subgraph $X$ of $H$ is \emph{heavy} if $n_X>n_0$ and $X$ is \emph{light} otherwise.  For a heavy subgraph $X$,
+    \[ \frac{|H|}{n_X} > \frac{|H|}{n_0} \in \Omega\left(\frac{|H|}{c}\right)
+    \enspace.
+    \]
     \begin{align*}
-        (\log^{(t-2)} k)^k/n_X & < \left(\log^{(t-2)}\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)\right)^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}} \\
-        & = \left(\log^{(t-2)}(c+s)\right)^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
-            \left(\tfrac{\log^{(t-1)}(c+s+\log(c+s)/\log^{(t-1)}(c+s))}{\log^{(t-1)}(c+s)}\right)} \\
-            & \qquad\qquad\text{(change of base)} \\
-        & < (\log^{(t-2)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
-            \left(1 + \tfrac{\log(c+s)/\log^{(t-1)}(c+s)}{\prod_{j=0}^{t-1}\log^{(j)}(c+s)}\right)} \\
-            & \qquad\qquad\text{(by \cref{logi-ratio})}\\
-        & = (\log^{(t-2)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
-            \left(1 + \tfrac{1}{(c+s)\cdot\left(\prod_{j=2}^{t-1}\log^{(j)}(c+s)\right)\log^{(t-1)}(c+s)}\right)} \\
-            & \qquad\qquad\text{(since $t\ge 2$)}\\
-        & \le (\log^{(t-2)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
-            \left(1 + \tfrac{1}{(c+s)\cdot \log^{(t-1)}(c+s)}\right)} \\
-            & \qquad\qquad\text{(since $c\ge \tau(t-1)$, so $\textstyle \prod_{j=2}^{t-1}\log^{(j)}c\ge 1$)} \\
-        & = (\log^{(t-2)}(c+s))^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)} +
-            \tfrac{1}{\log^{(t-1)}(c+s)} + \tfrac{\log(c+s)}{(c+s)(\log^{(t-1)}(c+s))^2}}  \\
-        & = (\log^{(t-2)}(c+s))^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)} + O\left(\frac{1}{\log^{(t-1)}(c+s)}\right)}  \\
-        & = (\log^{(t-2)}(c+s))^{c+s}\cdot (c+s)\cdot O_c(1) \\
-        & = O\left(c\cdot\left(\log^{(t-2)}(c+s)\right)^{c+s}\right) \enspace ,
+        (\log^{(t-2)} k)^k/n_X
+        % & < \left(\log^{(t-2)}\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)\right)^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}} \\
+        % & = \left(\log^{(t-2)}(c+s)\right)^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
+        %     \left(\tfrac{\log^{(t-1)}(c+s+\log(c+s)/\log^{(t-1)}(c+s))}{\log^{(t-1)}(c+s)}\right)} \\
+        %     & \qquad\qquad\text{(change of base)} \\
+        % & < (\log^{(t-2)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
+        %     \left(1 + \tfrac{\log(c+s)/\log^{(t-1)}(c+s)}{\prod_{j=0}^{t-1}\log^{(j)}(c+s)}\right)} \\
+        %     & \qquad\qquad\text{(by \cref{logi-ratio})}\\
+        % & = (\log^{(t-2)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
+        %     \left(1 + \tfrac{1}{(c+s)\cdot\left(\prod_{j=2}^{t-1}\log^{(j)}(c+s)\right)\log^{(t-1)}(c+s)}\right)} \\
+        %     & \qquad\qquad\text{(since $t\ge 2$)}\\
+        % & \le (\log^{(t-2)}(c+s))^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
+        %     \left(1 + \tfrac{1}{(c+s)\cdot \log^{(t-1)}(c+s)}\right)} \\
+        %     & \qquad\qquad\text{(since $c\ge \tau(t-1)$, so $\textstyle \prod_{j=2}^{t-1}\log^{(j)}c\ge 1$)} \\
+        % & = (\log^{(t-2)}(c+s))^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)} +
+        %     \tfrac{1}{\log^{(t-1)}(c+s)} + \tfrac{\log(c+s)}{(c+s)(\log^{(t-1)}(c+s))^2}}  \\
+        % & = (\log^{(t-2)}(c+s))^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)} + O\left(\frac{1}{\log^{(t-1)}(c+s)}\right)}  \\
+        % & = (\log^{(t-2)}(c+s))^{c+s}\cdot (c+s)\cdot O_c(1) \\
+        & = O\left(c\cdot\left(\log^{(t-2)}c\right)^{c}\right) \enspace .
         \numberthis \label{sizer}
     \end{align*}
-    since $c+s\in O(c)$.
+    % since $c+s\in O(c)$.
 
     By \cref{weighted-separator} with the weight function $\xi(v):=n_v$, there exists $S_T\subseteq V(T)$ of size $O(c)$ that defines $S:=\bigcup_{x\in S_T} B_x$ such that each component $X$ of $H-S$ is light.  Let $T'$ be the subtree of $T$ induced by $S_T$ and every $T$-ancestor of every node in $S_T$, i.e., $T':=T[\bigcup_{x\in S_T} V(P_T(x))]$. Let $H':=H[\bigcup x\in V(T') B_x]$.  Observe that $\mathcal{T'}:=(B_x:x\in V(T'))$ is a $t$-simple tree decomposition of $H'$, so $\stw(H')\le t$.
 
@@ -1006,8 +1010,10 @@ For each $t$-clique $C$ in $H[L_i]$, we use $H_C$ to denote the connected compon
     \end{compactenum}
     These modifications ensure that $\varphi$ satisfies requirements (R1) and (R2) and, since it only introduces new unique colours larger than any existing colour, it preserves the fact that $\varphi$ is an $\ell$-ranking of $H_0$.
 
-    Next, we apply induction on $H_C$ for each maximal clique $C$ in $I$.  Let us verify that this is possible.  If $C$ is a dangerous clique, then $\varphi(v)>a(k-c-1)$ for each $v\in C$ and $|H_C|\le |H|\le(\log^{(t-2)}k)^k/(\log^{(t-2)}(c+s))^{c+s}$.  
+    Next, we apply induction on $H_C$ for each maximal clique $C$ in $I$.  Let us verify that this is possible.  If $C$ is a dangerous clique, then $\varphi(v)>a(k-c-1)$ for each $v\in C$ and $|H_C|\le |H|\le(\log^{(t-2)}k)^k/(\log^{(t-2)}(c+s))^{c+s}$.  Therefore, the colours assigned to $C$ by $\varphi$ satisfy the requirements on $\phi_1,\ldots,\phi_t$ and we can apply induction on $H_C$.
 
+    % If $C$ is a safe clique, $n_v \ge |H_C|$ for each $v\in C$.  This implies that $\gamma_v \le \gamma_{t-1,k}(|H_C|)$.  Stated another way, $|H_C|= (log^{(t-2)}k)^k/\log^{(t-2)\delta}^\delta$
+    %
 
 
 
