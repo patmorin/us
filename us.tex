@@ -206,6 +206,22 @@ For any graph $H$, and any two vertices $v,w\in V(H)$, let $d_H(v,w)$ denote the
 
 For any $v\in V(H)$ and any $W\subseteq V(H)$, let $d_H(v,W)=\min\{d_H(v,w):w\in W\}$. A \emph{BFS layering} of $H$ is a partition of $V(H)$ into a sequence $\mathcal{L}:=(L_0,\ldots,L_m)$ of sets such that, for each $i\in\{1,\ldots,m\}$ and each $v\in L_i$, $d_H(v,L_0)=i$.  Any BFS layering $\mathcal{L}:=(L_0,\ldots,L_m)$ defines a partial order $\prec_{\mathcal{L}}$ on $V(H)$ in which $v\prec_{\mathcal{L}} w$ if and only if $v\in L_i$, $w\in L_j$ and $i<j$.
 
+A path $P:=u_0,\ldots,u_r$ in a graph $H$ is an \emph{induced} path if $H[\{u_0,\ldots,u_r\}]$ is a path.  The following simple lemma shows that, for vertex rankings, we need only consider induced paths:
+
+\begin{obs}\label{induced-paths-only}
+    A colouring $\varphi:V(G)\to\N$ of a graph $G$ is an $\ell$-ranking of $G$ if and only if, for every induced path $u_0,\ldots,u_r$ in $G$ of length at most $\ell$,
+    \begin{inparaenum}[(i)]
+        \item $\varphi(u_0)\neq\varphi(u_r)$; or
+        \item $\varphi(u_0)<\max\{\varphi(u_0),\ldots,\varphi(u_r)\}$.
+    \end{inparaenum}
+\end{obs}
+
+\begin{proof}
+    By definition any $\ell$-ranking $\varphi$ of $G$ satisifies (i) or (ii) for every path of length at most $\ell$, including every induced path of length at most $\ell$, so this direction is trivial.
+
+    For the other direction, suppose $H$ contains a not necessarily induced path $u_0,\ldots,u_r$ of length $r\le\ell$ with $\varphi(u_0)=\varphi(u_r)$ and $\varphi(u_0)=\max\{\varphi(u_0),\ldots,\varphi(u_r)\}$.  Then let $w_0,\ldots,w_s$ be the shortest path from $w_0:=u_0$ to $w_s:=u_r$ in  the graph $G[\{u_0,\ldots,u_r\}]$.  Then $w_0,\ldots,w_s$ is an induced path in $G$ with $\varphi(w_0)=\varphi(u_0)=\varphi(u_r)=\varphi(w_s)$. Since $\{w_0,\ldots,w_s\}\subseteq\{u_0,\ldots,u_s\}$, $\varphi(w_0)=\varphi(u_0)\le\max\{u_0,\ldots,u_r\}\le\max\{w_0,\ldots,w_s\}$.
+\end{proof}
+
 
 \subsection{Treewidth and $t$-Trees}
 
@@ -686,11 +702,11 @@ The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part
 
 
 
-A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$.  Let $H$ be a $t$-tree with a construction order $\mathcal{R}$ that generates a canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$. We define the \emph{$(\mathcal{T},\ell)$-skeleton} $\hat{H}$ of $H$ as the induced subgraph of $H$ with the following vertex set:
+A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least two children.  Let $\Lambda(T)$ denote the set of branching nodes in a tree $T$.  Let $H$ be a graph that is edge maximal with respect to some tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of width at most $t$. We define the \emph{$(\mathcal{T},\ell)$-skeleton} $\hat{H}$ of $H$ as the induced subgraph of $H$ whose vertex set is defined as follows:
 \begin{compactenum}
     \item $V(\hat{H})$ contains $\bigcup_{x\in\Lambda(T)} B_x$.
 
-    \item For each pair of branching nodes $x,y\in\Lambda(T)$ such that the path $P_T(x,y)$ from $x$ to $y$ in $T$ has no branching nodes in its interior, $V(\hat{H})$ contains the set $U_{xy}\subseteq V(H)$ obtained by applying \cref{path-induced} to the graph $G_{xy}:=H[\bigcup_{z\in V(P_T(x,y))} B_z]$ with the path decomposition $\mathcal{P}_{xy}:=(B_z:z\in P_T(x,y))$.  ($G_{xy}$ and $\mathcal{P}_{xy}$ satisfy the edge-maximality required for \cref{path-induced} since $H$ is a $t$-tree and therefore edge-maximal with respect to $\mathcal{T}$.)
+    \item For each pair of branching nodes $x,y\in\Lambda(T)$ such that the path $P_T(x,y)$ from $x$ to $y$ in $T$ has no branching nodes in its interior, $V(\hat{H})$ contains the set $U_{xy}\subseteq V(H)$ obtained by applying \cref{path-induced} to the graph $G_{xy}:=H[\bigcup_{z\in V(P_T(x,y))} B_z]$ with the path decomposition $\mathcal{P}_{xy}:=(B_z:z\in P_T(x,y))$.  (Note that $G_{xy}$ and $\mathcal{P}_{xy}$ satisfy the edge-maximality required for \cref{path-induced} since $H$ is edge-maximal with respect to $\mathcal{T}$.)
 \end{compactenum}
 
 
@@ -714,12 +730,12 @@ A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least t
 \end{lem}
 
 \begin{proof}
-    This follows from \cref{path-induced} (Z\cref{size-u}) and the fact that there are $|\Lambda(T)|-1$ distinct pairs $x,y\in\Lambda(T)$ such that $P_T(x,y)$ has no internal nodes in $\Lambda(T)$.
+    This follows from \cref{path-induced} (Z\ref{size-u}) and the fact that there are $|\Lambda(T)|-1$ distinct pairs $x,y\in\Lambda(T)$ such that $P_T(x,y)$ has no internal nodes in $\Lambda(T)$.
 \end{proof}
 
 
 \begin{lem}\label{skeleton-colour}
-     For any simple $t$-tree $H$ with a canonical decomposition $\mathcal{T}:=(B_x:x\in V(T))$ defining a $(\mathcal{T},\ell)$-skeleton $\hat{H}$,  $\lrn(H)\in O(\lrn(\hat{H}))$.
+    Let $H$ be a graph that is edge maximal with respect to some width-$t$ tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ that defines a $(\mathcal{T},\ell)$-skeleton $\hat{H}$, of $H$.  Then $\lrn(H)\in O(\lrn(\hat{H}))$.
 \end{lem}
 
 \begin{proof}
@@ -730,7 +746,7 @@ A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least t
     \begin{compactenum}
         \item $\{u_0,u_r\}\subseteq V(H-V(\hat{H}))$. There are two subcases:
         \begin{compactenum}
-            \item $\{u_1,\ldots,u_r\}\subseteq V(H-V(\hat{H}))$.  In this case, $u_0,\ldots,r_r$ is a path in $H-V(\hat{H})$, so  $\varphi(u_0)<\varphi(u_i)$ for some $i\in\{1,\ldots,r-1\}$ since $\varphi$ is an $\ell$-ranking of $H-V(\hat{H})$.
+            \item $\{u_1,\ldots,u_{r-1}\}\subseteq V(H-V(\hat{H}))$.  In this case, $u_0,\ldots,r_r$ is a path in $H-V(\hat{H})$, so  $\varphi(u_0)<\varphi(u_i)$ for some $i\in\{1,\ldots,r-1\}$ since $\varphi$ is an $\ell$-ranking of $H-V(\hat{H})$.
 
             \item $u_i\in V(\hat{H})$ for some $i\in\{1,\ldots,r\}$. In this case, $\varphi(u_0)\le 3t+1 < \varphi(u_i)$.
         \end{compactenum}
@@ -803,13 +819,9 @@ then $H$ has an $\ell$-ranking $\varphi:V(H)\to a(k-c-1)-g$ such that $\varphi(v
     \end{align*}
     since $c+s\in O(c)$.
 
-    By \cref{weighted-separator} with the weight function $\xi(v):=n_v$, there exists $S_T\subseteq V(T)$ of size $O(c)$ that defines $S:=\bigcup_{x\in S_T} B_x$ such that each component $X$ of $H-S$ is light.
+    By \cref{weighted-separator} with the weight function $\xi(v):=n_v$, there exists $S_T\subseteq V(T)$ of size $O(c)$ that defines $S:=\bigcup_{x\in S_T} B_x$ such that each component $X$ of $H-S$ is light.  Let $T'$ be the subtree of $T$ induced by $S_T$ and every $T$-ancestor of every node in $S_T$, i.e., $T':=T[\bigcup_{x\in S_T} V(P_T(x))]$. Let $H':=H[\bigcup x\in V(T') B_x]$.  Observe that $\mathcal{T'}:=(B_x:x\in V(T'))$ is a $t$-simple tree decomposition of $H'$, so $\stw(H')\le t$.
 
-
-     % Let $T'$ be the subtree of $T$ induced by $S_T$ and every $T$-ancestor of every node in $S_T$, i.e., $T':=T[\bigcup_{x\in S_T} V(P_T(x))]$. Let $H':=H[\bigcup x\in V(T') B_x]$.  Observe that $\mathcal{T'}:=(B_x:x\in V(T'))$ is a $t$-simple tree decomposition of $H'$, so $\stw(H')\le t$.
-    For each $i\in\{0,\ldots,h\}$, $\stw(H[L_i])\le t-1$ (by \cref{simple-bfs-layers}) so let $\mathcal{T}_i:=(B_x:x\in V(T_i))$ be a $(t-1)$-simple tree decomposition of $H[L_i]$.  For each $v\in S\cap L_i$, let $x_v$ be a node in $T_i$ such that $v\in B_{x_v}$.  Let $S_{T_i}:\{x_v:v\in S\}$ and let $T_i'$ be the subtree of $T_i$ induced by each $T_i$-ancestor of each node in $S_{T_i}$, i.e., $T_i':=T_i[\bigcup_{x\in S_{T_i}} V(P_{T_i}(x))]$.
-
-    Let $H_i':=H[\bigcup_{x\in V(T_i')} B_x]$.  Observe that $\mathcal{T}_i':=(B_x:x\in V(T_i'))$ is a $(t-1)$-simple tree decomposition of $H_i'$.  For each leaf $x$ of $T_i'$, $x=x_v$ for some node $v\in S$.  Therefore the number of leaves of $T_i'$ is at most $|S|\in O(c)$. Since $T_i'$ has $O(c)$ leaves, it has $O(c)$ branching nodes.  Therefore, by \cref{skeleton-size}, the $(\mathcal{T}_i',\ell)$-skeleton $\hat{H}_i'$ of $H_i'$ has size $|\hat{H_i}'|\in O(c)$.
+    For each $i\in\{0,\ldots,h\}$, let $H'_i:=H'[L_i]$.  By \cref{simple-bfs-layers},  $\stw(H'_i)\le t-1$.  Furthermore, $\mathcal{T}'_i:=(B_x\cap L_i: x\in V(T'))$ is a tree decomposition of $H'_i$ and $H'_i$ is edge maximal with respect to $\mathcal{T}'_i$.  For each leaf $x$ of $T'$ is an element of $S_T$.  Therefore the number of leaves of $T'$ is at most $|S_T|\in O(c)$. Since $T'$ has $O(c)$ leaves, it has $O(c)$ branching nodes.  Therefore, by \cref{skeleton-size}, the $(\mathcal{T}_i',\ell)$-skeleton $\hat{H}_i'$ of $H_i'$ has size $|\hat{H_i}'|\in O(c)$.
     By \weirdref{simple-t-trees}{a} applied to $\hat{H}'$,
     \[
        \lrn(\hat{H_i}')\in
@@ -817,14 +829,9 @@ then $H$ has an $\ell$-ranking $\varphi:V(H)\to a(k-c-1)-g$ such that $\varphi(v
        \subseteq O\left(\frac{\log c}{\log^{(t-1)} c}\right) = O(s) \enspace .
     \]
     Therefore, by \cref{skeleton-colour} $\lrn(H_i')\in O(s)$, so
-    $H_i'$ has an $\ell$-ranking $\varphi:V(H_i')\to \{\lceil a(k-c-1)\rceil-(i+1)r-g,\ldots,\lceil a(k-c-1)\rceil-ir-g\}$ for some $r\in O(s)$.
+    $H_i'$ has an $\ell$-ranking $\varphi:V(H_i')\to \{\lceil a(k-c-1)\rceil-(i+1)q-g,\ldots,\lceil a(k-c-1)\rceil-iq-g\}$ for some $q\in O(s)$.
 
-
-
-    % Modifying $\varphi$ so that it colours $\varphi(v_i):=\phi_i$ for each $i\in\{1,\ldots,t\}$ preserves the fact that $\varphi$ is a 2-ranking, since $\phi_1,\ldots,\phi_t$ are all distinct and each greater than $a(k-c-1)$.
-    Let $H':=H[\bigcup_{i=0}^h V(H_i')]$. In the preceding paragraphs, we have defined a colouring $\varphi: V(H')\to \{a(k-c-1)-(h+1)r-g,\ldots,a(k-c-1)-g\}$.
-    % By definition, $\varphi$ satisifies requirement (P1).
-    For a sufficiently large constant $a:=a(t,\ell,d,g)$, $\lceil a(k-c-1)\rceil-(h+1)r >  a(k-c-s-1)+1$, so each vertex in $H'$ receives a colour larger than $a(k-c-s-1)+1$.  For any vertex $v\in V(H)$,
+    In the preceding paragraphs, we have defined a colouring $\varphi: V(H')\to \{a(k-c-1)-(h+1)r-g,\ldots,a(k-c-1)-g\}$.    For a sufficiently large constant $a:=a(t,\ell,d,g)$, $\lceil a(k-c-1)\rceil-(h+1)q >  a(k-c-s-1)+1$, so each vertex in $H'$ receives a colour larger than $a(k-c-s-1)+1$.  For any vertex $v\in V(H)$,
     \[ n_v=\frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}\gamma_v)^{\gamma_v}}
          \le n_H
          \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}(c+s))^{(c+s)}}
@@ -832,9 +839,7 @@ then $H$ has an $\ell$-ranking $\varphi:V(H)\to a(k-c-1)-g$ such that $\varphi(v
     so $\gamma(v)\ge c+s$, so $\varphi(v)> (\log^{(t-2)} k)^k/(\log^{(t-2)}\gamma(v))^{\gamma(v)}$ for each $v\in V(H')$, as required.
 
     Since $S':=V(H')\supseteq S$, each component $X$ of $H-V(H')$ is light, so
-   % Now, $T-T'$ is a forest of trees $T_1,\ldots,T_m$ rooted at nodes $r_1,\ldots,r_m$, respectively.
-   % For each $i\in\{1,\ldots,m\}$, $r_i$ is light, so
-   \[
+    \[
        n_{X} \le \frac{(\log^{(t-2)} k)^k}{
         \left(
             \log^{(t-2)}
@@ -847,25 +852,28 @@ then $H$ has an $\ell$-ranking $\varphi:V(H)\to a(k-c-1)-g$ such that $\varphi(v
        }
    \]
    Therefore, we can apply \cref{t-tree-slack} inductively on each component $X$ of $H-S'$ since $|X|<|H|$ and $X$ satisfies \cref{total-weight-i} with the value $c'=c+s$.  This gives an $\ell$-ranking $\varphi:V(X)\to\{1,\ldots,a(k-c-s-1)-g\}$ in which $\varphi(v)> a(k-\gamma_v-1)$ for each $v\in V(X)$, as required.
-   % Consider one particular such graph $H_{r_j}$ and let $v_1',\ldots,v_t'$ denote the vertices of $B_{r_j}$.  The vertices $v_2',\ldots,v_t'$ appear in $H'$ and have already received colours $\phi_2',\ldots,\phi_t':=\varphi(v_2'),\ldots,\varphi(v_t')$ each greater than $a(k-c'-1)+1$.  The vertex $v_1'$ has not been assigned a colour yet and it can receive colour $\phi_1':=\lceil a(k-c'-1)\rceil+1$.  Applying the inductive hypothesis colours the remaining vertices $V(H_{r_i})\setminus B_{r_i}$ using colours no greater than $a(k-c'-1)$.
    Doing this for each component $X$ of $H-S'$ completes the colouring $\varphi$ to a total colouring of $H$.
 
-   All that remains is to verify that $\varphi$ is an $\ell$-ranking of $H$. To do this, consider any path $u_0,\ldots,u_r$ in $H$.  We must show that $\varphi(u_0)\neq \varphi(u_r)$ or $\varphi(u_0)<\varphi(u_i)$ for some $i\in\{1,\ldots,r-1\}$.  There are a few cases to consider:
-   \begin{enumerate}
-    \item If $\varphi(u_0)=\varphi(u_r) \ge a(k-c'-1)$ then $\{u_0,u_r\}\subseteq V(H')$. Either
-    \begin{enumerate}
-       \item $\{u_1,\ldots,u_{r-1}\}\subseteq V(H')$ in which case $\varphi(v)>\varphi(u)$ since $\varphi$ is a 2-ranking of $H'$ (by the application of \weirdref{simple-t-trees}{a}) to $H'$; or
-       \item $u_i\in V(X)$ for some component $X$ of $H-S'$ and some $i\in\{1,\ldots,r-1\}$. This case is not possible.  Since $u_i\not\in V(H')$, [TODO: Continue here.] there is no $x\in V(T')$ with $v\in B_x$.  But this implies that $\{u,w,v\}\subseteq B_y$ for some $y\in V(T)-V(T')$.  The node $y$ has a $T$-ancestor $a\in V(T')$ such that $\{u,w\}\subseteq B_a$. This implies that $uw\in E(H')$, so $\varphi(u)\neq\varphi(w)$ since $\varphi$ is a 2-ranking and therefore a proper colouring of $H'$.
-   \end{enumerate}
-   \item If $\varphi(u)=\varphi(w) < a(k-c'-1)$ then $u\in V(X)$ and $w\in V(Y)$ for some components $X$ and $Y$ of $H-S'$.  Either
-   \begin{enumerate}
-    \item $v\in V(H')$ in which case $\varphi(v)>a(k-c'-1)\ge\varphi(u)$; or
-    \item $v\not\in V(H')$ in which case $X=Y$ and $v\in V(X)$ so $\varphi(v)>\varphi(u)$ (by the application of induction on $X$). \qedhere
-    \end{enumerate}
-   \end{enumerate}
+   % Finally, we augment $\varphi$ with a lower-order colour that tells us which BFS layer each vertex is on.  Formally, we redefine $\varphi(v):=h\cdot \varphi(v) + d_H(v,L_0)$.
+
+   All that remains is to verify that $\varphi$ is an $\ell$-ranking of $H$. To do this, consider any path $u_0,\ldots,u_r$ in $H$ with $\varphi(u_0)=\varphi(u_r)$.  By \cref{induced-paths-only} we may assume that $u_0,ldots,u_r$ is an induced path in $H$.  We must show that $\varphi(u_0)<\varphi(u_i)$ for some $j\in\{1,\ldots,r-1\}$. There are a few cases to consider:
+   \begin{compactenum}
+        \item If $\varphi(u_0)=\varphi(u_r) \ge a(k-c'-1)$ then $\{u_0,u_r\}\subseteq V(H')$.  By \cref{induced-unimodal}, $u_0,\ldots,u_r$ is $\mathcal{T}$-unimodal so, for each $i\in\{1,\ldots,r\}$, $x_T(u_i)$ is a $\mathcal{T}$-ancestor of at least one of $x_T(u_0)$ or $x_T(u_r)$.  By construction, $T'$ contains every $T$-ancestor of $x_T(u_0)$ and $T'$ contains every $T$-ancestor of $x_T(u_r)$.  Therefore $\{u_0,\ldots,u_r\}\subseteq \bigcup_{x\in V(T')} B_x=V(H')$.
+
+        For distinct $i$ and $j$ vertices in $H'_i$ and $H'_j$ receive colours from disjoint sets.  Therefore, since $\varphi(u_0)=\varphi(u_r)$,  $\{u_0,u_r\}\subseteq V(H'_i)$ for some $i\in\{0,\ldots,h\}$.  By \cref{order-relation} and the fact that $u_0,\ldots,u_r$ is $\mathcal{T}$-unimodal, $\{u_0,\ldots,u_{r}\}\subseteq \bigcup_{j=0}^{i} V(H'_j)$.  There are two cases to consider:
+        \begin{compactenum}
+           \item $\{u_0,\ldots,u_{r}\}\subseteq V(H'_i)$ in which case $\varphi(u_j)>\varphi(u_0)$ for some $j\in\{1,\ldots,r-1\}$ since $\varphi$ is an $\ell$-ranking of $H'_i$ (by the application of \weirdref{simple-t-trees}{a}) to $H'_i$; or
+           \item $u_j\in V(H'_{i-1})$ for some $j\in\{1,\ldots,r-1\}$.  In this case $\varphi(u_j)>a(k-)\varphi(u_0)$.
+       \end{compactenum}
+       \item If $\varphi(u_0)=\varphi(u_r) < a(k-c'-1)$ then $u_0\in V(X)$ and $u_r\in V(Y)$ for some components $X$ and $Y$ of $H-S'$.  Either
+       \begin{compactenum}
+            \item $u_j\in S'=V(H')$ for some $j\in\{1,\ldots,r-1\}$ in which case $\varphi(u_j)>a(k-c'-1)\ge\varphi(u_0)$; or
+            \item $X=Y$ and $\{u_0,\ldots,u_r\}\subseteq V(X)$, in which case $\varphi(u_j)>\varphi(u_0)$ for some $j\in\{1,\ldots,r\}$ (by the application of induction on $X$). \qedhere
+        \end{compactenum}
+    \end{compactenum}
 \end{proof}
 
-The next lemma helps deal with the case where we don't necessarily have the slack $s$ required to apply \cref{t-tree-slack}.  In this case we use the top $O(c)$ colours (which we can only use once) as a separator, $S$, to colour a subgraph $H'$ of $H$ so that each $(t-1)$-tree in the uncoloured $(t-1)$-forest $H-H'$ has the slack needed to apply \cref{t-tree-slack}.
+The next lemma helps deal with the case where we don't necessarily have the slack $s$ required to apply \cref{t-tree-slack}.  In this case we use the top $O(c)$ colours (which we can only use once) to colour a separator, $S$ of $H$ so that each component of $H-S$ has the slack needed to apply \cref{t-tree-slack}.
 
 \begin{lem}\label{t-tree-no-slack-separator}
     Let $t,k\in\N$ and $c\in\R$ with $t\ge 2$ and $\tau(t)\le c\le k-1$; let $H$ be a graph with $\tw(H)\le t-1$; let $\mathcal{T}:=(B_x:x\in V(T))$ be a tree decomposition of $H$ of width at most $t-1$;
