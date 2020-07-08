@@ -652,7 +652,7 @@ The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part
     For each $i\in\{1,\ldots,p\}$, $U$ contains $u_{i-1}$ and $u_i$.
     To obtain $U_i'$ we apply induction on $G_i$ using a path decomposition on a path whose endpoints are $y_{i-1}$ and $y_i$ having bags $B'_{y_{i-1}}=B_{y_{i-1}}\setminus u_{i-1}$ and $B'_{y_{i}}=B_{y_{i}}\setminus u_{i}$.  Therefore $U$ contains $\{u_{i-1},u_i\}\cup B'_{y_{i-1}}\cup B'_{y_i}=B_{y_{i-1}}\cup B_{y_i}$.
 
-    In particular, $U$ contains $B_{y_0}=B_1$ and $B_{y_p}=B_m$, so $U$ satisfies (Z\ref{values-u}).  The size of $U$ is at most $O(p+1+O(p\ell^{t-1}))=O(\ell^{t})$, so $U$ satisifes (Z\ref{size-u}).  All that remains is to show that $U$ satisfies (Z\ref{induced-u}).  Consider some induced path $w_0,\ldots,w_q$ in $G$ of length at most $\ell$ with $\{w_0,w_q\}\subseteq U$.  We want to show that $\{w_1,\ldots,w_{q-1}\}\subseteq U$.
+    In particular, $U$ contains $B_{y_0}=B_1$ and $B_{y_p}=B_m$, so $U$ satisfies (Z\ref{values-u}). The size of $U$ satisfies the recurrence $f(0)\le 2$ and $f(t)\le \ell+1+\ell\cdot f(t-1)$, which resolves to $f(t)\le (3\ell^{t+1}-\ell^t-\ell-1)/(\ell-1) \in O(\ell^t)$, so $U$ satisifes (Z\ref{size-u}).  All that remains is to show that $U$ satisfies (Z\ref{induced-u}).  Consider some induced path $w_0,\ldots,w_q$ in $G$ of length at most $\ell$ with $\{w_0,w_q\}\subseteq U$.  We want to show that $\{w_1,\ldots,w_{q-1}\}\subseteq U$.
 
     We say that a vertex $w_i$ is \emph{pinched} if $w_i\in B_{y_j}$ for some $j\in\{0,\ldots,p\}$. (Note that each of $u_1,\ldots,u_p$ is pinched.) The edges of $w_0,\ldots,w_q$ can be partitioned into subpaths of the form $w_{a},\ldots,w_{b}$ where
     \begin{inparaenum}[(i)]
@@ -665,7 +665,7 @@ The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part
     \begin{compactenum}
        \item $\{w_a,w_b\}\subseteq B_{y_j}$ for some $j\in\{0,\ldots,p\}$.  Since $G$ is edge maximal with respect to $\mathcal{P}$, this implies  $w_aw_b\in E(G)$. Since $w_a,\ldots,w_b$ is an induced path in $G$, $b=a+1$ and there is nothing to prove.
 
-       \item $\{w_a,w_b\}\in V(G_j')$ for some $j\in\{1,\ldots,p\}$. In this case, $w_a,\ldots,w_b$ is an induced path in $G_j'$ so, by the inductive hypothesis, $w_{a+1},\ldots,w_{b-1}\subseteq U_j'\subseteq U$.  (Note that this includes the special case in which $w_a=u_j$ and $w_b\in V(G_j')$.)
+       \item $\{w_a,w_b\}\in V(G_j')$ for some $j\in\{1,\ldots,p\}$. In this case, edge maximality implies that $B_{y_{j-1}}$ and $B_{y_{j}}$ each form cliques.  Since $w_a,\ldots,w_b$ is induced, this implies that $\{w_a,\ldots,w_b\}\subseteq V(G_j')\cup\{u_{j-1}\}$.  By edge maximality, the vertex $u_{j-1}$ dominates $V(G_j')$, so if $u_{j-1}\in\{w_a,\ldots,w_b\}$, then $b=a+2$ and $w_{a+1}=u_{j-1}\in U$ and we are done.  Otherwise, $w_a,\ldots,w_b$ is an induced path in $G_j'$ so, by the inductive hypothesis, $w_{a+1},\ldots,w_{b-1}\subseteq U_j'\subseteq U$.  (Note that this includes the special case in which $w_a=u_j$ and $w_b\in V(G_j')$.)
 
        \item $w_a = u_j$ for some $j\in\{0,\ldots,p\}$ and $w_b\in V(G_{j+1}')$.  There are three subcases to consider:
        \begin{compactenum}
