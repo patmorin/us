@@ -63,9 +63,9 @@
 \maketitle
 
 \begin{abstract}
-  A (vertex) $\ell$-ranking is a labelling $\varphi:V(G)\to\N$ of the vertices of a graph $G$ with integer colours so that for any path $v_0,\ldots,v_r$ of length $r\le \ell$, $\max\{\varphi(v_0),\ldots,\varphi(v_r)\}$ appears exactly once in the sequence $\varphi(v_0),\ldots,\varphi(v_r)$.  We show that, every $n$-vertex planar graph has an $\ell$-ranking using $O(f(\ell)\cdot\log n/\log\log\log n)$ colours and this is tight even when $\ell=2$; for some $n$-vertex planar graphs, any 2-ranking requires $\Omega(\log n/\log\log\log n)$ colours.  This result also extends to bounded genus graphs.
+  A (vertex) $\ell$-ranking is a labelling $\varphi:V(G)\to\N$ of the vertices of a graph $G$ with integer colours so that for any path $u_0,\ldots,u_r$ of length at most $\ell$, $\varphi(u_0)\neq\varphi(u_r)$ or $\varphi(u_0)<\max\{\varphi(u_0),\ldots,\varphi(u_r)\}$.  We show that, for any fixed integer $\ell\ge 2$, every $n$-vertex planar graph has an $\ell$-ranking using $O(\log n/\log\log\log n)$ colours and this is tight even when $\ell=2$; for some $n$-vertex planar graphs, any 2-ranking requires $\Omega(\log n/\log\log\log n)$ colours.  This result also extends to bounded genus graphs.
 
-  In developing this proof we obtain optimal bounds on the number of colours needed for $\ell$-ranking $t$-trees and simple $t$-trees (this includes planar 3-trees and outerplanar graphs).  These upper bounds are constructive and give $O(n\log n)$-time algorithms.  Additional results that come from our techniques include new sublogarithmic upper bounds on the number of colours needed for $\ell$-rankings of bounded genus graphs, apex minor-free graphs, and $k$-planar graphs.
+  In developing this proof we obtain optimal bounds on the number of colours needed for $\ell$-ranking $t$-trees and simple $t$-trees (this includes planar 3-trees and outerplanar graphs).  These upper bounds are constructive and give $O(n\log n)$-time algorithms.  Additional results that come from our techniques include new sublogarithmic upper bounds on the number of colours needed for $\ell$-rankings of apex minor-free graphs and $k$-planar graphs.
 \end{abstract}
 \end{titlepage}
 
@@ -78,11 +78,11 @@
 
 % A sequence of integers $\phi_0,\ldots,\phi_r$ is \emph{ranked} if $\max\{\phi_0,\ldots,\phi_r\}$ occurs exactly once in $\phi_0,\ldots,\phi_r$.
 
-A \emph{colouring} $\varphi:V(G)\to \N$ of a graph $G$ is a (vertex) \emph{$\ell$-ranking} of $G$ if, for every non-trivial path $v_0,\ldots,v_r$ in $G$ of length\footnote{The length of a path $v_0,\ldots,v_r$ is the number, $r$, of edges in the path.} at most $\ell$,
+A \emph{colouring} $\varphi:V(G)\to \N$ of a graph $G$ is an \emph{$\ell$-ranking} of $G$ if, for every non-trivial path $u_0,\ldots,u_r$ in $G$ of length\footnote{The length of a path $u_0,\ldots,u_r$ is the number, $r$, of edges in the path. A path is \emph{trivial} if its length is 0 and non-trivial otherwise.} at most $\ell$,
 \begin{inparaenum}[(i)]
-    \item $\varphi(v_0)\neq\varphi(v_r)$; or \item $\varphi(v_0)<\max\{\varphi(v_1),\ldots,\varphi(v_{r-1})\}$.
+    \item $\varphi(u_0)\neq\varphi(u_r)$; or \item $\varphi(u_0)<\max\{\varphi(u_0),\ldots,\varphi(u_{r})\}$.
 \end{inparaenum}
-The $\ell$-ranking number $\chi_\ell(G)$ is the minimum integer $k$ such that $G$ has a $\ell$-ranking $\varphi:V(G)\to \{1,\ldots,k\}$.  Note that, for any $\ell\ge 1$ any $\ell$-ranking of $G$ is a proper colouring\footnote{A colouring $\varphi:V(G)\to \N$ is \emph{proper} if, for each edge $vw\in E(G)$, $\varphi(v)\neq\varphi(w)$ and the \emph{chromatic number}, $\chi(G)$, of $G$ is the minimum integer $k$ such that there exists a proper colouring $\varphi:V(G)\to\{1,\ldots,k\}$ of $G$.} of $G$, so $\chi(G)\le \chi_\ell(G)$, and any proper colouring of $G$ is a 1-ranking of $G$, so $\chi(G)=\chi_1(G)$.
+The $\ell$-ranking number $\chi_\ell(G)$ of $G$ is the minimum integer $k$ such that $G$ has a $\ell$-ranking $\varphi:V(G)\to \{1,\ldots,k\}$.  Note that, for any $\ell\ge 1$ any $\ell$-ranking of $G$ is a proper colouring\footnote{A colouring $\varphi:V(G)\to \N$ is \emph{proper} if, for each edge $vw\in E(G)$, $\varphi(v)\neq\varphi(w)$ and the \emph{chromatic number}, $\chi(G)$, of $G$ is the minimum integer $k$ such that there exists a proper colouring $\varphi:V(G)\to\{1,\ldots,k\}$ of $G$.} of $G$, so $\chi(G)\le \chi_\ell(G)$, and any proper colouring of $G$ is a 1-ranking of $G$, so $\chi(G)=\chi_1(G)$.
 
 Besides the case $\ell=1$, two cases have received special attention: An $\infty$-ranking is called a \emph{vertex ranking} or \emph{ordered colouring}. The parameter $\chi_\infty(G)$ is called the \emph{vertex ranking number} of $G$ and has applications to matrix factorization \cite{bodlaender.gilbert.ea:approximating,duff.reid:multifrontal,liu:role,dereniowski.kubale:cholesky}, VLSI layout \cite{leiserson:area,sen.deng.ea:on}, and the analysis of online algorithms \cite{even.smorodinsky:hitting}. The case $\ell=2$ has also received special attention \cite{almeter.demircan.ea:graph,karpas.neiman.ea:on,shalu.antony:complexity}. A $2$-ranking is called a \emph{unique-superior colouring} (abbreviated \emph{us-colouring}) by \citet{karpas.neiman.ea:on} who prove the following result:
 
@@ -95,31 +95,30 @@ The same authors prove the following result for planar graphs:
 
 \setcounter{othertheorem}{15}
 \begin{othertheorem}[\cite{karpas.neiman.ea:on}]\label{planar-graphs}
-    For every $n$-vertex planar graph $G$, $\lrn(G)\in O(\ell\log n)$.
+    For every integer $\ell$ and every $n$-vertex planar graph $G$, $\lrn(G)\in O(\ell\log n)$.
 \end{othertheorem}
 
 Since every tree is a planar graph and no better lower bound is known for planar graphs, this leaves an obvious question:  Which is the correct bound for 2-ranking $n$-vertex planar graphs, $\log n$ or $\log n/\log\log n$?  As it turns out, neither is correct.  Let $\log x :=\ln x$ denote the natural logarithm of $x$ and define $\log^{(0)}x:=x$ and, for any integer $i>0$, let $\log^{(i)}x:=\log(\log^{(i-1)} x)$. We prove:
 
 
 \begin{thm}\label{planar}
-    For any fixed positive integer $\ell\ge 2$, $\lrn(G)\in O(\log n/\log^{(3)} n)$ for every $n$-vertex planar graph $G$ and this is asymptotically optimal: for infinitely many values of $n$, there exists an $n$-vertex planar graph $G$ with $\trn(G)\in \Omega(\log n/\log^{(3)} n)$
+    For any fixed integer $\ell\ge 2$, every $n$-vertex planar graph $G$ has $\lrn(G)\in O(\log n/\log^{(3)} n)$ and this is asymptotically optimal: for infinitely many values of $n$, there exists an $n$-vertex planar graph $G$ with $\trn(G)\in \Omega(\log n/\log^{(3)} n)$
 \end{thm}
 
 Our proof of the upper bound in \cref{planar} makes use of a recent \emph{product structure theorem} of \citet{dujmovic.joret.ea:planar} which states that every planar graph $G$ is a subgraph of $H\boxtimes K_3\boxtimes P$ where $H$ is a planar $3$-tree, $K_3$ is a 3-cycle, $P$ is a path, and $\boxtimes$ denotes the strong graph product.\footnote{Definitions of $t$-trees, simple $t$-trees, treewidth, simple treewidth, and strong graph product appear later, in \cref{sec:basics}.}  To apply this theorem, we prove the following result:
 
 \begin{thm}\label{simple-t-trees}
-    For any fixed positive integers $\ell,t\ge 1$, every $n$-vertex simple $t$-tree $H$, has $\lrn(H) \in O(\log n/\log^{(t)}n)$.
-    and this is asymptotically optimal: for all integer $t\ge 1$ and infinitely many values of $n$, there exists an $n$-vertex simple $t$-tree $H$ with $\trn(H)\in\Omega(\log n/\log^{(t)} n)$.
+    For any fixed integers $\ell\ge 2$ and $t\ge 1$, every $n$-vertex simple $t$-tree $H$ has $\lrn(H) \in O(\log n/\log^{(t)}n)$ and this is asymptotically optimal: for any fixed integer $t\ge 0$ and infinitely many values of $n$, there exists an $n$-vertex simple $t$-tree $H$ with $\trn(H)\in\Omega(\log n/\log^{(t)} n)$.
 \end{thm}
 
-\Cref{simple-t-trees} is immediately relevant because a 3-tree is planar if and only if it is a simple $3$-tree. Therefore, the lower bound in \cref{simple-t-trees} immediately implies the lower bound in \cref{planar} since it shows the existence of $n$-vertex planar graphs with $\trn(T)\in\Omega(\log n/\log^{(3)} n)$.
+The lower bound in \cref{simple-t-trees} immediately implies the lower bound in \cref{planar} because a 3-tree is planar if and only if it is a simple $3$-tree. Therefore, the lower bound in \cref{simple-t-trees} shows the existence of $n$-vertex planar graphs $H$ with $\trn(H)\in\Omega(\log n/\log^{(3)} n)$.
 
-To obtain the upper bound in \cref{planar}, we apply \cref{simple-t-trees} to the graph $H$ defined by the product structure theorem along with a simple lemma which shows that, for any two graphs $G_1$ and $G_2$, $\lrn(G_1\boxtimes G_2)\le \lrn(G_1)\cdot\dlcn(G_2)$ where $\dlcn(G_2)$ is the \emph{distance-$\ell$ colouring number} of $G_2$;  the minimum number of colours needed to colour $G_2$ so that the endpoints of each non-trivial path of length at most $\ell$ have different colours.  It is easy to see that $\dlcn(K_3\times P)\le 3(\ell+1)$, so $\lrn(H\boxtimes K_3\boxtimes P)\le 9\lrn(H)$.
+To obtain the upper bound in \cref{planar}, we apply the upper bound in \cref{simple-t-trees} to the simple 3-tree $H$ defined by the product structure theorem along with a simple lemma which shows that, for any two graphs $G_1$ and $G_2$, $\lrn(G_1\boxtimes G_2)\le \lrn(G_1)\cdot\dlcn(G_2)$ where $\dlcn(G_2)$ is the \emph{distance-$\ell$ colouring number} of $G_2$;  the minimum number of colours needed to colour $G_2$ so that the endpoints of each non-trivial path of length at most $\ell$ have different colours.  It is easy to see that $\dlcn(K_3\times P)\le 3(\ell+1)$, so $\lrn(H\boxtimes K_3\boxtimes P)\le 3(\ell+1)\cdot\lrn(H)$.
 
 Every (not-necessarily simple) $t$-tree is the spanning subgraph of some simple $(t+1)$-tree. Therefore, the upper bound in \cref{simple-t-trees} implies the (upper bound in the) following generalization of \cref{trees}:
 
 \begin{thm}\label{t-trees}
-    For any fixed integers $\ell\ge 2$, $t\ge 0$, every $n$-vertex $t$-tree $H$ has $\lrn(H) \in O(\log n/\log^{(t+1)} n)$ and this is asymptotically optimal: for infinitely many values of $n$, there exists an $n$-vertex $t$-tree $H$ with $\trn(H)\in\Omega(\log n/\log^{(t+1)} n)$.
+    For any fixed integers $\ell\ge 2$, $t\ge 0$, every $n$-vertex $t$-tree $H$ has $\lrn(H) \in O(\log n/\log^{(t+1)} n)$ and this is asymptotically optimal: for any fixed integer $t\ge 0$ and infinitely many values of $n$, there exists an $n$-vertex $t$-tree $H$ with $\trn(H)\in\Omega(\log n/\log^{(t+1)} n)$.
 \end{thm}
 
 The lower bound in \cref{t-trees} is through a construction of a $t$-tree $H$ with $\trn(H)\in\Omega(\log n/\log^{(t+1)} n)$.  Again, since every $(t-1)$-tree is the spanning subgraph of a simple $t$-tree, the lower bound in \cref{t-trees} implies the lower bound in \cref{simple-t-trees}.
@@ -127,17 +126,17 @@ The lower bound in \cref{t-trees} is through a construction of a $t$-tree $H$ wi
 In addition to planar graphs, there are product structure theorems for a number of other graph classes, including bounded genus graphs, apex minor-free graphs, and $k$-planar graphs.  Using product structure theorems for these graph classes along with \cref{simple-t-trees,t-trees}, we obtain the following two results:
 
 \begin{thm}\label{bounded-genus}
-    For every $n$-vertex graph $G$ of Euler genus at most $g$, $\trn(G)\in O(g\log n/\log^{(3)} n)$.
+    For any fixed integer $\ell\ge 2$ and any integer $g\ge 0$, every $n$-vertex graph $G$ of Euler genus at most $g$ has $\lrn(G)\in O(g\log n/\log^{(3)} n)$.
 \end{thm}
 
 \begin{thm}\label{meta-theorem}\label{meta}
     For each of the following graph classes $\mathcal{G}$:
     \begin{compactenum}
         % \item the class of graphs that have non-crossing drawings in a surface of genus at most $g$;
-        \item the class of graphs excluding a particular apex graph $A$ as a minor;
+        \item the class of graphs excluding a particular apex graph $A$ as a minor; and
         \item the class of graphs that can be drawn in a surface of genus $g$ with at most $k$ crossings per edge,
     \end{compactenum}
-    there exists an integer $c=c(\mathcal{G})$ such that, for every $n$-vertex graph $G\in\mathcal{G}$ and every fixed integer $\ell\ge 2$, $\lrn(G)\in O(\log n/\log^{(c)} n)$.
+    there exists an integer $c=c(\mathcal{G})$ such that, for any fixed integer $\ell\ge 2$, every $n$-vertex graph $G\in\mathcal{G}$ has $\lrn(G)\in O(\log n/\log^{(c)} n)$.
 \end{thm}
 
 
@@ -148,12 +147,12 @@ For a graph $G$, a vertex $\infty$-ranking is known as a \emph{vertex ranking} \
 
 The \emph{vertex ranking problem} of determining $\chi_\infty(G)$ for an arbitrary graph $G$ is known to be NP-hard, even on some restricted classes of graphs \cite{bodlaender.deogun.ea:rankings,llewellyn.tovey.ea:local,llewellyn.tovey.ea:erratum,dereniowski.nadolski:vertex}. Polynomial-time algorithms for the vertex ranking problem have been found for several families of graphs: \citet{schaeffer:optimal} showed this for trees and \citet{deogun.kloks.ea:on} showed this for permutation graphs.
 
-A straightforward application of divide-and-conquer using planar separators shows that, for any $n$-vertex planar graph $G$, $\chi_\infty(G) \in O(\sqrt{n})$ \cite{llewellyn.tovey.ea:local,katchalski.mccuaig.ea:ordered}, and this bound is optimal:  There exists $n$-vertex planar graphs $G$ with $\chi_\infty(G)\in \Omega(\sqrt{n})$ \cite{katchalski.mccuaig.ea:ordered}.  A lower bound of \citet{katchalski.mccuaig.ea:ordered} shows that upper bounds like this, using divide-and-conquer with separators, are essentially tight: If, for every $r$-element set $S\subseteq V(G)$, the graph $G-S$ has a component of size at least $\alpha m$, then $\chi_\infty(G) \in\Omega(\alpha r)$. In a similar vein, \citet{bodlaender.gilbert.ea:approximating,kloks:treewidth} show that $\chi_\infty(G)$ is lower bounded by 1 plus the pathwidth of $G$.
+A straightforward application of divide-and-conquer using planar separators shows that, for any $n$-vertex planar graph $G$, $\chi_\infty(G) \in O(\sqrt{n})$ \cite{llewellyn.tovey.ea:local,katchalski.mccuaig.ea:ordered}, and this bound is optimal:  There exists $n$-vertex planar graphs $G$ with $\chi_\infty(G)\in \Omega(\sqrt{n})$ \cite{katchalski.mccuaig.ea:ordered}.  A lower bound of \citet{katchalski.mccuaig.ea:ordered} shows that upper bounds like this, using divide-and-conquer with separators, are essentially tight: If, for every $r$-element set $S\subseteq V(G)$, the graph $G-S$ has a component of size at least $\alpha n$, then $\chi_\infty(G) \in\Omega(\alpha r)$. In a similar vein, \citet{bodlaender.gilbert.ea:approximating,kloks:treewidth} show that $\chi_\infty(G)$ is lower bounded by 1 plus the pathwidth of $G$.
 
-It is not hard to see that, even for an $n$-vertex path $P$, $\chi_\infty(P)\in\Omega(\log n)$.  The same separator argument, applied to treewidth-$t$ graphs shows that every $n$-vertex treewidth-$t$ graph $G$ has $\chi_\infty(G)\in O(t\log n)$.  This shows that, even for graphs with constant-size separators, (worst-case asymptotically) optimal bounds are obtained by divide-and-conquer using separators.  More references on graph rankings are available in Section 7.19 of the dynamic survey by \citet{gallian:dynamic}.
+It is not hard to see that, even for an $n$-vertex path $P$, $\chi_\infty(P)\in\Omega(\log n)$.  The same separator argument, applied to treewidth-$t$ graphs shows that every $n$-vertex treewidth-$t$ graph $G$ has $\chi_\infty(G)\in O(t\log n)$.  This shows that, even for graphs with constant-size separators, (worst-case asymptotically) optimal bounds are obtained by divide-and-conquer using separators.  More references on vertex ranking are available in Section 7.19 of the dynamic survey by \citet{gallian:dynamic}.
 
 \begin{table}
-    \begin{centering}
+    \centering{
         \begin{tabular}{|l|c|c|l|} \hline
             Graph class & Upper Bound & Lower Bound & Ref. \\ \hline
             Trees & $O(\log n/\log\log n)$ & $\Omega(\log n/\log\log n)$ & \cite{karpas.neiman.ea:on} \\
@@ -174,12 +173,12 @@ It is not hard to see that, even for an $n$-vertex path $P$, $\chi_\infty(P)\in\
             $(g,k)$-planar & $O(\log n/\log^{(c(g,k))} n)$ & & \cref{meta} \\
             \hline
         \end{tabular}
-    \end{centering}
+    } % centering
     \caption{Summary of previous and new results on $\trn$.  All new upper bounds hold for any constant $\ell$. All new lower bounds hold for $\ell=2$. Prior upper bounds hold only for $\ell=2$, with the exception of the $O(\ell\log n)$ upper bound for planar graphs.}
 \label{summary-table}
 \end{table}
 
-At least three works have considered $\chi_\ell$ for finite $\ell$ with a focus on the case $\ell=2$.  These results are summarized in \cref{summary-table}.  Note that 2-rankings fall between two very well-studied graph parameters:
+At least three works have considered $\chi_\ell$ for finite $\ell$ with a focus on the case $\ell=2$.  These results are summarized in \cref{summary-table}.  Note that 2-rankings fall between two very well-studied graph colouring problems:
 \begin{compactitem}
     \item \emph{star colourings}, which ensure that the graph induced by an 2 colour classes is forest of stars and
     \item \emph{distance-2 colourings} which ensure that the endpoints each non-trivial path of length at most 2 receive distinct colours.
@@ -190,21 +189,23 @@ Every 2-ranking is a star colouring and every distance-2 colouring is a 2-rankin
 
 \citet{shalu.antony:complexity} show that determining the minimum number of colours required by a 2-ranking of a given graph is NP-hard, even when restricted to planar bipartite graphs.  \citet{almeter.demircan.ea:graph} determine the exact value of $\trn(Q_d)=d+1$ where $Q_d$ is the $d$-cube.  They also shows that, for graphs $G$ of maximum degree 3, $\trn(G)\le 7$ and show the existence of a graph with maximum degree $k$ such that $\trn(G)\in\Omega(k^2/\log k)$.
 
-It is not hard to see that any colouring $\varphi$ of $G$ is a vertex $\ell$-ranking if and only if, for every connected graph $X$ of $G$ having at most $\ell+1$ vertices, there is only one vertex $v\in V(X)$ such that $\varphi(v)=\max\{\varphi(v):v\in V(X)\}$.  This makes $\ell$-ranking a stronger notion than \emph{$\ell$-centered colouring}, which requires only that there exists some colour $\alpha$ such that there is exactly one vertex $v\in V(X)$ with $\varphi(v)=\alpha$. In this case, the difference between ``unique'' and ``unique maximum'' is surprisingly profound.  Planar graphs (and, indeed, all graphs families having similar product structure theorem) have $\ell$-centered colourings using a number of colours that depends only (polynomially) on $\ell$ \cite{debski.felsner.ea:improved,pilipczuk.siebertz:polynomial}.
+It is not hard to see that any colouring $\varphi$ of $G$ is a vertex $\ell$-ranking if and only if, for every connected subgraph $X$ of $G$ having at most $\ell+1$ vertices, there is only one vertex $v\in V(X)$ such that $\varphi(v)=\max\{\varphi(v):v\in V(X)\}$.  This makes $\ell$-ranking a stronger notion than \emph{$\ell$-centered colouring}, which requires only that there exists some colour $\alpha$ such that there is exactly one vertex $v\in V(X)$ with $\varphi(v)=\alpha$. In this case, the difference between ``unique'' and ``unique maximum'' is surprisingly profound.  Planar graphs (and, indeed, all graphs families having similar product structure theorem) have $\ell$-centered colourings using a number of colours that depends only (polynomially) on $\ell$ \cite{debski.felsner.ea:improved,pilipczuk.siebertz:polynomial}.
 
-The remainder of this paper is organized as follows: \Cref{sec:basics} reviews some basic tools used in the following sections.   \Cref{lower-bounds} proves the lower bound in \cref{t-trees}, which immediately implies the lower bounds in \cref{planar,simple-t-trees}. \Cref{upper-bounds} proves the upper bound in \cref{simple-t-trees}, from which the upper bounds in \cref{planar,t-trees,bounded-genus} follow easily.  \Cref{conclusion} gives a brief summary and conclusions.
+The remainder of this paper is organized as follows: \Cref{sec:basics} reviews some basic tools used in the following sections.   \Cref{lower-bounds} proves the lower bound in \cref{t-trees}, which immediately implies the lower bounds in \cref{planar,simple-t-trees}. \Cref{upper-bounds} proves the upper bound in \cref{simple-t-trees}, from which the upper bounds in \cref{planar,t-trees,bounded-genus,meta} follow easily.  \Cref{conclusion} gives a brief summary and discusses directions for further work.
 
 \section{Preliminaries}
 \seclabel{basics}
 
 In this paper we use standard graph theory terminology as used in the book by \citet{diestel:graph}
-Every graph $G$ we consider is finite, simple, and undirected with vertex set denoted $V(G)$ and edge set denoted $E(G)$.  We use the shorthand $|G|:=|V(G)|$ to denote the number of vertices in $G$.  We use $N_G(v):=\{w\in V(G): vw\in E(G)\}$ to denote the open neighbourhood of $v$ in $G$.  For any set $S$, the induced subgraph  $G[S]$ is a graph with $V(G[S]):=V(G)\cap S$ and $E(G[S]):=\{vw\in E(G): \{v,w\}\subseteq S\}$, and $G-S:=G[V(G)\setminus S]$. For each $n\in\N$, $K_n$ denotes the complete graph on $n$ vertices.
+Every graph $G$ we consider is finite, simple, and undirected with vertex set denoted by $V(G)$ and edge set denoted by $E(G)$.  We use the shorthand $|G|:=|V(G)|$ to denote the number of vertices in $G$.  We use $N_G(v):=\{w\in V(G): vw\in E(G)\}$ to denote the \emph{open neighbourhood} of $v$ in $G$.  For any set $S$, the \emph{induced subgraph}  $G[S]$ is a graph with $V(G[S]):=V(G)\cap S$ and $E(G[S]):=\{vw\in E(G): \{v,w\}\subseteq S\}$, and $G-S:=G[V(G)\setminus S]$. For each $n\in\N$, $K_n$ denotes the complete graph on $n$ vertices.
 
-The \emph{length} of a path $v_0,\ldots,v_r$ in a graph is equal to the number, $r$, of edges in the path. A path is \emph{trivial} if it has length 0 and \emph{non-trivial} otherwise.
+The \emph{length} of a path $u_0,\ldots,u_r$ in a graph is equal to the number, $r$, of edges in the path. A path is \emph{trivial} if it has length 0 and \emph{non-trivial} otherwise.
 
-Let $T$ be a rooted tree rooted at some node $r\in V(T)$.  For any node $x\in V(T)$, let $P_T(x)$ denote the path, in $T$, from $r$ to $x$.  The \emph{$T$-depth} of $x\in V(T)$, denoted $d_T(x)$ is the length of the path $P_T(x)$.  A node $a\in V(T)$ is a \emph{$T$-ancestor} of $x\in V(T)$ if $a\in V(P_T(x))$. If $a$ is a $T$-ancestor of $x$ then $x$ is a \emph{$T$-descendant} of $a$.  Note that every node of $T$ is both a $T$-ancestor and $T$-descendant of itself.  If $a$ is a $T$-ancestor of $x$ and $x\neq a$ then $a$ is a \emph{strict} $T$-ancestor of $x$ and $x$ is a \emph{strict} $T$-descendant of $x$.  The strict ancestor relation induces a partial order $\prec_T$ on $V(T)$ in which $x\prec_T y$ if and only if $x$ is a strict $T$-ancestor of $y$.
+Let $T$ be a rooted tree rooted at some node $r\in V(T)$.  For any node $x\in V(T)$, $P_T(x)$ denotes the path, in $T$, from $r$ to $x$.  The \emph{$T$-depth} of $x\in V(T)$, denoted by $d_T(x)$, is the length of the path $P_T(x)$.  A node $a\in V(T)$ is a \emph{$T$-ancestor} of $x\in V(T)$ if $a\in V(P_T(x))$. If $a$ is a $T$-ancestor of $x$ then $x$ is a \emph{$T$-descendant} of $a$.  Note that every node of $T$ is both a $T$-ancestor and $T$-descendant of itself.  If $a$ is a $T$-ancestor of $x$ and $x\neq a$ then $a$ is a \emph{strict} $T$-ancestor of $x$ and $x$ is a \emph{strict} $T$-descendant of $x$.  The strict ancestor relation induces a partial order $\prec_T$ on $V(T)$ in which $x\prec_T y$ if and only if $x$ is a strict $T$-ancestor of $y$.
 
-For any graph $G$, and any two vertices $v,w\in V(G)$, let $d_G(v,w)$ denote the length of the shortest path, in $G$, from $v$ to $w$. For any integer $k\ge 0$, the \emph{$k$-th power} of $G$, denote $G^k$ is the graph with vertex set $V(G^k):=V(G)$ and edge set $E(G^{k}):=\{vw:v,w\in V(G),\,d_G(v,w)\le k\}$. In the special case $k=2$, $G^2$ is called the \emph{square} of $G$.  Note that any distance-$\ell$ colouring of $G$ is is a proper colouring of $G^\ell$ and vice-versa, i.e., $\dlcn(G)=\chi(G^\ell)$.
+For any graph $G$, and any two vertices $v,w\in V(G)$, $d_G(v,w)$ denotes the length of the shortest path, in $G$, from $v$ to $w$. For any integer $k\ge 0$, the \emph{$k$-th power} of $G$, denoted by $G^k$, is the graph with vertex set $V(G^k):=V(G)$ and edge set $E(G^{k}):=\{vw:v,w\in V(G),\,d_G(v,w)\le k\}$.
+% In the special case $k=2$, $G^2$ is called the \emph{square} of $G$.
+Note that any distance-$\ell$ colouring of $G$ is a proper colouring of $G^\ell$ and vice-versa, i.e., $\dlcn(G)=\chi(G^\ell)$.
 
 For any $v\in V(G)$ and any $W\subseteq V(G)$, let $d_H(v,W)=\min\{d_G(v,w):w\in W\}$. A \emph{BFS layering} of $G$ is a partition of $V(G)$ into a sequence $\mathcal{L}:=(L_0,\ldots,L_m)$ of sets such that, for each $i\in\{1,\ldots,m\}$ and each $v\in L_i$, $d_G(v,L_0)=i$.  Any BFS layering $\mathcal{L}:=(L_0,\ldots,L_m)$ defines a partial order $\prec_{\mathcal{L}}$ on $V(G)$ in which $v\prec_{\mathcal{L}} w$ if and only if $v\in L_i$, $w\in L_j$ and $i<j$.
 
@@ -221,7 +222,7 @@ A path $P:=u_0,\ldots,u_r$ in $G$ is an \emph{induced} path if $G[\{u_0,\ldots,u
 \begin{proof}
     By definition any $\ell$-ranking $\varphi$ of $G$ satisifies (i) or (ii) for every path of length at most $\ell$, including every induced path of length at most $\ell$, so this direction is trivial.
 
-    For the other direction, suppose $G$ contains a (not necessarily induced) path $u_0,\ldots,u_r$ of length $r\le\ell$ with $\varphi(u_0)=\varphi(u_r)$ and $\varphi(u_0)=\max\{\varphi(u_0),\ldots,\varphi(u_r)\}$.  Then let $w_0,\ldots,w_s$ be the shortest path from $w_0:=u_0$ to $w_s:=u_r$ in  the graph $G[\{u_0,\ldots,u_r\}]$.  Let $w_0,\ldots,w_s$ is an induced path in $G$ with $\varphi(w_0)=\varphi(u_0)=\varphi(u_r)=\varphi(w_s)$. Since $\{w_0,\ldots,w_s\}\subseteq\{u_0,\ldots,u_s\}$, $\varphi(w_0)=\varphi(u_0)\le\max\{w_0,\ldots,w_s\}\le \max\{u_0,\ldots,u_r\}$.
+    For the other direction, suppose $G$ contains a (not necessarily induced) path $u_0,\ldots,u_r$ of length $r\le\ell$ with $\varphi(u_0)=\varphi(u_r)$ and $\varphi(u_0)=\max\{\varphi(u_0),\ldots,\varphi(u_r)\}$.  Let $w_0,\ldots,w_s$ be the shortest path from $w_0:=u_0$ to $w_s:=u_r$ in  the graph $G[\{u_0,\ldots,u_r\}]$.  Then $w_0,\ldots,w_s$ is an induced path in $G$ with $\varphi(w_0)=\varphi(u_0)=\varphi(u_r)=\varphi(w_s)$ and, since $\{w_1,\ldots,w_{s-1}\}\subseteq\{u_1,\ldots,u_{s-1}\}$, $\max\{\varphi(w_1),\ldots,\varphi(w_{s-1})\}\le\max\{u_1,\ldots,u_{r-1}\}$, so $\varphi(w_0)=\varphi(u_0)=\max\{\varphi(w_0),\ldots,\varphi(w_s)\}$.
 \end{proof}
 
 
