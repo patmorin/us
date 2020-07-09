@@ -1228,18 +1228,18 @@ Therefore
     \left(\tfrac{\log^{(t-1)}\left(c+\log c/\log^{(t-1)} c\right)}{\log^{(t-1)} c}\right)} &\text{(change of base)} \\
     & = \left(\log^{(t-2)}c\right)^{\left(c+\tfrac{\log c}{\log^{(t-1)} c}\right)
     \left(
-    1 + \tfrac{(\log e)^t\log c/\log^{(t-1)} c}{\prod_{j=0}^{t-1}\log^{(j)}c}
+    1 + \tfrac{\log c/\log^{(t-1)} c}{\prod_{j=0}^{t-1}\log^{(j)}c}
     \right)} & \text{(by \cref{logi-ratio})} \\
     & = \left(\log^{(t-2)}c\right)^{\left(c+\tfrac{\log c}{\log^{(t-1)} c}\right)
     \left(
-    1 + \tfrac{(\log e)^t}{c\cdot\left(\prod_{j=2}^{t-1}\log^{(j)}c\right)\cdot\log^{(t-1)} c}
+    1 + \tfrac{1}{c\cdot\left(\prod_{j=2}^{t-1}\log^{(j)}c\right)\cdot\log^{(t-1)} c}
     \right)} & \text{(for $t\ge 2$)} \\
     & \le \left(\log^{(t-2)}c\right)^{\left(c+\tfrac{\log c}{\log^{(t-1)} c}\right)
     \left(
-    1 + \tfrac{(\log e)^t}{c\cdot\log^{(t-1)} c}
+    1 + \tfrac{1}{c\cdot\log^{(t-1)} c}
     \right)} & \text{($c\ge \tau(t-1)$, so $\prod_{j=2}^{t-1}\log^{(j)}c\ge 1$)} \\
     & = \left(\log^{(t-2)}c\right)^{\left(c+\tfrac{\log c}{\log^{(t-1)} c}+
-    \tfrac{(\log e)^t}{\log^{(t-1)} c} + \tfrac{(\log e)^t\log c}{c\cdot(\log^{(t-1)} c)^2}
+    \tfrac{1}{\log^{(t-1)} c} + \tfrac{\log c}{c\cdot(\log^{(t-1)} c)^2}
     \right)}  \\
     & = \left(\log^{(t-2)}c\right)^{\left(c+\tfrac{\log c}{\log^{(t-1)} c}
       + O_c\left(\tfrac{1}{\log^{(t-1)} c}\right)
