@@ -65,7 +65,7 @@
 \begin{abstract}
   A (vertex) $\ell$-ranking is a labelling $\varphi:V(G)\to\N$ of the vertices of a graph $G$ with integer colours so that for any path $u_0,\ldots,u_p$ of length at most $\ell$, $\varphi(u_0)\neq\varphi(u_p)$ or $\varphi(u_0)<\max\{\varphi(u_0),\ldots,\varphi(u_p)\}$.  We show that, for any fixed integer $\ell\ge 2$, every $n$-vertex planar graph has an $\ell$-ranking using $O(\log n/\log\log\log n)$ colours and this is tight even when $\ell=2$; for some $n$-vertex planar graphs, any 2-ranking requires $\Omega(\log n/\log\log\log n)$ colours.  This result also extends to bounded genus graphs.
 
-  In developing this proof we obtain optimal bounds on the number of colours needed for $\ell$-ranking $t$-trees and simple $t$-trees (this includes planar 3-trees and outerplanar graphs).  These upper bounds are constructive and give $O(n\log n)$-time algorithms.  Additional results that come from our techniques include new sublogarithmic upper bounds on the number of colours needed for $\ell$-rankings of apex minor-free graphs and $k$-planar graphs.
+  In developing this proof we obtain optimal bounds on the number of colours needed for $\ell$-ranking graphs of treewidth $t$ and graphs of simple treewidth $t$ (this includes planar 3-trees and outerplanar graphs).  These upper bounds are constructive and give $O(n\log n)$-time algorithms.  Additional results that come from our techniques include new sublogarithmic upper bounds on the number of colours needed for $\ell$-rankings of apex minor-free graphs and $k$-planar graphs.
 \end{abstract}
 \end{titlepage}
 
@@ -105,23 +105,23 @@ Since every tree is a planar graph and no better lower bound is known for planar
     For any fixed integer $\ell\ge 2$, every $n$-vertex planar graph $G$ has $\lrn(G)\in O(\log n/\log^{(3)} n)$ and this is asymptotically optimal: for infinitely many values of $n$, there exists an $n$-vertex planar graph $G$ with $\trn(G)\in \Omega(\log n/\log^{(3)} n)$
 \end{thm}
 
-Our proof of the upper bound in \cref{planar} makes use of a recent \emph{product structure theorem} of \citet{dujmovic.joret.ea:planar} which states that every planar graph $G$ is a subgraph of $H\boxtimes K_3\boxtimes P$ where $H$ is a planar $3$-tree, $K_3$ is a 3-cycle, $P$ is a path, and $\boxtimes$ denotes the strong graph product.\footnote{Definitions of $t$-trees, simple $t$-trees, treewidth, simple treewidth, and strong graph product appear later, in \cref{sec:basics}.}  To apply this theorem, we prove the following result:
+Our proof of the upper bound in \cref{planar} makes use of a recent \emph{product structure theorem} of \citet{dujmovic.joret.ea:planar} which states that every planar graph $G$ is a subgraph of $H\boxtimes K_3\boxtimes P$ where $H$ is a planar planar graph of treewidth at most $3$, $K_3$ is a 3-cycle, $P$ is a path, and $\boxtimes$ denotes the strong graph product.\footnote{Definitions of $t$-trees, simple $t$-trees, treewidth, simple treewidth, and strong graph product appear later, in \cref{sec:basics}.}  To apply this theorem, we prove the following result:
 
 \begin{thm}\label{simple-t-trees}
-    For any fixed integers $\ell\ge 2$ and $t\ge 1$, every $n$-vertex simple $t$-tree $H$ has $\lrn(H) \in O(\log n/\log^{(t)}n)$ and this is asymptotically optimal: for any fixed integer $t\ge 0$ and infinitely many values of $n$, there exists an $n$-vertex simple $t$-tree $H$ with $\trn(H)\in\Omega(\log n/\log^{(t)} n)$.
+    For any fixed integers $\ell\ge 2$ and $t\ge 1$, every $n$-vertex graph $H$ of simple treewidth at most $t$ has $\lrn(H) \in O(\log n/\log^{(t)}n)$ and this is asymptotically optimal: for any fixed integer $t\ge 0$ and infinitely many values of $n$, there exists an $n$-vertex graph $H$ of simple treewidth $t$ that has $\trn(H)\in\Omega(\log n/\log^{(t)} n)$.
 \end{thm}
 
-The lower bound in \cref{simple-t-trees} immediately implies the lower bound in \cref{planar} because a 3-tree is planar if and only if it is a simple $3$-tree. Therefore, the lower bound in \cref{simple-t-trees} shows the existence of $n$-vertex planar graphs $H$ with $\trn(H)\in\Omega(\log n/\log^{(3)} n)$.
+The lower bound in \cref{simple-t-trees} immediately implies the lower bound in \cref{planar} because a graph has simple treewidth at most 3 if and only if it is planar and has treewidth at most 3. Therefore, the lower bound in \cref{simple-t-trees} shows the existence of $n$-vertex planar graphs $H$ with $\trn(H)\in\Omega(\log n/\log^{(3)} n)$.
 
-To obtain the upper bound in \cref{planar}, we apply the upper bound in \cref{simple-t-trees} to the simple 3-tree $H$ defined by the product structure theorem along with a simple lemma which shows that, for any two graphs $G_1$ and $G_2$, $\lrn(G_1\boxtimes G_2)\le \lrn(G_1)\cdot\dlcn(G_2)$ where $\dlcn(G_2)$ is the \emph{distance-$\ell$ colouring number} of $G_2$;  the minimum number of colours needed to colour $G_2$ so that the endpoints of each non-trivial path of length at most $\ell$ have different colours.  It is easy to see that $\dlcn(K_3\times P)\le 3(\ell+1)$, so $\lrn(H\boxtimes K_3\boxtimes P)\le 3(\ell+1)\cdot\lrn(H)$.
+To obtain the upper bound in \cref{planar}, we apply the upper bound in \cref{simple-t-trees} to the graph $H$ defined by the product structure theorem along with a simple lemma which shows that, for any two graphs $G_1$ and $G_2$, $\lrn(G_1\boxtimes G_2)\le \lrn(G_1)\cdot\dlcn(G_2)$ where $\dlcn(G_2)$ is the \emph{distance-$\ell$ colouring number} of $G_2$;  the minimum number of colours needed to colour $G_2$ so that the endpoints of each non-trivial path of length at most $\ell$ have different colours.  It is easy to see that $\dlcn(K_3\times P)\le 3(\ell+1)$, so $\lrn(H\boxtimes K_3\boxtimes P)\le 3(\ell+1)\cdot\lrn(H)$.
 
-Every (not-necessarily simple) $t$-tree is the spanning subgraph of some simple $(t+1)$-tree. Therefore, the upper bound in \cref{simple-t-trees} implies the (upper bound in the) following generalization of \cref{trees}:
+Every graph of treewidth at most $t$ has simple treewidth at most $t+1$. Therefore, the upper bound in \cref{simple-t-trees} implies the (upper bound in the) following generalization of \cref{trees}:
 
 \begin{thm}\label{t-trees}
-    For any fixed integers $\ell\ge 2$, $t\ge 0$, every $n$-vertex $t$-tree $H$ has $\lrn(H) \in O(\log n/\log^{(t+1)} n)$ and this is asymptotically optimal: for any fixed integer $t\ge 0$ and infinitely many values of $n$, there exists an $n$-vertex $t$-tree $H$ with $\trn(H)\in\Omega(\log n/\log^{(t+1)} n)$.
+    For any fixed integers $\ell\ge 2$, $t\ge 0$, every $n$-vertex graph $H$ of treewidth at most $t$ has $\lrn(H) \in O(\log n/\log^{(t+1)} n)$ and this is asymptotically optimal: for any fixed integer $t\ge 0$ and infinitely many values of $n$, there exists an $n$-vertex graph $H$ of treewidth $t$ with $\trn(H)\in\Omega(\log n/\log^{(t+1)} n)$.
 \end{thm}
 
-The lower bound in \cref{t-trees} is through a construction of a $t$-tree $H$ with $\trn(H)\in\Omega(\log n/\log^{(t+1)} n)$.  Again, since every $(t-1)$-tree is the spanning subgraph of a simple $t$-tree, the lower bound in \cref{t-trees} implies the lower bound in \cref{simple-t-trees}.
+The lower bound in \cref{t-trees} is through a construction of a treewidth-$t$ graph $H$ with $\trn(H)\in\Omega(\log n/\log^{(t+1)} n)$.  Again, since any graph of treewidth at most $t-1$ has simple treewidth at most $t$, the lower bound in \cref{t-trees} implies the lower bound in \cref{simple-t-trees}.
 
 In addition to planar graphs, there are product structure theorems for a number of other graph classes, including bounded genus graphs, apex minor-free graphs, and $k$-planar graphs.  Using product structure theorems for these graph classes along with \cref{simple-t-trees,t-trees}, we obtain the following two results:
 
@@ -164,8 +164,8 @@ It is not hard to see that, even for an $n$-vertex path $P$, $\chi_\infty(P)\in\
             $d$-degenerate & $O(d\sqrt{n})$ & $\Omega(n^{1/3} + d^2/\log d)$ & \cite{karpas.neiman.ea:on,almeter.demircan.ea:graph} \\
             \hline \multicolumn{4}{c}{} \\
             \hline
-            Simple $t$-trees & $O(\log n/\log^{(t)} n)$ & $\Omega(\log n/\log^{(t)} n)$ & \cref{simple-t-trees} \\
-            $t$-trees & $O(\log n/\log^{(t+1)} n)$ & $\Omega(\log n/\log^{(t+1)} n)$ & \cref{t-trees} \\
+            Simple treewidth $\le t$ & $O(\log n/\log^{(t)} n)$ & $\Omega(\log n/\log^{(t)} n)$ & \cref{simple-t-trees} \\
+            Treewidth $\le t$ & $O(\log n/\log^{(t+1)} n)$ & $\Omega(\log n/\log^{(t+1)} n)$ & \cref{t-trees} \\
             Planar graphs & $O(\log n/\log^{(3)} n)$ & $\Omega(\log n/\log^{(3)} n)$ & \cref{planar,t-trees} \\
             Outerplanar graphs & $O(\log n/\log^{(2)} n)$ & $\Omega(\log n/\log^{(2)} n)$ & \cref{t-trees}, \cite{karpas.neiman.ea:on} \\
             Genus-$g$ graphs & $O(g\log n/\log^{(3)} n)$ & $\Omega(\log n/\log^{(3)} n)$ & \cref{bounded-genus,t-trees} \\
@@ -242,32 +242,24 @@ For any $v\in V(G)$ and any $W\subseteq V(G)$, let $d_H(v,W)=\min\{d_G(v,w):w\in
 
 \subsection{Treewidth}
 
-% A graph $H$ is a \emph{$t$-tree} if $H$ is a clique of size at most $t$ or if it contains a vertex $v$ such that $H[N_H(v)]$ is a $t$-clique and $H-\{t\}$ is a $t$-tree.
-% % A \emph{$t$-forest} is a graph whose connected components are $t$-trees.
-% This recursive definition of $t$-trees implies that there is a permutation $\mathcal{R}:=(v_1,\ldots,v_n)$ of $V(H)$ such that, for each $i\in\{1,\ldots,n\}$, $H[N_H(v_i)\cap \{v_1,\ldots,v_{i-1}\}]$ is a clique of size $\min\{t,i-1\}$.  We call $\mathcal{R}$ a \emph{construction order} for $H$.  A construction order $\mathcal{R}$ induces a total order on $V(H)$ that we denote by $<_{\mathcal{R}}$.  When a construction order $\mathcal{R}:=(v_1,\ldots,v_n)$ of $H$ is given, we call $N_H(v_i)\cap \{v_1,\ldots,v_{i-1}\}$ the \emph{parent clique} of $v_i$ (with respect to the order $v_1,\ldots,v_n$).
-% The \emph{dominant parent} of $v_i$ (w.r.t. $v_1,\ldots,v_n$) is the vertex $v_j\in C_{v_i}$ that minimizes $j$. Note that the parent clique and dominant parent of any vertex $v_i$, is determined by the choice of the \emph{root clique} $v_1,\ldots,v_{t}$.
-
 For two graphs $H$ and $X$, an \emph{$X$-decomposition} of $H$ is a sequence $\mathcal{X}:=(B_x:x\in V(X))$ of subsets of $V(H)$ called \emph{bags} indexed by the nodes of $X$ and such that
  \begin{inparaenum}[(i)]
      \item for each $v\in V(H)$, $X[\{x\in V(X):v\in B_x\}]$ is connected; and
      \item for each $vw\in E(H)$, there exists some $x\in V(X)$ such that $\{v,w\}\subseteq B_x$.
 \end{inparaenum}
 The \emph{width} of $\mathcal{X}$ is $\max\{|B_x|:x\in V(X)\}-1$. We say that $H$ is \emph{edge-maximal} with respect to $\mathcal{X}$ if, for each $x\in V(X)$, $B_x$ forms a clique in $H$. The $X$-decomposition $\mathcal{X}$ is \emph{smooth} if, for each edge $xy\in E(X)$, $|B_x\setminus B_y|\le 1$ and $|B_y\setminus B_x|\le 1$.
-% For any $X$-decomposition of $G$, it is straightforward, and common, to obtain a smooth $X'$-decomposition of $G$ where $X'$ is a graph obtained by subdividing edges of $X$.
 
 In the special case where $X$ is a tree (or a forest), $\mathcal{X}$ is called a \emph{tree decomposition} of $H$.  In the still more special case where $X$ is a path (or a collection of disjoint paths), $\mathcal{X}$ is called a \emph{path decomposition} of $H$. The \emph{treewidth} $\tw(H)$ of $H$ is the minimum width of any tree decomposition of $H$. The \emph{pathwidth} $\pw(H)$ of $H$ is the minimum width of any path decomposition of $H$.
 
-% It is not difficult to see that every $t$-tree $H$ has treewidth $t$ and a tree-decomposition of $H$ can be constructed incrementally from a construction order $v_1,\ldots,v_n$ of $H$: Start with a tree $T$ that consists of a single node $r$ with bag $B_p:=\{v_1,\ldots,v_{\min\{t+1,n\}}\}$ and, for $i\gets t+2,\ldots,n$, let $p_i$ be the minimum-depth node of $T$ such that $B_{p_i}$ contains the parent clique $N_H(v_i)\cap\{v_1,\ldots,v_{i-1}\}$ of $v_i$, and add a new leaf $x_i$ to $T$ adjacent to $p_i$ whose bag $B_{x_i}$ contains $v_i$ and its parent clique.  We call a tree-decomposition constructed this way a \emph{canonical} tree decomposition of $H$ generated by the construction order $v_1,\ldots,v_n$.  We use the convention that $T$ is rooted at $r$.
+For a graph $H$ and a tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ in which $T$ is a rooted tree, we use the notation $x_T(v)$ to denote the minimum $T$-depth node $x\in V(T)$ such that $v\in B_x$.  This induces a partial order $\prec_{\mathcal{T}}$ on $V(H)$ in which $v\prec_{\mathcal{T}} w$ if and only if $x_T(v)\prec_T x_T(w)$.  The following observations have straightforward proofs:
 
-% By construction, every bag of a canonical tree decomposition $\mathcal{T}$ of a $t$-tree $H$ has size exactly $\min\{t+1,|H|\}$ and its vertices form a clique.  Therefore $H$ is edge-maximal with respect to $\mathcal{T}$.  Also by construction, for each edge $xy\in E(T)$, $|B_x\setminus B_y|=1$, so $\mathcal{T}$ is smooth.
-% Note that this implies that $|V(T)|=\max\{1,n-t\}$.
-% , since $B_p$ contains $t+1$ vertices of $H$ and, for each $x\in V(T)\setminus\{r\}$, $B_x$ includes exactly one vertex of $H$ that is not in its parent $B_p$ where $p$ is the $T$-parent of $x$.
-For a graph $H$ and a tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ in which $T$ is a rooted tree, we use the notation $x_T(v)$ to denote the minimum $T$-depth node $x\in V(T)$ such that $v\in B_x$.  This induces a partial order $\prec_{\mathcal{T}}$ on $V(H)$ in which $v\prec_{\mathcal{T}} w$ if and only if $x_T(v)\prec_T x_T(w)$.
+ \begin{obs}\label{induced-unimodal}
+     Let $H$ be a graph that is edge maximal with respect to some tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$.  Then, for any induced path $u_0,\ldots,u_p$ in $H$, $u_i\preceq_\mathcal{T} u_0$ or $u_i\preceq_\mathcal{T} u_p$ for each $i\in\{1,\ldots,p-1\}$.
+ \end{obs}
 
-The following observation relates construction orders, orders induced by BFS layerings, and orders induced by tree decompositions:
 
 \begin{obs}\label{order-relation}
-    Let $H$ be a graph that is edge-maximal with respect to a tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$, let $T$ be rooted at $r\in V(T)$, and let $\mathcal{L}:=L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0:=B_p$.  Then, for any two nodes $v,w\in V(H)$,
+    Let $H$ be a graph that is edge-maximal with respect to a tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$, let $T$ be rooted at $r\in V(T)$, and let $\mathcal{L}:=L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0:=B_p$.  Then, for any two vertices $v,w\in V(H)$,
     \begin{compactenum}
         \item $v\prec_{\mathcal{T}}w$ implies $v\preceq_{\mathcal{L}}w$
         \item $v\prec_{\mathcal{L}}w$ implies $v\preceq_{\mathcal{T}}w$.
@@ -275,11 +267,15 @@ The following observation relates construction orders, orders induced by BFS lay
     Equivalently, there is no pair $v,w\in V(H)$ such that $v\prec_{\mathcal{L}}w$ and $w\prec_{\mathcal{T}}v$.
 \end{obs}
 
-The following observation shows that
-\begin{obs}\label{induced-unimodal}
-    Let $H$ be a graph that is edge maximal with respect to some smooth tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$.  Then, for any induced path $u_0,\ldots,u_p$ in $H$, $u_i\prec_\mathcal{T} u_0$ or $u_i\prec_\mathcal{T} u_p$ for each $i\in\{1,\ldots,p-1\}$.
-    % Let $H$ be a $t$-tree with a construction order $\mathcal{R}$ generating a canonical tree decomposition $\mathcal{T}$ and let $u_0,\ldots,u_p$ be an induced path in $H$.  Then $u_0,\ldots,u_p$ is $\mathcal{T}$-unimodal.
+\begin{obs}\label{up-neighbours}
+    Let $H$ be a graph that is edge-maximal with respect to a width-$t$ tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$, let $T$ be rooted at $r\in V(T)$, and let $\mathcal{L}:=L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0:=B_p$. Then, for any $i\in\{1,\ldots,m\}$ and any $v\in L_i$, $|N_H(v)\cap L_{i-1}|\le t$.
 \end{obs}
+
+% \begin{proof}
+%     By \cref{order-relation}, $w\preceq_\mathcal{T} v$ for each $w\in N_H(v)\cap L_i$.  Proprety~(i) of tree decompositions therefore implies that $N_H(v)\cap L_{i-1}\subseteq B_{x_T(v)}$.  Therefore $t+1\ge |B_{x_T(v)}| \ge |N_H(v)\cap L_{i-1}|+1$, as required.
+% \end{proof}
+
+
 
 % We say that a path $w_0,\ldots,w_q$ in $H$ is \emph{$\mathcal{T}$-downward} if $w_0\prec_\mathcal{T}w_{1}\prec_\mathcal{T}\cdots\prec_\mathcal{T} w_q$.  A path $w_0,\ldots,w_q$ is \emph{$\mathcal{T}$-upward} if and only if its reversal $w_q,\ldots,w_0$ is \emph{$\mathcal{T}$-downward}.
 % The following lemma, due to \citet{pilipczuk.siebertz:polynomial} bounds the number of vertices that can be reached from $v\in V(H)$ by $\mathcal{T}$-upward paths of length at most $\ell$.
@@ -361,7 +357,10 @@ We will make use of the following well-known and easy to prove vertex-weighted s
 \subsection{Simple Treewidth}
 
 
-A tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of a graph $H$ is \emph{$t$-simple} if it has width $t$ and, for every $t$-element subset $S\subseteq V(H)$, $|\{x\in V(T):S\subseteq B_x\}|\le 2$.  The simple treewidth $\stw(H)$ of a graph $H$ is the minimum integer $t$ such that $H$ has a $t$-simple tree decomposition \cite{knauer.ueckerdt:simple}.  A $t$-tree $H$ is a \emph{simple} $t$-tree if its canonical tree decompositions are $t$-simple.\footnote{Although a $t$-tree $H$ has different canonical tree decompositions depending on the choice of $v_1,\ldots,v_{t+1}$ in the construction order, each of these tree decompositions $(B_x:x\in V(T))$ generates the same set $\{B_x:x\in V(T)\}$ of bags that have a bijection with the $t+1$ cliques of $H$.  Therefore all of these tree decompositions are $t$-simple or none of them are.}  Though it appears implicitly, several times in the literature, \citet{knauer.ueckerdt:simple} define simple treewidth and the thesis of \citet{wulf:stacked} studies it extensively. \citet{markenzon.justel.ea:subclasses} define simple $t$-trees (which they call Simple Clique (SC) $t$-trees).
+A tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of a graph $H$ is \emph{$t$-simple} if it has width $t$ and, for every $t$-element subset $S\subseteq V(H)$, $|\{x\in V(T):S\subseteq B_x\}|\le 2$.  The simple treewidth $\stw(H)$ of a graph $H$ is the minimum integer $t$ such that $H$ has a $t$-simple tree decomposition \cite{knauer.ueckerdt:simple}.
+% A $t$-tree $H$ is a \emph{simple} $t$-tree if its canonical tree decompositions are $t$-simple.\footnote{Although a $t$-tree $H$ has different canonical tree decompositions depending on the choice of $v_1,\ldots,v_{t+1}$ in the construction order, each of these tree decompositions $(B_x:x\in V(T))$ generates the same set $\{B_x:x\in V(T)\}$ of bags that have a bijection with the $t+1$ cliques of $H$.  Therefore all of these tree decompositions are $t$-simple or none of them are.}
+Though it appears implicitly, several times in the literature, \citet{knauer.ueckerdt:simple} define simple treewidth and the thesis of \citet{wulf:stacked} studies it extensively.
+% \citet{markenzon.justel.ea:subclasses} define simple $t$-trees (which they call Simple Clique (SC) $t$-trees).
 
 Simple treewidth is minor-monotone. This is stated by \citet{knauer.ueckerdt:simple} and \citet[Theorem~5.2]{wulf:stacked} gives a proof:
 
@@ -369,14 +368,14 @@ Simple treewidth is minor-monotone. This is stated by \citet{knauer.ueckerdt:sim
     For every graph $G$ and every minor $M$ of $G$, $\stw(M)\le\stw(G)$.
 \end{lem}
 
-We work with simple $t$-trees because they arise naturally:
+We work with simple treewidth because it arises naturally in the graphs we are interested in:
 
 \begin{lem}[\cite{knauer.ueckerdt:simple,markenzon.justel.ea:subclasses}]\label{simple-small-cases}
-    A graph $H$ is
+    For any graph $H$,
     \begin{compactenum}[(i)]
-        \item a simple $1$-tree if and only if $H$ is a path.
-        \item a simple $2$-tree if and only if $H$ is an edge-maximal outerplanar graph;
-        \item a simple $3$-tree if and only if $H$ is a planar 3-tree.
+        \item $\stw(H)\le 1$ if and only if $H$ is a collection of paths;
+        \item $\stw(H)\le 2$ if and only if $H$ is outerplanar;
+        \item $\stw(H)\le 3$ if and only if $\tw(H)\le 3$ and $H$ is planar.
     \end{compactenum}
 \end{lem}
 
@@ -490,7 +489,7 @@ For any integer $i$, any real $k>\tau(i-1)$, and any real $n\in[1,(\log^{(i)} k)
 \section{Lower Bounds}
 \label{lower-bounds}
 
-We now prove the lower bound in \cref{t-trees}, which establishes all the other lower bounds. The idea in this lower bound is to construct a graph $G$ that has a BFS layering $L_0,\ldots,L_m$ such that, for each $i,\in\{0,\ldots,m-1\}$ and each vertex $a\in L_i$, $G[N_G(a)\cap L_{i+1}]$ is a collection of $(t-1)$-trees $U_{a,0},\ldots,U_{a,k}$, each of which is a copy of a small $(t-1)$-tree $U$ that requires at least $h$ colours.  This forces the colour of $a$ to exceed, by at least $h+1$, the smallest colour used in $U_{a,0},\ldots,U_{a,k}$.  Proceeding bottom up, this forces the vertex in $L_0$ to receive a colour larger than $(h+1)m$.  The lower bound is then obtained by using induction on $t$ to upper bound the size of the $(t-1)$-tree $U$ needed to ensure that $\trn(U)\ge h$ and choosing the parameters $h$ and $m$ appropriately.
+We now prove the lower bound in \cref{t-trees}, which establishes all the other lower bounds. The idea in this lower bound is to construct a graph $G$ that has a BFS layering $L_0,\ldots,L_m$ such that, for each $i,\in\{0,\ldots,m-1\}$ and each vertex $a\in L_i$, $G[N_G(a)\cap L_{i+1}]$ is a collection of treewidth-$(t-1)$ graphs $U_{a,0},\ldots,U_{a,k}$, each of which is a copy of a small treewidth-$(t-1)$ graph $U$ that requires at least $h$ colours.  This forces the colour of $a$ to exceed, by at least $h+1$, the smallest colour used in $U_{a,0},\ldots,U_{a,k}$.  Proceeding bottom up, this forces the vertex in $L_0$ to receive a colour larger than $(h+1)m$.  The lower bound is then obtained by using induction on $t$ to upper bound the size of the graph $U$ needed to ensure that $\trn(U)\ge h$ and choosing the parameters $h$ and $m$ appropriately.
 
 \begin{lem}\label{apex-graph}
     Let $h,k\ge 1$ be integers, let $U$ be a graph with $\trn(U)\ge h$ and let $G$ be a graph obtained by taking $k+1$ disjoint copies $U_0,\ldots,U_k$ of $U$ and adding an apex vertex $a$ adjacent to each $v\in\bigcup_{i=0}^k V(U_i)$.  Then, for any integer $k_0\in \{1,\ldots,k\}$ and any 2-ranking of $\varphi:V(G)\to\{k_0,\ldots,k\}$, $\varphi(a) \ge k_0+h$.
@@ -607,7 +606,7 @@ This section is devoted to proving the upper bound in \cref{simple-t-trees}:
 \end{cor}
 
 \begin{proof}
-    Without loss of generality, we may assume that $G$ is an edge-maximal outerplanar graph so, by \cref{simple-small-cases}{(ii)}, $G$ is a simple $2$-tree and, by \weirdref{simple-t-trees}{a} $\lrn(G)\in O(\log n/\log^{(2)} n)$.
+    By \cref{simple-small-cases}{(ii)}, $\stw(G)\le 2$ so, by \weirdref{simple-t-trees}{a} $\lrn(G)\in O(\log n/\log^{(2)} n)$.
 \end{proof}
 
 The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part of the paper and is the subject of most of this section.  Globally, the proof is by induction on the value of $t$, though it is easy to miss this, since it is spread over several lemmas. The case $t=1$ is easy: By \cref{simple-small-cases}(i), any graph of simple treewidth 1 is a contained in a path and therefore has an $\ell$-ranking using $\ell+1\in O(\log n/\log^{(1)} n) = O(1)$ colours.  In the proof of \cref{t-tree-slack}, below, we will apply \weirdref{simple-t-trees}{a} to graphs of simple treewidth $t-1$. \cref{t-tree-slack} is then used in the proof of \cref{t-tree-technical} which is used in the proof of \weirdref{simple-t-trees}{a}, at the end of this section.
@@ -917,7 +916,7 @@ Since our strategy is to use \cref{t-tree-slack} on the first $\ell+1$ BFS layer
 \end{lem}
 
 \begin{proof}
-    For each component $X$ of $H[\bigcup_{j=i+1}^m L_j]$, let $C_X:=L_i\cap \bigcup_{w\in V(X)} N_H(w)$.  Now, $|C_X|\le t$ and a vertex $w\in V(X)$ appears in $H_v$ if and only if $v\in C_X$.  Therefore,
+    For each component $X$ of $H[\bigcup_{j=i+1}^m L_j]$, let $C_X:=L_i\cap \bigcup_{w\in V(X)} N_H(w)$.  By \cref{up-neighbours}, $|C_X|\le t$ and a vertex $w\in V(X)$ appears in $H_v$ if and only if $v\in C_X$.  Therefore,
     \[
         \sum_{v\in L_i} \kappa_v \le t\cdot|L_i| + \sum_{X}|C_X|\cdot|X| \le t\cdot|L_i| + \sum_{X}t\cdot|X|\le t\cdot|H| \enspace .  \qedhere
     \]
@@ -1158,9 +1157,9 @@ As noted in the introduction, several other families of graphs are known to have
 \section{Discussion}
 \label{conclusion}
 
-We have given asymptotically optimal bounds on the number of colours required by $\ell$-rankings of $n$-vertex $t$-trees, simple $t$-trees, planar 3-trees, outerplanar graphs, and planar graphs.  Prior to this work, the best known bounds for planar graphs were $\Omega(\log n/\log\log n)$ (trees) and $O(\log n)$.
+We have given asymptotically optimal bounds on the number of colours required by $\ell$-rankings of $n$-vertex graphs of treewidth $t$, graphs of simple treewidth $t$, planar 3-trees, outerplanar graphs, and planar graphs.  Prior to this work, the best known bounds for planar graphs were $\Omega(\log n/\log\log n)$ (trees) and $O(\log n)$.
 
-Our upper bounds are constructive and lead to $O(n)$ time algorithms for finding $\ell$-rankings of $t$-trees, simple $t$-trees, planar 3-trees, and outerplanar graphs.  For planar graphs, we require an algorithmic version of \cref{product-structure}. Currently, the fastest such algorithm runs in $O(n\log n)$ time \cite{morin:fast}.
+Our upper bounds are constructive and lead to straightforward $O(n)$ time algorithms for finding $\ell$-rankings of (simple) treewidth $t$ graphs, including planar 3-trees, and outerplanar graphs.  For planar graphs, we require an algorithmic version of \cref{product-structure}. Currently, the fastest such algorithm runs in $O(n\log n)$ time \cite{morin:fast}.
 
 Two directions for future work stand out:
 \begin{inparaenum}[(i)]
