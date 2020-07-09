@@ -1202,11 +1202,12 @@ The authors are grateful to David Wood who, after reading an early draft of this
     & \le (\log^{(t-2)}c)^{\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)
         \left(1 + \tfrac{2\log(c+s)}{c\log c\cdot\log^{(t-1)}c}\right)} \\            & \qquad\qquad\text{(since $c\ge \tau(t-1)$, so $\textstyle \prod_{j=2}^{t-1}\log^{(j)}c\ge 1$)} \\
     & \le (\log^{(t-2)}c)^{\left(c+s+\tfrac{\log c+s/c}{\log^{(t-1)}(c+s)}\right)
-        \left(1 + \tfrac{2\log c+2s/c}{c\cdot\log^{(t-1)}c}\right)} \\            & \qquad\qquad\text{(by \cref{logi-ratio})} \\
+        \left(1 + \tfrac{2\log c+2s/c}{c\cdot\log^{(t-1)}c}\right)} \\            & \qquad\qquad\text{(by \cref{log-x-plus-a})} \\
     & \le (\log^{(t-2)}c)^{c+s+\tfrac{\log c}{\log^{(t-1)}c} +
         \tfrac{2\log c}{\log^{(t-1)}c} + o\left(\tfrac{1}{\log^{(t-1)} c}\right)}  \\
     & = (\log^{(t-2)}c)^{c+\tfrac{4\log c}{\log^{(t-1)}c} + o\left(\tfrac{1}{\log^{(t-1)} c}\right)}  \\
     % & = (\log^{(t-2)}c)^{c}\cdot O(c^4) \\
+    & = (1+o_c(1))\cdot c^4\cdot \left(\log^{(t-2)}c\right)^{c} \\
     & = O\left(c^4\cdot\left(\log^{(t-2)}c\right)^{c}\right) \enspace .
 \end{align*}
 
