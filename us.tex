@@ -15,6 +15,7 @@
 
 \usepackage[longnamesfirst,numbers,sort&compress]{natbib}
 
+
 % Taken from
 % https://tex.stackexchange.com/questions/42726/align-but-show-one-equation-number-at-the-end
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
@@ -36,8 +37,13 @@
 
 \newcommand{\ellt}{{\lfloor\ell/2\rfloor}}
 
-\title{\MakeUppercase{Asymptotically Optimal Vertex Ranking of Planar Graphs}}
-\author{Prosenjit Bose, Vida Dujmović, Mehrnoosh Javarsineh, and Pat Morin}
+\title{\MakeUppercase{Asymptotically Optimal Vertex Ranking of Planar Graphs}\thanks{This research was partly funded by NSERC.}}
+\author{Prosenjit Bose%
+    \thanks{School of Computer Science, Carleton University}\quad
+    Vida Dujmović%
+    \thanks{Department of Computer Science and Electrical Engineering, University of Ottawa}\quad
+    Mehrnoosh Javarsineh\footnotemark[2]  \quad
+    Pat Morin\footnotemark[2]}
 
 \newcommand{\trn}{\chi_2}
 \newcommand{\lrn}{\chi_{\ell}}
@@ -69,9 +75,9 @@
 \end{abstract}
 \end{titlepage}
 
-\tableofcontents
-
-\newpage
+% \tableofcontents
+%
+% \newpage
 \pagenumbering{arabic}
 
 \section{Introduction}
