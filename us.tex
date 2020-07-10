@@ -80,11 +80,11 @@
 
 A \emph{colouring} $\varphi:V(G)\to \N$ of a graph $G$ is an \emph{$\ell$-ranking} of $G$ if, for every non-trivial path $u_0,\ldots,u_p$ in $G$ of length\footnote{The length of a path $u_0,\ldots,u_p$ is the number, $r$, of edges in the path. A path is \emph{trivial} if its length is 0 and non-trivial otherwise.} at most $\ell$,
 \begin{inparaenum}[(i)]
-    \item $\varphi(u_0)\neq\varphi(u_p)$; or \item $\varphi(u_0)<\max\{\varphi(u_0),\ldots,\varphi(u_{r})\}$.
+    \item $\varphi(u_0)\neq\varphi(u_p)$; or \item $\varphi(u_0)<\max\{\varphi(u_0),\ldots,\varphi(u_p)\}$.
 \end{inparaenum}
 The $\ell$-ranking number $\chi_\ell(G)$ of $G$ is the minimum integer $k$ such that $G$ has a $\ell$-ranking $\varphi:V(G)\to \{1,\ldots,k\}$.  Note that, for any $\ell\ge 1$ any $\ell$-ranking of $G$ is a proper colouring\footnote{A colouring $\varphi:V(G)\to \N$ is \emph{proper} if, for each edge $vw\in E(G)$, $\varphi(v)\neq\varphi(w)$ and the \emph{chromatic number}, $\chi(G)$, of $G$ is the minimum integer $k$ such that there exists a proper colouring $\varphi:V(G)\to\{1,\ldots,k\}$ of $G$.} of $G$, so $\chi(G)\le \chi_\ell(G)$, and any proper colouring of $G$ is a 1-ranking of $G$, so $\chi(G)=\chi_1(G)$.
 
-Besides the case $\ell=1$, two cases have received special attention: An $\infty$-ranking is called a \emph{vertex ranking} or \emph{ordered colouring}. The parameter $\chi_\infty(G)$ is called the \emph{vertex ranking number} of $G$ and has applications to matrix factorization \cite{bodlaender.gilbert.ea:approximating,duff.reid:multifrontal,liu:role,dereniowski.kubale:cholesky}, VLSI layout \cite{leiserson:area,sen.deng.ea:on}, and the analysis of online algorithms \cite{even.smorodinsky:hitting}. The case $\ell=2$ has also received special attention \cite{almeter.demircan.ea:graph,karpas.neiman.ea:on,shalu.antony:complexity}. A $2$-ranking is called a \emph{unique-superior colouring} (abbreviated \emph{us-colouring}) by \citet{karpas.neiman.ea:on} who prove the following result:
+Besides the case $\ell=1$, two cases have received special attention: An $\infty$-ranking is called a \emph{vertex ranking} or \emph{ordered colouring}. The parameter $\chi_\infty(G)$ is called the \emph{vertex ranking number} of $G$ and has applications to matrix factorization \cite{bodlaender.gilbert.ea:approximating,duff.reid:multifrontal,liu:role,dereniowski.kubale:cholesky}, VLSI layout \cite{leiserson:area,sen.deng.ea:on}, and the analysis of online algorithms \cite{even.smorodinsky:hitting}. The case $\ell=2$ has also received special attention \cite{almeter.demircan.ea:graph,karpas.neiman.ea:on,shalu.antony:complexity}. A $2$-ranking is called a \emph{unique-superior colouring} by \citet{karpas.neiman.ea:on} who prove the following result:
 
 \setcounter{othertheorem}{19}
 \begin{othertheorem}[\cite{karpas.neiman.ea:on}]\label{trees}
@@ -218,7 +218,7 @@ For any set $S$, $G[S]$ is the graph with vertex set $V(G[S]):=V(G)\cap S$ and e
 The same reasoning used to prove \cref{induced-paths-only} also shows:
 
 \begin{obs}\label{walks-too}
-    A colouring $\varphi:V(G)\to\N$ of a graph $G$ is an $\ell$-ranking of $G$ if and only if, for every walk $w_0,\ldots,w_q$ in $G$ of length at most $\ell$,
+    A colouring $\varphi:V(G)\to\N$ of a graph $G$ is an $\ell$-ranking of $G$ if and only if, for every walk $w_0,\ldots,w_q$ in $G$ with $w_0\neq w_q$ of length at most $\ell$,
     \begin{inparaenum}[(i)]
         \item $\varphi(w_0)\neq\varphi(w_q)$; or
         \item $\varphi(w_0)<\max\{\varphi(w_0),\ldots,\varphi(w_q)\}$.
@@ -259,16 +259,11 @@ For a graph $H$ and a tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ i
 
 
 \begin{obs}\label{order-relation}
-    Let $H$ be a graph that is edge-maximal with respect to a tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$, let $T$ be rooted at $r\in V(T)$, and let $\mathcal{L}:=L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0:=B_p$.  Then, for any two vertices $v,w\in V(H)$,
-    \begin{compactenum}
-        \item $v\prec_{\mathcal{T}}w$ implies $v\preceq_{\mathcal{L}}w$
-        \item $v\prec_{\mathcal{L}}w$ implies $v\preceq_{\mathcal{T}}w$.
-    \end{compactenum}
-    Equivalently, there is no pair $v,w\in V(H)$ such that $v\prec_{\mathcal{L}}w$ and $w\prec_{\mathcal{T}}v$.
+    Let $H$ be a graph that is edge-maximal with respect to a tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$, let $T$ be rooted at $r\in V(T)$, and let $\mathcal{L}:=L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0:=B_r$.  Then, for any $v,w\in V(H)$, $v\prec_{\mathcal{T}}w$ implies $v\preceq_{\mathcal{L}}w$. Equivalently, there is no pair $v,w\in V(H)$ such that $v\prec_{\mathcal{L}}w$ and $w\prec_{\mathcal{T}}v$.
 \end{obs}
 
 \begin{obs}\label{up-neighbours}
-    Let $H$ be a graph that is edge-maximal with respect to a width-$t$ tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$, let $T$ be rooted at $r\in V(T)$, and let $\mathcal{L}:=L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0:=B_p$. Then, for any $i\in\{1,\ldots,m\}$ and any $v\in L_i$, $|N_H(v)\cap L_{i-1}|\le t$.
+    Let $H$ be a graph that is edge-maximal with respect to a width-$t$ tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$, let $T$ be rooted at $r\in V(T)$, and let $\mathcal{L}:=L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0:=B_r$. Then, for any $i\in\{1,\ldots,m\}$ and any $v\in L_i$, $|N_H(v)\cap L_{i-1}|\le t$.
 \end{obs}
 
 % \begin{proof}
@@ -276,66 +271,6 @@ For a graph $H$ and a tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ i
 % \end{proof}
 
 
-
-% We say that a path $w_0,\ldots,w_q$ in $H$ is \emph{$\mathcal{T}$-downward} if $w_0\prec_\mathcal{T}w_{1}\prec_\mathcal{T}\cdots\prec_\mathcal{T} w_q$.  A path $w_0,\ldots,w_q$ is \emph{$\mathcal{T}$-upward} if and only if its reversal $w_q,\ldots,w_0$ is \emph{$\mathcal{T}$-downward}.
-% The following lemma, due to \citet{pilipczuk.siebertz:polynomial} bounds the number of vertices that can be reached from $v\in V(H)$ by $\mathcal{T}$-upward paths of length at most $\ell$.
-%
-% \begin{lem}[\cite{pilipczuk.siebertz:polynomial}]\label{upward-count}
-%     Let $H$ be a $t$-tree with a construction order $\mathcal{R}$ generating a canonical tree decomposition $\mathcal{T}$.  Then, for each integer $\ell\ge 0$ and each $v\in V(H)$, the number of vertices in $H$ that can be reached by $\mathcal{T}$-upward paths beginning at $v$ is at most $\binom{\ell+t}{t}$.
-% \end{lem}
-% A path $u_0,\ldots,u_p$ in $H$ is \emph{$\mathcal{T}$-unimodal} if there exists $m\in\{0,\ldots,p\}$ such that $u_0,\ldots,u_m$ is $\mathcal{T}$-upward and $u_{m+1},\ldots,u_p$ is $\mathcal{T}$-downward.
-%
-% \begin{lem}\label{induced-unimodal}
-%     Let $H$ be a $t$-tree with a construction order $\mathcal{R}$ generating a canonical tree decomposition $\mathcal{T}$ and let $u_0,\ldots,u_p$ be an induced path in $H$.  Then $u_0,\ldots,u_p$ is $\mathcal{T}$-unimodal.
-% \end{lem}
-%
-% \begin{proof}
-%     For the sake of contradiction, suppose otherwise.  First note that $x_T:V(H)\to V(T)$ is \emph{nearly bijective} in the sense that for distinct $v,w\in V(H)$, $x_T(v)\neq x_T(w)$ or $\{v,w\}\subseteq B_p$. In the latter case $x_T(v)=x_T(w)=r$.  Next observe that, for any edge $u_iu_{i+1}\in E(H)$, $x_T(u_i)\preceq_T x_T(u_{i+1})$ or $x_T(u_{i+1})\preceq_T x_T(u_{i})$.  There are a few cases to consider:
-%     \begin{enumerate}
-%         \item There exists $i\in\{1,\ldots,p-1\}$ such that $x_T(u_{i-1})= x_T(u_i)= x_T(u_{i+1})$.  But this implies the existence of the edge $u_{i-1}u_{i+1}$, a contradiction.
-%
-%         \item There exists $i\in\{1,\ldots,p-1\}$ such that $x_T(u_{i-1})\prec_\mathcal{T} x_T(u_i)= x_T(u_{i+1})$.  Since $x_T$ is nearly bijective, this implies that $x_T(u_{i})=x_T(u_{i+1})=r$.  But this contradicts $x_T(u_{i-1})\prec_\mathcal{T} x_T(u_i)$ since $r\prec_T x$ for every $x\in V(T)\setminus\{r\}$.
-%
-%         \item There exists $i\in\{1,\ldots,p-1\}$ such that $x_T(u_{i-1})= x_T(u_i)\succ_\mathcal{T} u_{i+1}$.  This is a contradiction for the same reason as the previous case.
-%
-%         \item There exists $i\in\{1,\ldots,p-1\}$ such that $x_T(u_{i-1}) \prec_\mathcal{T} x_T(u_i)\succ_\mathcal{T} x_T(u_{i+1})$.  This implies that $x_T(u_{i-1})\preceq_T x_T(u_{i+1}) \prec_T(u_{i})$ or that
-%         $x_T(u_{i+1})\prec_T x_T(u_{i-1}) \prec_T(u_{i})$.  In the former case, Property~(ii) of tree decompositions implies that $u_{i-1}\in B_{x_T(u_{i+1})}$.  In the latter case, $u_{i+1}\in B_{x_T(u_{i-1})}$.  Both cases imply that $u_{i-1}u_{i+1}\in E(H)$, contradicting the fact that $u_0,\ldots,u_p$ is an induced path of $H$.
-%     \end{enumerate}
-%     If none of the preceding four cases occurs, then $u_0,\ldots,u_p$ is $\mathcal{T}$-unimodal.
-% \end{proof}
-
-
-%
-%
-% \begin{obs}\label{dominant-parent}
-%     Let $H$ be a $t$-tree with construction order $\mathcal{R}:=(v_1,\ldots,v_n)$ and let $\mathcal{L}:=(L_0,\ldots,L_m)$ be a BFS layering of $H$ with $L_0:=\{v_1,\ldots,v_{\min\{t,n\}}\}$.  Then, for any $i\in\{1,\ldots,m\}$ and any vertex $v\in L_{i}$ with dominant parent $p$, $p\in L_{i-1}$.
-% \end{obs}
-%
-% \begin{proof}
-%     A well-known property of BFS layerings is that, for $i>0$, any vertex $v\in L_{i}$ has some neighbour $w\in L_{i-1}$.  By definition, $p\le_\mathcal{R} w$ so, by \cref{order-relation} $p\le_\mathcal{L} w$. Since $w\in L_{i-1}$, $p\in L_0\cup\cdots\cup L_{i-1}$.  Another well known property of BFS layerings is that $v$ has no neighbour in $L_0,\ldots,L_{i-2}$.  Therefore $p\in L_{i-1}$.
-% \end{proof}
-
-% The following simple result is used several times in the (fairly involved) proof of \cref{simple-t-trees}.  We note that the vertices $p,q,v$ in the statement of the result are not necessarily distinct.
-%
-% \begin{obs}\label{up-clique}
-%     Let $H$ be a $t$-tree with construction order $\mathcal{R}:=(v_1,\ldots,v_n)$, let $\mathcal{L}:=(L_0,\ldots,L_m)$ be a BFS layering of $H$ with $L_0:=\{v_1,\ldots,v_{\min\{t,n\}}\}$, let $i\in\{0,\ldots,m-1\}$, let $uvw$ be a path in $H$ with $u,w\in L_{i+1}$, $v\in L_{i}$, and let $p,q\in L_{i}$ be the dominant parents of $u$ and $w$ respectively.  Then $H[\{v,p,q\}]$ is a clique.
-% \end{obs}
-%
-% % We remark that, in \cref{up-clique} $\{v,p,q\}$ may consist of $1$, $2$, or $3$ distinct elements.
-%
-% \begin{proof}
-%     Refer to \cref{up-clique-figure}. Consider the canonical tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ generated by $v_1,\ldots,v_n$.  By \cref{order-relation}, $v\prec_{\mathcal{T}} u,w$ and, by definition $p,q\preceq_{\mathcal{T}} v$.  Therefore $p,q\prec_{\mathcal{T}} v\prec_{\mathcal{T}} u,w$.  Since $pu\in E(H)$, this implies that $p\in B_{x_T(v)}$.  Similarly $q\in B_{x_T(v)}$.  By definition, $v\in B_{x_T(v)}$.  The vertices in $B_{x_T(v)}$ form a clique in $H$, so $\{v,p,q\}$ is a clique in $H$.
-% \end{proof}
-%
-% \begin{figure}
-%     \centering{
-%         \includegraphics{figs/up-clique}
-%     }
-%     \caption{The proof of \cref{up-clique}}
-%     \label{up-clique-figure}
-% \end{figure}
-
-% An incredibly useful property of graphs of small treewidth is that they have small separators.
 We will make use of the following well-known and easy to prove vertex-weighted separator lemma:
 
 \begin{lem}\label{weighted-separator}
@@ -395,7 +330,7 @@ Simple treewidth and treewidth are closely related:
 A proof of the following lemma, using minor-monotonicity, is due to \citet{wood:personal}.
 
 \begin{lem}[\cite{wood:personal}]\label{simple-bfs-layers}
-    Let $H$ be a graph that edge-maximal with respect to some $t$-simple tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ and let $L_0,\ldots,L_m$ be the BFS ordering of $H$ with $L_0:=B_p$.   Then, for each $i\in\{1,\ldots,m\}$, $\stw(H[L_i])\le t-1$.
+    Let $H$ be a graph that edge-maximal with respect to some $t$-simple tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ and let $L_0,\ldots,L_m$ be the BFS ordering of $H$ with $L_0:=B_r$.   Then, for each $i\in\{1,\ldots,m\}$, $\stw(H[L_i])\le t-1$.
 \end{lem}
 
 
@@ -549,12 +484,14 @@ For a graph $U$ and integers $h,m\ge 0$, we define the \emph{$(h,m)$-boost} $U^{
     \begin{align*}
         |G| & \le (|U|\cdot m\cdot h)^{m} \\
         & \le \left((\log^{(t-2)} h)^{(t-1)h + o(h)}\cdot m\cdot h\right)^{m} \\
-        & = (\log^{(t-2)} h)^{(t-1)r + o(r)}\cdot r^{m} \\
-        & = (\log^{(t-1)} r)^{(t-1)r + o(r)}\cdot r^{r/log r+o(r)} \\
-        % & \text{(since $h:=\log r$)}\\
+        & = (\log^{(t-2)} h)^{(t-1)r + o(r)}\cdot r^{m+o(m)}
+        & \text{(since $h=\lceil\log r\rceil$ and $m=\lceil r/\log r\rceil$)}\\
+        & = (\log^{(t-1)} r)^{(t-1)r + o(r)}\cdot r^{m+o(m)}
+         & \text{(since $h=\lceil\log r\rceil$, so $e^h\le r\le e^{h+1}$)} \\
         % & = (\log^{(t-1)} r)^{(t-1)r + o(r)}\cdot r^{r/\log r}
-        % & \text{(since $m:=r/\log r$)}\\
-        & = (\log^{(t-1)} r)^{(t-1)r + o(r)}\cdot e^{r+o(r)} \\
+        % & \text{(since $m:=\ceil r/\log r\rceil$)}\\
+        & = (\log^{(t-1)} r)^{(t-1)r + o(r)}\cdot e^{r+o(r)}
+        & \text{(since $m:=\lceil r/\log r\rceil$)}\\
         & \le (\log^{(t-1)} r)^{tr + o(r)} & \text{(since $r\ge \tau(t)$, so $\log^{(t-1)} r\ge e$).} & \qedhere
     \end{align*}
 \end{proof}
@@ -763,38 +700,24 @@ A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least t
 Now we arrive at the combinatorial core of the proof. The main idea is break $H$ up into a sequence of blocks, each of which consists of $\ell+1$.  Each pair of consecutive blocks overlaps in a single layer.  The following lemma is what allows us to handle the first block.  The purpose of the weighting $(n_v:v\in V(H))$ is to allow us to account for the fact that this first block has more layers attached to it.
 
 \begin{lem}\label{t-tree-slack}
-Let $t,d,\ell,\beta\in\N$ be fixed values, let $k\in N$ and $c\in\R$ be such that $t\ge 2$ and $\tau(t-1)\le c\le k-1$; let $H$ be a graph with $\diam(H)\le d$ and $\stw(H)\le t$ in which each vertex $v\in V(H)$ is assigned a real-valued weight $n_v\ge 1$. Then there exists a constant $a:=a(t,\ell,d,\beta)$ such that, if
-\begin{equation}
-     \sum_{v\in V(H)} n_v \le \beta\cdot\frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} c)^{c}} \enspace ,
- \label{total-weight}
-\end{equation}
-and
-\begin{equation}
-     \max\{n_v:v\in V(H)\} \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} (c+s))^{c+s}} \enspace ,
- \label{max-weight}
-\end{equation}
-where $s := \log c/\log^{(t-1)} c$,
-% and if $\phi_1,\ldots,\phi_t'$ are distinct integers, each greater than $a(k-c-1)$,
-then $H$ has an $\ell$-ranking $\varphi:V(H)\to a(k-c-1)$ such that $\varphi(v)> a(k-\gamma_{t-2,k}(n_v)-1)$ for each $v\in V(H)$.
-% \begin{compactenum}[(P1)]
-    % \item for each $i\in\{1,\ldots,{t'}\}$, $\varphi(v_i)=\phi_i$; and
-    % \item for each $v\in V(H)\setminus B_p$, $a(k-\gamma(v)-1) < \varphi(v) \le a(k-c-1)$.
-% \end{compactenum}
+    Let $t,d,\ell,\beta\in\N$ be fixed values, let $k\in N$ and $c\in\R$ be such that $t\ge 2$ and $\tau(t-1)\le c\le k-1$; let $H$ be a graph with $\diam(H)\le d$ and $\stw(H)\le t$ in which each vertex $v\in V(H)$ is assigned a real-valued weight $n_v\ge 1$. Then there exists a constant $a:=a(t,\ell,d,\beta)$ such that, if
+    \begin{equation}
+         \sum_{v\in V(H)} n_v \le \beta\cdot\frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} c)^{c}} \enspace ,
+     \label{total-weight}
+    \end{equation}
+    and
+    \begin{equation}
+         \max\{n_v:v\in V(H)\} \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} (c+s))^{c+s}} \enspace ,
+     \label{max-weight}
+    \end{equation}
+    where $s := \log c/\log^{(t-1)} c$,
+    then $H$ has an $\ell$-ranking $\varphi:V(H)\to a(k-c-1)$ such that $\varphi(v)> a(k-\gamma_{t-2,k}(n_v)-1)$ for each $v\in V(H)$.
 \end{lem}
 
 \begin{proof}
-    % For each node $x\in V(T)\setminus\{r\}$, let $T_x$ denote the subtree of $T$ induced by $x$ and all its $T$-descendants and let $H_x:=H[\bigcup_{y\in V(T_x)} B_y]-B_p$ where $p$ is the parent of $x$ in $T$.
-    % Recall that, for $x\neq r$, $B_x$ contains exactly one vertex $v_1'$ that is not present in $B_p$ where $p$ is the $T$-parent of $x$.
-    Without loss of generality, we may assume $H$ is edge maximal with respect to some $t$-simple tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ rooted at some node $r\in V(T)$ with $|B_p|=t$.  Let $L_0,\ldots,L_h$ be a BFS layering of $H$ with $L_0:=B_p$.  Note that $h\le\diam(H)\le d$.
+    Without loss of generality, we may assume $H$ is edge maximal with respect to some $t$-simple tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ rooted at some node $r\in V(T)$.  Let $L_0,\ldots,L_h$ be a BFS layering of $H$ with $L_0:=B_r$.  Note that $h\le\diam(H)\le d$.
 
-    The proof is by induction on $|H|$.  In the base case, $|H|=0$ and there is nothing to prove.
-    % $1\le|H|\le t$, in which case $T$ has only one node $r$. For each $i\in\{1,\ldots,t'\}$, we set $\varphi(v_i):=\phi_i$, in order to satisfy (P1).  In this case Condition (P2) is vacuous since it does not apply to vertices in $B_p$.
-    Now assume $|H|\ge 1$.  For each subgraph $X$ of $H$, define
-    $
-        n_{X}:=\sum_{v\in V(X)} n_v
-        % \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}} \enspace .
-    $.
-    Note that \cref{total-weight} implies that $n_H\le(\log^{(t-2)} k)^k/(\log^{(t-2)}c)^c$.  For $v\in V(H)$ we use the shorthand $\gamma_v:=\gamma_{t-2,k}(n_v)$ and for any subgraph $X$ of $H$ we use the shorthand $\gamma_X := \gamma_{t-2,k}(n_X)$.  Note that \cref{total-weight} implies that $\gamma_H \ge (\log c)^c$ and $\gamma_v\ge(\log(c+s))^{c+s}$ for each $v\in V(H)$.
+    The proof is by induction on $|H|$.  In the base case, $|H|=0$ and there is nothing to prove. Now assume $|H|\ge 1$.  For each subgraph $X$ of $H$, define $n_{X}:=\sum_{v\in V(X)} n_v$ so that \cref{total-weight} implies that $n_H\le(\log^{(t-2)} k)^k/(\log^{(t-2)}c)^c$.  For $v\in V(H)$ we use the shorthand $\gamma_v:=\gamma_{t-2,k}(n_v)$ and for any subgraph $X$ of $H$ we use the shorthand $\gamma_X := \gamma_{t-2,k}(n_X)$.  Note that \cref{total-weight} implies that $\gamma_H \ge (\log c)^c$ and $\gamma_v\ge(\log(c+s))^{c+s}$ for each $v\in V(H)$.
 
     Let
     \begin{equation}
@@ -912,7 +835,7 @@ then $H$ has an $\ell$-ranking $\varphi:V(H)\to a(k-c-1)$ such that $\varphi(v)>
 Since our strategy is to use \cref{t-tree-slack} on the first $\ell+1$ BFS layers of $H$ and then recurse on the subgraphs attached to layer $\ell+1$, we need to define vertex weights $n_v$ that allow us to capture the sizes of the subgraphs attached to vertices in layer $\ell+1$.  The following lemma shows that the obvious approach to this does not overcount by more than a factor of $t$.
 
 \begin{lem}\label{size-claim}
-    Let $H$ be a graph that is edge maximal with respect to a tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of width at most $t$, let $T$ be rooted at $r\in V(T)$, and let $\mathcal{L}:=L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0=B_p$.  For each $i\in\{0,\ldots,m\}$ and each $v\in L_i$, let $H_v$ be the component of $H[\{v\}\bigcup_{j=i+1}^m L_j]$ that contains $v$ and let $\kappa_v:= t-1+|X_v|$.  Then $\sum_{v\in L_i} \kappa_v \le t\cdot|H|$.
+    Let $H$ be a graph that is edge maximal with respect to a tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of width at most $t$, let $T$ be rooted at $r\in V(T)$, and let $\mathcal{L}:=L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0=B_r$.  For each $i\in\{0,\ldots,m\}$ and each $v\in L_i$, let $H_v$ be the component of $H[\{v\}\bigcup_{j=i+1}^m L_j]$ that contains $v$ and let $\kappa_v:= t-1+|X_v|$.  Then $\sum_{v\in L_i} \kappa_v \le t\cdot|H|$.
 \end{lem}
 
 \begin{proof}
@@ -927,8 +850,8 @@ Finally, we can prove the technical lemma that implies \weirdref{simple-t-trees}
 \begin{lem}\label{t-tree-technical}
     Let $n,k,t,\ell\in N$ and $c\in\R$ be such that $n\le (\log^{(t-2)} k)^k/(\log^{(t-2)} c)^{c}$;
     let $H$ be an $n$-vertex graph that is edge maximal with respect to some $t$-simple tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ rooted at $r\in V(T)$; and
-    let $B_p:=\{v_1,\ldots,v_{t}\}$; and
-    let $L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0:=B_p$.
+    let $B_r:=\{v_1,\ldots,v_{t}\}$; and
+    let $L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0:=B_r$.
 
     Then, there exists an integer $a:=a(t,\ell)$ such that, for any distinct $\phi_0,\ldots,\phi_{t'}\in \{\lfloor a(k-c-1)\rfloor+1,\ldots,ak\}$ there exists an $\ell$-ranking $\varphi:V(G)\to\{1,\ldots,ak\}$ such that
     \begin{compactenum}[(R1)]
@@ -974,140 +897,9 @@ Finally, we can prove the technical lemma that implies \weirdref{simple-t-trees}
     \end{compactenum}
 \end{proof}
 
-%
-%     let $L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0:=B_p$; and .
-% \end{lem}
-%
-%     The following technical claim essentially implies \cref{two-tree-technical}, but is suitable for induction on the layer $i$.
-%
-%     \begin{clm}\label{main-claim}
-%         Let $H'$ be the union of one or more connected components of $H[\bigcup_{j=i}^m L_i]$. There exists a constant $a$ such that, if
-%         \begin{equation}
-%             \sum_{v\in V(H'[L_i])} n_v\le \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} (c+s))^{c+s}} \enspace , \label{main-size}
-%         \end{equation}
-%         where $s:=\log c/\log^{(t-1)} c$,
-%         then there exists $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,\ldots,t^{\ellt}-1\}$ such that
-%         \begin{compactenum}[(P1)]
-%             \item The function $\theta:V(H')\to\{1,\ldots,3t^{\ellt}ak\}$ defined by $\theta(v)=3t^{\ellt}\varphi(v) - 3\psi(v) -(\ell(v)\bmod 3)$ is a 2-ranking of $H'$;
-%             \item for each $v\in V(H'[L_i])$, $\psi(v)=0$; and
-%             \item for each $v\in V(H'[L_i])$, $\varphi(v)\le a(k-c-1)$.
-%         \end{compactenum}
-%     \end{clm}
-%
-%     \begin{proof}[Proof of \cref{main-claim}]
-%         [TODO: The lemma wants $H'$ to be the union of connected components of $H[\bigcup_{j=i}^m L_i]$, but when we recurse, we give it $H^-_v:=H_v-\bigcup_{v'\in V(H'[L_i])} S_{v'}$.]
-%
-%         % In all cases, (P2) requires setting $\psi(v)=0$ for all $v\in V(H'[L_i])$, so we do this now and will not mention it again.
-%         % By \cref{simple-subgraph}, we may assume that $H'[L_i]$ is a simple $(t-1)$-tree.
-%
-%         The proof is by induction on $m-i$. In the base case $m-i=0$, so $H'$ is a subgraph of $H[L_m]=H[L_i]$. By \cref{simple-bfs-layers} $\stw(H')\le \stw(H[L_i])\le t-1$.  Then, for each $v\in L_i$, $n_v=\tau(t-1)$.  Then
-%         \begin{align*}
-%             \sum_{v\in V(H')} \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} \gamma(v))^{\gamma(v)}}
-%             & = \sum_{v\in V(H')} n_v \\
-%             % & = \tau(t-1)\cdot|H'| \\
-%             % & \le \sum_{v\in V(H'[L_i])} n_v  & \text{(by \cref{size-claim})}\\
-%             & \le \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} c)^c} & \text{(by \cref{main-size})} \enspace .
-%         \end{align*}
-%         Applying \cref{t-tree-slack} to $H'$ gives a colouring $\varphi: V(H')\to\{1,\ldots,ak\}$ that satisfies (P1) and (P3).  To satisfy (P2) we set $\psi(v):=0$ for each $v\in V(H')$.  This handles the case $i=m$.
-%
-%         Before proceeding with the inductive step, we give some intuition and definitions for the secondary colouring $\psi$. For each $i\in\{1,\ldots,m\}$, $\tw(H[L_i])\le \stw(H[L_i])\le t$. Therefore, there exists a colouring $\zeta:V(H)\to\{0,\ldots,t-1\}$ such that $\zeta$ is a proper colouring of $H[L_i]$ for each $i\in\{1,\ldots,m\}$. For each $j\in\{1,\ldots,\ellt\}$, each $v\in H'[L_{i+j}]$, and each $s\in\{1,\ldots,j\}$, we will associate the vertex $v$ with a specific vertex $p_s(v)\in V(H'[L_{i+j-s}])$.  In this way, $v$ gets a $\ellt$-vector of colours $(\psi_1(v),\ldots,\psi_{\ellt-1}(v))$, where
-%         \[
-%             \psi_s(v) :=
-%                 \begin{cases}
-%                     \zeta(p_s(v)) & \text{if $s\in\{1,\ldots,j\}$} \\
-%                     0             & \text{if $s\in\{j+1,\ldots,\ellt\}$.}
-%                 \end{cases}
-%         \]
-%         This vector then defines the colour $\psi(v):=\sum_{s=1}^\ellt t^{i-1}\psi_s(v)$.
-%
-%         We now proceed with the inductive step, so $i\in\{0,\ldots,m-1\}$.
-%         Now,
-%         \[
-%             \sum_{v\in V(H'[L_i])}\frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} \gamma(v))^{\gamma(v)}}
-%             = \sum_{v\in V(H'[L_i])} n_v
-%             \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} (c+s))^{c+s}} \enspace .
-%         \]
-%        Therefore $\gamma$ satisfies the requirements for \cref{t-tree-slack}, so we can find a 2-ranking of $H'[L_i]$ that satisfies (P3) and satisfies (P1), at least for the graph $H'[L_i]$. In addition $\varphi(v)> a(k-c-\gamma(v)-1)$ for each $v\in V(H'[L_i])$.  We will show how to can extend $\varphi$ to a complete colouring of $H'$.
-%
-%        The next step is use \cref{t-tree-no-slack-separator} to break $H'-L_i$ into sufficiently small components.  For any $v\in H'[L_{i]}]$, define
-%        \begin{align*}
-%           n_{H^+_v} & := \sum_{w\in V(H^+_v)[L_{i+1}]} n_w \\
-%                     & \le \tau(t-1)\cdot|H^+_v| & \text{(by \cref{size-claim})} \\
-%                     & \le \tau(t-1)\cdot n_v & \text{(by \cref{size-claim})} \\
-%                     & = \tau(t-1)\cdot\left(\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}}\right)
-%                     & \text{(by definition of $\gamma(v)$)} \\
-%                     & \in O\left(\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)}\gamma(v))^{\gamma(v)}}\right) &\text{(for $t\in O(1)$)}
-%        \end{align*}
-%        Therefore, $\gamma$ satisifies the conditions for applying \cref{t-tree-no-slack-separator} to $H^+_v[L_{i+1}]$.  Therefore, there exists a set $S_v\subseteq H^+_v[L_{i+1}]$ of size $O(\gamma(v)+1)$ such that each component $X$ of $H^+_v-S_v$ has $n_X\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$, where $s(v):=\log\gamma(v)/\log^{(t-1)}\gamma(v)$.
-%
-%        Let $\zeta:V(H'[L_i])\to\{0,\ldots,t-1\}$ be a proper colouring of $H'[L_i]$.  Assign each of the vertices in $S_v$ a distinct colour $\varphi(w)$ from the set $\{\lfloor a(k-\gamma(v))\rfloor+1,\ldots,ak\}$.  In addition, assign $\psi(w):=\zeta(v)$.  Note that, if we do this for each $v\in V(H'[L_i])$ there may be some vertices $w\in L_{i+1}$ that are assigned colours $\varphi(w)$ and $\psi(w)$ more than once.  In this case, we arbitrarily choose one of the vertices $v\in H'[L_i]$ such that $w\in S_v$ and use the colours $\varphi(w)$ and $\psi(w)$ assigned to $w$ by $v$.
-%
-%        Recall that, for each vertex $w$ in $L_{i+1}$, the \emph{dominant parent} $p(w)$ of $w$ is in $L_i$ (\cref{dominant-parent}).  In particular, for any $w\in V(H'[L_{i+1}])$, $p(w)\in V(H'[L_{i}])$.
-%        For each vertex $v$ in $H'[L_i]$ we define $D_v:=\{w\in H'[L_{i+1}]: p(w)=v\}$.  For each $v\in V(H'[L_i])$, define the graph $H_v$ to be the component of $H'[D_v\cup \bigcup_{j=i+2}^m L_j]$ that contains $D_v$.  Note that $H_v$ is a subgraph of $H^+_v$.
-%
-%        There are some vertices $w$ in $H_v[L_{i+1}]$ that have already been assigned colours $\varphi(w)$ and $\psi(w)$ because $w\in S_{v'}$ for some $v'\in V(H'[L_i])$.  Consider the \emph{uncoloured graph} $H^-_v:=H_v-\bigcup_{v'\in V(H'[L_i])} S_{v'}$.  Since $H^-_v\subseteq H_v\subseteq H^+_v$, any component $Y$ of $H^-_v$ has $n_Y\le (\log^{(t-2)} k)^k/(\log^{(t-2)} (\gamma(v))+s(v))^{\gamma(v)+s(v)}$.  Furthermore, if $Y$ is a subgraph of $H_C$ for some $t$-clique $C$ in $H'[L_i]$, then
-%        \begin{equation}
-%         n_Y \le \min_{v'\in C}\left(\frac{(\log^{(t-2)}k)^k}{(\log^{(t-2)} (\gamma(v'))+s(v'))^{\gamma(v')+s(v')}} \right) \enspace . \label{min}
-%         \end{equation}
-%        Again, this is because $Y\subseteq Y^+$ where $Y^+$ is a component of $H_C\subseteq H^+_{v'}$ and each component $Y'$ of $H^+_{v'}-S_{v'}$ has $n_{Y'}\le (\log^{(t-2)}k)^k/(\log^{(t-2)} (\gamma(v'))+s(v'))^{\gamma(v')+s(v')}$.
-%
-%        We apply the inductive hypothesis to each component $Y$ of $H^-_v$ and we obtain $\varphi:V(H^-_v)\to\{1,\ldots,ak\}$ and $\psi:V(H_w)\to\{0,1\}$ that satisfy the conditions of the claim.  We do this to colour $H^-_v$ for each $v\in V(H'[L_i])$.
-%
-%        At this point colourings $\varphi:V(H')\to\{1,\ldots,ak\}$ and $\psi:V(H')\to\{0,1\}$ are completely defined.  We must, however, make one small modification to $\psi$.  Since each vertex in $H'[L_{i+1}]$ is coloured by induction on some component of $H^-_v$ for some $v\in V(H'[L_i])$, $\psi(w)=0$ for each $w\in V(H'[L_{i+1}])$, and we are free to change this.
-%        % Now, the graph $H'[L_i]$ is a $(t-1)$-forest and therefore has a proper $t$-colouring $\zeta:V(H'[L_i])\to\{0,\ldots,t-1\}$.
-%        Recall that $\zeta:V(H'[L_i])\to\{0,\ldots,t-1\}$ is a proper $t$-colouring of $H'[L_i]$.  For each vertex $v$ in $H'[L_i]$ and each vertex $w$ in $H^-_v[L_{i+1}]$ we set $\psi(w):=\zeta(v)=\zeta(p(w))$.  This completes the description of the colourings $\varphi$ and $\psi$.
-%
-%        We have already ensured that $\varphi$ and $\psi$ satisfy (P2) and (P3). All that remains is to ensure that they satisfy (P1).  To do this, consider some path $uvw$ in $H'$.  We must show that $\theta(u)\neq\theta(w)$ or $\theta(u)<\theta(v)$.  There are a few cases to consider (see \cref{cases}):
-%        \begin{figure}
-%             \centering{
-%                 \begin{tabular}{|c|c|c|}\hline & & \\[.1mm]
-%                     \includegraphics{figs/cases-1} &
-%                     \includegraphics{figs/cases-2} &
-%                     \includegraphics{figs/cases-3} \\
-%                     (1) & (2) & (3) \\ \hline & & \\[.1mm]
-%                     \includegraphics{figs/cases-4} &
-%                     \includegraphics{figs/cases-5} &
-%                     \includegraphics{figs/cases-6} \\
-%                     (4) & (5) & (6) \\ \hline & & \\[.1mm]
-%                     \includegraphics{figs/cases-7} &
-%                     \includegraphics{figs/cases-8} &
-%                     \includegraphics{figs/cases-9} \\
-%                     (7(a)) & (7(b)) & (8) \\ \hline
-%                 \end{tabular}
-%             }
-%             \caption{Cases in the proof of \cref{main-claim}.}
-%             \label{cases}
-%        \end{figure}
-%        \begin{compactenum}
-%           \item If $u\in L_i$ and $w\in L_j$ for $i\neq j$ then $i\bmod 3\neq j\bmod 3$, so $\theta(u)\neq\theta(w)$.
-%
-%           \item If $u,w\in L_i$ and $v\in L_{i+1}$ then $u,w$ is contained in the parent clique $C_v$ of $v$.  In particular, $uw\in E(H'[L_i])$ so $\varphi(u)\neq\varphi(w)$ since \cref{t-tree-slack} produces a 2-ranking (which is a proper colouring) $\varphi$ of $H'[L_i]$.
-%
-%           \item If $u,v,w\in L_i$ then $uvw$ is completely contained in $H'[L_i]$ and $\varphi(u)\neq\varphi(w)$ or $\varphi(u)<\varphi(v)$ because \cref{t-tree-slack} produces a 2-ranking $\varphi$ of $H'[L_i]$.
-%
-%           \item If $uw\in E(H^-_p)$ or the path $u,v,w\in V(H^-_p)$ for some vertex $p$ in $H'[L_i]$ then the inductive hypothesis ensures that $\theta$ was already a 2-ranking of $H^-_v$ and the subsequent modifications to $\psi(w)$ for $w\in H^-_v[L_{i+1}]$ do not change this. In fact, these modifications do not change the relative order of $\theta(u)$ and $\theta(w)$ or the relative order of $\theta(u)$ and $\theta(v)$.
-%
-%           \item If $u,w\in V(H^-_p)$ for some $p\in V(H'[L_i])$, $v$ is in $H'[L_i]$, and $v\neq p$ then, by \cref{up-clique}, $pv\in E(H'[L_i])$.  Therefore, there exists a $t$-clique $C$ in $H'[L_i]$ with $\{p,v\}\subseteq C_u$ such that $u\in V(H_{C})$.  The vertex $u$ is contained in some component $Y$ of $H^-_v$. By \cref{min} and the application of \cref{t-tree-slack} to $Y$, $\varphi(u)\le a(k-\gamma(v)-1) < \varphi(v)$ so $\theta(u) < \theta(v)$.
-%
-%           \item If $u\in V(H^-_{p})$, $v\in V(H'[L_i])$ and $w\in V(H^-_q)$ for some $p\neq q$, then $p=p(v)$ and $q=p(w)$.  By \cref{up-clique}, the edge $pq\in E(H[L_i])$, so $\psi(u)=\zeta(p)\neq\zeta(q)=\psi(w)$ since $\zeta$ is a proper colouring of $H'[L_i]$.
-%
-%           \item If $u,w\in V(H_{p}-H^-_{p})$ for some $p\in V(H'[L_i])$ then $\varphi(u)$ and $\psi(u)$ were assigned by some vertex $p'\in V(H'[L_i])$ such that $v\in S_{p'}$.  Similarly, $\varphi(w)$ and $\psi(w)$ were assigned by some vertex $q'\in V(H'[L_i])$ such that $w\in S_{q'}$.  There are two subcases to consider:
-%           \begin{compactenum}
-%             \item If $p'=q'$ then $\varphi(u)\neq\varphi(w)$ since every vertex in $S_{p'}$ is assigned a unique colour by $\varphi$.
-%             \item If $p'\neq q'$ then, by \cref{up-clique}, $p'q'\in E(H'[L_i])$ so that $\psi(u)=\zeta(p')\neq\zeta(q')=\psi(w)$.
-%         \end{compactenum}
-%         In either case $\theta(u)\neq\theta(w)$.
-%
-%         \item If $u,w\in H_p[L_{i+1}]$, $u\in V(H^-_{p})$ and $w\not\in V(H^-_{p})$ for some $p\in V(H'[L_i])$ then $w\in S_{q'}$ for some $q'\in V(H'[L_i])$ and $\varphi(w)$ (and $\psi(w)$) was assigned by $q'$, so $\varphi(w)>a(k-\gamma(q')-1)$. On the other hand, by \cref{min}, $\varphi(u) \le a(k-\gamma(q')-1)$.  Therefore $\varphi(u)<\varphi(w)$ so $\theta(u)\neq\theta(w)$.
-%       \end{compactenum}
-%       This completes the proof of \cref{main-claim}.
-%     \end{proof}
-%     Finally, to complete the proof of \cref{two-tree-technical} we apply \cref{main-claim} with $i=0$ and $H'=H$.  By \cref{size-claim} we can do this with any value $k$ such that $\tau(t-1)\cdot n \le (\log k)^{k}$ to show that $\trn(H)\le \tau(t-1)\cdot a\cdot k$ for some constant $a$.
-% \end{proof}
-
 Rewriting \cref{t-tree-technical} in terms of $n$ yields \weirdref{simple-t-trees}{a}:
 
-\begin{proof}[Proof of \weirdref{simple-t-trees}{a}]
+\begin{proof}[Proof of \cref{simple-t-trees} (upper bound)]
     By \cref{t-tree-technical}, $\lrn(H)\in O(k)$ for any $k$ that satisfies
     \[  (\log^{(t-2)} k)^{k} \ge n \Leftrightarrow
         k \ge \frac{\log n}{\log^{(t-1)} k}
