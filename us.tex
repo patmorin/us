@@ -13,6 +13,8 @@
 \usepackage{cancel}
 \usepackage{enumitem}
 
+\usepackage{todonotes}
+
 \usepackage[longnamesfirst,numbers,sort&compress]{natbib}
 
 
@@ -111,6 +113,8 @@ Since every tree is a planar graph and no better lower bound is known for planar
     For any fixed integer $\ell\ge 2$, every $n$-vertex planar graph $G$ has $\lrn(G)\in O(\log n/\log^{(3)} n)$ and this is asymptotically optimal: for infinitely many values of $n$, there exists an $n$-vertex planar graph $G$ with $\trn(G)\in \Omega(\log n/\log^{(3)} n)$
 \end{thm}
 
+\todo[inline]{SoDA referee ($\times 2$) wants us to include dependence on $\ell$ in \cref{planar,simple-t-trees,t-trees,bounded-genus,outerplanar}. For fixed $t$, I think it's $\ell^{t-1}\log\ell$, but it makes the proofs even more messy.}
+
 Our proof of the upper bound in \cref{planar} makes use of a recent \emph{product structure theorem} of \citet{dujmovic.joret.ea:planar} which states that every planar graph $G$ is a subgraph of $H\boxtimes K_3\boxtimes P$ where $H$ is a planar graph of treewidth at most $3$, $K_3$ is a 3-cycle, $P$ is a path, and $\boxtimes$ denotes the strong graph product.\footnote{Definitions of $t$-trees, simple $t$-trees, treewidth, simple treewidth, and strong graph product appear later, in \cref{sec:basics}.}  To apply this theorem, we prove the following result:
 
 \begin{thm}\label{simple-t-trees}
@@ -155,7 +159,7 @@ Here we survey previous work on $\ell$-ranking as well as its relations to other
 
 For a graph $G$, a vertex $\infty$-ranking is known as a \emph{vertex ranking} \cite{bodlaender.deogun.ea:rankings} or \emph{ordered colouring} of $G$ \cite{katchalski.mccuaig.ea:ordered}.  Finding a vertex ranking $\varphi$ that uses exactly $\chi_\infty(G)$ colours is equivalent to finding a minimum-height elimination tree of $G$ \cite{torre.greenlaw.ea:optimal,deogun.kloks.ea:on}.  This measure has applications to parallel Cholesky factorization of matrices \cite{bodlaender.gilbert.ea:approximating,duff.reid:multifrontal,liu:role,dereniowski.kubale:cholesky} and in VLSI layout \cite{leiserson:area,sen.deng.ea:on}.  More recently, \citet{even.smorodinsky:hitting} showed that $\chi_\infty(G)$ determines the competitive ratio of the best algorithm for the online hitting set problem in $G$.
 
-The \emph{vertex ranking problem} of determining $\chi_\infty(G)$ for an arbitrary graph $G$ is known to be NP-hard, even on some restricted classes of graphs \cite{bodlaender.deogun.ea:rankings,llewellyn.tovey.ea:local,llewellyn.tovey.ea:erratum,dereniowski.nadolski:vertex}. Polynomial-time algorithms for the vertex ranking problem have been found for several families of graphs: \citet{schaeffer:optimal} showed this for trees and \citet{deogun.kloks.ea:on} showed this for permutation graphs.
+The \emph{vertex ranking problem} of determining $\chi_\infty(G)$ for an arbitrary graph $G$ is known to be NP-hard, even on some restricted classes of graphs \cite{bodlaender.deogun.ea:rankings,llewellyn.tovey.ea:local,llewellyn.tovey.ea:erratum,dereniowski.nadolski:vertex}. Polynomial-time algorithms for the vertex ranking problem have been found for several families of graphs: \citet{schaeffer:optimal,iyer.ratliff.ea:optimal} showed this for trees and \citet{deogun.kloks.ea:on} showed this for permutation graphs.
 
 A straightforward application of divide-and-conquer using planar separators shows that, for any $n$-vertex planar graph $G$, $\chi_\infty(G) \in O(\sqrt{n})$ \cite{llewellyn.tovey.ea:local,katchalski.mccuaig.ea:ordered}, and this bound is optimal:  There exists $n$-vertex planar graphs $G$ with $\chi_\infty(G)\in \Omega(\sqrt{n})$ \cite{katchalski.mccuaig.ea:ordered}.  A lower bound of \citet{katchalski.mccuaig.ea:ordered} shows that upper bounds like this, using divide-and-conquer with separators, are essentially tight: If, for every $r$-element set $S\subseteq V(G)$, the graph $G-S$ has a component of size at least $\alpha n$, then $\chi_\infty(G) \in\Omega(\alpha r)$. In a similar vein, \citet{bodlaender.gilbert.ea:approximating,kloks:treewidth} show that $\chi_\infty(G)$ is lower bounded by 1 plus the pathwidth of $G$.
 
@@ -196,15 +200,15 @@ At least three works have considered $\chi_\ell$ for finite $\ell$ with a focus 
 
 \citet{karpas.neiman.ea:on} proved \cref{trees}---a tight bound of $\trn(T)\in O(\log n/\log\log n)$ for every $n$-vertex tree $T$---and \cref{planar-graphs}---the upper bound $\trn(G)\in O(\log n)$ for every $n$-vertex planar graph $G$.  More generally, the same authors show that, for any proper minor-closed family $\mathcal{G}$ of graphs and, for every positive integer $\ell$, $\chi_\ell(G)\in O(\ell\log n)$ for every $n$-vertex $G\in\mathcal{G}$.  They also show that, for fixed $d$, every $n$-vertex $d$-degenerate graph $G$ has $\trn(G)\in O(\sqrt{n})$ and there exists examples with $\trn(G)\in\Omega(n^{1/3})$.
 
-\citet{shalu.antony:complexity} show that determining the minimum number of colours required by a 2-ranking of a given graph is NP-hard, even when restricted to planar bipartite graphs.  \citet{almeter.demircan.ea:graph} determine the exact value of $\trn(Q_d)=d+1$ where $Q_d$ is the $d$-cube.  They also shows that, for graphs $G$ of maximum degree 3, $\trn(G)\le 7$ and show the existence of a graph with maximum degree $k$ such that $\trn(G)\in\Omega(k^2/\log k)$.
+\citet{shalu.antony:complexity} show that determining the minimum number of colours required by a 2-ranking of a given graph is NP-hard, even when restricted to planar bipartite graphs.  \citet{almeter.demircan.ea:graph} determine the exact value of $\trn(Q_d)=d+1$ where $Q_d$ is the $d$-cube.  They also show that, for graphs $G$ of maximum degree 3, $\trn(G)\le 7$ and show the existence of a graph with maximum degree $k$ such that $\trn(G)\in\Omega(k^2/\log k)$.
 
 
 \subsubsection{Star Colouring and Distance-$2$ colouring}
 
  Note that 2-rankings fall between two very well-studied graph colouring problems:
 \begin{compactitem}
-    \item \emph{star colourings}, which ensure that the graph induced by an 2 colour classes is forest of stars and
-    \item \emph{distance-2 colourings} which ensure that the endpoints each non-trivial path of length at most 2 receive distinct colours.
+    \item \emph{star colourings}, which ensure that the graph induced by any 2 colour classes is forest of stars and
+    \item \emph{distance-2 colourings} which ensure that the endpoints of each non-trivial path of length at most 2 receive distinct colours.
 \end{compactitem}
 Every 2-ranking is a star colouring and every distance-2 colouring is a 2-ranking so, letting $\scn(G)$ and $\dtcn(G)$ denote the star colouring number of $G$ and distance-2 colouring number of $G$, respectively, we have $\scn(G) \le \trn(G)\le \dtcn(G)$.
 
@@ -220,8 +224,7 @@ The remainder of this paper is organized as follows: \Cref{sec:basics} reviews s
 \section{Preliminaries}
 \seclabel{basics}
 
-In this paper we use standard graph theory terminology as used in the book by \citet{diestel:graph}
-Every graph $G$ we consider is finite, simple, and undirected with vertex set denoted by $V(G)$ and edge set denoted by $E(G)$.  We use the shorthand $|G|:=|V(G)|$ to denote the number of vertices in $G$.  We use $N_G(v):=\{w\in V(G): vw\in E(G)\}$ to denote the \emph{open neighbourhood} of $v$ in $G$. For any $S\subseteq V(G)$, $N_G(S):=\bigcup_{v\in S} N_G(v)\setminus S$.  For each $n\in\N$, $K_n$ denotes the complete graph on $n$ vertices.  The \emph{length} of a path $u_0,\ldots,u_p$ in $G$ is equal to the number, $p$, of edges in the path. A path is \emph{trivial} if it has length 0 and \emph{non-trivial} otherwise.
+In this paper we use standard graph theory terminology as used in the book by \citet{diestel:graph}.  Every graph $G$ we consider is finite, simple, and undirected with vertex set denoted by $V(G)$ and edge set denoted by $E(G)$.  We use the shorthand $|G|:=|V(G)|$ to denote the number of vertices in $G$.  We use $N_G(v):=\{w\in V(G): vw\in E(G)\}$ to denote the \emph{open neighbourhood} of $v$ in $G$. For any $S\subseteq V(G)$, $N_G(S):=\bigcup_{v\in S} N_G(v)\setminus S$.  For each $n\in\N$, $K_n$ denotes the complete graph on $n$ vertices.  The \emph{length} of a path $u_0,\ldots,u_p$ in $G$ is equal to the number, $p$, of edges in the path. A path is \emph{trivial} if it has length 0 and \emph{non-trivial} otherwise.
 
 For any set $S$, $G[S]$ is the graph with vertex set $V(G[S]):=V(G)\cap S$ and edge set $E(G[S]):=\{vw\in E(G): \{v,w\}\subseteq S\}$, and $G-S:=G[V(G)\setminus S]$.  We say that a subgraph $G'$ of $G$ is an \emph{induced} subgraph of $G$ if $G[V(G')]=G'$.  For vertex rankings, it suffices to consider induced paths:
 
@@ -234,7 +237,7 @@ For any set $S$, $G[S]$ is the graph with vertex set $V(G[S]):=V(G)\cap S$ and e
 \end{obs}
 
 \begin{proof}
-    By definition any $\ell$-ranking $\varphi$ of $G$ satisifies (i) or (ii) for every path of length at most $\ell$, including every induced path of length at most $\ell$, so this direction is trivial.
+    By definition any $\ell$-ranking $\varphi$ of $G$ satisfies (i) or (ii) for every path of length at most $\ell$, including every induced path of length at most $\ell$, so this direction is trivial.
 
     For the other direction, suppose $G$ contains a (not necessarily induced) path $u_0,\ldots,u_p$ of length $r\le\ell$ with $\varphi(u_0)=\varphi(u_p)$ and $\varphi(u_0)=\max\{\varphi(u_0),\ldots,\varphi(u_p)\}$.  Let $w_0,\ldots,w_s$ be the shortest path from $w_0:=u_0$ to $w_s:=u_p$ in  the graph $G[\{u_0,\ldots,u_p\}]$.  Then $w_0,\ldots,w_s$ is an induced path in $G$ with $\varphi(w_0)=\varphi(u_0)=\varphi(u_p)=\varphi(w_s)$ and, since $\{w_0,\ldots,w_{s}\}\subseteq\{u_0,\ldots,u_{r}\}$, $\max\{\varphi(w_0),\ldots,\varphi(w_{s})\}\le\max\{u_0,\ldots,u_{r}\}$, so $\varphi(w_0)=\varphi(u_0)=\max\{\varphi(w_0),\ldots,\varphi(w_s)\}$, as required.
 \end{proof}
@@ -252,11 +255,11 @@ The same reasoning used to prove \cref{induced-paths-only} also shows:
 
 Let $T$ be a rooted tree rooted at some node $r\in V(T)$.  For any node $x\in V(T)$, $P_T(x)$ denotes the path, in $T$, from $r$ to $x$.  The \emph{$T$-depth} of $x\in V(T)$, denoted by $d_T(x)$, is the length of the path $P_T(x)$.  A node $a\in V(T)$ is a \emph{$T$-ancestor} of $x\in V(T)$ if $a\in V(P_T(x))$. If $a$ is a $T$-ancestor of $x$ then $x$ is a \emph{$T$-descendant} of $a$.  Note that every node of $T$ is both a $T$-ancestor and $T$-descendant of itself.  If $a$ is a $T$-ancestor of $x$ and $x\neq a$ then $a$ is a \emph{strict} $T$-ancestor of $x$ and $x$ is a \emph{strict} $T$-descendant of $a$.  The strict ancestor relation induces a partial order $\prec_T$ on $V(T)$ in which $x\prec_T y$ if and only if $x$ is a strict $T$-ancestor of $y$.
 
-For any graph $G$, and any two vertices $v,w\in V(G)$, $d_G(v,w)$ denotes the length of the shortest path, in $G$, from $v$ to $w$. The \emph{diameter} of $G$ is $\diam(G):=\max\{d_G(v,w):v,w\in V(G)\}$. For any integer $k\ge 0$, the \emph{$k$-th power} of $G$, denoted by $G^k$, is the graph with vertex set $V(G^k):=V(G)$ and edge set $E(G^{k}):=\{vw:v,w\in V(G),\,d_G(v,w)\le k\}$.
+For any graph $G$, and any two vertices $v,w\in V(G)$, $d_G(v,w)$ denotes the length of a shortest path, in $G$, from $v$ to $w$. The \emph{diameter} of $G$ is $\diam(G):=\max\{d_G(v,w):v,w\in V(G)\}$. For any integer $k\ge 1$, the \emph{$k$-th power} of $G$, denoted by $G^k$, is the graph with vertex set $V(G^k):=V(G)$ and edge set $E(G^{k}):=\{vw:v,w\in V(G),\, 1\le d_G(v,w)\le k\}$.
 % In the special case $k=2$, $G^2$ is called the \emph{square} of $G$.
 Note that any distance-$\ell$ colouring of $G$ is a proper colouring of $G^\ell$ and vice-versa, i.e., $\dlcn(G)=\chi(G^\ell)$.
 
-For any $v\in V(G)$ and any $W\subseteq V(G)$, let $d_H(v,W)=\min\{d_G(v,w):w\in W\}$. A \emph{BFS layering} of a connected graph $G$ is a partition of $V(G)$ into a sequence $\mathcal{L}:=(L_0,\ldots,L_m)$ of sets such that, for each $i\in\{1,\ldots,m\}$ and each $v\in L_i$, $d_G(v,L_0)=i$.  Any BFS layering $\mathcal{L}:=(L_0,\ldots,L_m)$ defines a partial order $\prec_{\mathcal{L}}$ on $V(G)$ in which $v\prec_{\mathcal{L}} w$ if and only if $v\in L_i$, $w\in L_j$ and $i<j$.
+For any $v\in V(G)$ and any $W\subseteq V(G)$, let $d_G(v,W)=\min\{d_G(v,w):w\in W\}$. A \emph{(generalized) BFS layering} of a connected graph $G$ is a partition of $V(G)$ into a sequence $\mathcal{L}:=(L_0,\ldots,L_m)$ of sets such that, for each $i\in\{1,\ldots,m\}$ and each $v\in L_i$, $d_G(v,L_0)=i$.  Any BFS layering $\mathcal{L}:=(L_0,\ldots,L_m)$ defines a partial order $\prec_{\mathcal{L}}$ on $V(G)$ in which $v\prec_{\mathcal{L}} w$ if and only if $v\in L_i$, $w\in L_j$ and $i<j$.
 
 % A path $P:=u_0,\ldots,u_p$ in $G$ is an \emph{induced} path if $G[\{u_0,\ldots,u_p\}]$ is a path.
 
@@ -276,7 +279,7 @@ In the special case where $X$ is a tree (or a forest), $\mathcal{X}$ is called a
 For a graph $H$, a \emph{rooted} tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ is one in which $T$ is a rooted tree.  Throughout the remainder of the paper, all our tree decompositions are rooted, with the root of $T$ typically denoted by $r$, in which case we call it an $r$-rooted tree decomposition.  We use the notation $x_T(v)$ to denote the minimum $T$-depth node $x\in V(T)$ such that $v\in B_x$.  This induces a partial order $\prec_{\mathcal{T}}$ on $V(H)$ in which $v\prec_{\mathcal{T}} w$ if and only if $x_T(v)\prec_T x_T(w)$.  The following observations have straightforward proofs:
 
  \begin{obs}\label{induced-unimodal}
-     Let $H$ be a graph that is edge-maximal with respect to some rooted tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$.  Then, for any induced path $u_0,\ldots,u_p$ in $H$, $u_i\preceq_\mathcal{T} u_0$ or $u_i\preceq_\mathcal{T} u_p$ for each $i\in\{1,\ldots,p-1\}$.
+     Let $H$ be a graph that is edge-maximal with respect to some rooted tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$.  Then, for any induced path $u_0,\ldots,u_p$ in $H$ and any $i\in\{1,\ldots,p-1\}$, $u_i\preceq_\mathcal{T} u_0$ or $u_i\preceq_\mathcal{T} u_p$.
  \end{obs}
 
 
@@ -379,10 +382,10 @@ As the following simple lemma shows, product structure is highly relevant to $\e
     For each $(x,y)\in V(G_1\boxtimes G_2)$, let $\varphi(x,y):=\dlcn(G_2)\cdot \rho(x) - \psi(y)$ where $\rho:V(G_1)\to\{1,\ldots,\lrn(G_1)\}$ is an $\ell$-ranking of $G_1$ and $\psi:V(G_2)\to\{0,\ldots,\dlcn(G_2)-1\}$ is a distance-$\ell$ colouring of $G_2$.
 
     To see that $\varphi$ is an $\ell$-ranking, consider any
-    path $u_0,\ldots,u_p$ in $G_1\boxtimes G_2$ of length $r\le\ell$ such that $\varphi(u_0)=\varphi(u_p)$.  We must show that $\varphi(u_0)<\max\{\varphi(u_0),\ldots,\varphi(u_p)\}$.
+    path $u_0,\ldots,u_p$ in $G_1\boxtimes G_2$ of length $p\le\ell$ such that $\varphi(u_0)=\varphi(u_p)$.  We must show that $\varphi(u_0)<\max\{\varphi(u_0),\ldots,\varphi(u_p)\}$.
 
-    For each $i\in\{0,\ldots,p\}$, let $(u_{i,1},u_{i,2}):=u_i$, so that $u_{i,1}\in V(G_1)$ and $u_{i,2}\in V(G_2)$. Since $\varphi(u_0)=\varphi(u_p)$, $\rho(u_{0,2})=\rho(u_{p,2})$. Since $\Psi$ is a distance-$\ell$ colouring of $G_2$ and $r\le\ell$, this implies that $u_{0,2}=u_{p,2}$.  This implies that $u_{0,1}\neq u_{p,1}$, otherwise $u_0=u_p$ and $u_0,\ldots,u_p$ is not a path.  Therefore, $u_{0,1},\ldots,u_{p,1}$ is a walk in $G_1$ with distinct endpoints.
-    Since $\rho$ is an $\ell$-ranking of $G_1$, \cref{walks-too} implies that $\rho(u_{0,1})<\max\{\rho_{u_0,1},\ldots,u_{p,1}\}$ and therefore $\varphi(u)<\max\{\varphi(u_0),\ldots,\varphi(u_p)\}$, as required.
+    For each $i\in\{0,\ldots,p\}$, let $(u_{i,1},u_{i,2}):=u_i$, so that $u_{i,1}\in V(G_1)$ and $u_{i,2}\in V(G_2)$. Since $\varphi(u_0)=\varphi(u_p)$, $\psi(u_{0,2})=\psi(u_{p,2})$. Since $\psi$ is a distance-$\ell$ colouring of $G_2$ and $r\le\ell$, this implies that $u_{0,2}=u_{p,2}$.  This implies that $u_{0,1}\neq u_{p,1}$, otherwise $u_0=u_p$ and $u_0,\ldots,u_p$ is not a path.  Therefore, $u_{0,1},\ldots,u_{p,1}$ is a walk in $G_1$ with distinct endpoints.
+    Since $\rho$ is an $\ell$-ranking of $G_1$, \cref{walks-too} implies that $\rho(u_{0,1})<\max\{\rho_{u_0,1},\ldots,u_{p,1}\}$ and therefore $\varphi(u_0)<\max\{\varphi(u_0),\ldots,\varphi(u_p)\}$, as required.
 \end{proof}
 
 Note that the graph $K_3\boxtimes P$, which appears in \cref{product-structure}, has maximum degree 8 so $(K_3\boxtimes P)^\ell$ has maximum degree at most $8\cdot 7^{\ell-1}$.  Since distance-$\ell$ colouring any graph is $G$ equivalent to properly colouring $G^{\ell}$, this implies that $\dtcn(K_3\boxtimes P)\le 8\cdot7^\ell$. The following lemma improves this constant using the fact that $(K_3\boxtimes P)^\ell$ is $3\ell+2$ degenerate (as can be seen by ordering vertices of $(K_3\boxtimes P)$ by the order that their second coordinate appears in $P$).
@@ -390,6 +393,8 @@ Note that the graph $K_3\boxtimes P$, which appears in \cref{product-structure},
 \begin{lem}\label{dumb}
     For any path $P$, $\dlcn(K_3\boxtimes P)\le 3(\ell+1)$.
 \end{lem}
+
+We remark that \cref{dumb} is tight since, for any path $P$ of length at least $\ell$, $(K_3\boxtimes P)^\ell$ contains cliques order $2(\ell+1)$.
 
 % \begin{proof}
 %     Order the vertices of $K_3\boxtimes P$ as $(x_1,y_1),\ldots,(x_{3|P|},y_{3|P|})$ so that, if $y_i$ appears before $y_j$ in $P$, then $i<j$. For each $j\in\{1,\ldots,3|P|\}$, let $I_j\subset\{1,\ldots,j-1\}$ be the set of indices $i$ such that $K_3\boxtimes P$ contains a non-trivial path of length at most $\ell$ with endpoints $(x_i,y_i)$ and $(x_j,y_j)$.  It is easy to verify that $|I_j|\le 3(\ell+1)$.  For each $j\in\{1,\ldots,3|P|\}$, set $\varphi(x_j,y_j):=\min(\{1,\ldots,3(\ell+1)\}\setminus\{\varphi(x_i,y_i):i\in I_j\})$.  This gives a distance-$\ell$ colouring $\varphi:K_3\boxtimes P\to\{1,\ldots,3(\ell+1)\}$.
@@ -402,7 +407,7 @@ For any $x> 0$ and $a\ge 0$, we have the inequality,
 \begin{equation}
     \log (x+a) = \log (x(1+a/x)) = \log x + \log(1+a/x) \le \log x + \log e^{a/x} = \log x + \frac{a}{x} \enspace , \label{log-x-plus-a}
 \end{equation}
-where the inequality follows from the inequality $e^z \le 1+z$, valid for all $z\in\R$.
+where the inequality follows from the inequality $e^z \ge 1+z$, valid for all $z\in\R$.
 
 Recall that, for any integer $i\ge 0$,
 \[
@@ -429,7 +434,7 @@ For any $x > \tau(i-1)$ and any $a\ge 0$, \cref{log-x-plus-a} generalizes as fol
 
 In several places we have ratios involving iterated logarithms, in which case we make use of the following consequence of \cref{logi-x-plus-a}
 \begin{equation}
-    \frac{\log^{(i)} x+a}{\log^{(i)} x} \le 1 + \frac{a}{\prod_{j=0}^{i}\log^{(j)} x} \enspace, \label{logi-ratio}
+    \frac{\log^{(i)} (x+a)}{\log^{(i)} x} \le 1 + \frac{a}{\prod_{j=0}^{i}\log^{(j)} x} \enspace, \label{logi-ratio}
 \end{equation}
 which is again valid for all $x> \tau(i-1)$.
 
@@ -452,6 +457,8 @@ We now prove the lower bound in \cref{t-trees}, which establishes all the other 
 \begin{proof}
     Since $\trn(U_i)\ge h$, there exists $v_i\in V(U_i)$ such that $\varphi(v_i)\ge k_0+h-1$, for each $i\in\{0,\ldots,k\}$.  Since $|\{0,\ldots,k\}|=k+1>k-k_0+1=|\{k_0,\ldots,k\}|$ the Pigeonhole Principle implies that there exists distinct $i,j\in\{0,\ldots,k\}$ such that $\varphi(v_i)=\varphi(v_j)$.  Since $v_i a v_j$ is a path in $G$, this implies that $\varphi(a)\ge \varphi(v_i)+1\ge k_0+h$.
 \end{proof}
+
+% \todo[inline]{SoDA Referee: p. 9 - In lemma 18 the number of copies of U is exactly k+1, but in the proof of lemma 19, the number of copies of U (i.e. hm+1) could be more than k+1, so I think Lemma 18 cannot be applied directly. I believe this can be fixed easily by modifying the statement/proof of Lemma 18.}
 
 For a graph $U$ and integers $h,m\ge 0$, we define the \emph{$(h,m)$-boost} $U^{(h,m)}$ of $U$ as follows: The vertex set of $U^{(h,m)}$ is the disjoint union of $L_0,\ldots,L_m$.  The set $L_0:=\{a_0\}$ consists of a single vertex. For each $i\in\{1,\ldots,m\}$ and each $a\in L_{i-1}$, $U^{(h,m)}$ contains $hm+1$ disjoint copies $U_{a,0},\ldots,U_{a,hm}$ of $U$ and contains the edge $av$ for each $v\in\bigcup_{j=0}^{hm} V(U_{a,j})$.  This determines the set $L_i=\bigcup_{a\in L_{i-1}}\bigcup_{j=0}^{hm} V(U_{a,j})$.  As a simple example, if $U$ is a 1-vertex graph, then $U^{(h,m)}$ is a complete $(hm+1)$-ary tree of height $m$.
 
@@ -516,11 +523,14 @@ For a graph $U$ and integers $h,m\ge 0$, we define the \emph{$(h,m)$-boost} $U^{
 
 \begin{proof}[Proof of \cref{t-trees} (lower bound)]
     \Cref{treewidth-lower-bound} produces a graph $G$, $n:=|G|\le (\log^{(t-1)} r)^{tr+o(r)}$, $\tw(G)\le t$, and $\trn(G)\ge r$.  So,
-    \[  \log n \le (tr+o(r))\log^{(t)} r = t\cdot(1+o(1))\trn(G)\log^{(t)} \trn(G)\]
+    \[
+        \log n \le (tr+o(r))\log^{(t)} r
+        = t\cdot(1+o(1))\trn(G)\log^{(t)} \trn(G)
+    \]
     and attempting to solve for $\trn(G)$ shows that $\trn(G)\in \Omega(\log n/\log^{(t+1)} n)$.
 \end{proof}
 
-The lower bound construction in this section gives some guidance on how to obtain a matching upper bound for $\trn(G)$.  Specifically, for some node $a\in L_i$, the colouring of the component $X$ of $H[\{a\}\cup\bigcup_{j=i+1}^m L_j]$ that contains $a$ can create a lower bound on $\varphi(a)$.  Specifically, if two vertices $u,w\in V(X[L_{i+1}]$ receives the same colour $\phi$ then $\varphi(a)>\phi$.  This suggests that one should attempt to minimize the largest colour that this is repeated in the colouring of $X[L_{i+1}]$.  Indeed, this is a guiding principle in our upper bound proof.
+The lower bound construction in this section gives some guidance on how to obtain a matching upper bound for $\trn(G)$.  Specifically, for some node $a\in L_i$, the colouring of the component $X$ of $H[\{a\}\cup\bigcup_{j=i+1}^m L_j]$ that contains $a$ can create a lower bound on $\varphi(a)$.  Specifically, if two vertices $u,w\in V(X[L_{i+1}])$ receives the same colour $\phi$ then $\varphi(a)>\phi$.  This suggests that one should attempt to minimize the largest colour that is repeated in the colouring of $X[L_{i+1}]$.  Indeed, this is a guiding principle in our upper bound proof.
 
 
 %========================================================================
@@ -552,7 +562,7 @@ This section is devoted to proving the upper bound in \cref{simple-t-trees}:
 \end{proof}
 
 \begin{proof}[Proof of \cref{t-trees} (upper bound)]
-    By \cref{simple-treewidth-vs-treewidth}, $\stw(H)\le\tw(H)+1\le t+1$ so, by   \weirdref{simple-t-trees}{a}, $\trn(H)\in O(n\log^{(t+1)}n)$.
+    By \cref{simple-treewidth-vs-treewidth}, $\stw(H)\le\tw(H)+1\le t+1$ so, by   \weirdref{simple-t-trees}{a}, $\trn(H)\in O(\log n/\log^{(t+1)}n)$.
 \end{proof}
 
 \weirdref{simple-t-trees}{a} also has the following corollary, which strengthens \cref{trees}:
@@ -565,7 +575,7 @@ This section is devoted to proving the upper bound in \cref{simple-t-trees}:
     By \cref{simple-small-cases}{(ii)}, $\stw(G)\le 2$ so, by \weirdref{simple-t-trees}{a} $\lrn(G)\in O(\log n/\log^{(2)} n)$.
 \end{proof}
 
-The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part of the paper and is the subject of most of this section.  Globally, the proof is by induction on the value of $t$, though it is easy to miss this, since it is spread over several lemmas. The case $t=1$ is easy: By \cref{simple-small-cases}(i), any graph of simple treewidth 1 is a contained in a path and therefore has an $\ell$-ranking using $\ell+1\in O(\log n/\log^{(1)} n) = O(1)$ colours.  In the proof of \cref{t-tree-slack}, below, we will apply \weirdref{simple-t-trees}{a} to graphs of simple treewidth $t-1$. \cref{t-tree-slack} is then used in the proof of \cref{t-tree-technical} which is used in the proof of \weirdref{simple-t-trees}{a} (a statement about graphs of simple treewidth $t$), at the end of this section.
+The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part of the paper and is the subject of most of this section.  Globally, the proof is by induction on the value of $t$, though it is easy to miss this, since it is spread over several lemmas. The case $t=1$ is easy: By \cref{simple-small-cases}(i), any graph of simple treewidth 1 is a contained in a path and therefore has an $\ell$-ranking using $\ell+1\in O(\log n/\log^{(1)} n) = O(1)$ colours.\footnote{This is far from tight: Any path has $\ell$-ranking using at most $\lceil\log(\ell+1)\rceil+1$ colours.}  In the proof of \cref{t-tree-slack}, below, we will apply \weirdref{simple-t-trees}{a} to graphs of simple treewidth $t-1$. \cref{t-tree-slack} is then used in the proof of \cref{t-tree-technical} which is used in the proof of \weirdref{simple-t-trees}{a} (a statement about graphs of simple treewidth $t$), at the end of this section.
 
 \subsubsection{The Bread}
 
@@ -599,9 +609,9 @@ We begin with a few helper lemmas.
 \begin{proof}
     To eliminate a level of subscripts, let $x_i:=i$ for each $i\in\{1,\ldots,m\}$.  The proof is by induction on $t$. In the base case, $t=0$, $G$ has no edges and therefore no non-trivial paths. The lemma is satisfied by taking $U:=B_{1}\cup B_{m}$.  In this case $|U|\le 2\in O(\ell^0)$.
 
-    Now assume that $t\ge 1$. If $G$ is not connected, then $B_{1}$ and $B_{m}$ are in difference components of $G$.  Choosing $U:=B_{1}\cup B_{m}$ satisfies the requirements of the lemma since the only paths $w_0,\ldots,w_q$ that need consideration have $\{w_0,w_q\}\subseteq B_1$ or $\{w_0,w_q\}\subset B_m$.  Since we only consider induced paths in $G$ and $G$ is edge-maximal with respect to $\mathcal{P}$, this implies that $q=1$, so $w_0,\ldots,w_q=w_0w_q$ consists of a single edge and $\{w_0,w_q\}\subseteq U$.
+    Now assume that $t\ge 1$. If $G$ is not connected, then $B_{1}$ and $B_{m}$ are in different components of $G$.  Choosing $U:=B_{1}\cup B_{m}$ satisfies the requirements of the lemma since the only paths $w_0,\ldots,w_q$ that need consideration have $\{w_0,w_q\}\subseteq B_1$ or $\{w_0,w_q\}\subset B_m$.  Since we only consider induced paths in $G$ and $G$ is edge-maximal with respect to $\mathcal{P}$, this implies that $q=1$, so $w_0,\ldots,w_q=w_0w_q$ consists of a single edge and $\{w_0,w_q\}\subseteq U$.
 
-    We may now assume that $G$ is connected. For each $v\in V(G)$, let $r(v):=\max\{i\in\{1,\ldots,m\}:v\in B_i\}$.  Consider the \emph{greedy path} $u_0,\ldots,u_p$ that begins at $u_0\in B_{1}$, ends at $u_p\in B_{m}$, and is defined as follows: $u_0$ is a vertex in $B_{1}$ that maximizes $r(u_0)$.  For $i\ge 1$, $u_i$ is a vertex in $B_{r(u_{i-1})}$ that maximizes $r(u_i)$.  It is well known that $u_0,\ldots,u_p$ is a shortest path from $B_{1}$ to $B_{m}$, i.e., $p=\min\{d_H(w_0,w_q): w_0\in B_1,\, w_q\in B_m\}$.  Therefore, if $p>\ell$, the lemma is again trivially satisified by taking $U:=B_{1}\cup B_{m}$.
+    We may now assume that $G$ is connected. For each $v\in V(G)$, let $r(v):=\max\{i\in\{1,\ldots,m\}:v\in B_i\}$.  Consider the \emph{greedy path} $u_0,\ldots,u_p$ that begins at $u_0\in B_{1}$, ends at $u_p\in B_{m}$, and is defined as follows: $u_0$ is a vertex in $B_{1}$ that maximizes $r(u_0)$.  For $i\ge 1$, $u_i$ is a vertex in $B_{r(u_{i-1})}$ that maximizes $r(u_i)$.  It is well known that $u_0,\ldots,u_p$ is a shortest path from $B_{1}$ to $B_{m}$, i.e., $p=\min\{d_H(w_0,w_q): w_0\in B_1,\, w_q\in B_m\}$.  Therefore, if $p>\ell$, the lemma is again trivially satisfied by taking $U:=B_{1}\cup B_{m}$.
 
     Otherwise, $u_0,\ldots,u_p$ defines a sequence $y_0,\ldots,y_p$ of nodes in $P$, where $y_0:=1$ and, for each $i\in\{1,\ldots,p-1\}$, $y_{i}:=r(u_{i-1})$.  Consider a path decomposition $\mathcal{P'}:=(B'_x:x\in V(P))$  obtained by removing $u_i$ from $B_{j}$ for each $i\in\{0,\ldots,p\}$ and each $j\in\{y_i,\ldots,m\}$. Let $G'$ be the graph with $V(G'):=\bigcup_{x=1}^m B'_x$ that is edge-maximal with respect to $\mathcal{P}'$.  Observe that $\mathcal{P'}$ has width at most $t-1$.
 
@@ -611,7 +621,7 @@ We begin with a few helper lemmas.
     For each $i\in\{1,\ldots,p\}$, $U$ contains $u_{i-1}$ and $u_i$.
     The set $U_i'$ is obtained by induction on $G_i'$ using a path decomposition on a path whose endpoints are $y_{i-1}$ and $y_i$ having bags $B'_{y_{i-1}}=B_{y_{i-1}}\setminus u_{i-1}$ and $B'_{y_{i}}=B_{y_{i}}\setminus u_{i}$.  Therefore $U$ contains $\{u_{i-1},u_i\}\cup B'_{y_{i-1}}\cup B'_{y_i}=B_{y_{i-1}}\cup B_{y_i}$.
 
-    In particular, $U$ contains $B_{y_0}=B_1$ and $B_{y_p}=B_m$, so $U$ satisfies (Z\ref{values-u}). The size of $U$ satisfies the recurrence $f(0)\le 2$ and $f(t)\le \ell+1+\ell\cdot f(t-1)$, which resolves to $f(t)\le (3\ell^{t+1}-\ell^t-\ell-1)/(\ell-1) \in O(\ell^t)$, so $U$ satisifes (Z\ref{size-u}).  All that remains is to show that $U$ satisfies (Z\ref{induced-u}).  Consider some induced path $w_0,\ldots,w_q$ in $G$ of length at most $\ell$ with $\{w_0,w_q\}\subseteq U$.  We want to show that $\{w_1,\ldots,w_{q-1}\}\subseteq U$.
+    In particular, $U$ contains $B_{y_0}=B_1$ and $B_{y_p}=B_m$, so $U$ satisfies (Z\ref{values-u}). The size of $U$ satisfies the recurrence $f(0)\le 2$ and $f(t)\le \ell+1+\ell\cdot f(t-1)$, which resolves to $f(t)\le (3\ell^{t+1}-\ell^t-\ell-1)/(\ell-1) \in O(\ell^t)$, so $U$ satisfies (Z\ref{size-u}).  All that remains is to show that $U$ satisfies (Z\ref{induced-u}).  Consider some induced path $w_0,\ldots,w_q$ in $G$ of length at most $\ell$ with $\{w_0,w_q\}\subseteq U$.  We want to show that $\{w_1,\ldots,w_{q-1}\}\subseteq U$.
 
     We say that a vertex $w_i$ is \emph{pinched} if $w_i\in B_{y_j}$ for some $j\in\{0,\ldots,p\}$. (Note that each of $u_0,\ldots,u_p$ is pinched.) The edges of $w_0,\ldots,w_q$ can be partitioned into subpaths of the form $w_{a},\ldots,w_{b}$ where
     \begin{inparaenum}[(i)]
@@ -661,7 +671,7 @@ A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least t
 
 
 \begin{lem}\label{skeleton-size}
-    $|V_t|\le |\Lambda(T)|\cdot O(\ell^t)$.
+    $|V(\hat{H})|\le |\Lambda(T)|\cdot O(\ell^t)$.
 \end{lem}
 
 \begin{proof}
@@ -744,7 +754,7 @@ Now we arrive at the combinatorial core of the proof. The main idea is break $H$
        = O(s) \enspace .
     \]
     Therefore, by \cref{skeleton-colour} $\lrn(H_i')\in O(s)$, so
-    $H_i'$ has an $\ell$-ranking $\varphi:V(H_i')\to \{\lfloor a(k-c-1)\rfloor-(i+1)q+1,\ldots,\lfloor a(k-c-1)\lfloor-iq\}$ for some $q\in O(s)$.
+    $H_i'$ has an $\ell$-ranking $\varphi:V(H_i')\to \{\lfloor a(k-c-1)\rfloor-(i+1)q+1,\ldots,\lfloor a(k-c-1)\rfloor-iq\}$ for some $q\in O(s)$.
 
     In the preceding paragraphs, we have defined a colouring $\varphi: V(H')\to \{\lfloor a(k-c-1)\rfloor-(h+1)q,\ldots,\lfloor a(k-c-1)\rfloor\}$. For a sufficiently large constant $a:=a(t,\ell,d,\beta)$, $(h+1)q < as$, so $\lfloor a(k-c-1)\rfloor-(h+1)q+1 > a(k-c-s-1)$. Therefore, each vertex in $H'$ receives a colour larger than $a(k-c-s-1)$. By \cref{max-weight}, $\gamma_v\ge c+s$ for each $v\in V(H)$, so $\varphi(v)> a(k-c-s-1) \ge a(k-\gamma_v-1)$ for each $v\in V(H')$, as required.
 
@@ -809,9 +819,9 @@ Finally, we can prove the technical lemma that implies \weirdref{simple-t-trees}
 \begin{proof}
     The proof is by induction on $n$. If $n=0$, then there is nothing to prove.
 
-    Let $n_0:=(\log^{(t-2)} k)^k/(\log^{(t-2)} (c+s))^{c+s}$ and, for each $v\in V(H)$, let $\kappa_v$ be defined as in \cref{size-claim}.  We say that a vertex $v\in L_{\ell+1}$ is \emph{dangerous} if $\kappa(v)>n_0$ and $v$ is \emph{harmless} otherwise.
+    Let $n_0:=(\log^{(t-2)} k)^k/(\log^{(t-2)} (c+s))^{c+s}$ and, for each $v\in V(H)$, let $\kappa_v$ be defined as in \cref{size-claim}.  We say that a vertex $v\in L_{\ell+1}$ is \emph{dangerous} if $\kappa_v>n_0$ and $v$ is \emph{harmless} otherwise.
 
-    We now assign weights to the vertices of the graph $H_0:=H[\bigcup_{j=0}^{\ell+1}]$ in such a way that we can apply \cref{t-tree-slack} to $H_0$.  For each $v\in\bigcup_{j=0}^\ell L_j$, we set $n_v:=1$.  For each $v\in L_{\ell+1}$, we set $n_v := \min\{n_0, \kappa_v\}$.  With this assignment of weights, \cref{size-claim} implies that $\sum_{v\in V(H_0)} n_v\le tn$, which satisifies \cref{total-weight} with $\beta=t$ and, by definition, $\max\{n_v:v\in V(H_0)\}\le n_0$ which satisfies \cref{max-weight}.
+    We now assign weights to the vertices of the graph $H_0:=H[\bigcup_{j=0}^{\ell+1}]$ in such a way that we can apply \cref{t-tree-slack} to $H_0$.  For each $v\in\bigcup_{j=0}^\ell L_j$, we set $n_v:=1$.  For each $v\in L_{\ell+1}$, we set $n_v := \min\{n_0, \kappa_v\}$.  With this assignment of weights, \cref{size-claim} implies that $\sum_{v\in V(H_0)} n_v\le tn$, which satisfies \cref{total-weight} with $\beta=t$ and, by definition, $\max\{n_v:v\in V(H_0)\}\le n_0$ which satisfies \cref{max-weight}.
 
     Again, we use the shorthand $\gamma_v := \gamma_{t-2,k}(n_v)$.    Therefore, by \cref{t-tree-slack}, $H_{0}$ has an $\ell$-ranking $\varphi:V(H_0)\to\{1,\ldots,\lfloor a(k-c-1)\rfloor\}$ in which $\varphi(v)> a(k-\gamma_v-1)$ for each $v\in V(H_0)$.
     By \cref{size-claim}, the number of dangerous vertices is at most
