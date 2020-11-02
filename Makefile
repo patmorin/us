@@ -1,21 +1,13 @@
-name=$(shell basename $$PWD)
 
-all: $(name).pdf
+name=$(shell basename $(CURDIR))
 
-# figs: $(wildcard figs/*.ipe)
-# 	make -C figs
+texsources=$(name).tex
 
 $(name).pdf : FORCE
 	make -C figs
-	latexmk -pdf $(name).tex
+	latexmk -pdf $(name)
 
-install : $(name).pdf
-	scp $(name).pdf cglab.ca:public_html/publications/drafts/$(name)/
-
-clean : FORCE
-	make -C figs clean
-	rm -f $(name).pdf
-
-reset: clean all
+install: $(name).pdf
+	scp $< cglab.ca:public_html/publications/drafts/$(name)/$(name)-`date --iso`.pdf
 
 FORCE :
