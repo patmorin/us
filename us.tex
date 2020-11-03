@@ -541,9 +541,11 @@ The lower bound construction in this section gives some guidance on how to obtai
 \section{Upper Bounds}
 \label{upper-bounds}
 
-In this section we prove asymptotically tight bounds for the worst-case number of colours needed for $\ell$-ranking simple treewidth-$t$ graphs, treewidth-$t$ graphs, planar graphs, and bounded genus graphs. From this point onward, we treat $\ell$ and $t$ as fixed constants independent of $n$ and other parameters that are unbounded, so that $f(\ell,t)\in O(1)$ for any function $f:\N\times\N\to\N$.
+In this section we prove asymptotically tight bounds for the worst-case number of colours needed for $\ell$-ranking simple treewidth-$t$ graphs, treewidth-$t$ graphs, planar graphs, and bounded genus graphs. In order to avoid complicating an already technically demanding proof, for the rest of this section we will treat $\ell$ and $t$ as fixed constants independent of $n$ and other parameters that are unbounded, so that $f(\ell,t)\in O(1)$ for any function $f:\N\times\N\to\N$.  At the end of this section, in \ref{dependence-on-ell} we discuss the dependence of $\trn$ on $\ell$.
+
 
 \subsection{Simple Treewidth-$t$ Graphs}
+\label{simple-treewidth-section}
 
 This section is devoted to proving the upper bound in \cref{simple-t-trees}:
 
@@ -579,7 +581,7 @@ This section is devoted to proving the upper bound in \cref{simple-t-trees}:
     By \cref{simple-small-cases}{(ii)}, $\stw(G)\le 2$ so, by \weirdref{simple-t-trees}{a} $\lrn(G)\in O(\log n/\log^{(2)} n)$.
 \end{proof}
 
-The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part of the paper and is the subject of most of this section.  Globally, the proof is by induction on the value of $t$, though it is easy to miss this, since it is spread over several lemmas. The case $t=1$ is easy: By \cref{simple-small-cases}(i), any graph of simple treewidth 1 is a contained in a path and therefore has an $\ell$-ranking using $\ell+1\in O(\log n/\log^{(1)} n) = O(1)$ colours.\footnote{This is far from tight: Any path has $\ell$-ranking using at most $\lceil\log(\ell+1)\rceil+1$ colours.}  In the proof of \cref{t-tree-slack}, below, we will apply \weirdref{simple-t-trees}{a} to graphs of simple treewidth $t-1$. \cref{t-tree-slack} is then used in the proof of \cref{t-tree-technical} which is used in the proof of \weirdref{simple-t-trees}{a} (a statement about graphs of simple treewidth $t$), at the end of this section.
+The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part of the paper and is the subject of most of this section.  Globally, the proof is by induction on the value of $t$, though it is easy to miss this, since it is spread over several lemmas. The case $t=1$ is easy: By \cref{simple-small-cases}(i), any graph of simple treewidth 1 is a contained in a path and therefore has an $\ell$-ranking using $\ell+1\in O(\log n/\log^{(1)} n) = O(1)$ colours.\footnote{\label{logarithmic-base-case}This is far from tight: Any path has $\ell$-ranking using at most $\lceil\log(\ell+1)\rceil+1$ colours.}  In the proof of \cref{t-tree-slack}, below, we will apply \weirdref{simple-t-trees}{a} to graphs of simple treewidth $t-1$. \cref{t-tree-slack} is then used in the proof of \cref{t-tree-technical} which is used in the proof of \weirdref{simple-t-trees}{a} (a statement about graphs of simple treewidth $t$), at the end of this section.
 
 \subsubsection{The Bread}
 
@@ -875,6 +877,8 @@ Rewriting \cref{t-tree-technical} in terms of $n$ yields \weirdref{simple-t-tree
 \end{proof}
 
 
+
+
 \subsection{Bounded Genus Graphs}
 
 We now prove the upper bound in \cref{bounded-genus}. A graph $G$ is an \emph{apex} graph if there exists an \emph{apex vertex} $v\in V(G)$ such that $G-\{v\}$ is planar. We make use of the following product structure theorem of \citet{dujmovic.joret.ea:planar}:\footnote{\citet{dujmovic.joret.ea:planar} state a version of \cref{product-structure} that describes $H$ as an apex graph of treewidth at most $4$.  By definition, this means that $H$ has an \emph{apex} vertex $v_0$ such that $H-\{v_0\}$ is planar.  In fact, in their proof, $v_0$ is a dominating vertex.  Because of this, the removal of $v_0$ also reduces the simple treewidth of $H$ to 3, yielding the version of \cref{product-structure-genus} stated here.}
@@ -904,6 +908,22 @@ As noted in the introduction, several other families of graphs are known to have
 \begin{proof}[Proof of \cref{meta}]
     For any $n$-vertex member $G$ of these graph families, \cref{gk-planar,apex-minor-free} show that $G$ is a subgraph of $H\boxtimes P$ with $\tw(H)\le t$.  \Cref{product-lemma,t-trees} and the fact that $\lrn(P)\le \ell+1$ then imply \cref{meta}.
 \end{proof}
+
+\subsection{The Dependence on $\ell$}
+\label{dependence}
+
+Throughout this section, we have assumed that $\ell$ and $t$ were fixed constants, independent of $n$.  We now describe the dependence of our results on $\ell$.  Since all of our upper bounds are based on \weirdref{simple-t-trees}{a} we begin by discussing \weirdref{simple-t-trees}{a} and its proof, which is the subject of \cref{simple-treewidth-section}.  We will show that, for fixed constant $t$, the bound for \weirdref{simple-t-trees}{a} is $\lrn(G)\in O(\ell^t + \ell^{t-1}\log\ell \log n/\log^{(t)} n)$.
+
+Recall that the overall structure of the proof is by induction on $t$ with the base case $t=1$.  \cref{logarithmic-base-case} already explains how a simple $1$-tree (a collection of disjoint paths) can be $\ell$-ranked using $O(\log\ell)$ colours, which establishes the bound for the case $t=1$.
+
+The first place that assumes $\ell$ is fixed is \cref{skeleton-colour} which claims a bound of $\lrn(H)\in O(\lrn(\hat{H}))$ but actually proves the more precise bound $\lrn(H)\in O(\ell t+ \lrn(\hat{H}))=O(\ell+\lrn(\hat{H}))$ for constant $t$.
+
+The next place in which $\ell$ is treated as a constant is in \cref{t-tree-slack}, in which the constant $a:=a(t,\ell,d,\beta)$ appears.  Within this proof, \weirdref{simple-t-trees}{a} is used on layers whose simple treewidth is $t-1$ is used on the graph $\hat{H}'_i$ for each $i\in\{0,\ldots,d\}$ to show that $\lrn(\hat{H}'_i)\in O(s)$. This should be replaced with $O(\ell^{t-1} + \ell^{t-2}\log\ell)s)$.  This, in turn is used with \cref{skeleton-colour} to show that $\lrn(H'_i)\in O(s)$. This should be replaced with $O(\ell^{t-1} + (\ell^{t-2}\log\ell)s + \ell) = O(\ell^{t-1}+(\ell^{t-2}\log\ell)s)$ because $t\ge 2$.  Disjoint colour sets are used for each of $H'_0,\ldots,H'_d$ which increases the number of colours by a factor of $h+1\le d+1$.  Later, \cref{t-tree-slack} is used in the proof of \cref{t-tree-technical} with the value $d=\ell+1$, so the number of colours used by $H'_0,\ldots,H'_d$ is $O(\ell^t + (\ell^{t-1}\log\ell)s)$.
+
+This gives a colouring of $H'$ using the colour set $\{XX,\ldots,\floor(k-c-1)\rfloor\}
+
+
+
 
 %========================================================================
 \section{Discussion}
