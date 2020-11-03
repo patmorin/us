@@ -221,9 +221,6 @@ The set of subgraphs of diameter at most $\ell$ includes all connected subgraphs
 
 These two examples show how the difference between ``unique'' and ``unique maximum'' can be surprisingly profound.  Every planar graph has a conflict-free 4-colouring \cite{abel.alvarez.ea:conflict-free}. Planar graphs (and, indeed, all graphs families having similar product structure theorems) have $(\ell+1)$-centered colourings using a number of colours that depends only (polynomially) on $\ell$ \cite{nesetril.ossona:grad,debski.felsner.ea:improved,pilipczuk.siebertz:polynomial}.  This contrasts starkly with the lower bounds in \cref{trees,planar}, which show that $\ell$-rankings of $n$-vertex trees and planar graphs, respectively, require a number of colours that depends nearly-logarithmically on $n$, for any $\ell\ge 2$.
 
-
-
-
 \subsection{Outline}
 
 The remainder of this paper is organized as follows: \Cref{sec:basics} reviews some basic tools used in the following sections.   \Cref{lower-bounds} proves the lower bound in \cref{t-trees}, which immediately implies the lower bounds in \cref{planar,simple-t-trees}. \Cref{upper-bounds} proves the upper bound in \cref{simple-t-trees}, from which the upper bounds in \cref{planar,t-trees,bounded-genus,meta} follow easily.  \Cref{conclusion} gives a brief summary and discusses directions for further work.
@@ -401,7 +398,7 @@ Note that the graph $K_3\boxtimes P$, which appears in \cref{product-structure},
     For any path $P$, $\dlcn(K_3\boxtimes P)\le 3(\ell+1)$.
 \end{lem}
 
-We remark that \cref{dumb} is tight since, for any path $P$ of length at least $\ell$, $(K_3\boxtimes P)^\ell$ contains cliques order $2(\ell+1)$.
+We remark that \cref{dumb} is tight since, for any path $P$ of length at least $\ell$, $(K_3\boxtimes P)^\ell$ contains cliques order $3(\ell+1)$.
 
 % \begin{proof}
 %     Order the vertices of $K_3\boxtimes P$ as $(x_1,y_1),\ldots,(x_{3|P|},y_{3|P|})$ so that, if $y_i$ appears before $y_j$ in $P$, then $i<j$. For each $j\in\{1,\ldots,3|P|\}$, let $I_j\subset\{1,\ldots,j-1\}$ be the set of indices $i$ such that $K_3\boxtimes P$ contains a non-trivial path of length at most $\ell$ with endpoints $(x_i,y_i)$ and $(x_j,y_j)$.  It is easy to verify that $|I_j|\le 3(\ell+1)$.  For each $j\in\{1,\ldots,3|P|\}$, set $\varphi(x_j,y_j):=\min(\{1,\ldots,3(\ell+1)\}\setminus\{\varphi(x_i,y_i):i\in I_j\})$.  This gives a distance-$\ell$ colouring $\varphi:K_3\boxtimes P\to\{1,\ldots,3(\ell+1)\}$.
