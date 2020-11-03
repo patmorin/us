@@ -207,15 +207,22 @@ At least three works have considered $\chi_\ell$ for finite $\ell$ with a focus 
 
  Note that 2-rankings fall between two very well-studied graph colouring problems:
 \begin{compactitem}
-    \item \emph{star colourings}, which ensure that the graph induced by any 2 colour classes is forest of stars and
+    \item \emph{star colourings}, which ensure that the graph induced by any 2 colour classes is a forest of stars and
     \item \emph{distance-2 colourings} which ensure that the endpoints of each non-trivial path of length at most 2 receive distinct colours.
 \end{compactitem}
 Every 2-ranking is a star colouring and every distance-2 colouring is a 2-ranking so, letting $\scn(G)$ and $\dtcn(G)$ denote the star colouring number of $G$ and distance-2 colouring number of $G$, respectively, we have $\scn(G) \le \trn(G)\le \dtcn(G)$.
 
 
-\subsubsection{Centered Colouring}
+\subsubsection{Centered and Conflict-Free Colouring}
 
-It is not hard to see that any colouring $\varphi$ of $G$ is a vertex $\ell$-ranking if and only if, for every connected subgraph $X$ of $G$ having at most $\ell+1$ vertices, there is exactly one vertex $v\in V(X)$ such that $\varphi(v)=\max\{\varphi(v):v\in V(X)\}$.  This makes $\ell$-ranking a stronger notion than \emph{$\ell$-centered colouring}, which requires only that there exists some colour $\alpha$ such that there is exactly one vertex $v\in V(X)$ with $\varphi(v)=\alpha$ \cite{nesetril.ossona:tree-depth,nesetril.ossona:grad,zhu:colouring}. In this case, the difference between ``unique'' and ``unique maximum'' is surprisingly profound.  Planar graphs (and, indeed, all graphs families having similar product structure theorems) have $\ell$-centered colourings using a number of colours that depends only (polynomially) on $\ell$ \cite{nesetril.ossona:grad,debski.felsner.ea:improved,pilipczuk.siebertz:polynomial}.
+It is not hard to see that any colouring $\varphi$ of $G$ is a vertex $\ell$-ranking if and only if, for every (connected) subgraph $X\subseteq G$ of diameter at most $\ell$, there there is exactly one vertex $v\in V(X)$ such that $\varphi(v)=\max\{\varphi(v):v\in V(X)\}$. This makes 2-ranking a stronger notion than \emph{conflict-free} colouring which requires that, for each vertex $v$ of $G$, some vertex $w$ in the closed neighbourhood $N_G[v]$ has a colour $\varphi(w)$ distinct from every other vertex in $N_G[v]$ \cite{pach.tardos:conflict-free,glebov.szabo.ea:conflict-free,gargano.rescigno:complexity}.
+
+The set of subgraphs of diameter at most $\ell$ includes all connected subgraphs with at most $\ell+1$ vertices.  This makes $\ell$-ranking a stronger notion than \emph{$(\ell+1)$-centered colouring}, which requires that, for any connected subgraph $X$ on at most $\ell+1$ vertices, there exists some colour $\alpha$ such that there is exactly one vertex $v\in V(X)$ with $\varphi(v)=\alpha$ \cite{nesetril.ossona:tree-depth,nesetril.ossona:grad,zhu:colouring}.
+
+These two examples show how the difference between ``unique'' and ``unique maximum'' can be surprisingly profound.  Every planar graph has a conflict-free 4-colouring \cite{abel.alvarez.ea:conflict-free}. Planar graphs (and, indeed, all graphs families having similar product structure theorems) have $(\ell+1)$-centered colourings using a number of colours that depends only (polynomially) on $\ell$ \cite{nesetril.ossona:grad,debski.felsner.ea:improved,pilipczuk.siebertz:polynomial}.  This contrasts starkly with the lower bounds in \cref{trees,planar}, which show that $\ell$-rankings of $n$-vertex trees and planar graphs, respectively, require a number of colours that depends nearly-logarithmically on $n$, for any $\ell\ge 2$.
+
+
+
 
 \subsection{Outline}
 
