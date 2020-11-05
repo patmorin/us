@@ -106,14 +106,13 @@ The same authors prove the following result for planar graphs:
     For every integer $\ell$ and every $n$-vertex planar graph $G$, $\lrn(G)\in O(\ell\log n)$.
 \end{othertheorem}
 
-Since every tree is a planar graph and no better lower bound is known for planar graphs, this leaves an obvious question:  Which is the correct bound for 2-ranking $n$-vertex planar graphs, $\log n$ or $\log n/\log\log n$?  As it turns out, the strange truth is somewhere in between.  Let $\log x :=\ln x$ denote the natural logarithm of $x$ and define $\log^{(0)}x:=x$ and, for any integer $i>0$, let $\log^{(i)}x:=\log(\log^{(i-1)} x)$. We prove:
+Since every tree is a planar graph and no better lower bound is known for planar graphs, this leaves an obvious question:  Which is the correct bound for 2-ranking $n$-vertex planar graphs, $\log n$ or $\log n/\log\log n$?  As it turns out, the strange truth is somewhere in between.  Let $\log x :=\ln x$ denote the natural logarithm of $x$ and define $\log^{(0)}x:=x$ and, for any integer $i>0$, let $\log^{(i)}x:=\log(\log^{(i-1)} x)$. We prove:\footnote{Refined versions of \cref{planar} and of the upcoming \cref{simple-t-trees,t-trees,bounded-genus,meta} that describes the dependence of $\lrn(G)$ on $\ell$ are presented in \cref{dependence}.}
 
 
 \begin{thm}\label{planar}
     For any fixed integer $\ell\ge 2$, every $n$-vertex planar graph $G$ has $\lrn(G)\in O(\log n/\log^{(3)} n)$ and this is asymptotically optimal: for infinitely many values of $n$, there exists an $n$-vertex planar graph $G$ with $\trn(G)\in \Omega(\log n/\log^{(3)} n)$
 \end{thm}
 
-\todo[inline]{SoDA referee ($\times 2$) wants us to include dependence on $\ell$ in \cref{planar,simple-t-trees,t-trees,bounded-genus,outerplanar}. For fixed $t$, I think it's $\ell^{t-1}\log\ell$, but it makes the proofs even more messy.}
 
 Our proof of the upper bound in \cref{planar} makes use of a recent \emph{product structure theorem} of \citet{dujmovic.joret.ea:planar} which states that every planar graph $G$ is a subgraph of $H\boxtimes K_3\boxtimes P$ where $H$ is a planar graph of treewidth at most $3$, $K_3$ is a 3-cycle, $P$ is a path, and $\boxtimes$ denotes the strong graph product.\footnote{Definitions of $t$-trees, simple $t$-trees, treewidth, simple treewidth, and strong graph product appear later, in \cref{sec:basics}.}  To apply this theorem, we prove the following result:
 
@@ -541,9 +540,11 @@ The lower bound construction in this section gives some guidance on how to obtai
 \section{Upper Bounds}
 \label{upper-bounds}
 
-In this section we prove asymptotically tight bounds for the worst-case number of colours needed for $\ell$-ranking simple treewidth-$t$ graphs, treewidth-$t$ graphs, planar graphs, and bounded genus graphs. From this point onward, we treat $\ell$ and $t$ as fixed constants independent of $n$ and other parameters that are unbounded, so that $f(\ell,t)\in O(1)$ for any function $f:\N\times\N\to\N$.
+In this section we prove asymptotically tight bounds for the worst-case number of colours needed for $\ell$-ranking simple treewidth-$t$ graphs, treewidth-$t$ graphs, planar graphs, and bounded genus graphs. In order to avoid complicating an already technically demanding proof, for the rest of this section we will treat $\ell$ and $t$ as fixed constants independent of $n$ and other parameters that are unbounded, so that $f(\ell,t)\in O(1)$ for any function $f:\N\times\N\to\N$.  At the end of this section, in \ref{dependence-on-ell} we discuss the dependence of $\trn$ on $\ell$.
+
 
 \subsection{Simple Treewidth-$t$ Graphs}
+\label{simple-treewidth-section}
 
 This section is devoted to proving the upper bound in \cref{simple-t-trees}:
 
@@ -579,7 +580,7 @@ This section is devoted to proving the upper bound in \cref{simple-t-trees}:
     By \cref{simple-small-cases}{(ii)}, $\stw(G)\le 2$ so, by \weirdref{simple-t-trees}{a} $\lrn(G)\in O(\log n/\log^{(2)} n)$.
 \end{proof}
 
-The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part of the paper and is the subject of most of this section.  Globally, the proof is by induction on the value of $t$, though it is easy to miss this, since it is spread over several lemmas. The case $t=1$ is easy: By \cref{simple-small-cases}(i), any graph of simple treewidth 1 is a contained in a path and therefore has an $\ell$-ranking using $\ell+1\in O(\log n/\log^{(1)} n) = O(1)$ colours.\footnote{This is far from tight: Any path has $\ell$-ranking using at most $\lceil\log(\ell+1)\rceil+1$ colours.}  In the proof of \cref{t-tree-slack}, below, we will apply \weirdref{simple-t-trees}{a} to graphs of simple treewidth $t-1$. \cref{t-tree-slack} is then used in the proof of \cref{t-tree-technical} which is used in the proof of \weirdref{simple-t-trees}{a} (a statement about graphs of simple treewidth $t$), at the end of this section.
+The proof of \weirdref{simple-t-trees}{a} is the most technically demanding part of the paper and is the subject of most of this section.  Globally, the proof is by induction on the value of $t$, though it is easy to miss this, since it is spread over several lemmas. The case $t=1$ is easy: By \cref{simple-small-cases}(i), any graph of simple treewidth 1 is a contained in a path and therefore has an $\ell$-ranking using $\ell+1\in O(\log n/\log^{(1)} n) = O(1)$ colours.\footnote{\label{logarithmic-base-case}This is far from tight: Any path has $\ell$-ranking using at most $\lceil\log(\ell+1)\rceil+1$ colours.}  In the proof of \cref{t-tree-slack}, below, we will apply \weirdref{simple-t-trees}{a} to graphs of simple treewidth $t-1$. \cref{t-tree-slack} is then used in the proof of \cref{t-tree-technical} which is used in the proof of \weirdref{simple-t-trees}{a} (a statement about graphs of simple treewidth $t$), at the end of this section.
 
 \subsubsection{The Bread}
 
@@ -875,6 +876,8 @@ Rewriting \cref{t-tree-technical} in terms of $n$ yields \weirdref{simple-t-tree
 \end{proof}
 
 
+
+
 \subsection{Bounded Genus Graphs}
 
 We now prove the upper bound in \cref{bounded-genus}. A graph $G$ is an \emph{apex} graph if there exists an \emph{apex vertex} $v\in V(G)$ such that $G-\{v\}$ is planar. We make use of the following product structure theorem of \citet{dujmovic.joret.ea:planar}:\footnote{\citet{dujmovic.joret.ea:planar} state a version of \cref{product-structure} that describes $H$ as an apex graph of treewidth at most $4$.  By definition, this means that $H$ has an \emph{apex} vertex $v_0$ such that $H-\{v_0\}$ is planar.  In fact, in their proof, $v_0$ is a dominating vertex.  Because of this, the removal of $v_0$ also reduces the simple treewidth of $H$ to 3, yielding the version of \cref{product-structure-genus} stated here.}
@@ -904,6 +907,55 @@ As noted in the introduction, several other families of graphs are known to have
 \begin{proof}[Proof of \cref{meta}]
     For any $n$-vertex member $G$ of these graph families, \cref{gk-planar,apex-minor-free} show that $G$ is a subgraph of $H\boxtimes P$ with $\tw(H)\le t$.  \Cref{product-lemma,t-trees} and the fact that $\lrn(P)\le \ell+1$ then imply \cref{meta}.
 \end{proof}
+
+\subsection{The Dependence on $\ell$}
+\label{dependence}
+
+Throughout this section, we have assumed that $\ell$ and $t$ were fixed constants, independent of $n$.  We now describe the dependence of our results on $\ell$.  Since all of our upper bounds are based on \weirdref{simple-t-trees}{a} we begin by discussing \weirdref{simple-t-trees}{a} and its proof, which is the subject of \cref{simple-treewidth-section}.  We will show that, for fixed constant $t$, the bound for \weirdref{simple-t-trees}{a} is easily shown to be $\lrn(G)\in O(\ell^{t-1}\log^t\ell \log n/\log^{(t)} n)$.
+
+Recall that the overall structure of the proof is by induction on $t$ with the base case $t=1$.  The case $t=1$ is described in \cref{logarithmic-base-case}, which explains how a simple $1$-tree (a collection of disjoint paths) has an $\ell$-ranking using $O(\log\ell)$ colours.  This establishes the result for the base case.
+
+The first part of the proof that makes use of the assumption that $\ell$ is fixed is \cref{skeleton-colour} which claims a bound of $\lrn(H)\in O(\lrn(\hat{H}))$ but actually proves the more precise bound $\lrn(H)\in O(\ell t+ \lrn(\hat{H}))=O(\ell+\lrn(\hat{H}))$ for constant $t$.
+
+The next place in which $\ell$ is treated as a constant is in \cref{t-tree-slack}, in which the constant $a:=a(t,\ell,d,\beta)$ appears.  The only place \cref{t-tree-slack} is used is in the proof of \cref{t-tree-technical}, where it is applied with $d\in O(\ell)$ and $\beta=t=O(1)$.  Under these conditions, taking $a\in O(\ell^{t-1}\log^t \ell)$ is sufficient, as we now show. Within the proof of \cref{t-tree-slack}, \weirdref{simple-t-trees}{a} is used on the graph $\hat{H}'_i$ for each $i\in\{0,\ldots,h\}$ to show that $\lrn(\hat{H}'_i)\in O(s)$.  Here $\hat{H}'_i$ is a treewidth $t-1$ graph with $O(\ell^t c^4)$ vertices and $s=\log c/\log^{(t-1)} c$.  With the more precise inductive hypothesis, this becomes
+\begin{align*}
+    \lrn(\hat{H}'_i) & \in O\left(\ell^{t-2}\log^{t-1}\ell
+    \cdot \frac{\log (\ell^{t} c^4))}{\log^{(t-1)} (\ell^t c^4)}\right) \\
+    & = O\left(\ell^{t-2}\log^{t-1}\ell\cdot \frac{\log c + \log\ell}{\log^{(t-1)} c}\right) \\
+    & \subseteq O\left(\ell^{t-2}\log^{t-1}\ell\cdot \frac{(\log c)(\log\ell)}{\log^{(t-1)} c}\right) \\
+    & = O((\ell^{t-2}\log^t\ell)s)
+\end{align*}
+Doing this for each $i\in\{0,\ldots,h\}$ gives a colouring of $H'$ using the colour set $\{\lfloor a(k-c-1)-(h+1)q+1,\ldots,\lfloor a(k-c-1)\rfloor\}$ for some $q\in O((\ell^{t-2}\log^t\ell)s)$.  Here $h\in O(d)=O(\ell)$. By choosing a sufficiently large $a\in O(\ell^{t-1}\log^t\ell)$, so that $as > (h+1)q$, this colouring uses only colours from the set $\{\lfloor a(k-c-s-1)+1,\ldots,\lfloor a(k-c-1)\rfloor$.  The rest of the proof applies \cref{t-tree-slack} inductively on each of the uncoloured components of $H-V(H')$ to complete the colouring using smaller colours in the set $\{1,\ldots,\lfloor a(k-c-s-1)\rfloor\}$ and is unchanged.  The remainder of the proof is unchanged and proves the following refinement of \cref{simple-t-trees}:
+
+\begin{itemize}
+    \item[(\ref{simple-t-trees})] For any fixed integer $t\ge 1$ and every integer $\ell\ge 1$, every $n$-vertex graph $H$ of simple treewidth at most $t$ has $\lrn(H)\in O(\ell^{t-1}\log^t \ell\log n/\log^{(t)} n)$.
+\end{itemize}
+
+Using this refinement of \cref{simple-t-trees} gives the following refined versions of \cref{planar,bounded-genus,t-trees,meta}.
+\begin{itemize}
+    \item[(\ref{planar})] For every integer $\ell\ge 1$, every $n$-vertex planar graph $G$ has $\lrn(G)\in O((\ell\log \ell)^3\log n/\log^{(3)} n)$. (The additional factor of $\ell$ comes from the application of \cref{product-lemma} on the graph $H\boxtimes P\supseteq G$, where $\stw(H)\le 3$.)
+
+    \item[(\ref{t-trees})] For any fixed integer $t\ge 0$ and every integer $\ell\ge 1$, every $n$-vertex graph $H$ of treewidth at most $t$ has $\lrn(H)\in O(\ell^t\log^{t+1}\ell \log n/\log^{(t+1)}n)$.
+
+    \item[(\ref{bounded-genus})] For any integers $g\ge 0$, $\ell\ge 1$, every  $n$-vertex graph $G$ of Euler genus at most $g$ has $\lrn(G)\in O((\ell\log \ell)^3 g\log n/\log^{(3)} n)$.
+
+    \item[(\ref{meta})] For each of the following graph classes $\mathcal{G}$:
+    \begin{compactenum}
+        % \item the class of graphs that have non-crossing drawings in a surface of genus at most $g$;
+        \item the class of graphs excluding a particular apex graph $A$ as a minor; and
+        \item the class of graphs that can be drawn in a surface of genus $g$ with at most $k$ crossings per edge,
+    \end{compactenum}
+    there exists an integers $c=c(\mathcal{G})$ and $b=b(\mathcal{G})$ such that every $n$-vertex graph $G\in\mathcal{G}$ has $\lrn(G)\in O(\ell^{b-1}\log^b\ell\log n/\log^{(c)} n)$.
+\end{itemize}
+
+
+
+
+
+
+
+
+
 
 %========================================================================
 \section{Discussion}
