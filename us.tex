@@ -239,7 +239,7 @@ Every 2-ranking is a star colouring and every distance-2 colouring is a 2-rankin
 
 It is not hard to see that any colouring $\varphi$ of $G$ is a vertex $\ell$-ranking if and only if, for every (connected) subgraph $X\subseteq G$ of diameter at most $\ell$, there there is exactly one vertex $v\in V(X)$ such that $\varphi(v)=\max\{\varphi(v):v\in V(X)\}$. This makes 2-ranking a stronger notion than \emph{conflict-free} colouring which requires that, for each vertex $v$ of $G$, some vertex $w$ in the closed neighbourhood $N_G[v]$ has a colour $\varphi(w)$ distinct from every other vertex in $N_G[v]$ \cite{pach.tardos:conflict-free,glebov.szabo.ea:conflict-free,gargano.rescigno:complexity}.
 
-The set of subgraphs of diameter at most $\ell$ includes all connected subgraphs with at most $\ell+1$ vertices.  This makes $\ell$-ranking a stronger notion than \emph{$(\ell+1)$-centered colouring}, which requires that, for any connected subgraph $X$ on at most $\ell+1$ vertices, there exists some colour $\alpha$ such that there is exactly one vertex $v\in V(X)$ with $\varphi(v)=\alpha$ \cite{nesetril.ossona:tree-depth,nesetril.ossona:grad,zhu:colouring}.
+The set of subgraphs of diameter at most $\ell$ includes all connected subgraphs with at most $\ell+1$ vertices.  In a \emph{$p$-centered colouring} any connected subgraph $X$ must be assigned at least $p+1$ distinct colours or have a colour that occurs exactly once \cite{nesetril.ossona:tree-depth,nesetril.ossona:grad,zhu:colouring}.  This implies that in a $p$-centered colouring, every connected subgraph of with less than $2p$ vertices must have a colour that occurs exactly once.
 
 These two examples show how the difference between ``unique'' and ``unique maximum'' can be surprisingly profound.  Every planar graph has a conflict-free 4-colouring \cite{abel.alvarez.ea:conflict-free}. Planar graphs (and, indeed, all graphs families having similar product structure theorems) have $(\ell+1)$-centered colourings using a number of colours that depends only (polynomially) on $\ell$ \cite{nesetril.ossona:grad,debski.felsner.ea:improved,pilipczuk.siebertz:polynomial}.  This contrasts starkly with the lower bounds in \cref{trees,planar}, which show that $\ell$-rankings of $n$-vertex trees and planar graphs, respectively, require a number of colours that depends nearly-logarithmically on $n$, for any $\ell\ge 2$.
 
@@ -420,7 +420,7 @@ Note that the graph $K_3\boxtimes P$, which appears in \cref{product-structure},
     For any path $P$, $\dlcn(K_3\boxtimes P)\le 3(\ell+1)$.
 \end{lem}
 
-We remark that \cref{dumb} is tight since, for any path $P$ of length at least $\ell$, $(K_3\boxtimes P)^\ell$ contains cliques order $3(\ell+1)$.
+We remark that \cref{dumb} is tight since, for any path $P$ of length at least $\ell$, $(K_3\boxtimes P)^\ell$ contains cliques of order $3(\ell+1)$.
 
 % \begin{proof}
 %     Order the vertices of $K_3\boxtimes P$ as $(x_1,y_1),\ldots,(x_{3|P|},y_{3|P|})$ so that, if $y_i$ appears before $y_j$ in $P$, then $i<j$. For each $j\in\{1,\ldots,3|P|\}$, let $I_j\subset\{1,\ldots,j-1\}$ be the set of indices $i$ such that $K_3\boxtimes P$ contains a non-trivial path of length at most $\ell$ with endpoints $(x_i,y_i)$ and $(x_j,y_j)$.  It is easy to verify that $|I_j|\le 3(\ell+1)$.  For each $j\in\{1,\ldots,3|P|\}$, set $\varphi(x_j,y_j):=\min(\{1,\ldots,3(\ell+1)\}\setminus\{\varphi(x_i,y_i):i\in I_j\})$.  This gives a distance-$\ell$ colouring $\varphi:K_3\boxtimes P\to\{1,\ldots,3(\ell+1)\}$.
