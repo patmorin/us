@@ -19,10 +19,13 @@
 
 \DeclareMathOperator{\tw}{tw}
 \DeclareMathOperator{\td}{td}
+\DeclareMathOperator{\stw}{stw}
 
 \title{Asymptotically Optimal Vertex Ranking \newline of Planar Graphs (and Beyond)}
 \author{Jit Bose \and Vida Dujmović \and Mehrnoosh Javarsineh \and Pat Morin}
-\titlegraphic{\includegraphics[height=1em]{by}}
+\titlegraphic{[Picture of 3 logs on a fire]}
+
+% \includegraphics[height=1em]{by}}
 
 \begin{document}
 
@@ -36,23 +39,35 @@
     \tableofcontents
 \end{frame}
 
+
+\section{Vertex ranking, centered colouring and treedepth}
+
 \begin{frame}
   \frametitle{Three Graph Colouring Parameters}
   \framesubtitle{(Not really)}
 
-  \begin{itemize}
-    \item \emph{vertex colouring:} $\varphi:V(G)\to\N$\vspace{.5cm}
 
-    \item \emph{centered colouring:} for every \emph{connected} $S\subseteq G$, some colour appears exactly once in $S$.
-    
-    \item \emph{(subgraph) vertex ranking:} for every \emph{connected} $S\subseteq G$, $\max\{\varphi(v):v\in V(S)\}$ appears exactly once in $S$.
-    
-    \item \emph{(path) vertex ranking:} for every \emph{path} $P$ in $G$ $\max\{\varphi(v):v\in V(P)\}$ appears exactly once in $P$.
-    
-    \item \emph{(endpoint) vertex ranking:} for every induced path $v_0,\ldots,v_p$ in $G$, $\varphi(v_0)\neq \phi(v_p)$ or $\varphi(v_0)<\max\{\varphi(v_1),\ldots,\varphi(v_{p-1})\}$.\vspace{.5cm}
+
+  \begin{itemize}[<+->]
+    \item \emph{vertex colouring:} $\varphi:V(G)\to\N$\vspace{.5cm}
+    \begin{center}
+      \only<1>{\includegraphics[scale=.6]{figs/three-params-1}}%
+      \only<2>{\includegraphics[scale=.6]{figs/three-params-4}}%
+      \only<3>{\includegraphics[scale=.6]{figs/three-params-5}}%
+      \only<4>{\includegraphics[scale=.6]{figs/three-params-6}}%
+      \only<5->{\includegraphics[scale=.6]{figs/three-params-8}}%
+    \end{center}
+
+    \item \emph{centered colouring:} every \emph{connected} $S\subseteq G$%, some colour appears exactly once in $S$.
+
+    \item \emph{(subgraph) vertex ranking:} every \emph{connected} $S\subseteq G$%, $\max\{\varphi(v):v\in V(S)\}$ appears exactly once in $S$.
+
+    \item \emph{(path) vertex ranking:} for every \emph{path} $P$ in $G$%, $\max\{\varphi(v):v\in V(P)\}$ appears exactly once in $P$.
+
+    \item \emph{(endpoint) vertex ranking:} for every \emph{induced path} $P$% $v_0,\ldots,v_p$ in $G$, $\varphi(v_0)\neq \phi(v_p)$ or $\varphi(v_0)<\max\{\varphi(v_1),\ldots,\varphi(v_{p-1})\}$.\vspace{.5cm}
     % \item \emph{treedepth:} The minimum height of a rooted tree whose closure contains $G$.
-    
-    \item<2->All equivalent, all require \emph{treedepth}, $\td(G)$ colours
+
+    \item All equivalent, all require \emph{treedepth}, $\td(G)$ colours
   \end{itemize}
 \end{frame}
 
@@ -60,12 +75,12 @@
   \frametitle{Treedepth}
 
   Examples:
-  \begin{itemize}
-    \item For $n$-vertex path $P$, $\td(P)=\lceil \log_2 (n+1)\rceil$
-    \item For complete binary tree $T$ of height $h$, $\td(T)=h$
-    \item For $n$-vertex treewidth-$t$ $G$, $\td(G)\in O(t\log n)$
-    \item For $n$-vertex planar graph $G$ $\td(G)\in O(\sqrt{\log n})$
-  \end{itemize}  
+  \begin{enumerate}[<+->]
+    \item[1] For $n$-vertex path $P$, $\td(P)=\lceil \log_2 (n+1)\rceil$
+    \item[2] For complete binary tree $T$ of height $h$, $\td(T)=h+1$
+    \item[3] For $n$-vertex planar graph $G$ $\td(G)\in O(\sqrt{\log n})$
+    \item[4] Large treedepth implies 1, 2, or large treewidth
+  \end{enumerate}
 \end{frame}
 
 
@@ -74,45 +89,55 @@
 
   \begin{itemize}
     \item \emph{$p$-centred colouring}: every connected $S\subseteq G$ has a unique colour or uses $>\!\!p$ colours
-    
+
     \item \emph{$p$-linear colouring}: every path $P$ in $G$ has a unique colour or uses $>\!\!p$ colours
-    
-    \item \emph{$\ell$-vertex ranking}: every path $v_0,\ldots,v_r$ in $G$ with length $p\le\ell$ has $\varphi(v_0)\neq\varphi(v_p))$ or $\varphi(v_0)<\max\{\varphi(v_1),\ldots,\varphi(v_{p-1})\}$.
-    
-    \item For fixed any $p$, first two are bounded for all \emph{bounded expansion} graph classes. Including, for example, planar graphs.
-    
-    \item What about $\ell$-vertex ranking?
+
+    \item \emph{$\ell$-vertex ranking}: every path $v_0,\ldots,v_r$ in $G$ with length $p\le\ell$ has $\varphi(v_0)\neq\varphi(v_p)$ or $\varphi(v_0)<\max\{\varphi(v_1),\ldots,\varphi(v_{p-1})\}$.\footnote{A path of length $\ell$ has $\ell+1$ vertices}
+
+    \item<2-> When $p,\ell=1$, these correspond to proper colourings
+
+    \item<3-> For fixed any $p$, first two are bounded for all \emph{bounded expansion} graph classes. Including, for example, planar graphs.
+
+    \item<4-> What about $\ell$-vertex ranking?
   \end{itemize}
 \end{frame}
 
+
+\section{$\ell$-vertex ranking of planar graphs}
+
 \begin{frame}
   \frametitle{$\ell$-vertex ranking}
-  
-  \begin{itemize}
-    \item Let $\chi_\ell(G)=\min\{k:\mbox{$G$ has $\ell$-vertex ranking using $k$ colours}\}$  
-    
-    \item<2->[]\textbf{Theorem (Karpas-Neiman-Smorodinsky 2016):} 
+
+  \begin{itemize}[<+->]
+    \item Let $\chi_\ell(G)=\min\{k:\mbox{$G$ has $\ell$-vertex ranking using $k$ colours}\}$
+
+    \item[]\textbf{Theorem (Karpas-Neiman-Smorodinsky 2016):}
     \begin{itemize}
-      \item every $n$-vertex tree $T$ has $\chi_2(T)\in O(\log n/\log\log n)$
-      \item there exists $n$ vertex tree $T$ with $\chi_2(T)\in\Omega(\log n/\log\log n)$
+      \item every $n$-vertex \emph{tree} $T$ has $\chi_2(T)\in O(\log n/\log\log n)$
+      \item there exists $n$ vertex \emph{tree} $T$ with $\chi_2(T)\in\Omega(\log n/\log\log n)$
     \end{itemize}
-    
-    \item<3->[]\textbf{Theorem (Karpas-Neiman-Smorodinsky 2016):} For any fixed $\ell$, every $n$-vertex planar graph $G$ has $\chi_\ell(G)\in O(\log n)$.
-    
-    \item<4->What is the correct answer for planar graphs, $\log n$ or $\log n/\log\log n$?
-    
-    \item<5->[]\textbf{Theorem 1: } For any fixed $\ell$, 
-    \begin{itemize} 
+
+    \item Not much better than $\td(T)\in O(\log n)$\vspace{.5cm}
+
+    \item[]\textbf{Theorem (Karpas-Neiman-Smorodinsky 2016):} For any fixed $\ell$, every $n$-vertex \emph{planar graph} $G$ has $\chi_\ell(G)\in O(\log n)$.
+
+    \item Much better than $\td(G)\in\Theta(\sqrt{n})$\vspace{.5cm}
+
+    \item What is the correct answer for planar graphs, \newline $\log n$ or $\log n/\log\log n$?
+
+    \item Neither!
+
+    \item[]\textbf{Theorem 1: } For any fixed $\ell$,
+    \begin{itemize}[<10->]
       \item every $n$-vertex planar $G$ has $\chi_\ell(G)\in O(\log n/\log\log\log n)$
       \item there exists $n$-vertex planar $G$ with $\chi_2(G)\in\Omega(\log n/\log\log\log n)$.
     \end{itemize}
   \end{itemize}
 \end{frame}
 
-
-
 \begin{frame}
   \frametitle{Why three logs?}
+  \framesubtitle{Product structure and planar 3-trees}
   \begin{itemize}[<+->]
     \item Trees: $\log n/\log\log n$
     \item Outerplanar graphs: $\log n/\log\log n$ (using same techniques)
@@ -128,43 +153,52 @@
   \end{itemize}
 \end{frame}
 
+\section{Reducing planar graphs to $2$-trees and simple $3$-trees}
 
 \begin{frame}
-  \frametitle{The upper bound}
-  \framesubtitle{The easy part}
-  
-  \begin{itemize}[<+->]
-    \item Planar $G$ is contained in $H\boxtimes (P\boxtimes K_3)$
-    \item \textbf{Lemma:} For any graphs $H$ and $R$, $\chi_\ell(H\boxtimes R) \le \chi_\ell(H)\times \chi(R^\ell)$.
+  \frametitle{The upper bound for products}
+  \framesubtitle{(A standard trick)}
+
+  \begin{itemize}
+    \item \textbf{Lemma 0:} For any graphs $H$ and $R$, $\chi_\ell(H\boxtimes R) \le \chi_\ell(H)\times \chi(R^\ell)$.
     \item[] \textit{Proof:} Use a product colouring:
     \begin{itemize}
-      \item $\ell$-vertex ranking $\varphi$ of $H$
-      \item distance-$\ell$ colouring $\psi$ of $R$
+      \item high order: $\ell$-vertex ranking of $H$
+      \item low order: distance-$\ell$ colouring of $R$
     \end{itemize}
-    \item[] path $P$ projects to a walk $W$ in $H$ with unique max $v$ under $\varphi$
-    \item[] $\psi$ is distinct for each occurrence of $v$ in $W$ \hfill\qed
-    
+    \multiinclude[<+>][format=pdf,start=1]{figs/product-proof}%
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The upper bound for planar graphs (easy part)}
+  \begin{itemize}
+    \item Planar $G$ is contained in $H\boxtimes (P\boxtimes K_3)$
+    \includegraphics{figs/hxpxk3}
     \item $R:=P\boxtimes P_3$ has a distance-$\ell$ colouring using $3\ell$ colours
-    \item ``Just'' need to show that $\chi_\ell(H)\in O(\log n/\log\log\log n)$ when $H$ is a planar $3$-tree.
+    \item By Lemma~0, ``just'' need to show that $\chi_\ell(H)\in O(\log n/\log\log\log n)$ when $H$ is a planar $3$-tree.
   \end{itemize}
 \end{frame}
 
 
+\section{Simple treewidth and simple $t$-trees}
+
 \begin{frame}
   \frametitle{Simple Treewidth}
   \framesubtitle{path, outerplanar, planar 3-tree, linkless embeddable, \ldots}
-  
+
   \begin{itemize}[<+->]
     \item $H$ has \emph{simple treewidth}\footnote{Useful reference: Bachelorthesis of Lasse Wulf} at most $t$ if it has a \emph{tree decomposition} $(B_x:x\in V(T))$ such that
     \begin{itemize}
       \item $\max\{|B_x|:x\in V(T)\}\le t+1$
-      \item for each $S\in \binom{V(H)}{t}$ there are most two nodes $x\in V(T)$ with $S\subseteq B_x$ 
+      \item for each $S\in \binom{V(H)}{t}$ there are most two nodes $x\in V(T)$ with $S\subseteq B_x$
     \end{itemize}
+    \item $\tw(G) \le stw(G)\le tw(G)+1$
     \item simple $1$-tree: path
     \item simple $2$-tree: (edge maximal) outerplanar graph
     \item simple $3$-tree: planar $3$-tree
-    \item simple $4$-tree: linkless embeddable 
-    \item[]\textbf{Theorem 2:} For every fixed $t,\ell\in\N$ 
+    \item simple $4$-tree: linkless embeddable
+    \item[]\textbf{Theorem 2:} For every fixed $t,\ell\in\N$
     \begin{itemize}
       \item every $n$-vertex simple $t$-tree $H$ has $\chi_\ell(H)\in O(\log n/\log^{(t)} n)$
       \item there exists $n$-vertex simple $t$-trees $H$ with $\chi_2(H)\in\Omega(\log n/\log^{(t)} n)$
@@ -172,335 +206,197 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Proof of Theorem 2}
 
-  \textbf{Theorem 2:} For every fixed $t,\ell\in\N$ 
+\section{Proof of lower bound for $t$-trees}
+
+\begin{frame}
+  \frametitle{Proof of Theorem 2 (Lower Bound)}
+
+  \textbf{Lower bound:} there exist $n$-vertex \emph{simple} $t$-trees $H$ with $\chi_2(H)\in\Omega(\log n/\log^{(t)}) n)$
+  \begin{itemize}[<+->]
+    \item Sufficient to construct $t$-tree $H$ with $\chi_2(H)\in\Omega(\log n/\log^{(t+1)} n)$  (because $\stw(H)\le t+1$)
+    \item Also: Every $2$-tree is planar
+    \item Gives planar $G$ with $\chi_\ell(G)\in\Omega(\log n/\log\log\log n)$
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Lower Bound for Trees}
+  \framesubtitle{Karpas, Neiman, Smorodinsky: ``Factorial Trees''}
+
   \begin{itemize}
-    \item every $n$-vertex simple $t$-tree $H$ has $\chi_\ell(H)\in O(\log n/\log^{(t)} n)$
-    \item there exists $n$-vertex simple $t$-trees $H$ with $\chi_2(H)\in\Omega(\log n/\log^{(t)} n)$
+    \item Consider star with $k+1$ leaves coloured with $\{1,\ldots,k\}$
+    \begin{itemize}
+      \item<2-> Some colour $c$ appears $\ge\!\! 2$ times at leaves
+      \item<4-> Root colour $\ge\!\!c+1 \in \{2,\ldots,k\}$
+      \item<6-> Repeat
+    \end{itemize}
+    \item <8-> Tree has $n\approx(k+1)!$ nodes and root colour $k=\Omega(\log n/\log\log n)$
   \end{itemize}
-  
-  \begin{itemize}
-    \item Proof is by induction on $t,n$
-    \item Base case, $t=1$, $G$ is a path and $\chi_\ell(G)\le\chi(G^\ell)\le\ell+1$
-    \item Inductive step (main ideas):
-    \begin{itemize}
-      \item Look at first $\ell+1$ BFS layers $L_0,\ldots,L_\ell$ where $L_0$ is root bag in a $t$-simple tree-decomposition of $G$
-      \item Stronger IH lets us precolour $L_0$ with (sufficiently large) colours
-      \item Stronger lemma allows us to handle graphs with $\ell+1$ layers and put lower bounds on colours of vertices in $L_\ell$. 
-      \item proof of stronger lemma uses induction on $t$ internally to "save a little" in $L_{\ell}$ (which only has stw $t-1$)
-      \item lower bounds are assigned to vertices in $L_{\ell}$ based on size of component in $H_{\ge\ell}:=H[\bigcup_{i={\ell}}^h L_i]$ that they belong to
-      \item now apply induction (on $n$) on each component of $H_{\ge\ell}$, root colours precoloured but these colours are big enough.
-    \end{itemize}
-  \end{itemize}
-  
-\end{frame}
-
-
-\end{document}
-
- Colour vertices of $G$ so that every path of length at most $\ell$
-    \item $G$ is \emph{$k$-planar} if it has a drawing with $\le\!\! k$ crossings per edge
     \begin{center}
-      % \multiinclude[<+>][format=pdf,start=1]{figs/k-planar}%
-    \end{center}
-      \item<4-> Is $G\subseteq H\boxtimes P$ where $\tw(H)\le f(k)$?
-  \end{itemize}
-\end{frame}
-
-\end{document}
-
-
-\begin{frame}
-    \frametitle{$(k,d)$-Shortcut Systems}
-    \framesubtitle{An abstraction of $k$-planarity}
-
-    \begin{itemize}
-        \item \emph{$(k,d)$-shortcut system} for $G$:
-        \begin{itemize}
-            \item<2-> a set $\mathcal{P}$ of length-$\le\!\! k$ paths in $G$
-            \item<2-> each $v\in V(G)$ appears interior to at most $d$ paths in $\mathcal{P}$
-        \end{itemize}
-    \end{itemize}
-    \begin{center}
-        \multiinclude[<+>][format=pdf,start=1]{figs/shortcut-system}%
-        \uncover<2->{\\ $(3,2)$-shortcut system}
-    \end{center}
-    \begin{itemize}
-        \item<3-> $G^{\mathcal{P}}:= G\cup\{vw:\mbox{$v$ and $w$ are endpoints of a path in $\mathcal{P}$}\}$
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Observation}
-    \framesubtitle{Crossed edges are just shortcuts in a planar graph}
-
-    If $G$ is $k$-planar then $G\subseteq G_0^{\mathcal{P}}$ where
-    \begin{itemize}
-        \item<2-> $G_0$ is planar
-        \item<3-> $\mathcal{P}$ is a $(k+1,2)$-shortcut system
-    \end{itemize}
-    \begin{center}
-        \multiinclude[<+>][format=pdf,start=1]{figs/kgp}%
+      \only<1>{\includegraphics[width=\textwidth]{figs/tree-lower-bound-1}}%
+      \only<2>{\includegraphics[width=\textwidth]{figs/tree-lower-bound-2}}%
+      \only<3>{\includegraphics[width=\textwidth]{figs/tree-lower-bound-3}}%
+      \only<4>{\includegraphics[width=\textwidth]{figs/tree-lower-bound-4}}%
+      \only<5>{\includegraphics[width=\textwidth]{figs/tree-lower-bound-5}}%
+      \only<6>{\includegraphics[width=\textwidth]{figs/tree-lower-bound-6}}%
+      \only<7->{\includegraphics[width=\textwidth]{figs/tree-lower-bound-7}}%
     \end{center}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Main Theorem}
-  \framesubtitle{If $G$ has product structure then so does $G^{\mathcal{P}}$}
-  \textbf{Main Theorem:} \newline
-  If $G\subseteq H\boxtimes P\boxtimes K_\ell$
+  \frametitle{Lower Bound for $t$-Trees}
+  \framesubtitle{Bottom-up construction}
+
+  \alert{No more calculations!}
+
   \begin{itemize}
-    \item  $\tw(H)\le t$
-    \item $\mathcal{P}$ is a $(k,d)$-shortcut system for $G$
-  \end{itemize}
-  then $G^\mathcal{P}\subseteq H'\boxtimes P\boxtimes K_{\ell'}$
-  \begin{itemize}
-    \item $\tw(H') \le t'=\binom{k+t}{t}-1$ and
-    \item $\ell'=d\ell(k^3+3k)$
-    % \item $K'$ is a clique of order $d\ell(k^3+3k)$
-  \end{itemize}
-  \vspace{1cm}
-  \uncover<2->{\textbf{Example:} $G'$ is ${\color{red} k}$-planar
+    \item Same idea as $t=1$
     \begin{itemize}
-      \item $t=3$, $\ell=3$, $d=2$, $k={\color{red}k}+1$
-      \item $t'=O(k^3)$, $\ell'=O(k^3)$
+      \item<1-> Leaf of star: ``small'' $(t-1)$-tree $H'$ that requires at least $h$ colours
+      \item<3-> Root of star: A vertex that dominates many copies of $H'$
+      \item<5-> Forces root colour $\ge h$
+      \item<6-> Repeat for $k/h$ layers
+      \item<7-> Forces a root of colour $k$
     \end{itemize}
-  }
+    \begin{center}
+      \multiinclude[<+>][format=pdf,start=1]{figs/t-tree-lb}%
+    \end{center}
+  \end{itemize}
 \end{frame}
 
-
-
 \begin{frame}
-    \frametitle{Applications}
-    \framesubtitle{(Besides $k$-planar graphs)}
+  \frametitle{Lessons from Lower Bound}
+  \framesubtitle{How to get a matching upper bound}
 
-    \textbf{($\mathcal{G}$) Graphs:} any subgraph of $G^\mathcal{P}$ where $G$ has \emph{product structure}
+  \begin{itemize}[<+->]
+    \item[]\textbf{Lessons:}
     \begin{itemize}
-        \item $(g,k)$-planar graphs
-        \item $(g,\delta)$-string graphs
-        \item $k$-nearest neighbour graphs of $2d$ point sets
-        \item bounded-degree graphs from proper minor-closed families
-        \item any $G^k$ where $G$ has bounded-degree and product structure
+      \item Layers in lower bound construction are BFS layers $L_0,\ldots,L_r$
+      \item $L_{i+1},\ldots,L_r$ create pressure to use large colours in $L_i$
     \end{itemize}
-
-    \textbf{($\mathcal{A}$) Applications:}
+    \vspace{1cm}
+    \item[]\textbf{Limitation:}
     \begin{itemize}
-        \item queue layouts
-        \item non-repetitive colouring
-        \item $p$-centered colouring and $\ell$-vertex ranking
-        \item universal graphs
+      \item Lower bound is for $\ell=2$, we want general $\ell$
+      \item[$\Rightarrow$] $L_{i+1},\ldots,L_r$ will create pressure to use large colours in $L_{i-\ell},\ldots,L_i$
     \end{itemize}
-
-    Anything in $\mathcal{G}\times \mathcal{A}$
+  \end{itemize}
 \end{frame}
 
-\section{Proof of Main Theorem}
+\section{Proof of upper bound for simple $t$-trees}
 
 \begin{frame}
-  \frametitle{Mental Map of $H\boxtimes P\boxtimes K_{\ell}$}
+  \frametitle{Proof of Theorem 2 (Upper Bound)}
+
+  \textbf{Upper bound:} For every fixed $t,\ell\in\N$ every $n$-vertex simple $t$-tree $H$ has $\chi_\ell(H)\in O(\log n/\log^{(t)} n)$
+
+  \textit{Proof:} By induction on $t$ and $n$
   \begin{itemize}
-    \item $H\uncover<2->{\boxtimes P\uncover<3->{\boxtimes K_{\ell}}}$
+    \item Use BFS layering $L_0,\ldots,L_r$
+    \begin{itemize}
+      \item $L_0$ is root bag in a $t$-simple tree-decomposition of $G$
+    \end{itemize}
+    \item Strengthening:
+    \begin{itemize}
+      \item (Sufficiently large) colours preassigned to $L_0$
+      \item No large colours get used in $L_1,\ldots,L_{\ell}$
+    \end{itemize}
   \end{itemize}
   \begin{center}
-    \multiinclude[<+>][format=pdf,start=1]{figs/product-x}%
+    \includegraphics{figs/Strengthening}
   \end{center}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Shortcuts over multiple rows}
+  \frametitle{Base case $t=1$}
+  \framesubtitle{$H$ is a simple $1$-tree (a path)}
 
   \begin{itemize}
-    \item Shortcuts in $\mathcal{P}$ may jump up to $k$ rows
-    \item $G^\mathcal{P}$ will have edges between non-consecutive rows
-    \item<2-> Easy solution: Compress $k$ rows into one
-  \end{itemize}
-    \begin{center}
-    \only<1>{\includegraphics{figs/layer-compression-1}}%
-    \only<2->{\includegraphics{figs/layer-compression-2}}%
-    \end{center}
-  \begin{itemize}
-    \item<3-> Increases $\ell$ by a factor of $k$
-    \item<4-> $\mathcal{P}$ is a $(k,d)$-shortcut system over $H\boxtimes P\boxtimes K_{\ell k}$ with all shortcuts crossing $\le\!\! 1$ layers
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Projecting shortcuts onto $H\boxtimes P$}
-
-  \begin{itemize}
-    \item<2-> Contract each copy of $K_{k\ell}$, so we are left with $H\boxtimes P$
-  \end{itemize}
-    \begin{center}
-    \only<1-2>{\includegraphics{figs/layer-compression-2}}%
-    \only<3->{\includegraphics{figs/layer-compression-3}}%
-    \end{center}
-  \begin{itemize}
-    \item<3-> Each vertex of $H\boxtimes P$ is used in at most $dk\ell$ shortcuts
-    \item<4-> $(k,dk\ell)$-shortcut system $\mathcal{P'}$ over $H\boxtimes P$
-    \item<4-> shortcuts still span $\le\!\!1$ rows
-  \end{itemize}
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{Nice Tree Decompositions}
-  \framesubtitle{Nodes of $T$ are same as vertices of $H$}
-
-  \begin{itemize}
-    \item A \emph{nice} rooted tree decomposition $\mathcal{T}=(B_x:x\in V(T))$ of $H$ has
-    \begin{itemize}
-      \item $V(T) = V(H)$
-      \item $x$ is root of $T_x:=T[\{x'\in V(T):x\in B_{x'}\}]$
-    \end{itemize}
-    \begin{center}
-      \includegraphics[scale=.8]{figs/nice-td}
-    \end{center}
-    \item<2-> Tree decomp implies: If $xy\in E(H)$ then $x\prec_T y$ or $y\prec_T x$
-  \end{itemize}
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{Alternative View}
-  \framesubtitle{Constructing the bags from the tree}
-  
-  \begin{itemize}
-    \item<1-> Start with $T$ such that $x\prec_T y$ or $y\prec_T x$ for each $xy\in E(H)$
-    \item<2-> $B_x\gets\{x\}$ for each $x\in V(T)$
-    \item<3-> If $xy\in E(H)$ and $x\prec_T y$ then drag $x$ down into $B_y$
+    \item easy to do with $\ell+O(1)$ colours (even with a precoloured edge)
   \end{itemize}
   \begin{center}
-    \multiinclude[<+>][format=pdf,start=1]{figs/alternative-view}%
-  \end{center}
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{A Useful Lemma}
-
-  \textbf{Lemma (Pilipczuk--Siebertz):}\footnote{Yes, the same paper!} For any $z\in V(H)$ the number of $x\in V(H)$ such that $x\prec_T z\prec_T z'$ and $\mathop{dist}_H(x,z')\le k$ is at most $\binom{k+t}{t}$.
-  \begin{center}
-    \multiinclude[<+>][format=pdf,start=1]{figs/pz}%
-  \end{center}
-  \begin{itemize}
-      \item<2->Problem: $vw$-shortcut in $H\boxtimes P$ projects onto $xz'$ shortcut in $H$, but $x\not\preceq_T z'$ and $z'\not\preceq_T x$
-  \end{itemize}
-\end{frame}
-
-
-
-
-\begin{frame}
-  \frametitle{Projecting shortcuts onto $T$}
-
-  \begin{itemize}
-    \item A shortcut in $I\in\mathcal{P'}$
-    \begin{itemize}
-      \item<2-> is a path $I$ in $G'=H\boxtimes P$
-      \item<3-> $I$ projects onto a walk $W$ in $H$
-      \item<4-> $W$ is a sequence $S_I$ of nodes in $T$
-    \end{itemize}
-  \end{itemize}
-  \begin{center}
-    \multiinclude[<+>][format=pdf,start=2,end=5]{figs/nice-td}%
+    \multiinclude[<+>][format=pdf,start=1]{figs/base-case}%
   \end{center}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Lifting in $T$}
-  \begin{itemize}
-    \item For $v$ in $H\boxtimes P$, $a(v)$ is the LCA of $\cup\{S_I:I\in\mathcal{P'},\, v\in V(I)\}$
-    \item For $x\in V(T)$, $S_x:=\{v\in V(G): a(v)=x\}$
-    \begin{center}
-      \includegraphics[scale=.8]{figs/nice-td-6}%
-    \end{center}
-    \item<2-> $\mathcal{S}:=(S_x:x\in V(T))$ is a partition of $V(G)$
-    \item<3->[$(\star)$] For any $vw$-shortcut in $H\boxtimes P$, $a(v)\preceq_T a(w)$ or $a(w)\preceq_T a(v)$
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{Now the Crazy Part}
+  \frametitle{Proof of Theorem 2 (Inductive Step)}
+  \framesubtitle{Shallow BFS layerings}
 
   \begin{itemize}
-      \item[$(\star)$] For any $vw$-shortcut in $H\boxtimes P$, $a(v)\preceq_T a(w)$ or $a(w)\preceq_T a(v)$
-  \end{itemize}
-
-    \vspace{.5cm}
-    Let $H':=G/\mathcal{S}$
-    \vspace{.5cm}
-
-    \textbf{Claim:} $\tw(H')\le\binom{k+t}{t}-1$\\
-    \vspace{.5cm}
-    \uncover<2->{\textit{Proof:}}
-    \begin{itemize}
-      \item<2-> Each $x\in V(H')$ is obtained by contracting $S_x$
-      \item<3-> Start with $T$ from nice tree decomposition of $H$ (not $H'$)
-      \item<4-> For each $xz'\in E(H')$ where $x\prec_T z$, drag $x$ down into $B_z'$
-      \item<5-> Correctness follows from $(\star)$\footnote{Technicality: Assume $\mathcal{P}$ contains a length-$1$ shortcut for each edge of $H\boxtimes P$}
-      \item<6-> Point: If $x\in B_{z}$ then
+      \item $H$ is a $t$-tree for $t\ge 2$
+      \item If $r=\text{\# BFS layers}\le \ell$
+      \item<2->Prove something even stronger:
       \begin{itemize}
-          \item $x\prec_T z\prec_T z'$ for some $z'$ and
-          \item $\mathop{dist}_{H}(x,z')\le k$ (because shortcuts have length $\le\!\!k$).
+        \item Can also put \emph{lower bounds} on colours used in $L_\ell$
+        \item As long as these lower bounds aren't too big (global condition)
+        \item<3-> Proof uses induction on $t$ (since $\stw(H[L_\ell]))\le t-1$)
       \end{itemize}
-      \item<7-> By Pilipczuk-Siebertz Lemma, $|B_{z'}|\le \binom{k+t}{t}$.
-      \hfill{\qed}
-    \end{itemize}
+  \end{itemize}
+  \begin{center}
+    \multiinclude[<+>][format=pdf,start=2,end=4]{figs/strengthening}%
+  \end{center}
 \end{frame}
 
 
 \begin{frame}
-  \frametitle{Finishing Up}
-  \framesubtitle{Verifying the layered width}
+  \frametitle{Proof of Theorem 2 (Inductive Step)}
+  \framesubtitle{Deep BFS layerings}
 
   \begin{itemize}
-    \item $\mathcal{P'}$: a $(k,dk\ell)$-shortcut system over $H\boxtimes P$.
-    \item Obtained from $\mathcal{P}$: a $(k,d)$-shortcut system over $H\boxtimes P\boxtimes K_{k\ell}$
-    \item We can show that the subset of $H\boxtimes P\boxtimes K_{\ell}$ corresponding to $S_x$ contains at most $d\ell(k^3+3k)$ vertices from each row of $H\boxtimes P\boxtimes K_{\ell}$.
-    \item Implies $G^{\mathcal{P}}\subseteq H'\boxtimes P\boxtimes K_{d\ell(k^3+3k)}$
-  \end{itemize}
-  \vspace{1cm}
-  \uncover<2->{
-  \textbf{Main Theorem:} \newline
-  If $G\subseteq H\boxtimes P\boxtimes K_\ell$
+    \item If $r=\text{\# BFS layers}>\ell$
+    \item Look at $H_{> \ell}:=H[L_\ell\cup\cdots\cup L_r]$
     \begin{itemize}
-      \item  $\tw(H)\le t$
-      \item $\mathcal{P}$ is a $(k,d)$-shortcut system for $G$
+      \item<2-> Sizes of components adjacent to $v\in L_\ell$ determine maximum pressure $L_{\ell+1},\ldots,L_r$ can exert on colour of $v$
+      \item<3-> These pressures are compatible with strengthening for $r\le\ell$
+      \item<4-> Colours assigned in $L_{\ell}$ are compatible with precolourings
+      of components of $H_{>\ell}$, so colour each inductively
     \end{itemize}
-    then $G^\mathcal{P}\subseteq H'\boxtimes P\boxtimes K_{\ell'}$
+      % \item User stronger lemma to colour $L_0,\ldots,L_\ell$
+      % \begin{itemize}
+      %   \item $L_0$ is precoloured
+      %   \item Colours in $L_\ell$ are lower-bounded
+      % \end{itemize}
+      % \item Inductively colour each component $C$ of $H_{\ge\ell}$
+      % \item $C[L_\ell]$ is the root bag in tree-decomp of $C$ and $L_\ell,\ldots,L_r$ is a BFS layering of $C$
+      % \item Vertices in $L_{\ell}$ are already coloured with large colours
+      % \end{itemize}
+    \end{itemize}
+    \begin{center}
+      \multiinclude[<+>][format=pdf,start=5]{figs/strengthening}%
+      \uncover<5>{$\square$}
+    \end{center}
+\end{frame}
+
+\section{Conclusions}
+
+\begin{frame}
+  \frametitle{Summary}
+
+  \uncover<1->{
+    \textbf{New Results:}
     \begin{itemize}
-      \item $\tw(H') \le t'=\binom{k+t}{t}-1$ and
-      \item $\ell'=d\ell(k^3+3k)$
-      % \item $K'$ is a clique of order $d\ell(k^3+3k)$
+      \item Matching upper and lower bounds for ranking
+      \begin{itemize}
+        \item Simple $t$-trees: $\log n/\log^{(t)} n$
+        \item $t$-trees for every tree: $\log n/\log^{(t+1)} n$
+        \item Planar, bounded genus: $\log n/\log^{(3)} n$
+      \end{itemize}
+      \item Efficient algorithms $O(n)$ or $O(n\log n)$
+      \item Sublogarithmic upper bounds for any graph with structure $H\boxtimes P\boxtimes K_s$ with $\tw(H)\in o(\log^* n)$
     \end{itemize}
   }
+  \vspace{.5cm}
+  \uncover<2->{
+    \textbf{Open Problem:}  For $d$-degenerate $G$, bounds are \newline $\chi_2(G)\in\Omega(n^{1/3})$ and $\chi_2(G)\in O(\sqrt{n})$
+  }
+  \vspace{.5cm}
+  \uncover<3->{
+    \begin{center}
+      {\Large\bfseries Thank You!}
+    \end{center}
+  }
 \end{frame}
-
-\begin{frame}
-  \frametitle{Discussion}
-  
-  \begin{itemize}
-    \item<1-> Optimizing for $k$-planar $G$ shows $G\subseteq H\boxtimes P\boxtimes K_\ell$ for $\tw(H)\le \binom{k+4}{3}-1$ and $\ell\le 18k^{\color{red}2}+48k+30$.
-    
-    \item<2-> Optimizing for $1$-planar $G$ shows $G\subseteq H\boxtimes P\boxtimes K_{30}$ with $\tw(H)\le 3$
-    
-    \item<3-> \textbf{Open Problem:} Does there exist $C\in\N$ and $f:\N\to\N$ such that for $k$-planar $G$,  $G\subseteq H\boxtimes P\boxtimes K_{f(k)}$ where $\tw(H)\le C$? \uncover<4->{(Maybe $C=3$)}\vspace{1.5cm}
-    
-    \item<5->[] \centerline{\Large\bfseries Thank You!}
-  \end{itemize}
-  
-\end{frame}
-
-
-% \begin{frame}
-%
-%
-% \end{frame}
-%
-
-
-
 \end{document}
