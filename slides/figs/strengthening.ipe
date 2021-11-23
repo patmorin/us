@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20211121140111" modified="D:20211121150954"/>
+<info created="D:20211121140111" modified="D:20211123094326"/>
 <preamble>\usepackage{sfmath}</preamble>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
@@ -411,8 +411,7 @@ h
 339.816 638.134
 358.992 676.99 u
 </path>
-<text layer="top" matrix="1 0 0 0.5 -91 331.311" transformations="translations" pos="400 768" stroke="black" type="label" width="9.599" height="6.923" depth="1.49" valign="center" style="math">L_0</text>
-<path matrix="1 0 0 0.5 0 331.311" stroke="black" fill="dutch white">
+<path layer="top" matrix="1 0 0 0.5 0 331.311" stroke="black" fill="dutch white">
 304 784
 208 784
 208 752
@@ -423,8 +422,8 @@ h
 <use matrix="0.5 0 0 0.5 128 331.311" name="mark/disk(sx)" pos="256 768" size="large" stroke="pearl aqua"/>
 <use matrix="0.5 0 0 0.5 128 331.311" name="mark/disk(sx)" pos="272 768" size="large" stroke="pale chestnut"/>
 <use matrix="0.5 0 0 0.5 128 331.311" name="mark/disk(sx)" pos="288 768" size="large" stroke="granny smith apple"/>
-<text matrix="1 0 0 0.5 -144.114 312.045" transformations="translations" pos="400 768" stroke="black" type="label" width="47.579" height="6.923" depth="2.32" halign="center" valign="center" style="math">L_1,\ldots,L_{\ell-1}</text>
-<text matrix="1 0 0 0.5 -27 291.311" transformations="translations" pos="400 768" stroke="black" type="label" width="9.229" height="6.923" depth="1.49" valign="center" style="math">L_\ell</text>
+<text matrix="1 0 0 0.5 -144.114 312.045" transformations="translations" pos="400 768" stroke="black" type="label" width="37.647" height="6.923" depth="1.49" halign="center" valign="center" style="math">L_1,\ldots,L_{\ell}</text>
+<text matrix="1 0 0 0.5 -37 291.311" transformations="translations" pos="400 768" stroke="black" type="label" width="18.697" height="6.919" depth="2.22" valign="center" style="math">L_{\ell+1}</text>
 <path matrix="1 0 0 0.5 0 331.311" stroke="black">
 336 752
 176 752
@@ -504,5 +503,9 @@ h
 339.816 638.134
 358.992 676.99 u
 </path>
+<text layer="top" matrix="1 0 0 1 -20 1" transformations="translations" pos="337.858 713.286" stroke="black" type="label" width="108.15" height="7.473" depth="2.49" valign="center">big colours (preassigned)</text>
+<text matrix="1 0 0 1 -4.9192 -17.851" transformations="translations" pos="337.858 713.286" stroke="black" type="label" width="56.593" height="6.918" depth="0" valign="center">small colours</text>
+<text layer="lower-bounds" matrix="1 0 0 1 48.7326 -37.8619" transformations="translations" pos="337.858 713.286" stroke="black" type="label" width="97.247" height="6.918" depth="0" valign="center">lower-bounded colours</text>
+<text layer="top" matrix="1 0 0 0.5 -122 331.311" transformations="translations" pos="400 768" stroke="black" type="label" width="9.599" height="6.923" depth="1.49" valign="center" style="math">L_0</text>
 </page>
 </ipe>

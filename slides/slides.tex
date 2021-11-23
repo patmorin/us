@@ -21,9 +21,9 @@
 \DeclareMathOperator{\td}{td}
 \DeclareMathOperator{\stw}{stw}
 
-\title{Asymptotically Optimal Vertex Ranking \newline of Planar Graphs (and Beyond)}
-\author{Jit Bose \and Vida Dujmović \and Mehrnoosh Javarsineh \and Pat Morin}
-\titlegraphic{[Picture of 3 logs on a fire]}
+\title[$\ell$-vertex ranking]{Asymptotically Optimal Vertex Ranking \newline of Planar Graphs (and Beyond)}
+\author[Bose, Dujmović, Javarsineh, M]{Jit Bose \and Vida Dujmović \and Mehrnoosh Javarsineh \and Pat Morin}
+\titlegraphic{\includegraphics[height=.25\textheight]{images/three-logs.png}}
 
 % \includegraphics[height=1em]{by}}
 
@@ -33,11 +33,11 @@
   \titlepage
 \end{frame}
 
-\begin{frame}
-    \frametitle{Outline}
-
-    \tableofcontents
-\end{frame}
+% \begin{frame}
+%     \frametitle{Outline}
+%
+%     \tableofcontents
+% \end{frame}
 
 
 \section{Vertex ranking, centered colouring and treedepth}
@@ -92,7 +92,8 @@
 
     \item \emph{$p$-linear colouring}: every path $P$ in $G$ has a unique colour or uses $>\!\!p$ colours
 
-    \item \emph{$\ell$-vertex ranking}: every path $v_0,\ldots,v_r$ in $G$ with length $p\le\ell$ has $\varphi(v_0)\neq\varphi(v_p)$ or $\varphi(v_0)<\max\{\varphi(v_1),\ldots,\varphi(v_{p-1})\}$.\footnote{A path of length $\ell$ has $\ell+1$ vertices}
+    \item \emph{$\ell$-vertex ranking}: every path $v_0,\ldots,v_r$ in $G$ with length $p\le\ell$ has $\varphi(v_0)\neq\varphi(v_p)$ or $\varphi(v_0)<\max\{\varphi(v_1),\ldots,\varphi(v_{p-1})\}$.\footnote{A path of length $\ell$ has $\ell+1$ vertices}\newline
+    (Every length-$\le\!\!\ell$ path has a unique maximum colour)
 
     \item<2-> When $p,\ell=1$, these correspond to proper colourings
 
@@ -136,6 +137,17 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{No Calculations}
+
+  \begin{itemize}[<+->]
+    \item No calculations in this talk\newline
+    (Too many iterated logs and towers of $e$'s)
+    \item But $\log^{(c)} x$ means $\underbrace{\log\log\cdots\log}_c x$
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
   \frametitle{Why three logs?}
   \framesubtitle{Product structure and planar 3-trees}
   \begin{itemize}[<+->]
@@ -175,7 +187,7 @@
   \begin{itemize}
     \item Planar $G$ is contained in $H\boxtimes (P\boxtimes K_3)$
     \includegraphics{figs/hxpxk3}
-    \item $R:=P\boxtimes P_3$ has a distance-$\ell$ colouring using $3\ell$ colours
+    \item $R:=P\boxtimes P_3$ has a distance-$\ell$ colouring using $3(\ell+1)$ colours
     \item By Lemma~0, ``just'' need to show that $\chi_\ell(H)\in O(\log n/\log\log\log n)$ when $H$ is a planar $3$-tree.
   \end{itemize}
 \end{frame}
@@ -249,16 +261,15 @@
   \frametitle{Lower Bound for $t$-Trees}
   \framesubtitle{Bottom-up construction}
 
-  \alert{No more calculations!}
-
   \begin{itemize}
     \item Same idea as $t=1$
     \begin{itemize}
       \item<1-> Leaf of star: ``small'' $(t-1)$-tree $H'$ that requires at least $h$ colours
       \item<3-> Root of star: A vertex that dominates many copies of $H'$
       \item<5-> Forces root colour $\ge h$
-      \item<6-> Repeat for $k/h$ layers
-      \item<7-> Forces a root of colour $k$
+      \item<6-> Take many copies and connect their roots to make a copy of $H'$
+      \item<7-> Repeat for $k/h$ layers
+      \item<8-> Forces a root of colour $k$
     \end{itemize}
     \begin{center}
       \multiinclude[<+>][format=pdf,start=1]{figs/t-tree-lb}%
@@ -327,12 +338,12 @@
 
   \begin{itemize}
       \item $H$ is a $t$-tree for $t\ge 2$
-      \item If $r=\text{\# BFS layers}\le \ell$
+      \item If $r=\text{\# BFS layers}\le \ell+1$
       \item<2->Prove something even stronger:
       \begin{itemize}
-        \item Can also put \emph{lower bounds} on colours used in $L_\ell$
+        \item Can also put \emph{lower bounds} on colours used in $L_{\ell+1}$
         \item As long as these lower bounds aren't too big (global condition)
-        \item<3-> Proof uses induction on $t$ (since $\stw(H[L_\ell]))\le t-1$)
+        \item<3-> Proof uses induction on $t$ (since $\stw(H[L_\ell])\le t-1$)
       \end{itemize}
   \end{itemize}
   \begin{center}
@@ -346,12 +357,12 @@
   \framesubtitle{Deep BFS layerings}
 
   \begin{itemize}
-    \item If $r=\text{\# BFS layers}>\ell$
-    \item Look at $H_{> \ell}:=H[L_\ell\cup\cdots\cup L_r]$
+    \item If $r=\text{\# BFS layers}>\ell+1$
+    \item Look at $H_{> \ell+1}:=H[L_{\ell+2}\cup\cdots\cup L_r]$
     \begin{itemize}
-      \item<2-> Sizes of components adjacent to $v\in L_\ell$ determine maximum pressure $L_{\ell+1},\ldots,L_r$ can exert on colour of $v$
+      \item<2-> Sizes of components adjacent to $v\in L_{\ell+1}$ determine maximum pressure $L_{\ell+1},\ldots,L_r$ can exert on colour of $v$
       \item<3-> These pressures are compatible with strengthening for $r\le\ell$
-      \item<4-> Colours assigned in $L_{\ell}$ are compatible with precolourings
+      \item<4-> Colours assigned in $L_{\ell+1}$ are compatible with precolourings
       of components of $H_{>\ell}$, so colour each inductively
     \end{itemize}
       % \item User stronger lemma to colour $L_0,\ldots,L_\ell$
@@ -395,7 +406,8 @@
   \vspace{.5cm}
   \uncover<3->{
     \begin{center}
-      {\Large\bfseries Thank You!}
+      {\Large\bfseries Thank You!}\\
+      \includegraphics[height=.2\textheight]{images/three-logs.png}
     \end{center}
   }
 \end{frame}
