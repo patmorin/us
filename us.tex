@@ -302,6 +302,16 @@ The \emph{width} of $\mathcal{X}$ is $\max\{|B_x|:x\in V(X)\}-1$. We say that $H
 
 In the special case where $X$ is a tree (or a forest), $\mathcal{X}$ is called a \emph{tree decomposition} of $H$.  In the still more special case where $X$ is a path (or a collection of disjoint paths), $\mathcal{X}$ is called a \emph{path decomposition} of $H$. The \emph{treewidth} $\tw(H)$ of $H$ is the minimum width of any tree decomposition of $H$. The \emph{pathwidth} $\pw(H)$ of $H$ is the minimum width of any path decomposition of $H$.
 
+\begin{lem}\label{pathwidth-reduction}
+  If $G$ is a graph with $\pw(G)\ge 1$ then $G$ contains a set of vertices $\{v_1,\ldots,v_m\}$ such that 
+  \begin{inparaenum}[(i)] 
+    \item $d_G(v_i,v_j)\ge |i-j|$ for each $i,j\in\{1,\ldots,m\}$; and
+    \item $\pw(G-\{v_1,\ldots,v_m\}) \le \pw(G)-1$.
+  \end{inparaenum}
+\end{lem}
+
+
+
 For a graph $H$, a \emph{rooted} tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ is one in which $T$ is a rooted tree.  Throughout the remainder of the paper, all our tree decompositions are rooted, with the root of $T$ typically denoted by $r$, in which case we call it an $r$-rooted tree decomposition.  We use the notation $x_T(v)$ to denote the minimum $T$-depth node $x\in V(T)$ such that $v\in B_x$.  This induces a partial order $\prec_{\mathcal{T}}$ on $V(H)$ in which $v\prec_{\mathcal{T}} w$ if and only if $x_T(v)\prec_T x_T(w)$.  The following observations have straightforward proofs:
 
  \begin{obs}\label{induced-unimodal}
@@ -381,6 +391,8 @@ A proof of the following lemma, using minor-monotonicity \cite[Theorem~5.2]{wulf
 \begin{lem}[\cite{wood:personal}]\label{simple-bfs-layers}
     Let $H$ be a connected graph that is edge-maximal with respect to some $r$-rooted $t$-simple tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ and let $L_0,\ldots,L_m$ be the BFS ordering of $H$ with $L_0:=B_r$.   Then, for each $i\in\{1,\ldots,m\}$, $\stw(H[L_i])\le t-1$.
 \end{lem}
+
+
 
 
 \subsection{Product Structure}
@@ -563,7 +575,7 @@ The lower bound construction in this section gives some guidance on how to obtai
 \section{Upper Bounds}
 \label{upper-bounds}
 
-In this section we prove asymptotically tight bounds for the worst-case number of colours needed for $\ell$-ranking simple treewidth-$t$ graphs, treewidth-$t$ graphs, planar graphs, and bounded genus graphs. In order to avoid complicating an already technically demanding proof, for the rest of this section we will treat $\ell$ and $t$ as fixed constants independent of $n$ and other parameters that are unbounded, so that $f(\ell,t)\in O(1)$ for any function $f:\N\times\N\to\N$.  At the end of this section, in \ref{dependence-on-ell} we discuss the dependence of $\trn$ on $\ell$.
+In this section we prove asymptotically tight bounds for the worst-case number of colours needed for $\ell$-ranking simple treewidth-$t$ graphs, treewidth-$t$ graphs, planar graphs, and bounded genus graphs. In order to avoid complicating an already technically demanding proof, for the rest of this section we will treat $\ell$ and $t$ as fixed constants independent of $n$ and other parameters that are unbounded, so that $f(\ell,t)\in O(1)$ for any function $f:\N\times\N\to\N$.  At the end of this section, in \cref{dependence-on-ell} we discuss the dependence of $\trn$ on $\ell$.
 
 
 \subsection{Simple Treewidth-$t$ Graphs}
@@ -616,13 +628,14 @@ We begin with a few helper lemmas.
 \begin{proof}
     The proof is by induction on $\pw(G)$.  The base case $\pw(G)=0$ is trivial: In this case, $G$ contains no edges and can be $\ell$-ranked with $1 = (\ell+1)\pw(G)+1$ colours.
 
-    For $\pw(G)>1$, it is well known that $G$ contains a sequence of vertices $v_1,\ldots,v_m$  such that
+    For $\pw(G)>1$ then, by \cref{pathwidth-reduction}, $G$ contains a sequence of vertices $v_1,\ldots,v_m$  such that
     \begin{inparaenum}[(i)]
-        \item $G$ contains no edge $v_iv_j$ with $|i-j|>1$;
-        \item $G$ contains no path $v_iw v_j$ with $w\not\in\{v_1,\ldots,v_m\}$ and $|i-j|>1$; and
+        \item $d_G(v_i,v_j) \ge |i-j|$ for each $i,j\in\{1,\ldots,m\}$; and
         \item $\pw(G-\{v_1,\ldots,v_m\})\le \pw(G)-1$.
     \end{inparaenum}
-    Property~(iii) implies that we can therefore inductively colour $G-\{v_1,\ldots,v_m\}$ using colours $\{1,\ldots,(\ell+1)(\pw(G)-1)+1\}$ and then colour each $v_i$ with colour $(\ell+1)(\pw(G)-1)+2+i\bmod (\ell+1)$.  Property~(i) ensures that this gives an $\ell$-ranking of $G[v_1,\ldots,v_m]$.  Property~(ii) and the fact that $v_1,\ldots,v_m$ are coloured using larger colours than those used to colour $G-\{v_1,\ldots,v_m\}$ ensures that the resulting colouring is an $\ell$-ranking of $G$.
+    Property~(ii) implies that we can therefore inductively colour $G-\{v_1,\ldots,v_m\}$ using colours $\{1,\ldots,(\ell+1)(\pw(G)-1)+1\}$ and then colour each $v_i$ with colour $((\ell+1)(\pw(G)-1)+2+i)\bmod (\ell+1)$. 
+    
+    To see that the resulting colouring is an $\ell$-ranking, consider any path $P$ in $G$ of length at most $\ell$.  If $V(P)\cap\{v_1,\ldots,v_m\}=\emptyset$ then $P\subseteq G-\{v_1,\ldots,v_m\}$ has a unique maximum colour by the inductive hypothesis.  Otherwise, by Property (i), each vertex in  $V(P)\cap\{v_1,\ldots,v_m\}$ has a unique colour, which is larger than any colour used by any vertex in $V(P)\setminus\{v_1,\ldots,v_m\}$.  Therefore, the largest colour used by any vertex in $\{v_1,\ldots,v_m\}$ is the unique maximum colour used by any vertex of $P$.
 \end{proof}
 
 \begin{lem}\label{path-induced}
@@ -731,7 +744,45 @@ A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least t
 
 \subsubsection{The Meat}
 
-Now we arrive at the combinatorial core of the proof. The main idea is break $H$ up into a sequence of blocks, each of which consists of $\ell+1$ consecutive BFS layers.  Each pair of consecutive blocks overlaps in a single BFS layer.  The following lemma is what allows us to handle the first block.  The purpose of the weighting $(n_v:v\in V(H))$ is to allow us to account for the fact that this first block has more layers attached to it.
+Now we arrive at the combinatorial core of the proof. The main idea is to cover $H$ with a sequence of blocks, each of which consists of $\ell+1$ consecutive BFS layers.  Each pair of consecutive blocks overlaps in a single BFS layer.  To convey some intuition about the proof, we first sketch how it can be used to prove that any tree $T$ with $3^3\le n \le k^k$ vertices has an $\ell$-vertex ranking $\varphi:V(T)\to\{1,\ldots,ak\}$, for some $a$ that depends only on $\ell$. [There is no requirement that $k$ be an integer here.]  Note that $k=\Theta(\log n/\log\log n)$ so this is already a non-trivial extension of the result by \citet{karpas.neiman.ea:on} that $2$-vertex ranking of $T$ can be done using $O(\log n/\log\log n)$ colours. 
+
+For each $i\in\{0\}\cup\N$, let $L_i$ denote the set of vertices of $T$ that have depth $i$ and let $r$ be the root of $T$.  We first observe that if $\varphi$ is an $\ell$-vertex ranking of $T$ with the property that $\varphi(r)= \max\{\varphi(v):v\in L_0,\ldots,L_{\ell}\}$ then increasing the value of $\varphi(r)$ results in a new colouring that is also an $\ell$-vertex ranking of $T$.  To leverage this flexibility, we will ensure that, in our colouring of $T$, $\varphi(r)=\max\{\varphi(v):v\in \bigcup_{i=0}^\ell L_i\}$.
+
+We will actually prove something stronger: If $n\le k^k/c^c$ then $T$ has a vertex ranking $\varphi:V(T)\to \{1\ldots,\lfloor ak\rfloor\}$ in which $\varphi(r) = \lfloor a(k-c-1)\rfloor+1$ and $\varphi(v)< a(k-c-1)$ for each $v\in\bigcup_{j=1}^\ell L_i$.  The proof has two layers of induction, the outer induction is on the height $h$ of $T$.  If $h\le\ell$, then we can set $\varphi(r)=\lceil a(k-c)\rceil+1$ and $\varphi(v):=\lceil a(k-c-1)\rceil-i$ for each $v\in L_i$ and each $i\in\{1,\ldots,\ell\}$.  Since $3^3\le n\le k^k$, $k\ge 3$ and $c \ge 1$.  Therefore, for $a \ge \ell+1$, this gives a colouring $\varphi:V(T)\to\{1,\ldots,ak\}$ and it is straightforward to verify that $\varphi$ is an $\ell$-vertex ranking of $T$.  (In fact, $\varphi$ is a vertex ranking of $T$.) Next we deal with the case in which $h> \ell$.
+
+For each vertex $v\in L_{\ell+1}$, let $n_v$ be the number of vertices in the subtree $T_v$ of $T$ containing $v$ and all its descendants and let $c_v$ be the solution to $k^k/c_v^{c_v}=n_v$.  Since $T_v$ has height at most $h-\ell-1 < h$, we can inductively compute an $\ell$-vertex ranking $\varphi$ of $T_v$ in which $\varphi(v)=\lfloor a(k-c_v-1)\rfloor+1$ and $\varphi(v) < a(k-c_v-1)$ for each $v\in\bigcup_{i=\ell+1}^{2\ell+1}(V(T_v)\cap L_i)$.  Now our job is to extend $\varphi$ to the vertices in $L_0,\ldots,L_{\ell}$.  While doing this, we may increase the colours of the vertices in $L_{\ell+1}$.
+
+To perform this extension, we solve a weighted version of $\ell$-vertex ranking on the subtree $T_0:=T[L_0\cup\cdots\cup L_{\ell+1}]$.  We say that a vertex $v\in L_{\ell+1}$ is \emph{dangerous} if $n_v\ge k^k/(c+1)^{c+1}$, which is equivalent to saying that $c_v \le c+1$.  An easy calculation shows that the number of dangerous vertices is at most $e(c+1)$. These dangerous vertices are dealt with separately, by having their colours reset to a large unique value.\todo{Explain}
+
+In this weighted version, each vertex $v$ is assigned a weight $n_v$ and we require that $\varphi(v)> a(k-c_v-1)$. For each dangerous $v\in L_{\ell+1}$, we set $n_v:=k^k/(c+1)^{c+1}$.  For each non-dangerous $v\in L_\ell$, we set $n_v$ to be equal to the number of vertices in $T_v$. For each $v\in L_0\cup\cdots L_{\ell-1}$ we set $n_v:=1$.  In all cases, $c_v$ is the solution to $k^k/c_v^{c_v}=n_v$.  Observe that $T_0$ has total weight $\sum_{i=0}^\ell\sum_{v\in L_i} n_v \le n$ and no vertex has weight greater than $k^k/(c+1)^{c+1}$.
+
+We solve this weighted problem using an inner induction on the total weight, $n$.  If $n\le a$, then the problem is easily solved.  If $n\ge a$, then we find a set $S$ of $b:=\lceil ek\rceil$ vertices in $T_0$ so that the total weight of each component of $T_0-S$ is at most $n/b$. Let $T_0'$ be the subtree of $T_0$ that includes every ancestor of every vertex in $S$.  Since $T_0'$ has height $\ell$, it has a vertex ranking using $\ell+1$ colours and with a little care we can colour $T_0'$ using the $\sqrt{a}(\ell+1)$ largest colours $\lfloor ak\rfloor-\sqrt{a}(\ell+1)+1,\ldots,\lfloor ak\rfloor$ and also ensure that $\varphi(r):=\lfloor ak\rfloor$ and that $\varphi(v)\ge a k_v$ for each $v\in T_0'$.\footnote{This last claim requires a proof.  In particular, one must show that if a not-yet coloured vertex $v$ is forced to take a colour $\varphi(v)\ge ax$ then $v$ is the root of a subtree of total weight at least $x^x$.}\todo{Now we can explain this.}
+
+All that remains now is to recursively colour the components of $T_0-V(T_0')$.  Each of these components has total weight at most
+\[
+   \frac{n}{b} 
+   \le \frac{k^k}{ek} 
+   = \frac{k^{k-1}}{e}
+   = \left(\frac{k}{(1+\tfrac{1}{k-1})}\right)^{k-1}
+   = \left(\frac{k}{\tfrac{k}{k-1}}  \right)^{k-1} 
+   = (k-1)^{k-1} \enspace .
+\]
+Therefore, each of these components can be coloured using the colours $1,\ldots,a(k-1)$.  If $a \ge (\ell+1)^2$ then the large colours used to colour $T_0'$ are larger than any of the colours used to colour these components.
+
+To see why the resulting colouring is a vertex ranking, consider any path $P$ of length at most $\ell$.  
+\begin{compactitem}
+  \item If $P$ is entirely contained in $T_v$ for some $v\in L_\ell$, then $P$ has a unique maximum colour by the outer inductive hypothesis (on $n=|V(T)|$).
+  \item If $P$ is entirely contained in one component of $T_0-V(T_0')$ then $P$ has a unique maximum colour by the inner inductive hypothesis (on the total weight, $n$, of $T_0$).  
+  \item If $P$ contains vertices of $T_0'$ and is entirely contained in $T_0$ then the intersection of $P$ with $T_0'$ is a path $P'$.  The path $P'$ has a a unique maximum colour and this colour is larger than any colour used by $V(P)\setminus V(P')$.
+  \item If $P$ is entirely contained in $T_0\cup T_v$ for some $v\in L_\ell$, then, then $P$ is covered by two paths $P_0:=P\cap T_0$ and $P_v:=P\cap T_v$ that both contain $v$. The path $P_0$ has a unique maximum colour $\phi\ge \varphi(v)$. The colouring of $T_v$ ensures that $\phi\ge \varphi(v)$ is greater than the colour of any vertex in of $P_v-\{v\}$.
+  
+  \item Otherwise, $P$ is entirely contained in $T_0\cup T_v\cup T_w$ for distinct $v,w\in L_\ell$.  Then $P$ is covered by three paths $P_v:=P\cap T-v$, $P_0:=P\cap T_0$ and $P_w:=P\cap T_w$.  The path $P_0$ has a unique maximum colour $\phi\ge\max\{\varphi(v),\varphi(w)\}$.  The colouring of $T_v$ ensures that the vertices of $P_v-\{v\}$ and $P_w-\{w\}$ all have colours less than $\phi$.
+\end{compactitem}  
+
+
+
+
+The following lemma is what allows us to handle the first block.  The purpose of the weighting $(n_v:v\in V(H))$ is to allow us to account for the fact that this first block has more layers attached to it.
 
 \begin{lem}\label{t-tree-slack}
     Let $t,d,\ell,\beta\in\N$ be fixed values, let $k\in\N$ and $c\in\R$ be such that $t\ge 2$ and $\tau(t-1)\le c\le k$; let $H$ be a graph with $\diam(H)\le d$ and $\stw(H)\le t$ in which each vertex $v\in V(H)$ is assigned a real-valued weight $n_v\ge 1$. Then there exists a constant $a:=a(t,\ell,d,\beta)$ such that, if
@@ -932,7 +983,7 @@ As noted in the introduction, several other families of graphs are known to have
 \end{proof}
 
 \subsection{The Dependence on $\ell$}
-\label{dependence}
+\label{dependence-on-ell}
 
 Throughout this section, we have assumed that $\ell$ and $t$ were fixed constants, independent of $n$.  We now describe the dependence of our results on $\ell$.  Since all of our upper bounds are based on \weirdref{simple-t-trees}{a} we begin by discussing \weirdref{simple-t-trees}{a} and its proof, which is the subject of \cref{simple-treewidth-section}.  We will show that, for fixed constant $t$, the bound for \weirdref{simple-t-trees}{a} is easily shown to be $\lrn(G)\in O(\ell^{t-1}\log^t\ell \log n/\log^{(t)} n)$.
 
