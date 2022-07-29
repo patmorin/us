@@ -746,80 +746,64 @@ A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least t
 
 Now we arrive at the combinatorial core of the proof. The main idea is to cover $H$ with a sequence of blocks, each of which consists of $\ell+2$ consecutive BFS layers.  Each pair of consecutive blocks overlaps in a single BFS layer. To convey some intuition about the proof, we first present it for trees, when $\ell=2$ and then for trees when $\ell \ge 2$.
 
-\paragraph{The Proof for Trees when $\ell=2$}
+\paragraph{The Proof for Trees.}
 
-We will now show that, for any $k\ge 3$, that any tree $T$ with $n \le k^k$ vertices has a $2$-vertex ranking $\varphi:V(T)\to\{0,\ldots,ak\}$, for some fixed constant $a$.  Observe that a value of $k\in\Theta(\log n/\log\log n)$ is sufficient to satisfy this requirement, so this gives a (more complicated) proof of the result by \citet{karpas.neiman.ea:on} that $2$-vertex ranking of any $n$-vertex tree can be done using $O(\log n/\log\log n)$ colours.
+We will now show that, for any $k\ge 3$, any tree $T$ with $n \le k^k$ vertices has a $\ell$-vertex ranking $\varphi:V(T)\to\{0,\ldots,\floor{ak}\}$, for some value of $a$ that depends only on $\ell$.  Observe that a value of $k\in\Theta(\log n/\log\log n)$ is sufficient to satisfy this requirement, so this already gives a an extension of the result by \citet{karpas.neiman.ea:on} that $2$-vertex ranking of any $n$-vertex tree can be done using $O(\log n/\log\log n)$ colours.
 
-Let $r$ be the root of $T$. We will prove the stronger result that, if $T$ has $n=k^k/c^c$ vertices, then $T$ has a vertex ranking $\varphi:V(T)\to\{1,\ldots,\floor{ak}\}$ such that $\varphi(r)=\floor{a(k-c-1)}+1$ and $\varphi(v)< \floor{a(k-c-1)}$ for each child and grandchild, $v$, of $r$.\footnote{A \emph{child} of $r$ is a vertex of depth $1$ in $T$, a \emph{grandchild} of $r$ is a vertex of depth $2$ in $T$, and a \emph{great-grandchild}
+Let $r$ be the root of $T$, let $h$ be the height of $T$ and, for each $i\in\{0,\ldots,h\}$, let $L_i$ denote the set of vertices in $T$ that have depth $i$.  For each vertex $v$ in $T$, let $T_v$ be the subtree of $T$ that contains $v$ and all its descendants, let $n_v:=|T_v|$ be the number of vertices in $T_v$, and let $c_v$ be the solution to the equation $k^k/c_v^{c_v} = n_v$.  In other words, $c_v:=\gamma_{0,k}(n_v)$.  Let $c:=c_r$, so $n=k^k/c^c$.  We will prove the following stronger result: 
 
-For each vertex $v$ in $T$, $T_v$ denotes the subtree of $T$ that contains $v$ and all its descendants, $n_v:=|T_v|$ is the number of vertices in $T_v$, and $c_v$ is the solution to the equation $k^k/c_v^{c_v} = n_v$, that is $c_v:=\gamma_{0,k}(n_v)$.
+\begin{quote}
+    $T$ has as $\ell$-vertex ranking $\varphi:V(T)\to\{1,\ldots,\floor{ak}\}$ such that $\varphi(r)=\floor{a(k-c)}+1$ and $\varphi(v)\le \floor{a(k-c)}$ for each vertex $v\in\bigcup_{i=1}^\ell L_i$.
+\end{quote}
 
-We proceed by induction on $n$. In the base case, $n=1$, so $c=k$.  We set $\varphi(r):=\floor{a(k-c-1)}+1=0$. Now suppose $n\ge 2$.  First, for each great-grandchild of $r$ is a node of depth $3$ in $T$.} $v$ of $r$, we apply the inductive hypothesis on the subtree $T_v$ to obtain a $2$-vertex ranking $\varphi$ of the forest $F$ obtained by removing $r$, its children, and grandchildren from $T$.
+We proceed by induction on $n$. In the base case, $n=1$, so $c=k$.  We set $\varphi(r):=\floor{a(k-c)}+1=1$ and we are done.\todo{Change this everywhere} Now suppose $n\ge 2$.  For each $v\in L_{\ell+1}$, apply the inductive hypothesis on the subtree $T_v$ to obtain an $\ell$-vertex ranking $\varphi$ of the forest $F:=T[\bigcup_{i=\ell+1}^h L_i]$.
 
-We say that a great-grandchild $v$ of $r$ is \emph{dangerous} if the subtree $T_v$ that contains $v$ and all its descendants has more than $k^k/(c+1)^{c+1}$ vertices.  Observe that the number $x$ of dangerous great-grandchildren must satisfy:
-$xk^k/(c+1)^{c+1} \le n \le k^k/c^c$, so
+We say that a vertex $v\in L_{\ell+1}$ is \emph{dangerous} if $T_v$ has size $n_v> k^k/(c+1)^{c+1}$ and \emph{harmless} otherwise.  Observe that the number $x$ of dangerous vertices must satisfy $xk^k/(c+1)^{c+1} < n = k^k/c^c$, so
 \[
   x \le \frac{(c+1)^{c+1}}{c^c} = \left(\frac{c+1}{c}\right)^c\cdot(c+1)
-  = (1+1/c)^c\cdot (c+1) < e(c+1)
+  = (1+1/c)^c\cdot (c+1) < e(c+1) \enspace .
 \]
-We modify $\varphi$ by assigning a unique colour $\varphi(v)\in\{\floor{a(k-c-1)+2,\ldots,\floor{ak}}$ to each dangerous great-grandchild of $v$.  The number of colours available is at least $ac-1$\todo{check} and $x < e(c+1)$, so this is always possible, provided that
-% ac-1 > e(c+1)
-% ac > e(c+1) + 1
-% a > (e(c+1) + 1)/c
-% a > e + (e+1)/c
-$a \ge 7 > e + (e+1)/c$.  Observe that this modification can only increase the value of $\varphi(v)$, since $c_v > c$ and the inductive hypothesis ensures that, prior to this modification $\varphi(v)=\floor{a(k-c_v-1)}+1 < \floor{a(k-c-1)}+2$ .  This implies that the modified colouring is still a $2$-vertex ranking of $F$ since, by the inductive hypothesis, $\varphi(v)$ is the largest colour on any path of length at most $2$ that includes $v$.
+We modify $\varphi$ by assigning a unique colour $\varphi(v)\in\{\floor{a(k-c)+2,\ldots,\floor{ak}}$ to each dangerous vertex.  The number of colours available for dangerous vertices is at least $ac-2$ and the number of dangerous vertices is at most $e(c+1)$, so this is always possible, provided that
+% ac-2 \ge e(c+1)
+% ac \ge e(c+1) + 2
+% a \ge (e(c+1) + 2)/c
+% a \ge e + (e+2)/c
+$a \ge 8 > e + (e+2)/c$.  Observe that this modification can only increase the value of $\varphi(v)$, since $c_v \ge c$ and the inductive hypothesis ensures that, prior to this modification $\varphi(v)=\floor{a(k-c_v)}+1 < \floor{a(k-c)}+2$.  This implies that the modified colouring is still a $2$-vertex ranking of $F$ since, by the inductive hypothesis, $\varphi(v)$ is the unique largest colour on any path of length at most $\ell$ that includes $v$.
 
-Next observe that each non-dangerous great-grandchild $w$ of $r$ has a colour $\varphi(w) = \floor{a(k-c_w-1)}+1 \le \floor{a(k-c-2)}+1 < \floor{a(k-c-1)}-2$ for any $a\ge 4$. Extending $\varphi$ to $r$, its children, and its grandchildren is now straightforward. For each grandchild $w$ of $x$ we set $\varphi(w):=\floor{a(k-c-1)}-2$.  For each child of $w$ of $x$ we set $\varphi(w):=\floor{a(k-c-1)}-1$.   Finally, we set $\varphi(x):=\floor{a(k-c-1}+1$, as required.
+Next observe that each harmless vertex $w\in L_{\ell+1}$ has a colour $\varphi(w) = \floor{a(k-c_w)}+1 \le \floor{a(k-c)}+1 < \floor{a(k-c)}-\ell$ for any $a\ge \ell+2$. Extending $\varphi$ to the vertices in $L_0,\ldots,L_{\ell}$ is now straightforward:  For each $i\in\{0,\ldots,\ell\}$ and each $v\in L_i$, set $\varphi(v):=\floor{a(k-c)}+1-i$.
 
-To see that the resulting colouring is indeed a $2$-vertex ranking we make the following observations about any length-$2$ path $P$:
+It is straightforward to check that the resulting colouring $\varphi:V(T)\to\{1,\ldots,\lfloor ak\rfloor\}$ satisfies the stronger conditions of the inductive hypothesis.  To see why $\varphi$ is an $\ell$-vertex ranking of $T$, consider any path $P$ of length at most $\ell$.
 \begin{compactitem}
-  \item If $P$ does not contain any vertex of depth $2$ or less then $P$ contains a unique maximum colour, by the inductive hypothesis.
-  \item If $P$ contains a dangerous vertex $w$, then $\varphi(w)$ is the largest colour in $P$.
-  \item If neither of the preceding two cases applies, then the largest colour in $P$ appears at the minimum-depth node in $P$.
+  \item If $P$ is entirely contained in $T_v$ for some $v\in L_{\ell+1}$, then $P$ has a unique maximum colour by the inductive hypothesis.
+  
+  \item Otherwise, if $P$ contains no dangerous vertices then the unique maximum colour in $P$ occurs at the unique vertex of $P$ that has minimum depth in $T$.
+
+  \item Otherwise, $P$ contains one or two dangerous vertices that have distinct colours and the largest of these is larger than any other colour that appears in $P$.
+\end{compactitem}
+This completes the proof for trees.  Before proceeding to the proof for graphs of simple treewidth $t$, some remarks are in order.  
+
+\begin{compactitem}
+  \item With some small changes, the proof given above also works for simple $2$-trees, i.e., maximal outerplanar graphs.  The differences are as follows:
+  \begin{compactitem}
+      \item For a simple $2$-tree $H$ we use a BFS layering $L_0,\ldots,L_h$ where $L_0$ may contain a single vertex or both endpoints of an edge of $H$, and the  vertices in $L_0$ will receive colours in $\{\floor{a(k-c)+1},\floor{a(k-c)}+2\}$.  
+      \item For each $i\in\{0,\ldots,\ell\}$, the induced graph $H[L_i]$ is a collection of paths, so it is coloured using $\ell+1$ distinct colours in $\{\floor{a(k-c)}+1-i(\ell-1),\ldots,\floor{a(k-c)}+1-(i-1)(\ell-1)\}$.  This works, provided that $a\ge\ell(\ell+1) + 2$.
+  \end{compactitem}
+  
+  \item The proof for simple $t$-trees follows the same general outline of first inductively colouring components of $H[\bigcup_{i=\ell+1}^{h} L_i]$ and increasing the colours of dangerous vertices in layer $L_{\ell+1}$ so that they are all unique.  
+  
+  \item The proof for simple $t$-trees also ensures that the colours of (the at most $t+1$) vertices in $L_0$ are larger than the colours of all vertices in layers $L_1,\ldots,L_\ell$.  
+  
+  \item As consequence of the previous item, each vertex in $\bigcup_{i=0}^\ell L_i$ receives a colour of at most $a(k-c)+1+t$
 \end{compactitem}
 
-\paragraph{The general case}x
+Unfortunately, this is where the similarities end, and for $t\ge 3$ considerable complications appear. The proof for trees and simple $2$-trees described above creates a colouring in which the colours used in layer $i$ are all greater than those used in layer $i+1$, for each $i\in\{0,\ldots,\ell-1\}$.  This works because for a tree $T$, $T[L_i]$ is a graph without edges, which can be coloured with one colour.  For simple $2$-tree $H$, $H[L_i]$ is a collection of paths, which can be coloured with $\ell+1$ colours.
+However, for a simple $t$-tree, the graph $H[L_i]$ is a graph of simple treewidth $t-1$, which can not necessarily be coloured with a number of colours that depends only on $\ell$.  For example, when $H$ is a simple $3$-tree, the graph $H[L_i]$ can contain an arbitrary outerplanar graph on $n'$ vertices, which may require $\Omega(\log n'/\log\log n')$ colours.  Without some control on the size of components in $H[L_i]$, simply  increasing the value of $a$ to accommodate for this will not work, and actually leads to a colouring that uses $\omega(\log n)$ colours.  
 
+We (partially) give up on the idea of using distinct colours for each $H[L_i]$ and instead we use a separator $S\subseteq \bigcup_{i=0}^\ell L_i$ that guarantees that the size of each component of $H[\bigcup_{i=0}^\ell L_i]-S$ is sufficiently small that it can be coloured with colours smaller than $a(k-c-s)$ for some appropriately chosen $s$. For this to work, we need that each component have size at most $(\log^{(t-2)} k)^k/(\log^{(t-2)}(c+s))$.  The situation is complicated further by the fact that the harmless vertices in $L_{\ell+1}$ create lower bounds on the colours of their neighbours in $L_\ell$.  Without these lower bounds, two vertices in distinct components of $H[L_{i+1}]$ might receive the same colour which is smaller than the colour of their common neighbour in $L_\ell$. 
+  
+This still leaves the problem of colouring the vertices in $H':=H[S]$.  It turns out that the number of vertices required to be in $S$ is much greater than $s$, so a na\"ive approach of assigning each vertex in $S$ its own colour does not work.  However, for each $i\in\{0,\ldots,\ell\}$, the structure of $H_i':=H'[L_i]$ is such that, although it may have many vertices, it has a $t-1$-simple tree decomposition with a relatively small number of leaves. \cref{skeleton-colour} addresses exactly this situation and implies that $H'_i$ can be coloured using $O(s)$ colours.  This leaves enough room to colour all of $H'$ using colours in the interval $[\floor{a(k-c-s)}+1,\floor{a(k-c)}]$.  
 
-In the base case, $T$ has at most $3^3$ vertices and each of these can receive a different colour, with the root receiving the colour has height 0 and consists of a single vertex $r$ which can be assi.
-
-For each $i\in\{0\}\cup\N$, let $L_i$ denote the set of vertices of $T$ that have depth $i$ and let $r$ be the root of $T$.  We first observe that if $\varphi$ is an $\ell$-vertex ranking of $T$ with the property that $\varphi(r)= \max\{\varphi(v):v\in L_0,\ldots,L_{\ell}\}$ then increasing the value of $\varphi(r)$ results in a new colouring that is also an $\ell$-vertex ranking of $T$.  To leverage this flexibility, we will ensure that, in our colouring of $T$, $\varphi(r)=\max\{\varphi(v):v\in \bigcup_{i=0}^\ell L_i\}$.
-
-We will actually prove something stronger: If $n\le k^k/c^c$ then $T$ has a vertex ranking $\varphi:V(T)\to \{1\ldots,\lfloor ak\rfloor\}$ in which $\varphi(r) = \lfloor a(k-c-1)\rfloor+1$ and $\varphi(v)< a(k-c-1)$ for each $v\in\bigcup_{j=1}^\ell L_i$.  The proof has two layers of induction, the outer induction is on the height $h$ of $T$.  If $h\le\ell$, then we can set $\varphi(r)=\lceil a(k-c)\rceil+1$ and $\varphi(v):=\lceil a(k-c-1)\rceil-i$ for each $v\in L_i$ and each $i\in\{1,\ldots,\ell\}$.  Since $3^3\le n\le k^k$, $k\ge 3$ and $c \ge 1$.  Therefore, for $a \ge \ell+1$, this gives a colouring $\varphi:V(T)\to\{1,\ldots,ak\}$ and it is straightforward to verify that $\varphi$ is an $\ell$-vertex ranking of $T$.  (In fact, $\varphi$ is a vertex ranking of $T$.) Next we deal with the case in which $h> \ell$.
-
-For each vertex $v\in L_{\ell+1}$, let $n_v$ be the number of vertices in the subtree $T_v$ of $T$ containing $v$ and all its descendants and let $c_v$ be the solution to $k^k/c_v^{c_v}=n_v$.  Since $T_v$ has height at most $h-\ell-1 < h$, we can inductively compute an $\ell$-vertex ranking $\varphi$ of $T_v$ in which $\varphi(v)=\lfloor a(k-c_v-1)\rfloor+1$ and $\varphi(v) < a(k-c_v-1)$ for each $v\in\bigcup_{i=\ell+1}^{2\ell+1}(V(T_v)\cap L_i)$.  Now our job is to extend $\varphi$ to the vertices in $L_0,\ldots,L_{\ell}$.  While doing this, we may increase the colours of the vertices in $L_{\ell+1}$.
-
-To perform this extension, we solve a weighted version of $\ell$-vertex ranking on the subtree $T_0:=T[L_0\cup\cdots\cup L_{\ell+1}]$.  We say that a vertex $v\in L_{\ell+1}$ is \emph{dangerous} if $n_v\ge k^k/(c+1)^{c+1}$, which is equivalent to saying that $c_v \le c+1$.  An easy calculation shows that the number of dangerous vertices is at most $e(c+1)$. These dangerous vertices are dealt with separately, by having their colours reset to a large unique value.\todo{Explain}
-
-In this weighted version, each vertex $v$ is assigned a weight $n_v$ and we require that $\varphi(v)> a(k-c_v-1)$. For each dangerous $v\in L_{\ell+1}$, we set $n_v:=k^k/(c+1)^{c+1}$.  For each non-dangerous $v\in L_\ell$, we set $n_v$ to be equal to the number of vertices in $T_v$. For each $v\in L_0\cup\cdots L_{\ell-1}$ we set $n_v:=1$.  In all cases, $c_v$ is the solution to $k^k/c_v^{c_v}=n_v$.  Observe that $T_0$ has total weight $\sum_{i=0}^\ell\sum_{v\in L_i} n_v \le n$ and no vertex has weight greater than $k^k/(c+1)^{c+1}$.
-
-We solve this weighted problem using an inner induction on the total weight, $n$.  If $n\le a$, then the problem is easily solved.  If $n\ge a$, then we find a set $S$ of $b:=\lceil ek\rceil$ vertices in $T_0$ so that the total weight of each component of $T_0-S$ is at most $n/b$. Let $T_0'$ be the subtree of $T_0$ that includes every ancestor of every vertex in $S$.  Since $T_0'$ has height $\ell$, it has a vertex ranking using $\ell+1$ colours and with a little care we can colour $T_0'$ using the $\sqrt{a}(\ell+1)$ largest colours $\lfloor ak\rfloor-\sqrt{a}(\ell+1)+1,\ldots,\lfloor ak\rfloor$ and also ensure that $\varphi(r):=\lfloor ak\rfloor$ and that $\varphi(v)\ge a k_v$ for each $v\in T_0'$.\footnote{This last claim requires a proof.  In particular, one must show that if a not-yet coloured vertex $v$ is forced to take a colour $\varphi(v)\ge ax$ then $v$ is the root of a subtree of total weight at least $x^x$.}\todo{Now we can explain this.}
-
-All that remains now is to recursively colour the components of $T_0-V(T_0')$.  Each of these components has total weight at most
-\[
-   \frac{n}{b}
-   \le \frac{k^k}{ek}
-   = \frac{k^{k-1}}{e}
-   = \left(\frac{k}{(1+\tfrac{1}{k-1})}\right)^{k-1}
-   = \left(\frac{k}{\tfrac{k}{k-1}}  \right)^{k-1}
-   = (k-1)^{k-1} \enspace .
-\]
-Therefore, each of these components can be coloured using the colours $1,\ldots,a(k-1)$.  If $a \ge (\ell+1)^2$ then the large colours used to colour $T_0'$ are larger than any of the colours used to colour these components.
-
-To see why the resulting colouring is a vertex ranking, consider any path $P$ of length at most $\ell$.
-\begin{compactitem}
-  \item If $P$ is entirely contained in $T_v$ for some $v\in L_\ell$, then $P$ has a unique maximum colour by the outer inductive hypothesis (on $n=|V(T)|$).
-  \item If $P$ is entirely contained in one component of $T_0-V(T_0')$ then $P$ has a unique maximum colour by the inner inductive hypothesis (on the total weight, $n$, of $T_0$).
-  \item If $P$ contains vertices of $T_0'$ and is entirely contained in $T_0$ then the intersection of $P$ with $T_0'$ is a path $P'$.  The path $P'$ has a a unique maximum colour and this colour is larger than any colour used by $V(P)\setminus V(P')$.
-  \item If $P$ is entirely contained in $T_0\cup T_v$ for some $v\in L_\ell$, then, then $P$ is covered by two paths $P_0:=P\cap T_0$ and $P_v:=P\cap T_v$ that both contain $v$. The path $P_0$ has a unique maximum colour $\phi\ge \varphi(v)$. The colouring of $T_v$ ensures that $\phi\ge \varphi(v)$ is greater than the colour of any vertex in of $P_v-\{v\}$.
-
-  \item Otherwise, $P$ is entirely contained in $T_0\cup T_v\cup T_w$ for distinct $v,w\in L_\ell$.  Then $P$ is covered by three paths $P_v:=P\cap T-v$, $P_0:=P\cap T_0$ and $P_w:=P\cap T_w$.  The path $P_0$ has a unique maximum colour $\phi\ge\max\{\varphi(v),\varphi(w)\}$.  The colouring of $T_v$ ensures that the vertices of $P_v-\{v\}$ and $P_w-\{w\}$ all have colours less than $\phi$.
-\end{compactitem}
-
-
-
-
-The following lemma is what allows us to handle the first block.  The purpose of the weighting $(n_v:v\in V(H))$ is to allow us to account for the fact that this first block has more layers attached to it.
+In order for all of this to work, there is a delicate balance between the size of $S$ against the sizes of the components that remain after removing $S$.  As it turns out, setting $s:=\log c/\log^{(t-2)} c$ achieves what we need.  This choice of $S$ appears in the following lemma, which is what we eventually use to colour the vertices in $L_0,\ldots,L_\ell$.  The purpose of the weighting $(n_v:v\in V(H))$ is to deal with the issue, discussed above, with harmless vertices in $L_{\ell+1}$.
 
 \begin{lem}\label{t-tree-slack}
     Let $t,d,\ell,\beta\in\N$ be fixed values, let $k\in\N$ and $c\in\R$ be such that $t\ge 2$ and $\tau(t-1)\le c\le k$; let $H$ be a graph with $\diam(H)\le d$ and $\stw(H)\le t$ in which each vertex $v\in V(H)$ is assigned a real-valued weight $n_v\ge 1$. Then there exists a constant $a:=a(t,\ell,d,\beta)$ such that, if
@@ -833,7 +817,7 @@ The following lemma is what allows us to handle the first block.  The purpose of
      \label{max-weight}
     \end{equation}
     where $s := \log c/\log^{(t-1)} c$,
-    then $H$ has an $\ell$-ranking $\varphi:V(H)\to a(k-c-1)$ such that $\varphi(v)> a(k-\gamma_{t-2,k}(n_v)-1)$ for each $v\in V(H)$.
+    then $H$ has an $\ell$-ranking $\varphi:V(H)\to\{1,\ldots, \floor{a(k-c}-1)$ such that $\varphi(v)> a(k-\gamma_{t-2,k}(n_v)-1)$ for each $v\in V(H)$.
 \end{lem}
 
 \begin{proof}
