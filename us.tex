@@ -928,7 +928,7 @@ Finally, we can prove the technical lemma that implies \weirdref{simple-t-trees}
 
     We now assign weights to the vertices of the graph $H_0:=H[\bigcup_{j=0}^{\ell+1}]$ in such a way that we can apply \cref{t-tree-slack} to $H_0$.  For each $v\in\bigcup_{j=0}^\ell L_j$, we set $n_v:=1$.  For each $v\in L_{\ell+1}$, we set $n_v := \min\{n_0, \kappa_v\}$.  With this assignment of weights, \cref{size-claim} implies that $\sum_{v\in V(H_0)} n_v\le tn \le (\log^{(t-2)} k)^k/(\log^{(t-2)} c)^c$, which satisfies \cref{total-weight} and, by definition, $\max\{n_v:v\in V(H_0)\}\le n_0$ which satisfies \cref{max-weight}.
 
-    Again, we use the shorthand $\gamma_v := \gamma_{t-2,k}(n_v)$.    Therefore, by \cref{t-tree-slack}, $H_{0}$ has an $\ell$-ranking $\varphi:V(H_0)\to\{1,\ldots,\lfloor a(k-c-1)\rfloor\}$ in which $\varphi(v)> a(k-\gamma_v-1)$ for each $v\in V(H_0)$.
+    In the following, we use the shorthand $\gamma_v := \gamma_{t-2,k}(n_v)$.    Therefore, by \cref{t-tree-slack}, $H_{0}$ has an $\ell$-ranking $\varphi:V(H_0)\to\{1,\ldots,\lfloor a(k-c-1)\rfloor\}$ in which $\varphi(v)> a(k-\gamma_v-1)$ for each $v\in V(H_0)$.
     By \cref{size-claim}, the number of dangerous vertices is at most
     \[
         \frac{tn}{n_0} \in O\left(\frac{(\log^{(t-2)} (c+s))^{c+s}}{(\log^{(t-2)} c)^c}\right) \in O(c) \enspace ,
@@ -938,14 +938,14 @@ Finally, we can prove the technical lemma that implies \weirdref{simple-t-trees}
 
     \begin{compactenum}
         \item We set $\varphi(v_i):=\phi_i$ for each $i\in\{1,\ldots,t'\}$.
-        \item For each dangerous vertex $v$, we set $\varphi(v)$ to a distinct value in $\{\lfloor a(k-c-1)\rfloor+1,\ldots,ak\}\setminus\{\phi_1,\ldots,\phi_t\}$. (Since the number of dangerous vertices is $O(c)$, this is always possible.)
+        \item For each dangerous vertex $v$, we set $\varphi(v)$ to a distinct value in $\{\lfloor a(k-c)\rfloor+1,\ldots,ak\}\setminus\{\phi_1,\ldots,\phi_t\}$. (Since the number of dangerous vertices is $O(c)$, this is always possible.)
     \end{compactenum}
     These modifications ensure that $\varphi$ satisfies requirements (R1) and (R2) and, since they only introduce new unique colours larger than any existing colour, they preserve the fact that $\varphi$ is an $\ell$-ranking of $H_0$.
 
     For each component $X$ of $H-H_0$, let $C_X:=L_{\ell+1}\cap N_H(V(X))$ and let $H_X:=H[C_X\cup V(X)]$.  By \cref{up-neighbours}, $|C_X|\le t$. We apply induction on $H_X$ for each component $X$ of $H-H_0$ using colours $\phi_1',\ldots,\phi_{t'}'$ already assigned to the vertices in $C_X$.
-    When we do this, we obtain an $\ell$-ranking of $H_X$ in which each vertex $w$ of $X[\bigcup_{j=\ell+2}^{2\ell+1} L_j]$ receives a colour $\varphi(w) \le a(k-\gamma_{t-2,k}(|H_X|)-1)$.
+    When we do this, we obtain an $\ell$-ranking of $H_X$ in which each vertex $w$ of $X[\bigcup_{j=\ell+2}^{2\ell+1} L_j]$ receives a colour $\varphi(w) \le a(k-\gamma_{t-2,k}(|H_X|))$.
 
-    For each harmless vertex $v\in C_X$, $X$ is a subgraph of $H_v$, so $n_v\ge t+|X|\ge |C_X|+|X|= |H_X|$, so $\gamma_v \le \gamma_{t-2,k}(|H_X|)$. Therefore, for each harmless $v\in C_X$, $\varphi(v)> a(k-\gamma_v-1)\ge\varphi(w)$ for each $w\in V(X)\cap [\bigcup_{j=\ell+2}^{2\ell+1} L_j]$.  For each dangerous vertex $v\in C_X$, $\varphi(v)>a(k-c-1)$.  Since $|H_X|\le|H|$, $\gamma_{t-2,k}(|H_X|) \ge c$.  Therefore each dangerous vertex $v\in C_X$ also receives a colour larger than each vertex $w$ in $X[\bigcup_{j=\ell+2}^{2\ell+1} L_j]$.
+    For each harmless vertex $v\in C_X$, $X$ is a subgraph of $H_v$, so $n_v\ge t+|X|\ge |C_X|+|X|= |H_X|$, so $\gamma_v \le \gamma_{t-2,k}(|H_X|)$. Therefore, for each harmless $v\in C_X$, $\varphi(v)> a(k-\gamma_v)\ge\varphi(w)$ for each $w\in V(X)\cap [\bigcup_{j=\ell+2}^{2\ell+1} L_j]$.  For each dangerous vertex $v\in C_X$, $\varphi(v)>a(k-c)$.  Since $|H_X|\le|H|$, $\gamma_{t-2,k}(|H_X|) \ge c$.  Therefore each dangerous vertex $v\in C_X$ also receives a colour larger than each vertex $w$ in $X[\bigcup_{j=\ell+2}^{2\ell+1} L_j]$.
 
     All that remains is to verify that the resulting colouring is, indeed, an $\ell$-ranking of $H$.  Consider some induced path $u_0,\ldots,u_p$ in $H$ of length $r\le\ell$ such that $\varphi(u_0)=\varphi(u_p)$.  There are some cases to consider:
 
