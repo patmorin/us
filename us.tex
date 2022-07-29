@@ -303,8 +303,8 @@ The \emph{width} of $\mathcal{X}$ is $\max\{|B_x|:x\in V(X)\}-1$. We say that $H
 In the special case where $X$ is a tree (or a forest), $\mathcal{X}$ is called a \emph{tree decomposition} of $H$.  In the still more special case where $X$ is a path (or a collection of disjoint paths), $\mathcal{X}$ is called a \emph{path decomposition} of $H$. The \emph{treewidth} $\tw(H)$ of $H$ is the minimum width of any tree decomposition of $H$. The \emph{pathwidth} $\pw(H)$ of $H$ is the minimum width of any path decomposition of $H$.
 
 \begin{lem}\label{pathwidth-reduction}
-  If $G$ is a graph with $\pw(G)\ge 1$ then $G$ contains a set of vertices $\{v_1,\ldots,v_m\}$ such that 
-  \begin{inparaenum}[(i)] 
+  If $G$ is a graph with $\pw(G)\ge 1$ then $G$ contains a set of vertices $\{v_1,\ldots,v_m\}$ such that
+  \begin{inparaenum}[(i)]
     \item $d_G(v_i,v_j)\ge |i-j|$ for each $i,j\in\{1,\ldots,m\}$; and
     \item $\pw(G-\{v_1,\ldots,v_m\}) \le \pw(G)-1$.
   \end{inparaenum}
@@ -633,8 +633,8 @@ We begin with a few helper lemmas.
         \item $d_G(v_i,v_j) \ge |i-j|$ for each $i,j\in\{1,\ldots,m\}$; and
         \item $\pw(G-\{v_1,\ldots,v_m\})\le \pw(G)-1$.
     \end{inparaenum}
-    Property~(ii) implies that we can therefore inductively colour $G-\{v_1,\ldots,v_m\}$ using colours $\{1,\ldots,(\ell+1)(\pw(G)-1)+1\}$ and then colour each $v_i$ with colour $((\ell+1)(\pw(G)-1)+2+i)\bmod (\ell+1)$. 
-    
+    Property~(ii) implies that we can therefore inductively colour $G-\{v_1,\ldots,v_m\}$ using colours $\{1,\ldots,(\ell+1)(\pw(G)-1)+1\}$ and then colour each $v_i$ with colour $((\ell+1)(\pw(G)-1)+2+i)\bmod (\ell+1)$.
+
     To see that the resulting colouring is an $\ell$-ranking, consider any path $P$ in $G$ of length at most $\ell$.  If $V(P)\cap\{v_1,\ldots,v_m\}=\emptyset$ then $P\subseteq G-\{v_1,\ldots,v_m\}$ has a unique maximum colour by the inductive hypothesis.  Otherwise, by Property (i), each vertex in  $V(P)\cap\{v_1,\ldots,v_m\}$ has a unique colour, which is larger than any colour used by any vertex in $V(P)\setminus\{v_1,\ldots,v_m\}$.  Therefore, the largest colour used by any vertex in $\{v_1,\ldots,v_m\}$ is the unique maximum colour used by any vertex of $P$.
 \end{proof}
 
@@ -744,7 +744,44 @@ A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least t
 
 \subsubsection{The Meat}
 
-Now we arrive at the combinatorial core of the proof. The main idea is to cover $H$ with a sequence of blocks, each of which consists of $\ell+1$ consecutive BFS layers.  Each pair of consecutive blocks overlaps in a single BFS layer.  To convey some intuition about the proof, we first sketch how it can be used to prove that any tree $T$ with $3^3\le n \le k^k$ vertices has an $\ell$-vertex ranking $\varphi:V(T)\to\{1,\ldots,ak\}$, for some $a$ that depends only on $\ell$. [There is no requirement that $k$ be an integer here.]  Note that $k=\Theta(\log n/\log\log n)$ so this is already a non-trivial extension of the result by \citet{karpas.neiman.ea:on} that $2$-vertex ranking of $T$ can be done using $O(\log n/\log\log n)$ colours. 
+Now we arrive at the combinatorial core of the proof. The main idea is to cover $H$ with a sequence of blocks, each of which consists of $\ell+2$ consecutive BFS layers.  Each pair of consecutive blocks overlaps in a single BFS layer. To convey some intuition about the proof, we first present it for trees, when $\ell=2$ and then for trees when $\ell \ge 2$.
+
+\paragraph{The Proof for Trees when $\ell=2$}
+
+We will now show that, for any $k\ge 3$, that any tree $T$ with $n \le k^k$ vertices has a $2$-vertex ranking $\varphi:V(T)\to\{0,\ldots,ak\}$, for some fixed constant $a$.  Observe that a value of $k\in\Theta(\log n/\log\log n)$ is sufficient to satisfy this requirement, so this gives a (more complicated) proof of the result by \citet{karpas.neiman.ea:on} that $2$-vertex ranking of any $n$-vertex tree can be done using $O(\log n/\log\log n)$ colours.
+
+Let $r$ be the root of $T$. We will prove the stronger result that, if $T$ has $n=k^k/c^c$ vertices, then $T$ has a vertex ranking $\varphi:V(T)\to\{1,\ldots,\floor{ak}\}$ such that $\varphi(r)=\floor{a(k-c-1)}+1$ and $\varphi(v)< \floor{a(k-c-1)}$ for each child and grandchild, $v$, of $r$.\footnote{A \emph{child} of $r$ is a vertex of depth $1$ in $T$, a \emph{grandchild} of $r$ is a vertex of depth $2$ in $T$, and a \emph{great-grandchild}
+
+For each vertex $v$ in $T$, $T_v$ denotes the subtree of $T$ that contains $v$ and all its descendants, $n_v:=|T_v|$ is the number of vertices in $T_v$, and $c_v$ is the solution to the equation $k^k/c_v^{c_v} = n_v$, that is $c_v:=\gamma_{0,k}(n_v)$.
+
+We proceed by induction on $n$. In the base case, $n=1$, so $c=k$.  We set $\varphi(r):=\floor{a(k-c-1)}+1=0$. Now suppose $n\ge 2$.  First, for each great-grandchild of $r$ is a node of depth $3$ in $T$.} $v$ of $r$, we apply the inductive hypothesis on the subtree $T_v$ to obtain a $2$-vertex ranking $\varphi$ of the forest $F$ obtained by removing $r$, its children, and grandchildren from $T$.
+
+We say that a great-grandchild $v$ of $r$ is \emph{dangerous} if the subtree $T_v$ that contains $v$ and all its descendants has more than $k^k/(c+1)^{c+1}$ vertices.  Observe that the number $x$ of dangerous great-grandchildren must satisfy:
+$xk^k/(c+1)^{c+1} \le n \le k^k/c^c$, so
+\[
+  x \le \frac{(c+1)^{c+1}}{c^c} = \left(\frac{c+1}{c}\right)^c\cdot(c+1)
+  = (1+1/c)^c\cdot (c+1) < e(c+1)
+\]
+We modify $\varphi$ by assigning a unique colour $\varphi(v)\in\{\floor{a(k-c-1)+2,\ldots,\floor{ak}}$ to each dangerous great-grandchild of $v$.  The number of colours available is at least $ac-1$\todo{check} and $x < e(c+1)$, so this is always possible, provided that
+% ac-1 > e(c+1)
+% ac > e(c+1) + 1
+% a > (e(c+1) + 1)/c
+% a > e + (e+1)/c
+$a \ge 7 > e + (e+1)/c$.  Observe that this modification can only increase the value of $\varphi(v)$, since $c_v > c$ and the inductive hypothesis ensures that, prior to this modification $\varphi(v)=\floor{a(k-c_v-1)}+1 < \floor{a(k-c-1)}+2$ .  This implies that the modified colouring is still a $2$-vertex ranking of $F$ since, by the inductive hypothesis, $\varphi(v)$ is the largest colour on any path of length at most $2$ that includes $v$.
+
+Next observe that each non-dangerous great-grandchild $w$ of $r$ has a colour $\varphi(w) = \floor{a(k-c_w-1)}+1 \le \floor{a(k-c-2)}+1 < \floor{a(k-c-1)}-2$ for any $a\ge 4$. Extending $\varphi$ to $r$, its children, and its grandchildren is now straightforward. For each grandchild $w$ of $x$ we set $\varphi(w):=\floor{a(k-c-1)}-2$.  For each child of $w$ of $x$ we set $\varphi(w):=\floor{a(k-c-1)}-1$.   Finally, we set $\varphi(x):=\floor{a(k-c-1}+1$, as required.
+
+To see that the resulting colouring is indeed a $2$-vertex ranking we make the following observations about any length-$2$ path $P$:
+\begin{compactitem}
+  \item If $P$ does not contain any vertex of depth $2$ or less then $P$ contains a unique maximum colour, by the inductive hypothesis.
+  \item If $P$ contains a dangerous vertex $w$, then $\varphi(w)$ is the largest colour in $P$.
+  \item If neither of the preceding two cases applies, then the largest colour in $P$ appears at the minimum-depth node in $P$.
+\end{compactitem}
+
+\paragraph{The general case}x
+
+
+In the base case, $T$ has at most $3^3$ vertices and each of these can receive a different colour, with the root receiving the colour has height 0 and consists of a single vertex $r$ which can be assi.
 
 For each $i\in\{0\}\cup\N$, let $L_i$ denote the set of vertices of $T$ that have depth $i$ and let $r$ be the root of $T$.  We first observe that if $\varphi$ is an $\ell$-vertex ranking of $T$ with the property that $\varphi(r)= \max\{\varphi(v):v\in L_0,\ldots,L_{\ell}\}$ then increasing the value of $\varphi(r)$ results in a new colouring that is also an $\ell$-vertex ranking of $T$.  To leverage this flexibility, we will ensure that, in our colouring of $T$, $\varphi(r)=\max\{\varphi(v):v\in \bigcup_{i=0}^\ell L_i\}$.
 
@@ -760,24 +797,24 @@ We solve this weighted problem using an inner induction on the total weight, $n$
 
 All that remains now is to recursively colour the components of $T_0-V(T_0')$.  Each of these components has total weight at most
 \[
-   \frac{n}{b} 
-   \le \frac{k^k}{ek} 
+   \frac{n}{b}
+   \le \frac{k^k}{ek}
    = \frac{k^{k-1}}{e}
    = \left(\frac{k}{(1+\tfrac{1}{k-1})}\right)^{k-1}
-   = \left(\frac{k}{\tfrac{k}{k-1}}  \right)^{k-1} 
+   = \left(\frac{k}{\tfrac{k}{k-1}}  \right)^{k-1}
    = (k-1)^{k-1} \enspace .
 \]
 Therefore, each of these components can be coloured using the colours $1,\ldots,a(k-1)$.  If $a \ge (\ell+1)^2$ then the large colours used to colour $T_0'$ are larger than any of the colours used to colour these components.
 
-To see why the resulting colouring is a vertex ranking, consider any path $P$ of length at most $\ell$.  
+To see why the resulting colouring is a vertex ranking, consider any path $P$ of length at most $\ell$.
 \begin{compactitem}
   \item If $P$ is entirely contained in $T_v$ for some $v\in L_\ell$, then $P$ has a unique maximum colour by the outer inductive hypothesis (on $n=|V(T)|$).
-  \item If $P$ is entirely contained in one component of $T_0-V(T_0')$ then $P$ has a unique maximum colour by the inner inductive hypothesis (on the total weight, $n$, of $T_0$).  
+  \item If $P$ is entirely contained in one component of $T_0-V(T_0')$ then $P$ has a unique maximum colour by the inner inductive hypothesis (on the total weight, $n$, of $T_0$).
   \item If $P$ contains vertices of $T_0'$ and is entirely contained in $T_0$ then the intersection of $P$ with $T_0'$ is a path $P'$.  The path $P'$ has a a unique maximum colour and this colour is larger than any colour used by $V(P)\setminus V(P')$.
   \item If $P$ is entirely contained in $T_0\cup T_v$ for some $v\in L_\ell$, then, then $P$ is covered by two paths $P_0:=P\cap T_0$ and $P_v:=P\cap T_v$ that both contain $v$. The path $P_0$ has a unique maximum colour $\phi\ge \varphi(v)$. The colouring of $T_v$ ensures that $\phi\ge \varphi(v)$ is greater than the colour of any vertex in of $P_v-\{v\}$.
-  
+
   \item Otherwise, $P$ is entirely contained in $T_0\cup T_v\cup T_w$ for distinct $v,w\in L_\ell$.  Then $P$ is covered by three paths $P_v:=P\cap T-v$, $P_0:=P\cap T_0$ and $P_w:=P\cap T_w$.  The path $P_0$ has a unique maximum colour $\phi\ge\max\{\varphi(v),\varphi(w)\}$.  The colouring of $T_v$ ensures that the vertices of $P_v-\{v\}$ and $P_w-\{w\}$ all have colours less than $\phi$.
-\end{compactitem}  
+\end{compactitem}
 
 
 
