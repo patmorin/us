@@ -109,11 +109,10 @@
 
 % A sequence of integers $\phi_0,\ldots,\phi_p$ is \emph{ranked} if $\max\{\phi_0,\ldots,\phi_p\}$ occurs exactly once in $\phi_0,\ldots,\phi_p$.
 
-A \emph{colouring} $\varphi:V(G)\to \N$ of a graph $G$ is an \emph{$\ell$-ranking} of $G$ if, for every non-trivial path $u_0,\ldots,u_p$ in $G$ of length\footnote{The length of a path $u_0,\ldots,u_p$ is the number, $p$, of edges in the path. A path is \emph{trivial} if its length is 0 and non-trivial otherwise.} at most $\ell$,
-\begin{inparaenum}[(i)]
-    \item $\varphi(u_0)\neq\varphi(u_p)$; or \item $\varphi(u_0)<\max\{\varphi(u_0),\ldots,\varphi(u_p)\}$.
-\end{inparaenum}
-The $\ell$-ranking number $\chi_\ell(G)$ of $G$ is the minimum integer $k$ such that $G$ has an $\ell$-ranking $\varphi:V(G)\to \{1,\ldots,k\}$.  Note that, for any $\ell\ge 1$ any $\ell$-ranking of $G$ is a proper colouring\footnote{A colouring $\varphi:V(G)\to \N$ is \emph{proper} if, for each edge $vw\in E(G)$, $\varphi(v)\neq\varphi(w)$ and the \emph{chromatic number}, $\chi(G)$, of $G$ is the minimum integer $k$ such that there exists a proper colouring $\varphi:V(G)\to\{1,\ldots,k\}$ of $G$.} of $G$, so $\chi(G)\le \chi_\ell(G)$, and any proper colouring of $G$ is a 1-ranking of $G$, so $\chi(G)=\chi_1(G)$.
+A \emph{colouring} $\varphi:V(G)\to \N$ of a graph $G$ is a \emph{(vertex) $\ell$-ranking} of $G$ if, for every connected non-empty subgraph $X\subseteq G$ of diameter\footnote{The \emph{length} of a path $u_0,\ldots,u_p$ is the number, $p$, of edges in the path. A path is \emph{trivial} if its length is 0 and non-trivial otherwise. The \emph{distance} between two vertices $v$ and $w$ in a graph is the length of a shortest path that contains $v$ and $w$, or $\infty$ if $v$ and $w$ are in different components of $G$. The \emph{diameter} of a graph $G$ is the maximum distance between any pair of vertices in $G$.}  at most $\ell$, there exists exactly one vertex $v\in V(X)$ such that $\varphi(v)=\max\{\varphi(w):w\in V(X)\}$.
+\todo{Move the alternative definition somewhere}
+
+The $\ell$-ranking number $\lrn(G)$ of $G$ is the minimum integer $k$ such that $G$ has an $\ell$-ranking $\varphi:V(G)\to \{1,\ldots,k\}$.  Note that, for any $\ell\ge 1$ any $\ell$-ranking of $G$ is a proper colouring\footnote{A colouring $\varphi:V(G)\to \N$ is \emph{proper} if, for each edge $vw\in E(G)$, $\varphi(v)\neq\varphi(w)$ and the \emph{chromatic number}, $\chi(G)$, of $G$ is the minimum integer $k$ such that there exists a proper colouring $\varphi:V(G)\to\{1,\ldots,k\}$ of $G$.} of $G$, so $\chi(G)\le \lrn(G)$, and any proper colouring of $G$ is a 1-ranking of $G$, so $\chi(G)=\chi_1(G)$.
 
 Besides the case $\ell=1$, two cases have received special attention: An $\infty$-ranking is called a \emph{vertex ranking} or \emph{ordered colouring}. The parameter $\chi_\infty(G)$ is called the \emph{vertex ranking number} of $G$ and has applications to matrix factorization \cite{bodlaender.gilbert.ea:approximating,duff.reid:multifrontal,liu:role,dereniowski.kubale:cholesky}, VLSI layout \cite{leiserson:area,sen.deng.ea:on}, and the analysis of online algorithms \cite{even.smorodinsky:hitting}. The case $\ell=2$ has also received special attention \cite{almeter.demircan.ea:graph,karpas.neiman.ea:on,shalu.antony:complexity}. A $2$-ranking is called a \emph{unique-superior colouring} by \citet{karpas.neiman.ea:on} who prove the following result:
 
@@ -189,7 +188,7 @@ It is not hard to see that, even for an $n$-vertex path $P$, $\chi_\infty(P)\in\
 
 \subsubsection{$2$-Ranking}
 
-At least three works have considered $\chi_\ell$ for finite $\ell$ with a focus on the case $\ell=2$.  These results are summarized in \cref{summary-table}.
+At least three works have considered $\lrn$ for finite $\ell$ with a focus on the case $\ell=2$.  These results are summarized in \cref{summary-table}.
 
 
 \begin{table}
@@ -220,7 +219,7 @@ At least three works have considered $\chi_\ell$ for finite $\ell$ with a focus 
 \end{table}
 
 
-\citet{karpas.neiman.ea:on} proved \cref{trees}---a tight bound of $\trn(T)\in O(\log n/\log\log n)$ for every $n$-vertex tree $T$---and \cref{planar-graphs}---the upper bound $\trn(G)\in O(\log n)$ for every $n$-vertex planar graph $G$.  More generally, the same authors show that, for any proper minor-closed family $\mathcal{G}$ of graphs and, for every positive integer $\ell$, $\chi_\ell(G)\in O(\ell\log n)$ for every $n$-vertex $G\in\mathcal{G}$.  They also show that, for fixed $d$, every $n$-vertex $d$-degenerate graph $G$ has $\trn(G)\in O(\sqrt{n})$ and there exists examples with $\trn(G)\in\Omega(n^{1/3})$.
+\citet{karpas.neiman.ea:on} proved \cref{trees}---a tight bound of $\trn(T)\in O(\log n/\log\log n)$ for every $n$-vertex tree $T$---and \cref{planar-graphs}---the upper bound $\trn(G)\in O(\log n)$ for every $n$-vertex planar graph $G$.  More generally, the same authors show that, for any proper minor-closed family $\mathcal{G}$ of graphs and, for every positive integer $\ell$, $\lrn(G)\in O(\ell\log n)$ for every $n$-vertex $G\in\mathcal{G}$.  They also show that, for fixed $d$, every $n$-vertex $d$-degenerate graph $G$ has $\trn(G)\in O(\sqrt{n})$ and there exists examples with $\trn(G)\in\Omega(n^{1/3})$.
 
 \citet{shalu.antony:complexity} show that determining the minimum number of colours required by a 2-ranking of a given graph is NP-hard, even when restricted to planar bipartite graphs.  \citet{almeter.demircan.ea:graph} determine the exact value of $\trn(Q_d)=d+1$ where $Q_d$ is the $d$-cube.  They also show that, for graphs $G$ of maximum degree 3, $\trn(G)\le 7$ and show the existence of a graph with maximum degree $k$ such that $\trn(G)\in\Omega(k^2/\log k)$.
 
@@ -237,7 +236,9 @@ Every 2-ranking is a star colouring and every distance-2 colouring is a 2-rankin
 
 \subsubsection{Centered and Conflict-Free Colouring}
 
-It is not hard to see that any colouring $\varphi$ of $G$ is a vertex $\ell$-ranking if and only if, for every (connected) subgraph $X\subseteq G$ of diameter at most $\ell$, there there is exactly one vertex $v\in V(X)$ such that $\varphi(v)=\max\{\varphi(v):v\in V(X)\}$. This makes 2-ranking a stronger notion than \emph{conflict-free} colouring which requires that, for each vertex $v$ of $G$, some vertex $w$ in the closed neighbourhood $N_G[v]$ has a colour $\varphi(w)$ distinct from every other vertex in $N_G[v]$ \cite{pach.tardos:conflict-free,glebov.szabo.ea:conflict-free,gargano.rescigno:complexity}.
+% It is not hard to see that any colouring $\varphi$ of $G$ is an $\ell$-ranking if and only if, for every (connected) subgraph $X\subseteq G$ of diameter at most $\ell$, there there is exactly one vertex $v\in V(X)$ such that $\varphi(v)=\max\{\varphi(v):v\in V(X)\}$.
+
+$2$-ranking is a stronger notion than \emph{conflict-free} colouring which requires that, for each vertex $v$ of $G$, some vertex $w$ in the closed neighbourhood $N_G[v]$ has a colour $\varphi(w)$ distinct from every other vertex in $N_G[v]$ \cite{pach.tardos:conflict-free,glebov.szabo.ea:conflict-free,gargano.rescigno:complexity}.
 
 The set of subgraphs of diameter at most $\ell$ includes all connected subgraphs with at most $\ell+1$ vertices.  In a \emph{$p$-centered colouring} any connected subgraph $X$ must be assigned at least $p+1$ distinct colours or have a colour that occurs exactly once \cite{nesetril.ossona:tree-depth,nesetril.ossona:grad,zhu:colouring}.  This implies that in a $p$-centered colouring, every connected subgraph of with less than $2p$ vertices must have a colour that occurs exactly once.
 
@@ -252,7 +253,28 @@ The remainder of this paper is organized as follows: \Cref{sec:basics} reviews s
 
 In this paper we use standard graph theory terminology as used in the book by \citet{diestel:graph}.  Every graph $G$ we consider is finite, simple, and undirected with vertex set denoted by $V(G)$ and edge set denoted by $E(G)$.  We use the shorthand $|G|:=|V(G)|$ to denote the number of vertices in $G$.  We use $N_G(v):=\{w\in V(G): vw\in E(G)\}$ to denote the \emph{open neighbourhood} of $v$ in $G$. For any $S\subseteq V(G)$, $N_G(S):=\bigcup_{v\in S} N_G(v)\setminus S$.  For each $n\in\N$, $K_n$ denotes the complete graph on $n$ vertices.  The \emph{length} of a path $u_0,\ldots,u_p$ in $G$ is equal to the number, $p$, of edges in the path. A path is \emph{trivial} if it has length 0 and \emph{non-trivial} otherwise.
 
-For any set $S$, $G[S]$ is the graph with vertex set $V(G[S]):=V(G)\cap S$ and edge set $E(G[S]):=\{vw\in E(G): \{v,w\}\subseteq S\}$, and $G-S:=G[V(G)\setminus S]$.  We say that a subgraph $G'$ of $G$ is an \emph{induced} subgraph of $G$ if $G[V(G')]=G'$.  For vertex rankings, it suffices to consider induced paths:
+For any set $S$, $G[S]$ is the graph with vertex set $V(G[S]):=V(G)\cap S$ and edge set $E(G[S]):=\{vw\in E(G): \{v,w\}\subseteq S\}$, and $G-S:=G[V(G)\setminus S]$.  We say that a subgraph $G'$ of $G$ is an \emph{induced} subgraph of $G$ if $G[V(G')]=G'$.  Although $\ell$-ranking is defined in terms of subgraphs of diameter at most $\ell$, it is more convenient to use an equivalent definition based on paths:\footnote{Definition (c) is, in fact, the definition used by \citet{karpas.neiman.ea:on}. We only provide a proof of equivalence here for the sake of completeness.}
+
+\begin{obs}
+  For any graph $G$, any vertex colouring $\varphi:V(G)\to\N$, and any $\ell\in\N$ the following statements are equivalent:
+  \begin{compactenum}[(a)]
+    \item $\varphi$ is an $\ell$-ranking of $G$.
+    \item For every non-trivial path $u_0,\ldots,u_p$ in $G$ of length at most $\ell$, there is exactly one $i\in\{0,\ldots,p\}$ such that $\varphi(u_i)=\max\{\varphi(u_j):j\in\{0,\ldots,p\}\}$.
+    \item For every non-trivial path $u_0,\ldots,u_p$ in $G$ of length at most $\ell$,
+  \begin{inparaenum}[(i)]
+    \item $\varphi(u_0)\neq\varphi(u_p)$; or \item $\varphi(u_0)<\max\{\varphi(u_0),\ldots,\varphi(u_p)\}\}$.
+  \end{inparaenum}
+  \end{compactenum}
+\end{obs}
+
+\begin{proof}
+  That $(a)\Rightarrow (b)$ follows immediately from the fact that every path in $G$ is length at most $\ell$ is a connected subgraph of $G$ of diameter at most $\ell$.  To see that $(b)\Rightarrow(c)$ observe that, if $\varphi(u_0)=\max\{\varphi(u_j):j\in\{0,\ldots,p\}\}$, then $\varphi(u_0)\neq\varphi(u_p)$.  Otherwise, $\varphi(u_0)<\max\{\varphi(u_j):j\in\{0,\ldots,p\}\}$.
+
+  To see that $(c)\Rightarrow (a)$ we prove the contrapositive $\neg(a)\Rightarrow\neg(c)$. Suppose that $\varphi$ is not an $\ell$-ranking of $G$. Then $G$ contains a subgraph $X$ of diameter at most $\ell$ and two vertices $v,w\in V(X)$ such that $\varphi(v)=\varphi(w)=\max\{\varphi(u):u\in V(X)\}$.  Then let $u_0,\ldots,u_p$ be a shortest path in $X$ from $u_0:=v$ to $u_p:=w$.  This path has length $p\le\diam(X)\le\ell$, $\varphi(u_0)=\varphi(u_p)$ and $\varphi(u_0)\not<\max\{\varphi(u_j):j\in\{0,\ldots,p\}\}$.
+\end{proof}
+
+
+It suffices to consider induced paths:
 
 \begin{obs}\label{induced-paths-only}
     A colouring $\varphi:V(G)\to\N$ of a graph $G$ is an $\ell$-ranking of $G$ if and only if, for every induced path $u_0,\ldots,u_p$ in $G$ of length at most $\ell$,
@@ -575,7 +597,7 @@ The lower bound construction in this section gives some guidance on how to obtai
 \section{Upper Bounds}
 \label{upper-bounds}
 
-In this section we prove asymptotically tight bounds for the worst-case number of colours needed for $\ell$-ranking simple treewidth-$t$ graphs, treewidth-$t$ graphs, planar graphs, and bounded genus graphs. In order to avoid complicating an already technically demanding proof, for the rest of this section we will treat $\ell$ and $t$ as fixed constants independent of $n$ and other parameters that are unbounded, so that $f(\ell,t)\in O(1)$ for any function $f:\N\times\N\to\N$.  At the end of this section, in \cref{dependence-on-ell} we discuss the dependence of $\trn$ on $\ell$.
+In this section we prove asymptotically tight bounds for the worst-case number of colours needed for $\ell$-ranking simple treewidth-$t$ graphs, treewidth-$t$ graphs, planar graphs, and bounded genus graphs. In order to avoid complicating an already technically demanding proof, for the rest of this section we will treat $\ell$ and $t$ as fixed constants independent of $n$ and other parameters that are unbounded, so that $f(\ell,t)\in O(1)$ for any function $f:\N\times\N\to\N$.  At the end of this section, in \cref{dependence-on-ell} we discuss the dependence of $\lrn$ on $\ell$.
 
 
 \subsection{Simple Treewidth-$t$ Graphs}
@@ -990,6 +1012,7 @@ We now prove the upper bound in \cref{bounded-genus}. A graph $G$ is an \emph{ap
 \end{thm}
 
 \begin{proof}[Proof of \cref{bounded-genus}]
+    \todo{Update this to use the new result on bounded genus graphs.}
     Apply \cref{product-structure-genus} to $G$ to obtain the graph $H$, path $P$, and apex vertex $v_0\in V(H)$.  By \cref{planar} there exists an $\ell$-ranking $\varphi:V(H-\{v_0\})\to \{1,\ldots,k\}$ with $k\in O(\log n/\log^{(3)} n)$. Setting $\varphi(v_0):=k+1$ then gives an $\ell$-ranking of $H$, so $\lrn(H)\le k+1\in O(\log n/\log^{(3)} n)$.  The same argument used to show that $\dlcn(K_3\boxtimes P)\le 3(\ell+1)$ (\cref{dumb}) shows that $\dtcn(K_{\max\{2g,3\}}\boxtimes P)\le \max\{2g+3\}\cdot(\ell+1)$.  \cref{bounded-genus} now follows from \cref{product-lemma}.
 \end{proof}
 
@@ -1066,7 +1089,7 @@ Using this refinement of \cref{simple-t-trees} gives the following refined versi
 
 We have given asymptotically optimal bounds on the number of colours required by $\ell$-rankings of $n$-vertex graphs of treewidth $t$, graphs of simple treewidth $t$, planar 3-trees, outerplanar graphs, and planar graphs.  Prior to this work, the best known bounds for planar graphs were $\Omega(\log n/\log\log n)$ (trees) and $O(\log n)$.
 
-Our upper bounds are constructive and lead to straightforward $O(n)$ time algorithms for finding $\ell$-rankings of (simple) treewidth $t$ graphs, including planar 3-trees, and outerplanar graphs.  For planar graphs, we require an algorithmic version of \cref{product-structure}. Currently, the fastest such algorithm runs in $O(n\log n)$ time \cite{morin:fast}.
+Our upper bounds are constructive and lead to straightforward $O(n)$ time algorithms for finding $\ell$-rankings of (simple) treewidth $t$ graphs, including planar 3-trees, and outerplanar graphs.  For planar graphs, we require an algorithmic version of \cref{product-structure}. Currently, the fastest such algorithm runs in $O(n\log n)$ time \cite{morin:fast}.\todo{Update to reflect linear time algorithm.}
 
 % Two directions for future work stand out:
 % \begin{inparaenum}[(i)]
