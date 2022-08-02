@@ -744,13 +744,13 @@ A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least t
 
 \subsubsection{The Meat}
 
-Now we arrive at the combinatorial core of the proof. The main idea is to cover $H$ with a sequence of blocks, each of which consists of $\ell+2$ consecutive BFS layers.  Each pair of consecutive blocks overlaps in a single BFS layer. To convey some intuition about the proof, we first present it for trees.
+Now we arrive at the combinatorial core of the proof. The main idea is to cover $H$ with a sequence of overlapping blocks, each of which consists of $\ell+2$ consecutive BFS layers.  Each pair of consecutive blocks overlaps in a single BFS layer. To convey some intuition about the proof, we first present it for trees.
 
 \paragraph{The Proof for Trees.}
 
-We will now show that, for any $k\ge 3$, any tree $T$ with $n \le k^k$ vertices has a $\ell$-ranking $\varphi:V(T)\to\{0,\ldots,\floor{ak}\}$, for some value of $a$ that depends only on $\ell$.  Observe that a value of $k\in\Theta(\log n/\log\log n)$ is sufficient to satisfy this requirement, so this already gives a an extension of the result by \citet{karpas.neiman.ea:on} that $2$-vertex ranking of any $n$-vertex tree can be done using $O(\log n/\log\log n)$ colours.
+We will now show that, for any $k\ge 3$,\todo{Do we need this restriction on $k$?} any tree $T$ with $n \le k^k$ vertices has a $\ell$-ranking $\varphi:V(T)\to\{0,\ldots,\floor{ak}\}$, for some value of $a$ that depends only on $\ell$.  Observe that a value of $k\in\Theta(\log n/\log\log n)$ is sufficient to satisfy this requirement, so this already gives a an extension of the result by \citet{karpas.neiman.ea:on} that $2$-vertex ranking of any $n$-vertex tree can be done using $O(\log n/\log\log n)$ colours.
 
-Let $r$ be the root of $T$, let $h$ be the height of $T$ and, for each $i\in\{0,\ldots,h\}$, let $L_i$ denote the set of vertices in $T$ that have depth $i$.  For each vertex $v$ in $T$, let $T_v$ be the subtree of $T$ that contains $v$ and all its descendants, let $n_v:=|T_v|$ be the number of vertices in $T_v$, and let $c_v$ be the solution to the equation $k^k/c_v^{c_v} = n_v$.  In other words, $c_v:=\gamma_{0,k}(n_v)$.  Let $c:=c_r$, so $n=k^k/c^c$.  We will prove the following stronger result: 
+Let $r$ be the root of $T$, let $h$ be the height of $T$ and, for each $i\in\{0,\ldots,h\}$, let $L_i$ denote the set of vertices in $T$ that have depth $i$.  For each vertex $v$ in $T$, let $T_v$ be the subtree of $T$ that contains $v$ and all its descendants, let $n_v:=|T_v|$ be the number of vertices in $T_v$, and let $c_v$ be the solution to the equation $k^k/c_v^{c_v} = n_v$.  In other words, $c_v:=\gamma_{0,k}(n_v)$.  Let $c:=c_r$, so $n=k^k/c^c$.  We will prove the following stronger result:
 
 \begin{quote}
     $T$ has as $\ell$-ranking $\varphi:V(T)\to\{1,\ldots,\floor{ak}\}$ such that $\varphi(r)=\floor{a(k-c)}+1$ and $\varphi(v)\le \floor{a(k-c)}$ for each vertex $v\in\bigcup_{i=1}^\ell L_i$.
@@ -775,33 +775,36 @@ Next observe that each harmless vertex $w\in L_{\ell+1}$ has a colour $\varphi(w
 It is straightforward to check that the resulting colouring $\varphi:V(T)\to\{1,\ldots,\lfloor ak\rfloor\}$ satisfies the stronger conditions of the inductive hypothesis.  To see why $\varphi$ is an $\ell$-vertex ranking of $T$, consider any path $P$ of length at most $\ell$.
 \begin{compactitem}
   \item If $P$ is entirely contained in $T_v$ for some $v\in L_{\ell+1}$, then $P$ has a unique maximum colour by the inductive hypothesis.
-  
+
   \item Otherwise, if $P$ contains no dangerous vertices then the unique maximum colour in $P$ occurs at the unique vertex of $P$ that has minimum depth in $T$.
 
   \item Otherwise, $P$ contains one or two dangerous vertices that have distinct colours and the largest of these is larger than any other colour that appears in $P$.
 \end{compactitem}
-This completes the proof for trees.  Before proceeding to the proof for graphs of simple treewidth $t$, some remarks are in order.  
+This completes the proof for trees.  Before proceeding to the proof for graphs of simple treewidth $t$, some remarks are in order.
 
 \begin{compactitem}
   \item With some small changes, the proof given above also works for simple $2$-trees, i.e., maximal outerplanar graphs.  The differences are as follows:
   \begin{compactitem}
-      \item For a simple $2$-tree $H$ we use a BFS layering $L_0,\ldots,L_h$ where $L_0$ may contain a single vertex or both endpoints of an edge of $H$, and the  vertices in $L_0$ will receive colours in $\{\floor{a(k-c)+1},\floor{a(k-c)}+2\}$.  
+      \item For a simple $2$-tree $H$ we use a BFS layering $L_0,\ldots,L_h$ where $L_0$ may contain a single vertex or both endpoints of an edge of $H$, and the  vertices in $L_0$ will receive colours in $\{\floor{a(k-c)}+1,\floor{a(k-c)}+2\}$.
       \item For each $i\in\{0,\ldots,\ell\}$, the induced graph $H[L_i]$ is a collection of paths, so it is coloured using $\ell+1$ distinct colours in $\{\floor{a(k-c)}+1-i(\ell-1),\ldots,\floor{a(k-c)}+1-(i-1)(\ell-1)\}$.  This works, provided that $a\ge\ell(\ell+1) + 2$.
   \end{compactitem}
-  
-  \item Our proof for simple $t$-trees follows the same general outline of first inductively colouring components of $H[\bigcup_{i=\ell+1}^{h} L_i]$ and increasing the colours of dangerous vertices in layer $L_{\ell+1}$ so that they are all unique.  
-  
-  \item Our proof for simple $t$-trees also ensures that the colours of (the at most $t+1$) vertices in $L_0$ are larger than the colours of all vertices in layers $L_1,\ldots,L_\ell$.  
-  
-  \item As consequence of the previous item, each vertex in $\bigcup_{i=0}^\ell L_i$ receives a colour of at most $a(k-c)+1+t$
+
+  \item Our proof for simple $t$-trees follows the same general outline of first inductively colouring components of $H[\bigcup_{i=\ell+1}^{h} L_i]$ and increasing the colours of dangerous vertices in layer $L_{\ell+1}$ so that they are all unique.
+
+  \item Our proof for simple $t$-trees also ensures that the colours of (the at most $t+1$) vertices in $L_0$ are larger than the colours of all vertices in layers $L_1,\ldots,L_\ell$.
+
+  \item As a consequence of the previous item, each vertex in $\bigcup_{i=0}^\ell L_i$ receives a colour of at most $a(k-c)+1+t$
 \end{compactitem}
 
-Unfortunately, this is where the similarities end, and for $t\ge 3$ considerable complications appear that are not present for $t=2$. The proof for trees and simple $2$-trees described above creates a colouring in which the colours used in layer $i$ are all greater than those used in layer $i+1$, for each $i\in\{0,\ldots,\ell-1\}$.  This works because for a tree $T$, $T[L_i]$ is a graph without edges, which can be coloured with one colour.  For simple $2$-tree $H$, $H[L_i]$ is a collection of paths, which can be coloured with $\ell+1$ colours.
-However, for a simple $t$-tree, the graph $H[L_i]$ is a graph of simple treewidth $t-1$, which can not necessarily be coloured with a number of colours that depends only on $\ell$.  For example, when $H$ is a simple $3$-tree, the graph $H[L_i]$ can contain an arbitrary outerplanar graph on $n'$ vertices, which may require $\Omega(\log n'/\log\log n')$ colours.  Without some control on the size of components in $H[L_i]$, simply  increasing the value of $a$ to accommodate for this will not work, and actually leads to a colouring that uses $\omega(\log n)$ colours.  
+Unfortunately, this is where the similarities end, and for $t\ge 3$ considerable complications appear that are not present for $t=2$. In short, this happens because, for $t\ge 3$, the graph $H[L_i]$ within each layer may require a number of colours that is not bounded by any function of $\ell$.
 
-We (partially) give up on the idea of using distinct colours for each $H[L_i]$ and instead we use a separator $S\subseteq \bigcup_{i=0}^\ell L_i$ that guarantees that the size of each component of $H[\bigcup_{i=0}^\ell L_i]-S$ is sufficiently small that it can be coloured with colours smaller than $a(k-c-s)$ for some appropriately chosen $s$. For this to work, we need that each component have size at most $(\log^{(t-2)} k)^k/(\log^{(t-2)}(c+s))$.  The situation is complicated further by the fact that the harmless vertices in $L_{\ell+1}$ create lower bounds on the colours of their neighbours in $L_\ell$.  Without these lower bounds, two vertices in distinct components of $H[L_{\ell+1}]$ might receive the same colour which is smaller than the colour of their common neighbour in $L_\ell$. 
-  
-This still leaves the problem of colouring the vertices in $H':=H[S]$.  It turns out that the number of vertices required to be in $S$ is much greater than $s$, so a na\"ive approach of assigning each vertex in $S$ its own colour does not work.  However, for each $i\in\{0,\ldots,\ell\}$, the structure of $H_i':=H'[L_i]$ is such that, although it may have many vertices, it has a $t-1$-simple tree decomposition with a relatively small number of leaves. \cref{skeleton-colour} addresses exactly this situation and implies that $H'_i$ can be coloured using $O(s)$ colours.  This leaves enough room to colour all of $H'$ using colours in the interval $[\floor{a(k-c-s)}+1,\floor{a(k-c)}]$.  
+\paragraph{The Proof for Simple $t$-Trees.}
+
+The proof for trees and simple $2$-trees described above creates a colouring in which the colours used in layer $i$ are all greater than those used in layer $i+1$, for each $i\in\{0,\ldots,\ell-1\}$.  This works because for a tree $T$, $T[L_i]$ is a graph without edges, which can be coloured with one colour.  For simple $2$-tree $H$, $H[L_i]$ is a collection of paths, which can be coloured with $\ell+1$ colours.  However, for a simple $t$-tree, the graph $H[L_i]$ is a graph of simple treewidth $t-1$, which can not necessarily be coloured with a number of colours that depends only on $\ell$.  For example, when $H$ is a simple $3$-tree, the graph $H[L_i]$ can contain an arbitrary outerplanar graph on $n'$ vertices, which may require $\Omega(\log n'/\log\log n')$ colours.  Without some control on the size of components in $H[L_i]$, simply  increasing the value of $a$ to accommodate for this will not work, and actually leads to a colouring that uses $\omega(\log n)$ colours.
+
+To circumvent this issue, we (partially) give up on the idea of using distinct colours for each $H[L_i]$ and instead we use a separator $S\subseteq \bigcup_{i=0}^\ell L_i$ that guarantees that the size of each component of $H[\bigcup_{i=0}^\ell L_i]-S$ is sufficiently small that it can be coloured with colours smaller than $a(k-c-s)$ for some appropriately chosen $s$. For this to work, we need that each component have size at most $(\log^{(t-2)} k)^k/(\log^{(t-2)}(c+s))$.  The situation is complicated further by the fact that the harmless vertices in $L_{\ell+1}$ create lower bounds on the colours of their neighbours in $L_\ell$.  Without these lower bounds, two vertices in distinct components of $H[L_{\ell+1}]$ might receive the same colour which is smaller than the colour of their common neighbour in $L_\ell$.
+
+This still leaves the problem of colouring the vertices in $H':=H[S]$.  It turns out that the number of vertices required to be in $S$ is much greater than $s$, so a na\"ive approach of assigning each vertex in $S$ its own colour does not work.  However, for each $i\in\{0,\ldots,\ell\}$, the structure of $H_i':=H'[L_i]$ is such that, although it may have many vertices, it has a $t-1$-simple tree decomposition with a relatively small number of leaves. \cref{skeleton-colour} addresses exactly this situation and implies that $H'_i$ can be coloured using $O(s)$ colours.  This leaves enough room to colour all of $H'$ using colours in the interval $[\floor{a(k-c-s)}+1,\floor{a(k-c)}]$, using a colouring in which all vertices of $H'_i$ have larger colours than those of $H'_{i+1}$, for each $i\in\{0,\ldots,\ell\}$.
 
 In order for all of this to work, we must strike a balance between the size of $S$ against the sizes of the components that remain after removing $S$.  As it turns out, setting $s:=\log c/\log^{(t-1)} c$ achieves what we need.  This choice of $s$ appears in the following lemma, which is what we eventually use to colour the vertices in $L_0,\ldots,L_\ell$.  The purpose of the weighting $(n_v:v\in V(H))$ that appears in this lemma is to deal with the fact, discussed above, that harmless vertices in $L_{\ell+1}$ will place lower bounds on the colours of vertices in $L_{\ell}$.
 
@@ -829,7 +832,7 @@ TODO: Get rid of the ${}-1$'s everywhere
 \begin{proof}
     Without loss of generality, we may assume $H$ is edge-maximal with respect to some $r$-rooted $t$-simple tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$.  Let $L_0,\ldots,L_h$ be a BFS layering of $H$ with $L_0:=B_r$.\todo{Do I use $:=$ everywhere?}  Note that $h\le\diam(H)\le d$.
 
-    The proof is by induction on $|H|$.  In the base case, $|H|=0$ and there is nothing to prove. Now assume $|H|\ge 1$.  For each subgraph $X$ of $H$, define $n_{X}:=\sum_{v\in V(X)} n_v$ so that \cref{total-weight} implies that $n_H\le(\log^{(t-2)} k)^k/(\log^{(t-2)}c)^c$.  
+    The proof is by induction on $|H|$.  In the base case, $|H|=0$ and there is nothing to prove. Now assume $|H|\ge 1$.  For each subgraph $X$ of $H$, define $n_{X}:=\sum_{v\in V(X)} n_v$ so that \cref{total-weight} implies that $n_H\le(\log^{(t-2)} k)^k/(\log^{(t-2)}c)^c$.
     % For $v\in V(H)$ we use the shorthand $\gamma_v:=\gamma_{t-2,k}(n_v)$ and for any subgraph $X$ of $H$ we use the shorthand $\gamma_X := \gamma_{t-2,k}(n_X)$.  Note that \cref{total-weight,max-weight} imply that $\gamma_H \ge c$ and $\gamma_v\ge c+s$ for each $v\in V(H)$.
 
     Let
