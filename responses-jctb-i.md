@@ -29,7 +29,7 @@ This isn't actually true. Since $P$ can be arbitrarily long, the product can hav
 
 - L135: \ell-ranking was defined, not vertex \ell-ranking, at the beginning of the paper.  Also the definition in L135-137 is much clearer and easier to understand. Why not adding it as an equivalent one when you provide the definition first?
 
-
+We have have changed removed the "vertex" qualifier here.  We have also changed the first paragraph of the paper to use this more natural definition of $\ell$-ranking.  The alternative definition (which is more useful in proofs)
 
 
 
