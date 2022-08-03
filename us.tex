@@ -240,9 +240,9 @@ Every 2-ranking is a star colouring and every distance-2 colouring is a 2-rankin
 
 $2$-ranking is a stronger notion than \emph{conflict-free} colouring which requires that, for each vertex $v$ of $G$, some vertex $w$ in the closed neighbourhood $N_G[v]$ has a colour $\varphi(w)$ distinct from every other vertex in $N_G[v]$ \cite{pach.tardos:conflict-free,glebov.szabo.ea:conflict-free,gargano.rescigno:complexity}.
 
-The set of subgraphs of diameter at most $\ell$ includes all connected subgraphs with at most $\ell+1$ vertices.  In a \emph{$p$-centered colouring} any connected subgraph $X$ must be assigned at least $p+1$ distinct colours or have a colour that occurs exactly once \cite{nesetril.ossona:tree-depth,nesetril.ossona:grad,zhu:colouring}.  This implies that in a $p$-centered colouring, every connected subgraph of with less than $2p$ vertices must have a colour that occurs exactly once.
+The set of subgraphs of diameter at most $\ell$ includes all connected subgraphs with at most $\ell+1$ vertices.  In a \emph{$p$-centered colouring} any connected subgraph $X$ must be assigned at least $p+1$ distinct colours or have a colour that occurs exactly once \cite{nesetril.ossona:tree-depth,nesetril.ossona:grad,zhu:colouring}.  This implies that in a $p$-centered colouring, every connected subgraph with at most $2p$ vertices must have a colour that occurs exactly once.
 
-These two examples show how the difference between ``unique'' and ``unique maximum'' can be surprisingly profound.  Every planar graph has a conflict-free 4-colouring \cite{abel.alvarez.ea:conflict-free}. Planar graphs (and, indeed, all graphs families having similar product structure theorems) have $(\ell+1)$-centered colourings using a number of colours that depends only (polynomially) on $\ell$ \cite{nesetril.ossona:grad,debski.felsner.ea:improved,pilipczuk.siebertz:polynomial}.  This contrasts starkly with the lower bounds in \cref{trees,planar}, which show that $\ell$-rankings of $n$-vertex trees and planar graphs, respectively, require a number of colours that depends nearly-logarithmically on $n$, for any $\ell\ge 2$.
+These two examples show how the difference between ``unique'' and ``unique maximum'' can be surprisingly profound.  Every planar graph has a conflict-free 4-colouring \cite{abel.alvarez.ea:conflict-free}. Planar graphs (and, indeed, all graph families having similar product structure theorems) have $(\ell+1)$-centered colourings using a number of colours that depends only (polynomially) on $\ell$ \cite{nesetril.ossona:grad,debski.felsner.ea:improved,pilipczuk.siebertz:polynomial}.  This contrasts starkly with the lower bounds in \cref{trees,planar}, which show that $\ell$-rankings of $n$-vertex trees and planar graphs, respectively, require a number of colours that depends nearly-logarithmically on $n$, for any $\ell\ge 2$.
 
 \subsection{Outline}
 
@@ -253,7 +253,7 @@ The remainder of this paper is organized as follows: \Cref{sec:basics} reviews s
 
 In this paper we use standard graph theory terminology as used in the book by \citet{diestel:graph}.  Every graph $G$ we consider is finite, simple, and undirected with vertex set denoted by $V(G)$ and edge set denoted by $E(G)$.  We use the shorthand $|G|:=|V(G)|$ to denote the number of vertices in $G$.  We use $N_G(v):=\{w\in V(G): vw\in E(G)\}$ to denote the \emph{open neighbourhood} of $v$ in $G$. For any $S\subseteq V(G)$, $N_G(S):=\bigcup_{v\in S} N_G(v)\setminus S$.  For each $n\in\N$, $K_n$ denotes the complete graph on $n$ vertices.  The \emph{length} of a path $u_0,\ldots,u_p$ in $G$ is equal to the number, $p$, of edges in the path. A path is \emph{trivial} if it has length 0 and \emph{non-trivial} otherwise.
 
-For any set $S$, $G[S]$ is the graph with vertex set $V(G[S]):=V(G)\cap S$ and edge set $E(G[S]):=\{vw\in E(G): \{v,w\}\subseteq S\}$, and $G-S:=G[V(G)\setminus S]$.  We say that a subgraph $G'$ of $G$ is an \emph{induced} subgraph of $G$ if $G[V(G')]=G'$.  Although $\ell$-ranking is defined in terms of subgraphs of diameter at most $\ell$, it is more convenient to use an equivalent definition based on paths:\footnote{Definition (c) is, in fact, the definition used by \citet{karpas.neiman.ea:on}. We only provide a proof of equivalence here for the sake of completeness.}
+For any set $S$, $G[S]$ is the graph with vertex set $V(G[S]):=V(G)\cap S$ and edge set $E(G[S]):=\{vw\in E(G): \{v,w\}\subseteq S\}$, and $G-S:=G[V(G)\setminus S]$.  We say that a subgraph $G'$ of $G$ is an \emph{induced} subgraph of $G$ if $G[V(G')]=G'$.  Although $\ell$-ranking is defined in terms of subgraphs of diameter at most $\ell$, it is more convenient to use an equivalent definition based on (induced) paths:\footnote{Definition (c) is, in fact, the definition used by \citet{karpas.neiman.ea:on}. We only provide a proof of equivalence here for the sake of completeness.}
 
 \begin{obs}
   For any graph $G$, any vertex colouring $\varphi:V(G)\to\N$, and any $\ell\in\N$ the following statements are equivalent:
@@ -274,8 +274,6 @@ For any set $S$, $G[S]$ is the graph with vertex set $V(G[S]):=V(G)\cap S$ and e
 \end{proof}
 
 
-It suffices to consider induced paths:
-
 \begin{obs}\label{induced-paths-only}
     A colouring $\varphi:V(G)\to\N$ of a graph $G$ is an $\ell$-ranking of $G$ if and only if, for every induced path $u_0,\ldots,u_p$ in $G$ of length at most $\ell$,
     \begin{inparaenum}[(i)]
@@ -287,7 +285,7 @@ It suffices to consider induced paths:
 \begin{proof}
     By definition any $\ell$-ranking $\varphi$ of $G$ satisfies (i) or (ii) for every path of length at most $\ell$, including every induced path of length at most $\ell$, so this direction is trivial.
 
-    For the other direction, suppose $G$ contains a (not necessarily induced) path $u_0,\ldots,u_p$ of length $r\le\ell$ with $\varphi(u_0)=\varphi(u_p)$ and $\varphi(u_0)=\max\{\varphi(u_0),\ldots,\varphi(u_p)\}$.  Let $w_0,\ldots,w_s$ be the shortest path from $w_0:=u_0$ to $w_s:=u_p$ in  the graph $G[\{u_0,\ldots,u_p\}]$.  Then $w_0,\ldots,w_s$ is an induced path in $G$ with $\varphi(w_0)=\varphi(u_0)=\varphi(u_p)=\varphi(w_s)$ and, since $\{w_0,\ldots,w_{s}\}\subseteq\{u_0,\ldots,u_{r}\}$, $\max\{\varphi(w_0),\ldots,\varphi(w_{s})\}\le\max\{u_0,\ldots,u_{r}\}$, so $\varphi(w_0)=\varphi(u_0)=\max\{\varphi(w_0),\ldots,\varphi(w_s)\}$, as required.
+    For the other direction, suppose $G$ contains a (not necessarily induced) path $u_0,\ldots,u_p$ of length $p\le\ell$ with $\varphi(u_0)=\varphi(u_p)$ and $\varphi(u_0)=\max\{\varphi(u_0),\ldots,\varphi(u_p)\}$.  Let $w_0,\ldots,w_s$ be the shortest path from $w_0:=u_0$ to $w_s:=u_p$ in  the graph $G[\{u_0,\ldots,u_p\}]$.  Then $w_0,\ldots,w_s$ is an induced path in $G$ with $\varphi(w_0)=\varphi(u_0)=\varphi(u_p)=\varphi(w_s)$ and, since $\{w_0,\ldots,w_{s}\}\subseteq\{u_0,\ldots,u_{r}\}$, $\max\{\varphi(w_0),\ldots,\varphi(w_{s})\}\le\max\{u_0,\ldots,u_{r}\}$, so $\varphi(w_0)=\varphi(u_0)=\max\{\varphi(w_0),\ldots,\varphi(w_s)\}$, as required.
 \end{proof}
 
 The same reasoning used to prove \cref{induced-paths-only} also shows:
@@ -444,11 +442,11 @@ As the following simple lemma shows, product structure is highly relevant to $\e
     To see that $\varphi$ is an $\ell$-ranking, consider any
     path $u_0,\ldots,u_p$ in $G_1\boxtimes G_2$ of length $p\le\ell$ such that $\varphi(u_0)=\varphi(u_p)$.  We must show that $\varphi(u_0)<\max\{\varphi(u_0),\ldots,\varphi(u_p)\}$.
 
-    For each $i\in\{0,\ldots,p\}$, let $(u_{i,1},u_{i,2}):=u_i$, so that $u_{i,1}\in V(G_1)$ and $u_{i,2}\in V(G_2)$. Since $\varphi(u_0)=\varphi(u_p)$, $\psi(u_{0,2})=\psi(u_{p,2})$. Since $\psi$ is a distance-$\ell$ colouring of $G_2$ and $r\le\ell$, this implies that $u_{0,2}=u_{p,2}$.  This implies that $u_{0,1}\neq u_{p,1}$, otherwise $u_0=u_p$ and $u_0,\ldots,u_p$ is not a path.  Therefore, $u_{0,1},\ldots,u_{p,1}$ is a walk in $G_1$ with distinct endpoints.
+    For each $i\in\{0,\ldots,p\}$, let $(u_{i,1},u_{i,2}):=u_i$, so that $u_{i,1}\in V(G_1)$ and $u_{i,2}\in V(G_2)$. Since $\varphi(u_0)=\varphi(u_p)$, $\psi(u_{0,2})=\psi(u_{p,2})$. Since $\psi$ is a distance-$\ell$ colouring of $G_2$ and $p\le\ell$, this implies that $u_{0,2}=u_{p,2}$.  This implies that $u_{0,1}\neq u_{p,1}$, otherwise $u_0=u_p$ and $u_0,\ldots,u_p$ is not a path.  Therefore, $u_{0,1},\ldots,u_{p,1}$ is a walk in $G_1$ with distinct endpoints.
     Since $\rho$ is an $\ell$-ranking of $G_1$, \cref{walks-too} implies that $\rho(u_{0,1})<\max\{\rho_{u_0,1},\ldots,u_{p,1}\}$ and therefore $\varphi(u_0)<\max\{\varphi(u_0),\ldots,\varphi(u_p)\}$, as required.
 \end{proof}
 
-Note that the graph $K_3\boxtimes P$, which appears in \cref{product-structure}, has maximum degree 8 so $(K_3\boxtimes P)^\ell$ has maximum degree at most $8\cdot 7^{\ell-1}$.  Since distance-$\ell$ colouring any graph is $G$ equivalent to properly colouring $G^{\ell}$, this implies that $\dtcn(K_3\boxtimes P)\le 8\cdot7^\ell$. The following lemma improves this constant using the fact that $(K_3\boxtimes P)^\ell$ is $3\ell+2$ degenerate (as can be seen by ordering vertices of $(K_3\boxtimes P)$ by the order that their second coordinate appears in $P$).
+Note that the graph $K_3\boxtimes P$, which appears in \cref{product-structure}, has maximum degree 8 so $(K_3\boxtimes P)^\ell$ has maximum degree at most $8\cdot 7^{\ell-1}$.  Since distance-$\ell$ colouring any graph is $G$ equivalent to properly colouring $G^{\ell}$, this implies that $\dlcn(K_3\boxtimes P)\le 8\cdot7^\ell$. The following lemma improves this constant using the fact that $(K_3\boxtimes P)^\ell$ is $3\ell+2$ degenerate (as can be seen by ordering vertices of $(K_3\boxtimes P)$ by the order that their second coordinate appears in $P$).
 
 \begin{lem}\label{dumb}
     For any path $P$, $\dlcn(K_3\boxtimes P)\le 3(\ell+1)$.
@@ -501,14 +499,18 @@ which is again valid for all $x> \tau(i-1)$.
 \subsection{The $\gamma_{i,k}$ Function}
 
 
-For any integer $i$, any real $k>\tau(i-1)$, and any real $n\in[1,(\log^{(i)} k)^k]$, we define $\gamma_{i,k}(n)$ to be the solution $x$ to the equation $(\log^{(i)} k)^k/(\log^{(i)} x)^{x}=n$.  The value of $\gamma_{i,k}(n)$ is well defined and $\tau(i)\le \gamma_{i,k}(n)\le k$, for the following reasons:  For $x\in[\tau(i),k]$, the left hand side is a continuous strictly decreasing function of $x$. Setting $x=\tau(i)$, the left hand side becomes $(\log^{(i)} k)^k \ge n$. Setting $x=k$, the left hand side becomes $1\le n$.
+For any integer $i$, any real $k>\tau(i-1)$, and any real $n\in[1,(\log^{(i)} k)^k]$, we define $\gamma_{i,k}(n)$ to be the solution $x$ to the equation
+\begin{equation}
+   (\log^{(i)} k)^k/(\log^{(i)} x)^{x}=n \enspace .  \label{gamma_eqn}
+\end{equation}
+The value of $\gamma_{i,k}(n)$ is well defined and $\tau(i)\le \gamma_{i,k}(n)\le k$, for the following reasons:  For $x\in[\tau(i),k]$, the left hand side of \cref{gamma_eqn} is a continuous strictly decreasing function of $x$. Setting $x=\tau(i)$, the left hand side becomes $(\log^{(i)} k)^k \ge n$. Setting $x=k$, the left hand side becomes $1\le n$.
 
 
 %========================================================================
 \section{Lower Bounds}
 \label{lower-bounds}
 
-We now prove the lower bound in \cref{t-trees}, which establishes all the other lower bounds. The idea in this lower bound is to construct a graph $G$ that has a BFS layering $L_0,\ldots,L_m$ such that, for each $i\in\{0,\ldots,m-1\}$ and each vertex $a\in L_i$, $G[N_G(a)\cap L_{i+1}]$ is a collection of treewidth-$(t-1)$ graphs $U_{a,0},\ldots,U_{a,k}$, each of which is a copy of a small treewidth-$(t-1)$ graph $U$ that requires at least $h$ colours.  This forces the colour of $a$ to exceed, by at least $h+1$, the smallest colour used in $U_{a,0},\ldots,U_{a,k}$.  Proceeding bottom up, this forces the vertex in $L_0$ to receive a colour larger than $(h+1)m$.  The lower bound is then obtained by using induction on $t$ to upper bound the size of the graph $U$ needed to ensure that $\trn(U)\ge h$ and choosing the parameters $h$ and $m$ appropriately.
+We now prove the lower bound in \cref{t-trees}, which establishes all the other lower bounds. The idea in this lower bound is to construct a graph $G$ that has a BFS layering $L_0,\ldots,L_m$ such that, for each $i\in\{0,\ldots,m-1\}$ and each vertex $a\in L_i$, $G[N_G(a)\cap L_{i+1}]$ is a collection of treewidth-$(t-1)$ graphs $U_{a,0},\ldots,U_{a,k}$, each of which is a copy of a small treewidth-$(t-1)$ graph $U$ that requires at least $h$ colours.  This forces the colour of $a$ to exceed, by at least $h$, the smallest colour used in $U_{a,0},\ldots,U_{a,k}$.  Proceeding bottom up, this forces the vertex in $L_0$ to receive a colour larger than $hm$.  The lower bound is then obtained by using induction on $t$ to upper bound the size of the graph $U$ needed to ensure that $\trn(U)\ge h$ and choosing the parameters $h$ and $m$ appropriately.
 
 \begin{lem}\label{apex-graph}
     Let $h,k\ge 1$ be integers, let $U$ be a graph with $\trn(U)\ge h$ and let $G$ be a graph obtained by taking $k+1$ disjoint copies $U_0,\ldots,U_k$ of $U$ and adding an apex vertex $a$ adjacent to each $v\in\bigcup_{i=0}^k V(U_i)$.  Then, for any integer $k_0\in \{1,\ldots,k\}$ and any 2-ranking of $\varphi:V(G)\to\{k_0,\ldots,k\}$, $\varphi(a) \ge k_0+h$.
