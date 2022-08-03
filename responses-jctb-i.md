@@ -29,17 +29,62 @@ This isn't actually true. Since $P$ can be arbitrarily long, the product can hav
 
 - L135: \ell-ranking was defined, not vertex \ell-ranking, at the beginning of the paper.  Also the definition in L135-137 is much clearer and easier to understand. Why not adding it as an equivalent one when you provide the definition first?
 
-We have have changed removed the "vertex" qualifier here.  We have also changed the first paragraph of the paper to use this more natural definition of $\ell$-ranking.  The alternative definition (which is more useful in proofs)
+**Authors' Response**
 
+We have have changed removed the "vertex" qualifier here.  We have also changed the first paragraph of the paper to use this more natural definition of $\ell$-ranking.  The alternative definition (which is more useful in proofs) is now included as an observation.
 
+**Referee 1 comment**
 
-- L145-151: It appears that \ell-centered coloring is distinguished from \ell-ranking in another way too, namely the former concerns a bounded size connected set while the latter concerns bounded diameter graph, but which can have unbounded size. Therefore, the stark difference in asymptotic behaviors of respective chromatic numbers may not solely attributed to the difference between "unique" and "unique maximum". Can you elaborate on this paragraph?
+L145-151: It appears that \ell-centered coloring is distinguished from \ell-ranking in another way too, namely the former concerns a bounded size connected set while the latter concerns bounded diameter graph, but which can have unbounded size. Therefore, the stark difference in asymptotic behaviors of respective chromatic numbers may not solely attributed to the difference between "unique" and "unique maximum". Can you elaborate on this paragraph?
+
+**Authors' Response**
+
+TODO
+
+**Referee 1 comment**
+
 - L176, L275: r -> p
+
+**Authors' Response**
+
+Fixed.
+
+**Referee 1 comment**
+
 - L233-L236: In the statement of Lemma 11, don't we need
+
+**Authors' Response**
+
+This question appears to be incomplete.
+
+
+**Referee 1 comment**
+
 - L282: \bar{\chi}_2 -> \bar{\chi}_\ell
+
+**Authors' Response**
+
+Fixed.
+
+**Referee 1 comment**
+
 - L308: please specify which equality you remark on the left hand side of.
+
+**Authors' Response**
+
+We have labelled the equation and now refer to it by its number.
+
+**Referee 1 comment**
+
 - L316-L317: following Lemma 18, the color of "a" exceeds the smallest color of the next layer by h, no?
+
+**Authors' Response**
+
+The referee is correct here.  We have the two occurences of $h+1$ in this paragraph to $h$.
+
 - L336-L346: technically speaking, Lemma 18 is stated for the case when the number of copies of U equals 1 plus the max available color, and it's inconvenient to apply this lemma in the current set-up of Lemma 19's proof. Instead, one can fix k=hm and take (for contradiction) is as an upper bound of \chi_2 value.
+
+
 - L355: all the occurrences of h in the proof need to be replaced by hm, I think.
 - L391: the reference to the section label is not properly compiled here.
 - L423-L425: please provide a reference for this property.
