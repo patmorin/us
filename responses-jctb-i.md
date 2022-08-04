@@ -112,7 +112,7 @@ We have fixed this.
 
 **Authors' Response**
 
-This is a property that comes from taking a greedy path in some interval supergraph of $G$.  Since it would be hard to find a statement in exactly the form we want, we state this as a lemma in Section 2 and provide a proof.
+We rewrote this proof to use (after ensuring that $G$ is connected) a shortest path with one endpoint in B_{x_1} and one endpoint in $B_{x_m}$.  Such a path has all the properties needed to complete the proof.
 
 **Referee 1 comment**
 
@@ -120,11 +120,305 @@ This is a property that comes from taking a greedy path in some interval supergr
 
 **Authors' Response**
 
+We have corrected this.
 
+**Referee 1 comment**
 
 - L471: what do you mean by "edges of w_0,…w_q"? Edges whose both endpoint belong to these vertices?
+
+**Authors' Response**
+
+$w_0,\ldots,w_q$ is an induced path in $G$ so the edges being partitioned are $w_0w_1, w_1w_2,\ldots,w_{q-1}w_q$.  This is intended to be a short way of saying that we cut $w_0,\dots,w_q$ at each pinched vertex to get a sequence of paths where the last vertex in the $i$th path is the first vertex in the $(i+1)$st path.
+
+**Referee 1 comment**
+
 - L507: please make an explicit pointer to Lemma 25 here.
+
+**Authors' Response**
+
+We have added this.
+
+**Referee 1 comment**
+
 - L541: I guess we miss a bracket [] here.
+
+**Authors' Response**
+
+We have corrected this.
+
+**Referee 1 comment**
+
 - L593-L594: the subscript r->p.
-- L694: The definition of (g,k)-planar graph appears only later (L744-745). Although it can be easily guessed, I think it's better to bring the definition before announcing the result.
+
+**Authors' Response**
+
+We have fixed this.
+
+**Referee 1 comment**
+
+- L694: The definition of (g,k)-planar graph appears only later (L744-745).
+Although it can be easily guessed, I think it's better to bring the definition before announcing the result.
+
+**Authors' Response**
+
+We have moved the definition of (g,k)-planar so that it appears before its first use.
+
+**Referee 1 comment**
+
 - L707: could you add a few words at footnote 5 on how to \ell-color a path?
+
+**Authors' Response**
+
+We have expanded footnote 5 so that it explains how to $\ell$-rank a path using $\floor{\log_2 \ell}+2$ colours.
+
+**Referee 2 comment**
+
+Although the authors dedicate paragraph 1.1.1 to vertex ranking, they refrain to precise that vertex ranking is equal to tree-depth (see [29]) and (consequently) to mention quite a few relevant works. Also, the rank number of a graph G is the minimum clique number of a trivially perfect super-graph of G (which is an ana- log of similar characterizations of pathwidth and treewidth). Moreover, I do not understand why you refer to [33] for the notion of ranking, and not to [A.V. Iyer, H.D. Ratliff, and G. Vijayan. Optimal node ranking of trees. Information Processing Letters, 28(5), 225-229 (1988)], to which [3] explicitly refers to. The notion of (vertex) t-ranking was introduced in [7] (without dedicated no- tation) and it would be fair to quote this reference when you recall its definition.
+
+**Authors' Response**
+
+We have reworked Section 1.1 and Section 1.0 to include a discussion of treedepth and centered colourings, and to point out that $\ell$-rankings appear implicitly in the dynamic programming algorithm of Deogun, Kloks, et al 1999.
+
+**Referee 2 comment**
+
+The choice of χ ℓ (G)(instead of χ ℓ-vr used in [19]) to denote ℓ-vertex ranking is questionable, particularly as you stress the essential difference with (ℓ + 1)-centered coloring, which is commonly denoted this way (since [29]).
+
+**Author' Response**
+
+We have changed this notation to $\chi_{$\ell$-vr}$ throughout the paper.
+
+**Referee 2 comment**
+
+p3, l100 There exists n-vertex planar. . . : maybe give the trivial example
+of grids.
+
+**Author's Response**
+
+We now give the $\sqrt{n}\times\sqrt{n}$ grid as a concrete example of such a graph.
+
+**Referee 2 comment**
+
+Why not the more precise bounds χ ∞ (P n ) = ⌈log 2 (n + 1)⌉ and
+χ ∞ (G) ≤ (t + 1) log 2 n (see e.g. [29])?
+
+**Author's Response**
+
+We now state the precise bounds.
+
+**Referee 2 comment**
+
+More generally. . . : the notation O(ℓ log n) suggests that you
+mean that for any fixed proper minor-closed family G of graphs,
+χ ℓ (G) ∈ O(ℓ log n) for every positive integer ℓ and every n-vertex
+graph G ∈ G.
+
+**Author's Response**
+
+We have rephrased this as the referee suggests.
+
+**Referee 2 comment**
+
+In [19], the bound O(ℓ log n) is proved for every fixed proper minor
+closed class (Theorem 5.4). Why do you mention here that this
+bound holds only for planar graphs (thus contradicting what you
+wrote on the previous page, line 116)?
+
+**Author's Response**
+
+We do not see the contradiction here.  The first sentence states that $\chi_2(G)\in O(\log n)$ for planar $G$ and the second states that $\chi_\ell(G)\in O(\ell\log n)$ for any graph $G$ from a (fixed) proper minor-closed family.  We write it this way because the authors of [19] did: The first sentence is Theorem 4.1 in their paper; the second sentence is Theorem~5.4.
+
+**Referee 2 comment**
+
+You should include a proper definition of (ℓ+1)-centered coloring:
+An (ℓ+1)-centered coloring is a coloring such that every connected
+subgraph with at most ℓ colors has some uniquely colored vertex.
+
+**Author's Response**
+
+This seems to be the definition of $\ell$-centered colouring, at least the way it's used in [6,32].  The definition we use here matches the one used in (for example) the abstract of
+
+https://arxiv.org/abs/1907.04586
+
+
+**Referee 2 comment**
+
+The connection with ℓ-ranking does not seem right to me: there
+is a coloration with ℓ colors of the path on 2 ℓ−1 + 1 vertices that is
+not (ℓ + 1)-centered, but such that every subgraph of diameter at
+most 2 ℓ−1 has exactly one vertex of maximum color. For instance,
+consider 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 and ℓ = 5. However, 2 ℓ -vertex
+ranking is a stronger notion than ℓ-centered coloring.
+
+**Author's Response**
+
+The purpose of the discuss here is to highlight the fact that, although centered chromatic number, and vertex-ranking number are the same, the situation changes immediately when we switch to "local" versions of these problems.  We have added some text here to point out that a p-centered colouring assigns a unique colour to every path of length at most $2p$.  
+
+**Referee 2 comment**
+
+Please give some reference (or at least refer to [N. Robertson,
+P.D. Seymour, Graph minors. II. Algorithmic aspects of tree-
+width, Journal of Algorithms, 7(3) 1986, pp. 309-322] for the
+unweighted version)
+
+**Author's Response**
+
+Done.
+
+
+**Referee 2 comment**
+
+the thesis of Wulf [37] studies it extensively in his thesis [37].
+
+**Author's Response**
+
+Done.
+
+**Referee 2 comment**
+
+A proof . . . is due to Wood: if the lemma is due to Wood, then
+write “The following lemma, whose proof uses minor-monotony,
+is due to Wood”; otherwise, give a proper reference to Lemma 14.
+
+**Author's Response**
+
+Done.
+
+**Referee 2 comment**
+
+whose vertex set V (G 1 ) ⊠ V (G 2 ) is the Cartesian product
+V (G 1 ) ⊠ V (G 2 ) :=V (G 1 ) × V (G 2 )
+
+**Author's Response**
+
+Done.
+
+**Referee 2 comment**
+
+implies that U 0,1 ̸ = u p,1 , for otherwise . . .
+
+**Author's Response**
+
+Done.
+
+**Referee 2 comment**
+
+ρ(u 0,1 ) < max{ ρ(u 0,1 )ρ u 0 ,1 ,. . . ,ρ(u p,1 )u p,1 }
+
+**Author's Response**
+
+We have corrected this.
+
+**Referee 2 comment**
+
+any graph is G is
+
+**Author's Response**
+
+Done.
+
+**Referee 2 comment**
+
+A priori, the upper bound should be 8 · 7 ℓ + 1. (Arguing that the
+product is not a complete graph to decrease the upper bound by
+1 would obviously be of no interest here.)
+
+**Author's Response**
+
+Done.
+
+**Referee 2 comment**
+
+The following observationlemma. . . : either this is an observation,
+or you should replace the comments on lines 282-285 by a formal
+proof after the statement of the lemma.
+
+**Author's Response**
+
+We have changed this to an observation.
+
+**Referee 2 comment**
+
+. . . in P ) and contains cliques of order 3(ℓ + 1).
+Observation 17. For any path P , χ ℓ (K 3 ⊠ P )=3(ℓ + 1).
+We remark . . . 3(l + 1).
+
+**Author's Response**
+
+We didn't change this because it would require that the Observation/Lemma be qualified by the condition that $P$ have length at least $\ell+1$.  This is a small thing, but we don't want to address such a qualification when we later use the result.  (In response to Referee 1, this lemma was generalized by replacing $K_3$ with $K_d$ and is used in a few more places.)
+
+**Referee 2 comment**
+
+log x ≤ x−1 for x > 0 is a basic property of the natural logarithm.
+Hence (1) could definitely be reduced to
+a
+log(x + a) = log x + log(1 + a/x) ≤ log x +
+
+**Author's Response**
+
+We removed the intermediate step of going through (1+x) <= e^x
+
+**Referee 2 comment**
+
+Either precise i > 0 or define τ (−1).
+
+**Author's Response**
+
+Done.
+
+**Referee 2 comment**
+
+the solution x ∈ [τ (i), k] to the equation . . . (You prove the exis-
+tence of a unique solution in the interval [τ (i), k], but not that the
+solution is unique on the domain on which (log (i) k) k /(log (i) x) x
+is defined.)
+
+**Author's Response**
+
+Done.
+
+**Referee 2 comment**
+
+You should add the remark that γ i,k is a decreasing function (used
+in proof of Lemma 29).
+
+**Author's Response**
+
+Done.
+
+**Referee 2 comment**
+
+The idea in this lower bound is to . . .
+
+
+**Author's Response**
+
+Done.
+
+**Referee 2 comment**
+
+Let k = χ 2 (U (h,m) ) Suppose for the sake . . . hm + 1 and let ϕ :
+V (U (h,m) → {1, . . . , k} be a 2-ranking of U (h,m) U (h,m) . (. . . ) This
+gives χ 2 (U (h,m) ) ≥ hm + 1the desired contradiction since . . . a 0 ∈
+L 0 , k ≥ϕ(a 0 ) ≥ mh + 1 > k.
+
+**Author's Response**
+
+Done.
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
