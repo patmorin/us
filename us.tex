@@ -128,7 +128,7 @@ The same authors prove the following result for planar graphs:
     For every integer $\ell$ and every $n$-vertex planar graph $G$, $\lrn(G)\in O(\ell\log n)$.
 \end{othertheorem}
 
-Since every tree is a planar graph and no better lower bound is known for planar graphs, this leaves an obvious question:  Which is the correct bound for 2-ranking $n$-vertex planar graphs, $\log n$ or $\log n/\log\log n$?  As it turns out, the strange truth is somewhere in between.  Let $\log x :=\ln x$ denote the natural logarithm of $x$ and define $\log^{(0)}x:=x$ and, for any integer $i>0$, let $\log^{(i)}x:=\log(\log^{(i-1)} x)$. We prove:\footnote{Refined versions of \cref{planar} and of the upcoming \cref{simple-t-trees,t-trees,bounded-genus,meta} that describes the dependence of $\lrn(G)$ on $\ell$ are presented in \cref{dependence}.}
+Since every tree is a planar graph and no better lower bound is known for planar graphs, this leaves an obvious question:  Which is the correct bound for 2-ranking $n$-vertex planar graphs, $\log n$ or $\log n/\log\log n$?  As it turns out, the strange truth is somewhere in between.  Let $\log x :=\ln x$ denote the natural logarithm of $x$ and define $\log^{(0)}x:=x$ and, for any integer $i>0$, let $\log^{(i)}x:=\log(\log^{(i-1)} x)$. We prove:\footnote{Refined versions of \cref{planar} and of the upcoming \cref{simple-t-trees,t-trees,bounded-genus,meta} that describes the dependence of $\lrn(G)$ on $\ell$ are presented in \cref{dependence-on-ell}.}
 
 
 \begin{thm}\label{planar}
@@ -322,13 +322,24 @@ The \emph{width} of $\mathcal{X}$ is $\max\{|B_x|:x\in V(X)\}-1$. We say that $H
 
 In the special case where $X$ is a tree (or a forest), $\mathcal{X}$ is called a \emph{tree decomposition} of $H$.  In the still more special case where $X$ is a path (or a collection of disjoint paths), $\mathcal{X}$ is called a \emph{path decomposition} of $H$. The \emph{treewidth} $\tw(H)$ of $H$ is the minimum width of any tree decomposition of $H$. The \emph{pathwidth} $\pw(H)$ of $H$ is the minimum width of any path decomposition of $H$.
 
-\begin{lem}\label{pathwidth-reduction}
-  If $G$ is a graph with $\pw(G)\ge 1$ then $G$ contains a set of vertices $\{v_1,\ldots,v_m\}$ such that
-  \begin{inparaenum}[(i)]
-    \item $d_G(v_i,v_j)\ge |i-j|$ for each $i,j\in\{1,\ldots,m\}$; and
-    \item $\pw(G-\{v_1,\ldots,v_m\}) \le \pw(G)-1$.
-  \end{inparaenum}
-\end{lem}
+% \begin{lem}\label{pathwidth-reduction}
+%   Let $G$ be a connected graph that is edge-maximal with respect to some path-decomposition $\mathcal{P}:=(B_x:x\in V(P))$ of width $\pw(G)\ge 1$.  Then $G$ contains a path $v_1,\ldots,v_m$ such that
+%   \begin{inparaenum}[(i)]
+%     \item $d_G(v_i,v_j)\ge |i-j|$ for each $i,j\in\{1,\ldots,m\}$; and
+%     \item $\pw(G-\{v_1,\ldots,v_m\}) \le \pw(G)-1$.
+%   \end{inparaenum}
+% \end{lem}
+% 
+% \begin{proof}
+%   Let $x_0,\ldots,x_r:=P$.
+%   For each vertex $v$ of $G$ define $b(v):=\max\{i\in\{0,\ldots,r\}: v\in B_{x_i}$.  We choose a greedy path $v_1,\ldots,v_m$ as follows:  $v_1$ is a vertex in $B_{x_0}$ that maximizes $b(v)$.  As long $v_{i-1}$ is not in $B_{x_r}$, we define $x_i$ as a vertex in $B_{b(v_{i-1})}$ that maximizes $b(v_i)$.  This process is well-defined and finite because the fact that $G$ is connected implies that $b(v_1),\ldots,b(v_r)$ is a strictly increasing sequence.
+% 
+%   We now show that $v_1,\ldots,v_m$ satisifies (i).  Indeed, otherwise there exists $i,j\in\{1,\ldots,m\}$ and a path $w_0,\ldots,w_p$ in $G$ of length $p < j-i$ from $w_0:=v_i$ to $w_p:=v_j$.
+%   In this case, there is a minimal $k\ge 1$ such that $b(w_{j})=b(v_{i+j})$ for all $j\in\{0,\ldots,k-1\}$, but $b(w_k)>b(v_{i+k})$.  But this contradicts the choice of $v_{i+k}$ as a vertex of $B_{b(v_{i+k-1})}$ that maximizes $b(v_{i+k})$.
+% 
+%   Next we show that $v_1,\ldots,v_m$ satisfies (ii).
+%   Since $G[v_1,\ldots,v_m]$ is connected with $v_1\in B_{x_0}$ and $v_m\in B_{x_r}$, it follows that $B_x$ contains at least one of $v_1,\ldots,v_m$ for each $x\in V(P)$.  Since $(B_x\setminus\{v_1,\ldots,v_m\}:x\in V(P))$ is a path decomposition of $G-\{v_1,\ldots,v_m\}$, this implies that $\pw(G-\{v_1,\ldots,v\})\le \pw(G)-1$.  
+% \end{proof}
 
 
 
@@ -531,7 +542,7 @@ For a graph $U$ and integers $h,m\ge 0$, we define the \emph{$(h,m)$-boost} $U^{
 \begin{proof}
     Suppose, for the sake of contradiction, that $\trn(U^{(h,m)})=k<hm+1$ and let $\varphi:V(U^{(h,m)})\to\{1,\ldots,k\}$ be a 2-ranking of $U_{(h,m)}$.  Let $L_0,\ldots,L_{m}$ be the partition of $V(U^{(h,m)})$ used in the definition of $U^{(h,m)}$. We will show by induction on $m-i$ that, for each $a\in L_{i}$, $\varphi(a)\ge(m-i)h+1$. This gives the desired contradiction since it implies that, for the unique vertex $a_0\in L_0$, $\varphi(a_0)\ge m h+1 > k$.
 
-    The base case of the induction, $m-i=0$, is trivial; it simply asserts that $\varphi(v)\ge 1$ for each $v\in L_m$.  For any $i\in\{0,\ldots,m-1\}$ we apply the inductive hypothesis to conclude that $\varphi(v)\in\{(m-i-1)h+1,\ldots,k\}$ for each $v\in L_{i+1}$.  For each $a\in L_i$, the subgraph of $U^{(h,m)}$ induced by $a$ and its neighbours in $L_{i+1}$ contains the graph described in \cref{apex-graph} with $k_0:=(m-i-1)h+1$.  The conclusion of \cref{apex-graph} therefore implies that $\varphi(a)\ge k_0+h=(m-i)h+1$, as required.
+    The base case of the induction, $m-i=0$, is trivial; it simply asserts that $\varphi(v)\ge 1$ for each $v\in L_m$.  Now assume $m-i > 0$.  For each $a\in L_i$ and each  $v\in N_{U^{(h,m)}}(a)\cap L_{i+1}$, the inductive hypothesis implies that $\varphi(v)\in\{(m-i-1)h+1,\ldots,k\}$.  The induced graph $G:=U^{(h,m)}[\{a\}\cup N_{U^{(h,m)}}(a)\cap L_{i+1}]$ is the graph described by \cref{apex-graph} with the value $k_0:=h(m-i-1)h+1$.  The conclusion of \cref{apex-graph} therefore implies that $\varphi(a)\ge k_0+h=(m-i)h+1$, as required.
 \end{proof}
 
 \begin{lem}\label{boost-size}
@@ -551,7 +562,7 @@ For a graph $U$ and integers $h,m\ge 0$, we define the \emph{$(h,m)$-boost} $U^{
 
 \begin{proof}
   Let $t:=\tw(U)$.
-  Create a width-$(t+1)$ tree-decomposition $(B_x:x\in V(T))$ of $U^{(h,m)}$ as follows: Start with $T$ having a single node $z_0$ with $B_{z_0}=L_0$.  For each $i\in\{1,\ldots,m\}$, and each $a\in L_{i-1}$, find some bag $B_z$ in the current decomposition that contains $a$, take $h+1$ disjoint copies $(A_x:x\in V(T_0)),\ldots,(A_x:x\in V(T_h))$ of some width-$t$ tree decomposition $\mathcal{T}$ of $U$.  For each $i\in\{0,\ldots,h\}$, add an edge from $z$ to any node of the tree in $T_i$ and add $a$ to every bag in $T_i$.  It is straightforward to verify that this does, indeed, give a width-$(\tw(U)+1)$ tree-decomposition of $U^{(h,m)}$.
+  Create a width-$(t+1)$ tree-decomposition $(B_x:x\in V(T))$ of $U^{(h,m)}$ as follows: Start with $T$ having a single node $z_0$ with $B_{z_0}=L_0$.  For each $i\in\{1,\ldots,m\}$, and each $a\in L_{i-1}$, find some bag $B_z$ in the current decomposition that contains $a$, take $hm+1$ disjoint copies $(A_x:x\in V(T_0)),\ldots,(A_x:x\in V(T_h))$ of some width-$t$ tree decomposition $\mathcal{T}$ of $U$.  For each $i\in\{0,\ldots,hm\}$, add an edge from $z$ to any node of the tree in $T_i$ and add $a$ to every bag in $T_i$.  It is straightforward to verify that this does, indeed, give a width-$(\tw(U)+1)$ tree-decomposition of $U^{(h,m)}$.
 \end{proof}
 
 
@@ -650,16 +661,14 @@ We begin with a few helper lemmas whose purpose is to bound the number of colour
 \end{lem}
 
 \begin{proof}
-    The proof is by induction on $\pw(G)$.  The base case $\pw(G)=0$ is trivial: In this case, $G$ contains no edges and can be $\ell$-ranked with $1 = (\ell+1)\pw(G)+1$ colours.
+    The proof is by induction on $\pw(G)$.  The base case $\pw(G)=0$ is trivial: In this case, $G$ contains no edges and can be $\ell$-ranked with $1 = (\ell+1)\pw(G)+1$ colours.   For $\pw(G)\ge 1$, we may assume that $G$ is connected since, otherwise, we can colour each component of $G$ separately. Let $P:=x_1,\ldots,x_m$ be a path and let $(B_x:x\in V(P))$ be a $P$-decomposition of $G$ of width $\pw(G)$.
+    
+    Let $v_1,\ldots,v_p$ be a path of minimum length such that $v_1\in B_{x_0}$ and $v_p\in B_{x_m}$.  Since $v_1,\ldots,v_m$ with $v_1\in B_{x_0}$ and $v_r\in B_{x_m}$,  $|B_x\cap\{v_1,\ldots,v_p\}|\ge 1$, for each $x\in V(P)$.  Since $(B_x\setminus\{v_1,\ldots,v_p\}:x\in V(P))$ is a path decomposition of $G-\{v_1,\ldots,v_p\}$, this implies that $\pw(G-\{v_1,\ldots,v_p\})\le \pw(G)-1$.  We inductively colour $G-\{v_1,\ldots,v_p\}$ using colours $\{1,\ldots,(\ell+1)(\pw(G)-1)+1\}$ and then colour each $v_i$ with colour $((\ell+1)(\pw(G)-1)+2+i)\bmod (\ell+1)$.
 
-    For $\pw(G)>1$ then, by \cref{pathwidth-reduction}, $G$ contains a sequence of vertices $v_1,\ldots,v_m$  such that
-    \begin{inparaenum}[(i)]
-        \item $d_G(v_i,v_j) \ge |i-j|$ for each $i,j\in\{1,\ldots,m\}$; and
-        \item $\pw(G-\{v_1,\ldots,v_m\})\le \pw(G)-1$.
-    \end{inparaenum}
-    Property~(ii) implies that we can therefore inductively colour $G-\{v_1,\ldots,v_m\}$ using colours $\{1,\ldots,(\ell+1)(\pw(G)-1)+1\}$ and then colour each $v_i$ with colour $((\ell+1)(\pw(G)-1)+2+i)\bmod (\ell+1)$.
-
-    To see that the resulting colouring is an $\ell$-ranking, consider any path $P$ in $G$ of length at most $\ell$.  If $V(P)\cap\{v_1,\ldots,v_m\}=\emptyset$ then $P\subseteq G-\{v_1,\ldots,v_m\}$ has a unique maximum colour by the inductive hypothesis.  Otherwise, by Property (i), each vertex in  $V(P)\cap\{v_1,\ldots,v_m\}$ has a unique colour, which is larger than any colour used by any vertex in $V(P)\setminus\{v_1,\ldots,v_m\}$.  Therefore, the largest colour used by any vertex in $\{v_1,\ldots,v_m\}$ is the unique maximum colour used by any vertex of $P$.
+    To see that the resulting colouring is an $\ell$-ranking, consider any path $X$ in $G$ of length at most $\ell$.  If $V(X)\cap\{v_1,\ldots,v_p\}=\emptyset$ then $X\subseteq G-\{v_1,\ldots,v_p\}$ has a unique maximum colour by the inductive hypothesis.  Now observe that $\varphi(v_i)=\varphi(v_j)$ implies that $|j-i|\ge \ell+1$.
+    
+    
+    Otherwise, since $v_1,\ldots,v_p$ is a shortest path in $G$, each vertex in $V(X)\cap\{v_1,\ldots,v_m\}$ has a unique colour, which is larger than any colour used by any vertex in $V(X)\setminus\{v_1,\ldots,v_m\}$.  Therefore, the largest colour used by any vertex in $\{v_1,\ldots,v_m\}$ is the unique maximum colour used by any vertex of $X$.
 \end{proof}
 
 \begin{lem}\label{path-induced}

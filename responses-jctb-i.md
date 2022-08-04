@@ -82,13 +82,47 @@ We have labelled the equation and now refer to it by its number.
 
 The referee is correct here.  We have the two occurences of $h+1$ in this paragraph to $h$.
 
+**Referee 1 comment**
+
 - L336-L346: technically speaking, Lemma 18 is stated for the case when the number of copies of U equals 1 plus the max available color, and it's inconvenient to apply this lemma in the current set-up of Lemma 19's proof. Instead, one can fix k=hm and take (for contradiction) is as an upper bound of \chi_2 value.
 
+**Authors' Response**
+
+This is what the current proof of Lemma 19 (now Lemma 21) does.  It assumes that a $k$-colouring for $k=hm$, and then repeatedly uses Lemma 18 to show that the vertices in $L_i$ all have colours greater than $h(m-i)$.  We have reworded the proof of Lemma 21 to hopefully make this clearer.
+
+
+**Referee 1 comment**
 
 - L355: all the occurrences of h in the proof need to be replaced by hm, I think.
+
+**Authors' Response**
+
+The referee is correct. We have fixed this.
+
+**Referee 1 comment**
+
 - L391: the reference to the section label is not properly compiled here.
+
+**Authors' Response**
+
+We have fixed this.
+
+**Referee 1 comment**
+
 - L423-L425: please provide a reference for this property.
+
+**Authors' Response**
+
+This is a property that comes from taking a greedy path in some interval supergraph of $G$.  Since it would be hard to find a statement in exactly the form we want, we state this as a lemma in Section 2 and provide a proof.
+
+**Referee 1 comment**
+
 - L453: the index i runs from 1 to p; y_i indicates the ending bag of u_{i-1}, except for the last vertex u_p which obviously ends at bag m.
+
+**Authors' Response**
+
+
+
 - L471: what do you mean by "edges of w_0,…w_q"? Edges whose both endpoint belong to these vertices?
 - L507: please make an explicit pointer to Lemma 25 here.
 - L541: I guess we miss a bracket [] here.
