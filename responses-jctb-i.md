@@ -88,8 +88,7 @@ The referee is correct here.  We have the two occurences of $h+1$ in this paragr
 
 **Authors' Response**
 
-This is what the current proof of Lemma 19 (now Lemma 21) does.  It assumes that a $k$-colouring for $k=hm$, and then repeatedly uses Lemma 18 to show that the vertices in $L_i$ all have colours greater than $h(m-i)$.  We have reworded the proof of Lemma 21 to hopefully make this clearer.
-
+We have changed the statement of Lemma 18 to what is really needed: If a 2-ranking uses $k$ colours and all the vertices in $U_0,\ldots,U_k$ receive colours greater than or equal to $k_0$ then $a$ receives a colour of at least $k_0+h$.  The proof of Lemma 18 doesn't change.
 
 **Referee 1 comment**
 
