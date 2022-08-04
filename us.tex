@@ -329,16 +329,16 @@ In the special case where $X$ is a tree (or a forest), $\mathcal{X}$ is called a
 %     \item $\pw(G-\{v_1,\ldots,v_m\}) \le \pw(G)-1$.
 %   \end{inparaenum}
 % \end{lem}
-% 
+%
 % \begin{proof}
 %   Let $x_0,\ldots,x_r:=P$.
 %   For each vertex $v$ of $G$ define $b(v):=\max\{i\in\{0,\ldots,r\}: v\in B_{x_i}$.  We choose a greedy path $v_1,\ldots,v_m$ as follows:  $v_1$ is a vertex in $B_{x_0}$ that maximizes $b(v)$.  As long $v_{i-1}$ is not in $B_{x_r}$, we define $x_i$ as a vertex in $B_{b(v_{i-1})}$ that maximizes $b(v_i)$.  This process is well-defined and finite because the fact that $G$ is connected implies that $b(v_1),\ldots,b(v_r)$ is a strictly increasing sequence.
-% 
+%
 %   We now show that $v_1,\ldots,v_m$ satisifies (i).  Indeed, otherwise there exists $i,j\in\{1,\ldots,m\}$ and a path $w_0,\ldots,w_p$ in $G$ of length $p < j-i$ from $w_0:=v_i$ to $w_p:=v_j$.
 %   In this case, there is a minimal $k\ge 1$ such that $b(w_{j})=b(v_{i+j})$ for all $j\in\{0,\ldots,k-1\}$, but $b(w_k)>b(v_{i+k})$.  But this contradicts the choice of $v_{i+k}$ as a vertex of $B_{b(v_{i+k-1})}$ that maximizes $b(v_{i+k})$.
-% 
+%
 %   Next we show that $v_1,\ldots,v_m$ satisfies (ii).
-%   Since $G[v_1,\ldots,v_m]$ is connected with $v_1\in B_{x_0}$ and $v_m\in B_{x_r}$, it follows that $B_x$ contains at least one of $v_1,\ldots,v_m$ for each $x\in V(P)$.  Since $(B_x\setminus\{v_1,\ldots,v_m\}:x\in V(P))$ is a path decomposition of $G-\{v_1,\ldots,v_m\}$, this implies that $\pw(G-\{v_1,\ldots,v\})\le \pw(G)-1$.  
+%   Since $G[v_1,\ldots,v_m]$ is connected with $v_1\in B_{x_0}$ and $v_m\in B_{x_r}$, it follows that $B_x$ contains at least one of $v_1,\ldots,v_m$ for each $x\in V(P)$.  Since $(B_x\setminus\{v_1,\ldots,v_m\}:x\in V(P))$ is a path decomposition of $G-\{v_1,\ldots,v_m\}$, this implies that $\pw(G-\{v_1,\ldots,v\})\le \pw(G)-1$.
 % \end{proof}
 
 
@@ -524,11 +524,11 @@ The value of $\gamma_{i,k}(n)$ is well defined and $\tau(i)\le \gamma_{i,k}(n)\l
 We now prove the lower bound in \cref{t-trees}, which establishes all the other lower bounds. The idea in this lower bound is to construct a graph $G$ that has a BFS layering $L_0,\ldots,L_m$ such that, for each $i\in\{0,\ldots,m-1\}$ and each vertex $a\in L_i$, $G[N_G(a)\cap L_{i+1}]$ is a collection of treewidth-$(t-1)$ graphs $U_{a,0},\ldots,U_{a,k}$, each of which is a copy of a small treewidth-$(t-1)$ graph $U$ that requires at least $h$ colours.  This forces the colour of $a$ to exceed, by at least $h$, the smallest colour used in $U_{a,0},\ldots,U_{a,k}$.  Proceeding bottom up, this forces the vertex in $L_0$ to receive a colour larger than $hm$.  The lower bound is then obtained by using induction on $t$ to upper bound the size of the graph $U$ needed to ensure that $\trn(U)\ge h$ and choosing the parameters $h$ and $m$ appropriately.
 
 \begin{lem}\label{apex-graph}
-    Let $h,k\ge 1$ be integers, let $U$ be a graph with $\trn(U)\ge h$ and let $G$ be a graph obtained by taking $k+1$ disjoint copies $U_0,\ldots,U_k$ of $U$ and adding an apex vertex $a$ adjacent to each $v\in\bigcup_{i=0}^k V(U_i)$.  Then, for any integer $k_0\in \{1,\ldots,k\}$ and any 2-ranking of $\varphi:V(G)\to\{k_0,\ldots,k\}$, $\varphi(a) \ge k_0+h$.
+    Let $h,k\ge 1$ be integers, let $U$ be a graph with $\trn(U)\ge h$ and let $G$ be a graph obtained by taking $k+1$ disjoint copies $U_0,\ldots,U_k$ of $U$ and adding an apex vertex $a$ adjacent to each $v\in\bigcup_{i=0}^k V(U_i)$.  Let $\varphi:V(G)\to\{1,\ldots,k\}$ be a $2$-ranking of $G$ with the property that $\varphi(v)\ge k_0$ for each vertex $v\in\bigcup_{i=0}^k V(U_i)$.  Then $\varphi(a) \ge k_0+h$.
 \end{lem}
 
 \begin{proof}
-    Since $\trn(U_i)\ge h$, there exists $v_i\in V(U_i)$ such that $\varphi(v_i)\ge k_0+h-1$, for each $i\in\{0,\ldots,k\}$.  Since $|\{0,\ldots,k\}|=k+1>k-k_0+1=|\{k_0,\ldots,k\}|$ the Pigeonhole Principle implies that there exists distinct $i,j\in\{0,\ldots,k\}$ such that $\varphi(v_i)=\varphi(v_j)$.  Since $v_i a v_j$ is a path in $G$, this implies that $\varphi(a)\ge \varphi(v_i)+1\ge k_0+h$.
+    Since $\trn(U_i)\ge h$ and each $v\in V(U_i)$ has $\varphi(v)\ge k_0$, there exists some $v_i\in V(U_i)$ such that $\varphi(v_i)\ge k_0+h-1$, for each $i\in\{0,\ldots,k\}$.  Since $|\{0,\ldots,k\}|=k+1>k-k_0+1=|\{k_0,\ldots,k\}|$ the Pigeonhole Principle implies that there exists distinct $i,j\in\{0,\ldots,k\}$ such that $\varphi(v_i)=\varphi(v_j)$.  Since $v_i a v_j$ is a path in $G$, this implies that $\varphi(a)\ge \varphi(v_i)+1\ge k_0+h$.
 \end{proof}
 
 % \todo[inline]{SoDA Referee: p. 9 - In lemma 18 the number of copies of U is exactly k+1, but in the proof of lemma 19, the number of copies of U (i.e. hm+1) could be more than k+1, so I think Lemma 18 cannot be applied directly. I believe this can be fixed easily by modifying the statement/proof of Lemma 18.}
@@ -662,13 +662,12 @@ We begin with a few helper lemmas whose purpose is to bound the number of colour
 
 \begin{proof}
     The proof is by induction on $\pw(G)$.  The base case $\pw(G)=0$ is trivial: In this case, $G$ contains no edges and can be $\ell$-ranked with $1 = (\ell+1)\pw(G)+1$ colours.   For $\pw(G)\ge 1$, we may assume that $G$ is connected since, otherwise, we can colour each component of $G$ separately. Let $P:=x_1,\ldots,x_m$ be a path and let $(B_x:x\in V(P))$ be a $P$-decomposition of $G$ of width $\pw(G)$.
-    
-    Let $v_1,\ldots,v_p$ be a path of minimum length such that $v_1\in B_{x_0}$ and $v_p\in B_{x_m}$.  Since $v_1,\ldots,v_m$ with $v_1\in B_{x_0}$ and $v_r\in B_{x_m}$,  $|B_x\cap\{v_1,\ldots,v_p\}|\ge 1$, for each $x\in V(P)$.  Since $(B_x\setminus\{v_1,\ldots,v_p\}:x\in V(P))$ is a path decomposition of $G-\{v_1,\ldots,v_p\}$, this implies that $\pw(G-\{v_1,\ldots,v_p\})\le \pw(G)-1$.  We inductively colour $G-\{v_1,\ldots,v_p\}$ using colours $\{1,\ldots,(\ell+1)(\pw(G)-1)+1\}$ and then colour each $v_i$ with colour $((\ell+1)(\pw(G)-1)+2+i)\bmod (\ell+1)$.
 
-    To see that the resulting colouring is an $\ell$-ranking, consider any path $X$ in $G$ of length at most $\ell$.  If $V(X)\cap\{v_1,\ldots,v_p\}=\emptyset$ then $X\subseteq G-\{v_1,\ldots,v_p\}$ has a unique maximum colour by the inductive hypothesis.  Now observe that $\varphi(v_i)=\varphi(v_j)$ implies that $|j-i|\ge \ell+1$.
-    
-    
-    Otherwise, since $v_1,\ldots,v_p$ is a shortest path in $G$, each vertex in $V(X)\cap\{v_1,\ldots,v_m\}$ has a unique colour, which is larger than any colour used by any vertex in $V(X)\setminus\{v_1,\ldots,v_m\}$.  Therefore, the largest colour used by any vertex in $\{v_1,\ldots,v_m\}$ is the unique maximum colour used by any vertex of $X$.
+    Let $v_1,\ldots,v_p$ be a path of minimum length such that $v_1\in B_{x_0}$ and $v_p\in B_{x_m}$.  Since $v_1,\ldots,v_m$ is a path in $G$ with $v_1\in B_{x_0}$ and $v_r\in B_{x_m}$,  $|B_x\cap\{v_1,\ldots,v_p\}|\ge 1$, for each $x\in V(P)$.  Since $(B_x\setminus\{v_1,\ldots,v_p\}:x\in V(P))$ is a path decomposition of $G-\{v_1,\ldots,v_p\}$, this implies that $\pw(G-\{v_1,\ldots,v_p\})\le \pw(G)-1$.  We inductively colour $G-\{v_1,\ldots,v_p\}$ using colours $\{1,\ldots,(\ell+1)(\pw(G)-1)+1\}$ and then colour each $v_i$ with colour $((\ell+1)(\pw(G)-1)+2+i)\bmod (\ell+1)$.
+
+    A standard property of shortest paths implies that, for any $i,j\in\{1,\ldots,p\}$, $|j-i|=d_G(v_i,v_j)$. In this colouring, $\varphi(v_i)=\varphi(v_j)$ implies that $j-i\equiv 0\pmod{\ell+1}$, for any $i,j\in\{1,\ldots,p\}$.  In particular, for distinct $i,j\in\{1,\ldots,p\}$ with $\varphi(v_i)=\varphi(v_j)$, $d_G(v_i,v_j) = |j-i|\ge\ell+1$.
+
+    To see that the resulting colouring is an $\ell$-ranking, consider any path $X$ in $G$ of length at most $\ell$. If $V(X)\cap\{v_1,\ldots,v_p\}\neq\emptyset$ then each vertex $V(X)\cap\{v_1,\ldots,v_m\}$ has a unique colour, which is larger than any colour used by any vertex in $V(X)\setminus\{v_1,\ldots,v_m\}$.  If $V(X)\cap\{v_1,\ldots,v_p\}=\emptyset$ then $X\subseteq G-\{v_1,\ldots,v_p\}$ has a unique maximum colour by the inductive hypothesis.
 \end{proof}
 
 \begin{lem}\label{path-induced}
@@ -689,7 +688,7 @@ We begin with a few helper lemmas whose purpose is to bound the number of colour
 
     Otherwise, $u_0,\ldots,u_p$ defines a sequence $y_0,\ldots,y_p$ of nodes in $P$, where $y_0:=1$ and, for each $i\in\{1,\ldots,p-1\}$, $y_{i}:=r(u_{i-1})$.  Consider a path decomposition $\mathcal{P'}:=(B'_x:x\in V(P))$  obtained by removing $u_i$ from $B_{j}$ for each $i\in\{0,\ldots,p\}$ and each $j\in\{y_i,\ldots,m\}$. Let $G'$ be the graph with $V(G'):=\bigcup_{x=1}^m B'_x$ that is edge-maximal with respect to $\mathcal{P}'$.  Observe that $\mathcal{P'}$ has width at most $t-1$.
 
-    For each $i\in\{1,\ldots,p\}$, let $G'_i:=G'[\bigcup_{j=y_{i-1}}^{y_i}B'_j]$ and $\mathcal{P}'_i:=(B'_x:x\in\{y_{i-1},\ldots,y_i\})$.
+    For each $i\in\{1,\ldots,p\}$, let $P_i':=y_{i-1},\ldots,y_i$, let $G'_i:=G'[\bigcup_{j=y_{i-1}}^{y_i}B'_j]$ and let $\mathcal{P}'_i:=(B'_x:x\in V(P'_i)\}$.
     Note that $G'_i$ may contain $u_i$ (if $u_i\in B_{y_i-1}$) but $G'_i$ does not contain $u_{i-1}$ because $u_{i-1}$ does not appear in $B_j'$ for any $j\in\{y_{i-1},\ldots,m\}$.  For each $i\in\{1,\ldots,p\}$, we apply the lemma inductively to $G'_i$ and $\mathcal{P}'_i$ to obtain a set $U'_i$ of size $O(\ell^{t-1})$ that satisfies the requirements of the lemma for the graph $G'_i$. Let $U:=\{u_0,\ldots,u_p\}\cup\bigcup_{i=1}^p U'_i$.
 
     For each $i\in\{1,\ldots,p\}$, $U$ contains $u_{i-1}$ and $u_i$.
@@ -708,16 +707,19 @@ We begin with a few helper lemmas whose purpose is to bound the number of colour
     \begin{compactenum}
        \item $\{w_a,w_b\}\subseteq B_{y_j}$ for some $j\in\{0,\ldots,p\}$.  Since $G$ is edge-maximal with respect to $\mathcal{P}$, this implies  $w_aw_b\in E(G)$. Since $w_a,\ldots,w_b$ is an induced path in $G$, $b=a+1$ and there is nothing to prove.
 
-       \item $\{w_a,w_b\}\in V(G_j')$ for some $j\in\{1,\ldots,p\}$ (and not the preceding case). In this case, edge-maximality implies that $B_{y_{j-1}}$ and $B_{y_{j}}$ each form cliques that separate $G'_{j}$ from $G-V(G'_j)$.  Since $w_a,\ldots,w_b$ is an induced path in $G$, this implies that $\{w_a,\ldots,w_b\}\subseteq V(G_j')$.  Therefore, $w_a,\ldots,w_b$ is an induced path in $G_j'$ so, by the inductive hypothesis, $\{w_{a+1},\ldots,w_{b-1}\}\subseteq U_j'\subseteq U$.  (Note that this includes the special case in which $u_j\in\{w_a,\ldots,w_b\}$.)
+       \item $\{w_a,w_b\}\in V(G_j')$ for some $j\in\{1,\ldots,p\}$ (and not the preceding case). In this case, edge-maximality implies that $B_{y_{j-1}}$ and $B_{y_{j}}$ each form cliques that separate $G'_{j}$ from $G-V(G'_j)$.  Since $w_a,\ldots,w_b$ is an induced path in $G$ and none of $w_{a+1},\ldots,w_{b-1}$ are pinched, this implies that $\{w_a,\ldots,w_b\}\subseteq V(G_j')$.  Therefore, $w_a,\ldots,w_b$ is an induced path in $G_j'$ so, by the inductive hypothesis, $\{w_{a+1},\ldots,w_{b-1}\}\subseteq U_j'\subseteq U$.  (Note that this includes the special case in which $u_j\in\{w_a,\ldots,w_b\}$.)
 
-       \item $w_a = u_j$ for some $j\in\{0,\ldots,p\}$ and $w_b\in V(G_{j+1}')$.  There are three subcases to consider:
-       \begin{compactenum}
-            \item $w_{a+1}\in B_{y_{j+1}}$.  In this case $b=a+1$ and there is nothing to prove.
-
-            \item $w_{a+1}=w_q$. In this case $b=q=a+1$ and there is nothing to prove.
-
-            \item Neither of the previous two cases. We argue that this is not possible, so the previous two cases are already exhaustive.  Since $w_{a+1}\not\in B_{y_{j+1}}$, $w_{a+1}\in V(G_{j+1}')\setminus B_{y_{j+1}}$. Since $w_{a+1}\neq w_q$, ${a+2}\le q$ and $w_{a+2}\in V(G_{j+1}')$.  However since $G$ is edge-maximal with respect to $\mathcal{P}$, $N_G(u_j)\supseteq V(G_{j+1}')$. In particular, $w_aw_{a+2}\in E(G)$, contradicting the assumption that $w_0,\ldots,w_q$ is an induced path in $G$. \qedhere
-        \end{compactenum}
+       \item $w_a = u_j$ for some $j\in\{0,\ldots,p\}$ and $w_b\in V(G_{j+1}')$.  In this case, $w_a=u_j\in B_{k}$ for each $k\in\{y_j,\ldots,y_{j+1}\}$ and $w_b\in B_{k}$ for at least one $k\in\{y_j,\ldots,y_{j+1}\}$.  By edge maximality, $w_aw_b\in E(G)$ and $b=a+1$ so there is nothing to prove.  \qedhere
+       %
+       %
+       % There are three subcases to consider:
+       % \begin{compactenum}
+       %      \item $w_{a+1}\in B_{y_{j+1}}$. In this case, $w_{a+1}$ is pinched, so $b=a+1$ and there is nothing to prove.
+       %
+       %      \item $w_{a+1}=w_q$. In this case $b=q=a+1$ and there is nothing to prove.
+       %
+       %      \item Neither of the previous two cases. We argue that this is not possible, so the previous two cases are already exhaustive.  Since $w_{a+1}\not\in B_{y_{j+1}}$, $w_{a+1}\in V(G_{j+1}')\setminus B_{y_{j+1}}$. Since $w_{a+1}\neq w_q$, ${a+2}\le q$ and $w_{a+2}\in V(G_{j+1}')$.  However since $G$ is edge-maximal with respect to $\mathcal{P}$, $N_G(u_j)\supseteq V(G_{j+1}')$. In particular, $w_aw_{a+2}\in E(G)$, contradicting the assumption that $w_0,\ldots,w_q$ is an induced path in $G$. \qedhere
+       %  \end{compactenum}
     \end{compactenum}
 \end{proof}
 
@@ -765,9 +767,9 @@ A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least t
     \begin{compactenum}
         \item $\{u_0,u_p\}\subseteq V(H-V(\hat{H}))$. There are two subcases:
         \begin{compactenum}
-            \item $\{u_1,\ldots,u_{r-1}\}\subseteq V(H-V(\hat{H}))$.  In this case, $u_0,\ldots,p_p$ is a path in $H-V(\hat{H})$, so  $\varphi(u_0)<\varphi(u_i)$ for some $i\in\{1,\ldots,p-1\}$ since \cref{pathwidth} ensures that $\varphi$ is an $\ell$-ranking of $H-V(\hat{H})$.
+            \item $\{u_1,\ldots,u_{r-1}\}\subseteq V(H-V(\hat{H}))$.  In this case, $u_0,\ldots,u_p$ is a path in $H-V(\hat{H})$, so  $\varphi(u_0)<\varphi(u_i)$ for some $i\in\{1,\ldots,p-1\}$ since \cref{pathwidth} ensures that $\varphi$ is an $\ell$-ranking of $H-V(\hat{H})$.
 
-            \item $u_i\in V(\hat{H})$ for some $i\in\{1,\ldots,p\}$. In this case, $\varphi(u_0)\le (\ell+1)t+1 < (\ell+1)t+2 \le \varphi(u_i)$.
+            \item $u_i\in V(\hat{H})$ for some $i\in\{1,\ldots,p-1\}$. In this case, $\varphi(u_0)\le (\ell+1)t+1 < (\ell+1)t+2 \le \varphi(u_i)$.
         \end{compactenum}
         \item $\{u_0,u_p\}\subseteq V(\hat{H})$.
         % In this case, \cref{induced-unimodal} implies that $u_0,\ldots,u_p$ is $\mathcal{T}$-unimodal, i.e., $u_0,\ldots,u_p$ is the concatenation of two paths, one upward and one downward.
