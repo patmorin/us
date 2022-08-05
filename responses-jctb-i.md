@@ -1,4 +1,14 @@
+# Response to Referees
 
+The authors would like to thank both referees for the effort they put into carefully reading the paper and providing detailed feedback that has improved the paper significantly. This revision includes a few significant changes:
+
+- The section on bounded genus graphs has been simplified using the recently improved product structure theorem for bounded genus graphs (in which $H$ is now a simple $3$-tree).
+
+- The discussion in the final section was updated to include the fact that there now exists a linear time algorithm for finding product structure in planar graphs.
+
+- In response to one of Referee 1's suggestions, we have added a section just before the hardest part of the proof (The Meat).  In this section, we present the proof for trees and its extension to simple $2$-trees.  We then explain that, when extending the proof to simple $t$-trees for $t\ge 3$, the additional difficulty comes from the fact that the graph induced by each BFS layer no longer has an $\ell$-ranking that uses $f(\ell)$ colours.  We conclude by sketching how resolving this requires solving a weighted problem on a bounded diameter graph that can be solved using a separator that induces a graph that can be coloured using the method described in the previous section (The Bread).  We believe that this section, which occupies a two and half pages, greatly improves the readability of the paper.
+
+<!-- - The previous version of the paper made two claims about pathwidth-$p$ graphs that were "well-known and easy to prove", that both relate to the greedy path in the containing interval graph.  In one case, we replaced this with a shortest path.   -->
 
 **Referee 1 comment**
 
@@ -255,6 +265,16 @@ The purpose of the discuss here is to highlight the fact that, although centered
 
 **Referee 2 comment**
 
+It might be useful to precise that if a graph G is edge-maximal for a path-
+decomposition (resp. a tree-decomposition) of width t then it is an interval graph
+(resp. a chordal graph) with clique number at most t + 1.
+
+**Author's Response**
+
+Done.
+
+**Referee 2 comment**
+
 Please give some reference (or at least refer to [N. Robertson,
 P.D. Seymour, Graph minors. II. Algorithmic aspects of tree-
 width, Journal of Algorithms, 7(3) 1986, pp. 309-322] for the
@@ -404,6 +424,165 @@ L 0 , k ≥ϕ(a 0 ) ≥ mh + 1 > k.
 **Author's Response**
 
 Done.
+
+**Referee 2 comment**
+There is something wrong here: as m → ∞ we have [...]
+
+**Author's Response**
+
+We have added a $e^{O(1/h)}$ factor to the statement of the lemma and adjusted the proof accordingly.  (This factor disappears almost immediately when we next use the lemma.)
+
+**Referee 2 comment**
+
+Karpas et al. [19] have shownwho show
+. . . χ2 (T ) ≥ r. As the . . . (log(0) r)r , this establishes the base case
+t = 1.
+
+**Author's Response**
+
+Done.
+
+**Referee 2 comment**
+
+Now we take the graph Let G := U (h,m) .
+
+**Author's Response**
+Done.
+
+
+**Referee 2 comment**
+
+Update the upper bound (including the error term in the first line)
+and the consecutive computations
+
+**Author's Response**
+
+Done.
+
+**Referee 2 comment**
+
+in ?? we discuss . . . : missing reference
+
+**Author's Response**
+
+Fixed.
+
+**Referee 2 comment**
+
+it is well known: please give a reference
+
+**Author's Response**
+
+Instead (after ensure G is connected) we defined $v_0,\ldots,v_p$ to be a path of minimal length such that  $v_0\in B_{x_0}$ to $v_p\in B_{x_m}$.
+
+**Referee 2 comment**
+
+Consider the a greedy path . . .
+
+**Author's Response**
+
+Done.
+
+**Referee 2 comment**
+
+It is well known easily checked. (Note that this is related to the
+“well known” fact mentioned in the proof of the preceding lemma.
+Maybe you could add some basic properties of pathwidth to the
+Preliminaries section with a reference?)
+
+**Author's Response**
+
+We decided on the first option (stating that it's easily checked)
+
+**Referee 2 comment**
+
+each i ∈ {1, . . . ,p − 1 p}. (or even p + 1, as you probably wish to
+define yp+1 = r(up ) = m as well.)
+
+**Author's Response**
+
+We fixed this by removing the ${}-1$.  We don't think it's helpful to have $y_{p+1}$ defined since the bags $y_{p}+1,\ldots,y_{p+1}$ don't play any role in the subgraph 
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
+
+**Referee 2 comment**
+**Author's Response**
 
 **Referee 2 comment**
 **Author's Response**
