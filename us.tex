@@ -687,15 +687,15 @@ We begin with a few helper lemmas whose purpose is to bound the number of colour
     Let $P=x_1,\ldots,x_m$ be a path and let $G$ be a graph that is edge-maximal with respect to a width-$t$ $P$-decomposition $\mathcal{P}:=(B_x:x\in V(P))$ of $G$.  Then there exists a set $U\subseteq V(G)$ such that
     \begin{compactenum}[(Z1)]
         \item $B_{x_1}\cup B_{x_m}\subseteq U$;\label{values-u}
-        \item $|U|\in O((\ell+1)^t)$; and \label{size-u}
+        \item $|U|\le 2(\ell+1)^t + t$; and \label{size-u}
         \item for each non-trivial induced path $w_0,\ldots,w_q$ in $G$ that has length at most $\ell$ and $\{w_0,w_q\}\in U$, $\{w_1,\ldots,w_{q-1}\}\subseteq U$.\label{induced-u}
     \end{compactenum}
 \end{lem}
 
 \begin{proof}
-    To eliminate a level of subscripts, let $x_i:=i$ for each $i\in\{1,\ldots,m\}$. The proof is by induction on $t$. In the base case, $t=0$, $G$ has no edges and therefore no non-trivial paths. The lemma is satisfied by taking $U:=B_{1}\cup B_{m}$.  In this case $|U|\le 2\in O(\ell^0)$.
+    To eliminate a level of subscripts, let $x_i:=i$ for each $i\in\{1,\ldots,m\}$. The proof is by induction on $t$. In the base case, $t=0$, $G$ has no edges and therefore no non-trivial paths, so Z\ref{induced-u} is vacuous. The lemma is satisfied by taking $U:=B_{1}\cup B_{m}$.  This certainly satisfies Z\ref{values-u} and satisfies Z\ref{size-u} since $|U|\le 2= 2(\ell+1)^0+0$.
 
-    Now assume that $t\ge 1$. If $G$ is not connected, then $B_{1}$ and $B_{m}$ are in different components of $G$.  Choosing $U:=B_{1}\cup B_{m}$ satisfies the requirements of the lemma since the only paths $w_0,\ldots,w_q$ that need consideration have $\{w_0,w_q\}\subseteq B_1$ or $\{w_0,w_q\}\subset B_m$.  Since we only consider induced paths in $G$ and $G$ is edge-maximal with respect to $\mathcal{P}$, this implies that $q=1$, so $w_0,\ldots,w_q=w_0w_q$ consists of a single edge and $\{w_0,w_q\}\subseteq U$.
+    Now assume that $t\ge 1$. If $G$ is not connected, then $B_{1}$ and $B_{m}$ are in different components of $G$.  In this case we choose $U:=B_{1}\cup B_{m}$. This certainly satisfies Z\ref{values-u}.  This satisfies Z\ref{size-u} since $|U|\le|B_1|+|B_m|\le 2t+2 \le 2(\ell+1)^t+t$ because $2(\ell+1)^t \ge 2^{t+1}> t+2$ for all $t\ge 1$.  This also satisfies Z\ref{induced-u} because the only paths $w_0,\ldots,w_q$ that need consideration have $\{w_0,w_q\}\subseteq B_1$ or $\{w_0,w_q\}\subset B_m$.  Since we only consider induced paths in $G$ and $G$ is edge-maximal with respect to $\mathcal{P}$, this implies that $q=1$, so $w_0,\ldots,w_q=w_0w_q$ consists of a single edge and $\{w_0,w_q\}\subseteq U$.
 
     We may now assume that $G$ is connected. For each $v\in V(G)$, let $r(v):=\max\{i\in\{1,\ldots,m\}:v\in B_i\}$.  Refer to \cref{induced_path_fig}.  Consider the \emph{greedy path} $u_0,\ldots,u_p$ that begins at $u_0\in B_{1}$, ends at $u_p\in B_{m}$, and is defined as follows: $u_0$ is a vertex in $B_{1}$ that maximizes $r(u_0)$.  For $i\ge 1$, $u_i$ is a vertex in $B_{r(u_{i-1})}$ that maximizes $r(u_i)$.  This continues until reaching a vertex $u_p$ such that $r(u_p)=m$.   It is easy to verify that $u_0,\ldots,u_p$ is a shortest path from $B_{1}$ to $B_{m}$, i.e., $p=\min\{d_H(w_0,w_q): w_0\in B_1,\, w_q\in B_m\}$.  Therefore, if $p>\ell$, the lemma is again trivially satisfied by taking $U:=B_{1}\cup B_{m}$.
 
@@ -714,7 +714,15 @@ We begin with a few helper lemmas whose purpose is to bound the number of colour
 
     For each $i\in\{1,\ldots,p\}$, $U$ contains $u_{i-1}$ and $u_i$. The set $U_i'$ is obtained by induction on $G_i'$ using a path decomposition on a path whose endpoints are $y_{i-1}$ and $y_i$ having bags $B'_{y_{i-1}}=B_{y_{i-1}}\setminus u_{i-1}$ and $B'_{y_{i}}=B_{y_{i}}\setminus u_{i}$.  Therefore $U$ contains $\{u_{i-1},u_i\}\cup B'_{y_{i-1}}\cup B'_{y_i}=B_{y_{i-1}}\cup B_{y_i}$.
 
-    In particular, $U$ contains $B_{y_0}=B_1$ and $B_{y_{p+1}}=B_m$, so $U$ satisfies (Z\ref{values-u}). The size of $U$ satisfies the recurrence $f(0)\le 2$ and $f(t)\le \ell+1+(\ell+1)\cdot f(t-1)$, which resolves to $f(t)\le ((3\ell+1)(\ell+1)^t-x-1)/\ell \in O((\ell+1)^t)$, so $U$ satisfies (Z\ref{size-u}).  All that remains is to show that $U$ satisfies (Z\ref{induced-u}).  Consider some induced path $w_0,\ldots,w_q$ in $G$ of length at most $\ell$ with $\{w_0,w_q\}\subseteq U$.  We want to show that $\{w_1,\ldots,w_{q-1}\}\subseteq U$.
+    In particular, $U$ contains $B_{y_0}=B_1$ and $B_{y_{p+1}}=B_m$, so $U$ satisfies (Z\ref{values-u}).
+    Now observe that $|U|=|B_1| + |\{u_1,\ldots,u_p\}|+ |\bigcup_{i=1}^{p+1}(U\cap V(G_i'))|$.  Since $p\le \ell$, this implies that $|U\setminus B_1|$ satisfies the recurrence
+    \[
+       f(t) \le \begin{cases}
+                  1 & \text{if $t=0$} \\
+                  \ell + (\ell+1)\cdot f(t-1) & \text{otherwise.}
+                \end{cases}
+    \]
+    This recurrence resolves to $f(t)\le 2(\ell+1)^t - 1$.  Therefore $|U|\le f(t)+|B_{1}| \le 2(\ell+1)^t + t$ so this satisfies Z\ref{size-u}.  All that remains is to show that $U$ satisfies (Z\ref{induced-u}).  Consider some induced path $w_0,\ldots,w_q$ in $G$ of length at most $\ell$ with $\{w_0,w_q\}\subseteq U$.  We want to show that $\{w_1,\ldots,w_{q-1}\}\subseteq U$.
 
     We say that a vertex $w_i$ is \emph{pinched} if $w_i\in B_{y_j}$ for some $j\in\{0,\ldots,p+1\}$. (Note that each of $u_0,\ldots,u_p$ is pinched.) The edges of $w_0,\ldots,w_q$ can be partitioned into subpaths of the form $w_{a},\ldots,w_{b}$ where
     \begin{inparaenum}[(i)]
