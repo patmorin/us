@@ -815,7 +815,15 @@ Now we arrive at the combinatorial core of the proof. The main idea is to cover 
 
 We will now show that, for any $k\ge 3$,\todo{Do we need this restriction on $k$?} any tree $T$ with $n \le k^k$ vertices has a $\ell$-ranking $\varphi:V(T)\to\{0,\ldots,\floor{ak}\}$, for some value of $a$ that depends only on $\ell$.  Observe that a value of $k\in\Theta(\log n/\log\log n)$ is sufficient to satisfy this requirement, so this already gives an extension of the result by \citet{karpas.neiman.ea:on} that $2$-vertex ranking of any $n$-vertex tree can be done using $O(\log n/\log\log n)$ colours.
 
-Let $r$ be the root of $T$, let $h$ be the height of $T$ and, for each $i\in\{0,\ldots,h\}$, let $L_i$ denote the set of vertices in $T$ that have depth $i$.  For each vertex $v$ in $T$, let $T_v$ be the subtree of $T$ that contains $v$ and all its descendants, let $n_v:=|T_v|$ be the number of vertices in $T_v$, and let $c_v$ be the solution to the equation $k^k/c_v^{c_v} = n_v$.  In other words, $c_v:=\gamma_{0,k}(n_v)$.  Let $c:=c_r$, so $n=k^k/c^c$.  We will prove the following stronger result:
+Let $r$ be the root of $T$, let $h$ be the height of $T$ and, for each $i\in\{0,\ldots,h\}$, let $L_i$ denote the set of vertices in $T$ that have depth $i$.  For each vertex $v$ in $T$, let $T_v$ be the subtree of $T$ that contains $v$ and all its descendants, let $n_v:=|T_v|$ be the number of vertices in $T_v$, and let $c_v$ be the solution to the equation $k^k/c_v^{c_v} = n_v$.  In other words, $c_v:=\gamma_{0,k}(n_v)$.  Let $c:=c_r$, so $n=k^k/c^c$.  We will prove the following stronger result (see \cref{tree_fig}):
+
+\begin{figure}
+  \begin{center}
+    \includegraphics{figs/tree}
+  \end{center}
+  \caption{Finding an $\ell$-ranking of a tree of size $n=k^k/c^c$.  The root gets colour $\floor{a(k-c)}+1$. Vertices in $L_1,\ldots,L_{\ell}$ get colours in $[a(k-c-1),a(k-c)]$.  Dangerous vertices in $L_{\ell+1}$ get unique colours in $[\floor{a(k-c)}+2,ak]$.  Harless vertices get colours in $[1,a(k-c)]$.}
+  \label{tree_fig} 
+\end{figure}
 
 \begin{quote}
     $T$ has as $\ell$-ranking $\varphi:V(T)\to\{1,\ldots,\floor{ak}\}$ such that $\varphi(r)=\floor{a(k-c)}+1$ and $\varphi(v)\le \floor{a(k-c)}$ for each vertex $v\in\bigcup_{i=1}^\ell L_i$.
