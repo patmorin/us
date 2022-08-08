@@ -259,7 +259,7 @@ In this paper we use standard graph theory terminology as used in the book by \c
 For any set $S$, $G[S]$ is the graph with vertex set $V(G[S]):=V(G)\cap S$ and edge set $E(G[S]):=\{vw\in E(G): \{v,w\}\subseteq S\}$, and $G-S:=G[V(G)\setminus S]$.  We say that a subgraph $G'$ of $G$ is an \emph{induced} subgraph of $G$ if $G[V(G')]=G'$.  Although $\ell$-ranking is defined in terms of subgraphs of diameter at most $\ell$, it is more convenient to use an equivalent definition based on (induced) paths:\footnote{Definition (c) is, in fact, the definition used by \citet{karpas.neiman.ea:on}. We only provide a proof of equivalence here for the sake of completeness.}
 
 \begin{obs}
-  For any graph $G$, any vertex colouring $\varphi:V(G)\to\N$, and any $\ell\in\N$ the following statements are equivalent:
+  For any graph $G$, any vertex colouring $\varphi:V(G)\to\N$, and any $\ell\in\N\setminus\{0\}$ the following statements are equivalent:
   \begin{compactenum}[(a)]
     \item $\varphi$ is an $\ell$-ranking of $G$.
     \item For every non-trivial path $u_0,\ldots,u_p$ in $G$ of length at most $\ell$, there is exactly one $i\in\{0,\ldots,p\}$ such that $\varphi(u_i)=\max\{\varphi(u_j):j\in\{0,\ldots,p\}\}$.
@@ -492,7 +492,7 @@ Recall that, for any integer $i\ge 0$,
           \log\left(\log^{(i-1)}x\right) & \text{for $i\ge 1$.} \\
       \end{cases}
 \]
-Define the \emph{$\tau$ower} function $\tau:\N\setminus\{0\}\to\N$ by
+Define the \emph{$\tau$ower} function $\tau:\N\to\N$ by
 \[
   \tau(i) :=
     \begin{cases}
@@ -515,8 +515,7 @@ which is valid for all $x> \tau(i-1)$.
 
 \subsection{The $\gamma_{i,k}$ Function}
 
-
-For any integer $i$, any real $k>\tau(i-1)$, and any real $n\in[1,(\log^{(i)} k)^k]$, we define $\gamma_{i,k}(n)$ to be the solution $x\in[\tau(i),k]$ to the equation
+For any $i\in\N\setminus\{0\}$, any real $k>\tau(i-1)$, and any real $n\in[1,(\log^{(i)} k)^k]$, we define $\gamma_{i,k}(n)$ to be the solution $x\in[\tau(i),k]$ to the equation
 \begin{equation}
    (\log^{(i)} k)^k/(\log^{(i)} x)^{x}=n \enspace .  \label{gamma_eqn}
 \end{equation}
@@ -694,23 +693,30 @@ We begin with a few helper lemmas whose purpose is to bound the number of colour
 \end{lem}
 
 \begin{proof}
-    To eliminate a level of subscripts, let $x_i:=i$ for each $i\in\{1,\ldots,m\}$.  The proof is by induction on $t$. In the base case, $t=0$, $G$ has no edges and therefore no non-trivial paths. The lemma is satisfied by taking $U:=B_{1}\cup B_{m}$.  In this case $|U|\le 2\in O(\ell^0)$.
+    To eliminate a level of subscripts, let $x_i:=i$ for each $i\in\{1,\ldots,m\}$. The proof is by induction on $t$. In the base case, $t=0$, $G$ has no edges and therefore no non-trivial paths. The lemma is satisfied by taking $U:=B_{1}\cup B_{m}$.  In this case $|U|\le 2\in O(\ell^0)$.
 
     Now assume that $t\ge 1$. If $G$ is not connected, then $B_{1}$ and $B_{m}$ are in different components of $G$.  Choosing $U:=B_{1}\cup B_{m}$ satisfies the requirements of the lemma since the only paths $w_0,\ldots,w_q$ that need consideration have $\{w_0,w_q\}\subseteq B_1$ or $\{w_0,w_q\}\subset B_m$.  Since we only consider induced paths in $G$ and $G$ is edge-maximal with respect to $\mathcal{P}$, this implies that $q=1$, so $w_0,\ldots,w_q=w_0w_q$ consists of a single edge and $\{w_0,w_q\}\subseteq U$.
 
-    We may now assume that $G$ is connected. For each $v\in V(G)$, let $r(v):=\max\{i\in\{1,\ldots,m\}:v\in B_i\}$.  Consider the \emph{greedy path} $u_0,\ldots,u_p$ that begins at $u_0\in B_{1}$, ends at $u_p\in B_{m}$, and is defined as follows: $u_0$ is a vertex in $B_{1}$ that maximizes $r(u_0)$.  For $i\ge 1$, $u_i$ is a vertex in $B_{r(u_{i-1})}$ that maximizes $r(u_i)$.  It is easy to verify that $u_0,\ldots,u_p$ is a shortest path from $B_{1}$ to $B_{m}$, i.e., $p=\min\{d_H(w_0,w_q): w_0\in B_1,\, w_q\in B_m\}$.  Therefore, if $p>\ell$, the lemma is again trivially satisfied by taking $U:=B_{1}\cup B_{m}$.
+    We may now assume that $G$ is connected. For each $v\in V(G)$, let $r(v):=\max\{i\in\{1,\ldots,m\}:v\in B_i\}$.  Refer to \cref{induced_path_fig}.  Consider the \emph{greedy path} $u_0,\ldots,u_p$ that begins at $u_0\in B_{1}$, ends at $u_p\in B_{m}$, and is defined as follows: $u_0$ is a vertex in $B_{1}$ that maximizes $r(u_0)$.  For $i\ge 1$, $u_i$ is a vertex in $B_{r(u_{i-1})}$ that maximizes $r(u_i)$.  This continues until reaching a vertex $u_p$ such that $r(u_p)=m$.   It is easy to verify that $u_0,\ldots,u_p$ is a shortest path from $B_{1}$ to $B_{m}$, i.e., $p=\min\{d_H(w_0,w_q): w_0\in B_1,\, w_q\in B_m\}$.  Therefore, if $p>\ell$, the lemma is again trivially satisfied by taking $U:=B_{1}\cup B_{m}$.
+
+    \begin{figure}
+      \begin{center}
+        \includegraphics{figs/path_induced-1} \\
+        \includegraphics{figs/path_induced-2} \\
+      \end{center}
+      \caption{The proof of \cref{path-induced}.}
+      \label{induced_path_fig}
+    \end{figure}
 
     Otherwise, $u_0,\ldots,u_p$ defines a sequence $y_0,\ldots,y_{p+1}$ of nodes in $P$, where $y_0:=1$ and, for each $i\in\{1,\ldots,p+1\}$, $y_{i}:=r(u_{i-1})$.  Consider a path decomposition $\mathcal{P'}:=(B'_x:x\in V(P))$  obtained by removing $u_i$ from $B_{j}$ for each $i\in\{0,\ldots,p\}$ and each $j\in\{y_i,\ldots,m\}$. Let $G'$ be the graph with $V(G'):=\bigcup_{x=1}^m B'_x$ that is edge-maximal with respect to $\mathcal{P}'$.  Observe that $\mathcal{P'}$ has width at most $t-1$.
 
-    For each $i\in\{1,\ldots,p+1\}$, let $P_i':=y_{i-1},\ldots,y_i$, let $G'_i:=G'[\bigcup_{j=y_{i-1}}^{y_i}B'_j]$ and let $\mathcal{P}'_i:=(B'_x:x\in V(P'_i)\}$.
-    Note that $G'_i$ may contain $u_i$ (if $u_i\in B_{y_i-1}$) but $G'_i$ does not contain $u_{i-1}$ because $u_{i-1}$ does not appear in $B_j'$ for any $j\in\{y_{i-1},\ldots,m\}$.  For each $i\in\{1,\ldots,p\}$, we apply the lemma inductively to $G'_i$ and $\mathcal{P}'_i$ to obtain a set $U'_i$ of size $O(\ell^{t-1})$ that satisfies the requirements of the lemma for the graph $G'_i$. Let $U:=\{u_0,\ldots,u_p\}\cup\bigcup_{i=1}^p U'_i$.
+    For each $i\in\{1,\ldots,p+1\}$, let $P_i':=y_{i-1},\ldots,y_i$, let $G'_i:=G'[\bigcup_{j=y_{i-1}}^{y_i}B'_j]$ and let $\mathcal{P}'_i:=(B'_x:x\in V(P'_i)\}$. Note that $G'_i$ may contain $u_i$ (if $u_i\in B_{y_i-1}$) but $G'_i$ does not contain $u_{i-1}$ because $u_{i-1}$ does not appear in $B_j'$ for any $j\in\{y_{i-1},\ldots,m\}$.  For each $i\in\{1,\ldots,p\}$, we apply the lemma inductively to $G'_i$ and $\mathcal{P}'_i$ to obtain a set $U'_i$ of size $O(\ell^{t-1})$ that satisfies the requirements of the lemma for the graph $G'_i$. Let $U:=\{u_0,\ldots,u_p\}\cup\bigcup_{i=1}^p U'_i$.
 
-    For each $i\in\{1,\ldots,p\}$, $U$ contains $u_{i-1}$ and $u_i$.
-    The set $U_i'$ is obtained by induction on $G_i'$ using a path decomposition on a path whose endpoints are $y_{i-1}$ and $y_i$ having bags $B'_{y_{i-1}}=B_{y_{i-1}}\setminus u_{i-1}$ and $B'_{y_{i}}=B_{y_{i}}\setminus u_{i}$.  Therefore $U$ contains $\{u_{i-1},u_i\}\cup B'_{y_{i-1}}\cup B'_{y_i}=B_{y_{i-1}}\cup B_{y_i}$.
+    For each $i\in\{1,\ldots,p\}$, $U$ contains $u_{i-1}$ and $u_i$. The set $U_i'$ is obtained by induction on $G_i'$ using a path decomposition on a path whose endpoints are $y_{i-1}$ and $y_i$ having bags $B'_{y_{i-1}}=B_{y_{i-1}}\setminus u_{i-1}$ and $B'_{y_{i}}=B_{y_{i}}\setminus u_{i}$.  Therefore $U$ contains $\{u_{i-1},u_i\}\cup B'_{y_{i-1}}\cup B'_{y_i}=B_{y_{i-1}}\cup B_{y_i}$.
 
     In particular, $U$ contains $B_{y_0}=B_1$ and $B_{y_{p+1}}=B_m$, so $U$ satisfies (Z\ref{values-u}). The size of $U$ satisfies the recurrence $f(0)\le 2$ and $f(t)\le \ell+1+(\ell+1)\cdot f(t-1)$, which resolves to $f(t)\le ((3\ell+1)(\ell+1)^t-x-1)/\ell \in O((\ell+1)^t)$, so $U$ satisfies (Z\ref{size-u}).  All that remains is to show that $U$ satisfies (Z\ref{induced-u}).  Consider some induced path $w_0,\ldots,w_q$ in $G$ of length at most $\ell$ with $\{w_0,w_q\}\subseteq U$.  We want to show that $\{w_1,\ldots,w_{q-1}\}\subseteq U$.
 
-    We say that a vertex $w_i$ is \emph{pinched} if $w_i\in B_{y_j}$ for some $j\in\{0,\ldots,p\}$. (Note that each of $u_0,\ldots,u_p$ is pinched.) The edges of $w_0,\ldots,w_q$ can be partitioned into subpaths of the form $w_{a},\ldots,w_{b}$ where
+    We say that a vertex $w_i$ is \emph{pinched} if $w_i\in B_{y_j}$ for some $j\in\{0,\ldots,p+1\}$. (Note that each of $u_0,\ldots,u_p$ is pinched.) The edges of $w_0,\ldots,w_q$ can be partitioned into subpaths of the form $w_{a},\ldots,w_{b}$ where
     \begin{inparaenum}[(i)]
         \item $a=0$ or $w_a$ is pinched;
         \item $b=q$ or $w_b$ is pinched; and
@@ -721,9 +727,11 @@ We begin with a few helper lemmas whose purpose is to bound the number of colour
     \begin{compactenum}
        \item $\{w_a,w_b\}\subseteq B_{y_j}$ for some $j\in\{0,\ldots,p\}$.  Since $G$ is edge-maximal with respect to $\mathcal{P}$, this implies  $w_aw_b\in E(G)$. Since $w_a,\ldots,w_b$ is an induced path in $G$, $b=a+1$ and there is nothing to prove.
 
-       \item $\{w_a,w_b\}\in V(G_j')$ for some $j\in\{1,\ldots,p\}$ (and not the preceding case). In this case, edge-maximality implies that $B_{y_{j-1}}$ and $B_{y_{j}}$ each form cliques that separate $G'_{j}$ from $G-V(G'_j)$.  Since $w_a,\ldots,w_b$ is an induced path in $G$ and none of $w_{a+1},\ldots,w_{b-1}$ are pinched, this implies that $\{w_a,\ldots,w_b\}\subseteq V(G_j')$.  Therefore, $w_a,\ldots,w_b$ is an induced path in $G_j'$ so, by the inductive hypothesis, $\{w_{a+1},\ldots,w_{b-1}\}\subseteq U_j'\subseteq U$.  (Note that this includes the special case in which $u_j\in\{w_a,\ldots,w_b\}$.)
+       \item $\{w_a,w_b\}\subseteq V(G_j')$ for some $j\in\{1,\ldots,p\}$ (and not the preceding case).
+       % In this case, edge-maximality implies that $B_{y_{j-1}}$ and $B_{y_{j}}$ each form cliques that separate $G'_{j}$ from $G-V(G'_j)$.
+       Since $w_a,\ldots,w_b$ is an induced path in $G$ and none of $w_{a+1},\ldots,w_{b-1}$ are pinched, this implies that $\{w_a,\ldots,w_b\}\subseteq V(G_j')$.  Therefore, $w_a,\ldots,w_b$ is an induced path in $G_j'$ so, by the inductive hypothesis, $\{w_{a+1},\ldots,w_{b-1}\}\subseteq U_j'\subseteq U$.  (Note that this includes the special case in which $u_j\in\{w_a,\ldots,w_b\}$.)
 
-       \item $w_a = u_j$ for some $j\in\{0,\ldots,p\}$ and $w_b\in V(G_{j+1}')$.  In this case, $w_a=u_j\in B_{k}$ for each $k\in\{y_j,\ldots,y_{j+1}\}$ and $w_b\in B_{k}$ for at least one $k\in\{y_j,\ldots,y_{j+1}\}$.  By edge maximality, $w_aw_b\in E(G)$ and $b=a+1$ so there is nothing to prove.  \qedhere
+       \item $w_a = u_{j-1}$ for some $j\in\{1,\ldots,p+1\}$ and $w_b\in V(G_{j}')$.  In this case, $w_a=u_{j-1}\in B_{k}$ for each $k\in\{y_{j-1},\ldots,y_{j}\}$ and $w_b\in B_{k}$ for at least one $k\in\{y_{j-1},\ldots,y_{j}\}$.  By edge maximality, $w_aw_b\in E(G)$ and $b=a+1$ so there is nothing to prove.  \qedhere
        %
        %
        % There are three subcases to consider:
@@ -770,11 +778,11 @@ A node $x$ in a rooted tree $T$ is a \emph{branching node} if $x$ has at least t
 
 
 \begin{lem}\label{skeleton-colour}
-    Let $H$ be a graph that is edge-maximal with respect to some width-$t$ tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ that defines a $(\mathcal{T},\ell)$-skeleton $\hat{H}$, of $H$.  Then $\lrn(H)\in O(\lrn(\hat{H}))$.
+    Let $H$ be a graph that is edge-maximal with respect to some width-$t$ tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ that defines a $(\mathcal{T},\ell)$-skeleton $\hat{H}$, of $H$.  Then $\lrn(H)\le \lrn(\hat{H}) + (\ell+1)t+1$.
 \end{lem}
 
 \begin{proof}
-    Let $\varphi:V(\hat{H})\to \{(\ell+1)t+2,\ldots,\lrn(\hat{H})+(\ell+1)t+1\}$ be an $\ell$-ranking of $\hat{H}$. The graph $P:=T-\Lambda(T)$ consists of disjoint paths and, for any edge $vw\in E(H-V(\hat{H})))$ there is a node $x\in V(P)$ such that $\{v,w\}\subseteq B_x$.  Therefore $(B_x:x\in V(P))$ is a width-$t$ path decomposition of $H-V(\hat{H})$, so $\pw(H-V(\hat{H}))\le t$.  Therefore, by \cref{pathwidth}, $H-V(\hat{H})$ has an $\ell$-ranking $\varphi:V(H-V(\hat{H}))\to\{1,\ldots,(\ell+1)t+1\}$.  This gives a colouring $\varphi: V(H)\to\{1,\ldots,\trn(\hat{H})+(\ell+1)t+1\}$.
+    Let $\varphi:V(\hat{H})\to \{(\ell+1)t+2,\ldots,\lrn(\hat{H})+(\ell+1)t+1\}$ be an $\ell$-ranking of $\hat{H}$. The graph $P:=T-\Lambda(T)$ consists of disjoint paths and, for any edge $vw\in E(H-V(\hat{H})))$ there is a node $x\in V(P)$ such that $\{v,w\}\subseteq B_x$.  Therefore $(B_x:x\in V(P))$ is a width-$t$ path decomposition of $H-V(\hat{H})$, so $\pw(H-V(\hat{H}))\le t$.  Therefore, by \cref{pathwidth}, $H-V(\hat{H})$ has an $\ell$-ranking $\varphi:V(H-V(\hat{H}))\to\{1,\ldots,(\ell+1)t+1\}$.  This gives a colouring $\varphi: V(H)\to\{1,\ldots,\lrn(\hat{H})+(\ell+1)t+1\}$.
 
     We claim that $\varphi$ is an $\ell$-ranking of $\hat{H}$.  To see this, consider some path $u_0,\ldots,u_p$ with $\varphi(u_0)=\varphi(u_p)$.  We must show that $\varphi(u_i)>\varphi(u_0)$ for some $i\in\{1,\ldots,p-1\}$.
     By \cref{induced-paths-only}, we may assume that $u_0,\ldots,u_p$ is an induced path. There are a few cases to consider:
@@ -865,7 +873,7 @@ TODO: Get rid of the ${}-1$'s everywhere
 
 
 \begin{lem}\label{t-tree-slack}
-    Let $t,d,\ell,\beta\in\N$ be fixed values, let $k\ge 3$; let $H$ be a graph with $\diam(H)\le d$ and $\stw(H)\le t$ in which each vertex $v\in V(H)$ is assigned a real-valued weight $n_v\ge 1$. Then there exists a constant $a:=a(t,\ell,d)$ such that, if
+    Let $t,d,\ell\in\N\setminus\{0\}$ be fixed values, let $k\ge 3$; let $H$ be a graph with $\diam(H)\le d$ and $\stw(H)\le t$ in which each vertex $v\in V(H)$ is assigned a real-valued weight $n_v\ge 1$. Then there exists a constant $a:=a(t,\ell,d)$ such that, if
     \begin{equation}
          \sum_{v\in V(H)} n_v \le \frac{(\log^{(t-2)} k)^k}{(\log^{(t-2)} c)^{c}} \enspace ,
      \label{total-weight}
@@ -964,7 +972,7 @@ Since our strategy is to use \cref{t-tree-slack} on the first $\ell+1$ BFS layer
 Finally, we can prove the technical lemma that implies \weirdref{simple-t-trees}{a}.
 
 \begin{lem}\label{t-tree-technical}
-    Let $n,t,\ell\in\N$ and $k, c\in\R$ be such that $tn\le (\log^{(t-2)} k)^k/(\log^{(t-2)} c)^{c}$;let $H$ be an $n$-vertex graph that is edge-maximal with respect to some $r$-rooted $t$-simple tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$; let $L_0:=\{v_1,\ldots,v_{t'}\}\subseteq B_r$; and let $L_0,\ldots,L_m$ be the BFS layering of $H$.
+    Let $n,t,\ell\in\N\setminus\{0\}$ and $k, c\in\R$ be such that $tn\le (\log^{(t-2)} k)^k/(\log^{(t-2)} c)^{c}$;let $H$ be an $n$-vertex graph that is edge-maximal with respect to some $r$-rooted $t$-simple tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$; let $L_0:=\{v_1,\ldots,v_{t'}\}\subseteq B_r$; and let $L_0,\ldots,L_m$ be the BFS layering of $H$.
 
     Then, there exists an integer $a:=a(t,\ell)$ such that, for any distinct $\phi_0,\ldots,\phi_{t'}\in \{\floor{a(k-c)}+1,\ldots,\floor{ak}\}$ there exists an $\ell$-ranking $\varphi:V(G)\to\{1,\ldots,\floor{ak}\}$ such that
     \begin{compactenum}[(R1)]

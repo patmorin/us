@@ -2,13 +2,11 @@
 
 The authors would like to thank both referees for the effort they put into carefully reading the paper and providing detailed feedback that has improved the paper significantly. This revision includes a few significant changes:
 
-- The section on bounded genus graphs has been simplified using the recently improved product structure theorem for bounded genus graphs (in which $H$ is now a simple $3$-tree).
+- The section on bounded genus graphs has been simplified using the recently improved product structure theorem for bounded genus graphs (in which $H$ is now a simple $3$-tree).  There is no longer any need to deal with an apex vertex in $H$.
 
 - The discussion in the final section was updated to include the fact that there now exists a linear time algorithm for finding product structure in planar graphs.
 
-- In response to one of Referee 1's suggestions, we have added a section just before the hardest part of the proof (The Meat).  In this section, we present the proof for trees and its extension to simple $2$-trees.  We then explain that, when extending the proof to simple $t$-trees for $t\ge 3$, the additional difficulty comes from the fact that the graph induced by each BFS layer no longer has an $\ell$-ranking that uses $f(\ell)$ colours.  We conclude by sketching how resolving this requires solving a weighted problem on a bounded diameter graph that can be solved using a separator that induces a graph that can be coloured using the method described in the previous section (The Bread).  We believe that this section, which occupies a two and half pages, greatly improves the readability of the paper.
-
-<!-- - The previous version of the paper made two claims about pathwidth-$p$ graphs that were "well-known and easy to prove", that both relate to the greedy path in the containing interval graph.  In one case, we replaced this with a shortest path.   -->
+- In response to Referee 1's suggestion, we have added a section just before the hardest part of the proof (The Meat).  In this section, we present the proof for trees and its extension to simple $2$-trees.  We then explain that, when extending the proof to simple $t$-trees for $t\ge 3$, the additional difficulty comes from the fact that the graph induced by each BFS layer no longer has an $\ell$-ranking that uses $f(\ell)$ colours.  We conclude by sketching how resolving this requires solving a weighted problem on a bounded diameter graph that can be solved using a separator that induces a graph that can be coloured using the method described in the previous section (The Bread).  We believe that this section, which occupies two and half pages, greatly improves the readability of the paper.
 
 **Referee 1 comment**
 
@@ -16,7 +14,7 @@ In the proof appearing in L428-L430, what if two vertices v_1 and v_{\ell+2}, wh
 
 **Authors' Response**
 
-We have added a lemma in the introductory section which states that any pathwidth $p$ graph $G$ contains a sequence of vertices $v_1,\ldots,v_r$ such that $G-\{p_1,\ldots,p_r\}$ has pathwidth at most $p-1$ and $d_G(v_i,v_j)\ge|i-j|$ for each $i,j\in\{1,\ldots,r\}$.  This is cleaner, shorter, and handles the issue pointed out by the referee.
+The path $v_1,\ldots,v_r$ referred to in this proof has been replaced with a shortest path from (any vertex in) $B_{x_0}$ to (any vertex in) $B_{x_m}$. This is cleaner, shorter, and handles the issue pointed out by the referee.
 
 **Referee 1 comment**
 
@@ -26,10 +24,9 @@ The analysis of section 4.1.2 in order to show the claimed upper bound is not ea
 
 We have added a section here that presents the full proof for trees and outlines the proof for outerplanar graphs (simple $2$-trees) before jumping into the full proof for simple $t$-trees.  This section also includes a discussion on why the proof for simple $t$-trees ($t\ge 3$) is considerably more difficult than it is for trees and simple $2$-trees.
 
-
 **Referee 1 comment**
 
-L59: Regarding the first inequality about distance-\ell colouing, one can add a sentence that the number of vertices of the product is at most 3(\ell+1).
+L59: Regarding the first inequality about distance-\ell colouring, one can add a sentence that the number of vertices of the product is at most 3(\ell+1).
 
 **Authors' Response**
 
@@ -49,7 +46,7 @@ L145-151: It appears that \ell-centered coloring is distinguished from \ell-rank
 
 **Authors' Response**
 
-TODO
+We have rewritten this section a bit to make the comparison clearer.  In particular, we explain that, in a $p$-centered colouring, every path of length at most $2p$ contains a vertex whose colour is unique.  Thus, every $p$-centered colouring satisfies a condition comparable to that satisfied by a $2p$-ranking.  The only difference is that, in the former case, the condition is "unique" and in the latter case the condition is "unique maximum".  
 
 **Referee 1 comment**
 
@@ -65,8 +62,7 @@ Fixed.
 
 **Authors' Response**
 
-This question appears to be incomplete.
-
+This comment appears to be incomplete.
 
 **Referee 1 comment**
 
@@ -90,7 +86,7 @@ We have labelled the equation and now refer to it by its number.
 
 **Authors' Response**
 
-The referee is correct here.  We have the two occurences of $h+1$ in this paragraph to $h$.
+The referee is correct here.  We have changed the two occurences of $h+1$ in this paragraph to $h$.
 
 **Referee 1 comment**
 
@@ -98,7 +94,7 @@ The referee is correct here.  We have the two occurences of $h+1$ in this paragr
 
 **Authors' Response**
 
-We have changed the statement of Lemma 18 to what is really needed: If a 2-ranking uses $k$ colours and all the vertices in $U_0,\ldots,U_k$ receive colours greater than or equal to $k_0$ then $a$ receives a colour of at least $k_0+h$.  The proof of Lemma 18 doesn't change.
+We have changed the statement of Lemma 18 to what is really needed: If a 2-ranking of $G$ uses $k$ colours and all the vertices in $U_0,\ldots,U_k$ receive colours greater than or equal to $k_0$ then $a$ receives a colour of at least $k_0+h$.  The proof of Lemma 18 doesn't change.
 
 **Referee 1 comment**
 
@@ -261,13 +257,12 @@ ranking is a stronger notion than ℓ-centered coloring.
 
 **Author's Response**
 
-The purpose of the discuss here is to highlight the fact that, although centered chromatic number, and vertex-ranking number are the same, the situation changes immediately when we switch to "local" versions of these problems.  We have added some text here to point out that a p-centered colouring assigns a unique colour to every path of length at most $2p$.  
+The purpose of the discuss here is to highlight the fact that, although centered chromatic number and vertex-ranking number are the same, the situation changes immediately when we switch to "local" versions of these problems.  We have added some text here to point out that a p-centered colouring assigns a unique colour to every path of length at most $2p$.
 
 **Referee 2 comment**
 
 It might be useful to precise that if a graph G is edge-maximal for a path-
-decomposition (resp. a tree-decomposition) of width t then it is an interval graph
-(resp. a chordal graph) with clique number at most t + 1.
+decomposition (resp. a tree-decomposition) of width t then it is an interval graph (resp. a chordal graph) with clique number at most t + 1.
 
 **Author's Response**
 
@@ -283,7 +278,6 @@ unweighted version)
 **Author's Response**
 
 Done.
-
 
 **Referee 2 comment**
 
@@ -409,7 +403,6 @@ Done.
 
 The idea in this lower bound is to . . .
 
-
 **Author's Response**
 
 Done.
@@ -426,6 +419,7 @@ L 0 , k ≥ϕ(a 0 ) ≥ mh + 1 > k.
 Done.
 
 **Referee 2 comment**
+
 There is something wrong here: as m → ∞ we have [...]
 
 **Author's Response**
@@ -447,8 +441,8 @@ Done.
 Now we take the graph Let G := U (h,m) .
 
 **Author's Response**
-Done.
 
+Done.
 
 **Referee 2 comment**
 
@@ -501,103 +495,70 @@ define yp+1 = r(up ) = m as well.)
 
 **Author's Response**
 
-We fixed this by removing the ${}-1$.  We don't think it's helpful to have $y_{p+1}$ defined since the bags $y_{p}+1,\ldots,y_{p+1}$ don't play any role in the subgraph 
+The referee is right.  We made an off-by-one error here, and $y_{p+1}=r(u_p)=m$ is indeed the last vertex in the path the $P$ used by the path decomposition.  We have updated the proof accordingly.  (There are several subsequent comments by Referee 2 (ommitted here) that are also addressed by this change.)
 
 **Referee 2 comment**
+
+The set Λ(T ) should also include the root (which could have a
+single children) and all the leaves of T . Otherwise, if T is a path
+then Ĥ is empty.
+
 **Author's Response**
 
-**Referee 2 comment**
-**Author's Response**
+When $\hat{H}$ is empty, this is because $\Lambda(T)$ is empty, which means that $T$ is a path, so $H$ has pathwidth $t$.  This is not a problem, although the statement of the lemma was imprecise in this case, because of the use of big-Oh notation [We should have written $\chi_{\mathoperator{\ell-vr}}(H) \in O(1+\chi_{\mathoperator{\ell-vr}}(\hat{H}))].  Instead, we have changed the statement of the lemma to the more precise $\chi_{\mathoperator{\ell-vr}}(H) \le \chi_{\mathoperator{\ell-vr}}(\hat{H})+(\ell+1)t+1$, which is what the lemma actually proves.  
+
+Note that this is substantially stronger than a definition that includes all the leaves of $T$.  The difference is apparent in the case where $T$ has only a few very high degree nodes (which means that $T$ has many leaves).
 
 **Referee 2 comment**
+
+For each pair of \sout{branching} nodes . . .
+
 **Author's Response**
 
-**Referee 2 comment**
-**Author's Response**
+It's important that we only consider pairs of branching nodes here, otherwise we get a much bigger graph $\hat{H}$ that we want.
 
 **Referee 2 comment**
+
+{wa , wb }⊆ V (G′j )
+
 **Author's Response**
 
-**Referee 2 comment**
-**Author's Response**
+Fixed.
 
 **Referee 2 comment**
+
+χ2 (Ĥ) χℓ (Ĥ)
+
 **Author's Response**
 
-**Referee 2 comment**
-**Author's Response**
+fixed
 
 **Referee 2 comment**
+
+(. . . ) the first block has more layers attached to it: this is not
+consistent with the second sentence of the paragraph (“The main
+idea . . . each of which consists of ℓ + 1 consecutive BFS layers”).
+
 **Author's Response**
 
-**Referee 2 comment**
-**Author's Response**
+Some larger-scale changes in response to Referee~1's request for a demonstration of the proof in the case where $H$ is a tree now clarifies this.
 
 **Referee 2 comment**
+
+I assume t, d, l, β are positive integers. Maybe you should precise
+somewhere that N does not include 0.
+
 **Author's Response**
 
-**Referee 2 comment**
-**Author's Response**
+We checked all occurrences of $\mathbb{N}$ and replaced some of these with $\mathbb{N}\setminus\{0\}$ in the few places where it was appropriate.
 
 **Referee 2 comment**
+
+The β factor disappeared? I assume this is a typo.
+implies that rewrites as nH ≤ β· (log(t−2) k)k /(log(t−2) c)c .
+
+The inequality γH ≥ (log c)c has no reason to hold if β > 1.
+
 **Author's Response**
 
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
-
-**Referee 2 comment**
-**Author's Response**
+We have eliminated $\beta$ from the statement of the lemma.  In the previous version it was used to deal with the fact that the sum of weights we use can exceed the number of vertices by a factor of $t$.  This is easily dealt with outside of the lemma when it occurs.  This lemma is complicated enough without the $\beta$ parameter.
