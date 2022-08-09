@@ -229,7 +229,7 @@ We have expanded footnote 5 so that it explains how to $\ell$-rank a path using 
 
 # Comments from Referee 2
 
-**Note:** Referee 2's review was included as a PDF file, which we have cut and pasted from here.  Much of the (very nice) formatting was lost during this process.
+**Note:** Referee 2's review was included as a PDF file, which we have cut from and pasted here.  Much of the (very nice) formatting was lost during this process.
 
 
 **Referee 2 Comment**
