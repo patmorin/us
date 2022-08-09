@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.24">
-<info created="D:20220808160131" modified="D:20220808162423"/>
+<info created="D:20220808160131" modified="D:20220809120159"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -47,6 +47,17 @@ h
 <path fill="sym-stroke">
 0.6 0 0 0.6 0 0 e
 </path>
+</symbol>
+<symbol name="mark/myfdisk(sfpx)" transformations="translations">
+<group>
+<path fill="sym-fill">
+0.5 0 0 0.5 0 0 e
+</path>
+<path fill="sym-stroke" fillrule="eofill">
+0.5 0 0 0.5 0 0 e
+0.4 0 0 0.4 0 0 e
+</path>
+</group>
 </symbol>
 <symbol name="mark/fdisk(sfx)" transformations="translations">
 <group>
@@ -292,7 +303,9 @@ h
 <pen name="fat" value="1.2"/>
 <pen name="heavier" value="0.8"/>
 <pen name="ultrafat" value="2"/>
+<symbolsize name="huge" value="10"/>
 <symbolsize name="large" value="5"/>
+<symbolsize name="larger" value="7"/>
 <symbolsize name="small" value="2"/>
 <symbolsize name="tiny" value="1.1"/>
 <textsize name="Huge" value="\Huge"/>
@@ -484,23 +497,20 @@ h
 360 620 l
 h
 </path>
-<use name="mark/disk(sx)" pos="272 672" size="large" stroke="brew7"/>
-<use name="mark/disk(sx)" pos="160 672" size="large" stroke="brew7"/>
-<use name="mark/disk(sx)" pos="352 672" size="large" stroke="brew7"/>
-<use name="mark/disk(sx)" pos="336 672" size="large" stroke="brew7"/>
-<use name="mark/disk(sx)" pos="208 704" size="large" stroke="brew6"/>
-<use name="mark/disk(sx)" pos="176 704" size="large" stroke="brew6"/>
-<use name="mark/disk(sx)" pos="256 704" size="large" stroke="brew6"/>
-<use name="mark/disk(sx)" pos="304 704" size="large" stroke="brew6"/>
-<use name="mark/disk(sx)" pos="320 704" size="large" stroke="brew6"/>
-<use name="mark/disk(sx)" pos="336 704" size="large" stroke="brew6"/>
-<use name="mark/disk(sx)" pos="192 736" size="large" stroke="orange"/>
-<use name="mark/disk(sx)" pos="256 736" size="large" stroke="orange"/>
-<use name="mark/disk(sx)" pos="320 736" size="large" stroke="orange"/>
-<use name="mark/disk(sx)" pos="256 672" size="large" stroke="red"/>
-<use name="mark/disk(sx)" pos="192 672" size="large" stroke="red"/>
-<use name="mark/disk(sx)" pos="304 672" size="large" stroke="red"/>
-<use name="mark/disk(sx)" pos="256 768" size="large" stroke="brew4"/>
+<use name="mark/myfdisk(sfpx)" pos="160 672" size="huge" stroke="black" fill="brew7"/>
+<use name="mark/myfdisk(sfpx)" pos="208 704" size="huge" stroke="black" fill="brew6"/>
+<use name="mark/myfdisk(sfpx)" pos="176 704" size="huge" stroke="black" fill="brew6"/>
+<use name="mark/myfdisk(sfpx)" pos="256 704" size="huge" stroke="black" fill="brew6"/>
+<use name="mark/myfdisk(sfpx)" pos="304 704" size="huge" stroke="black" fill="brew6"/>
+<use name="mark/myfdisk(sfpx)" pos="320 704" size="huge" stroke="black" fill="brew6"/>
+<use name="mark/myfdisk(sfpx)" pos="336 704" size="huge" stroke="black" fill="brew6"/>
+<use name="mark/myfdisk(sfpx)" pos="192 736" size="huge" stroke="black" fill="darkorange"/>
+<use name="mark/myfdisk(sfpx)" pos="256 736" size="huge" stroke="black" fill="darkorange"/>
+<use name="mark/myfdisk(sfpx)" pos="320 736" size="huge" stroke="black" fill="darkorange"/>
+<use name="mark/myfdisk(sfpx)" pos="256 672" size="huge" stroke="black" fill="red"/>
+<use name="mark/myfdisk(sfpx)" pos="192 672" size="huge" stroke="black" fill="red"/>
+<use name="mark/myfdisk(sfpx)" pos="304 672" size="huge" stroke="black" fill="red"/>
+<use name="mark/myfdisk(sfpx)" pos="256 768" size="huge" stroke="black" fill="brew4"/>
 <path matrix="0 1 -1 0 1168 264" fill="brew7">
 384 768 m
 384 760 l
@@ -566,7 +576,6 @@ h
 136 640 m
 384 640 l
 </path>
-<use name="mark/disk(sx)" pos="240 672" size="large" stroke="brew7"/>
 <path fill="orange">
 400 712 m
 400 696 l
@@ -574,5 +583,9 @@ h
 408 712 l
 h
 </path>
+<use name="mark/myfdisk(sfpx)" pos="272 672" size="huge" stroke="black" fill="brew7"/>
+<use name="mark/myfdisk(sfpx)" pos="352 672" pen="ultrafat" size="huge" stroke="black" fill="brew7"/>
+<use name="mark/myfdisk(sfpx)" pos="336 672" size="huge" stroke="black" fill="brew7"/>
+<use name="mark/myfdisk(sfpx)" pos="240 672" size="huge" stroke="black" fill="brew7"/>
 </page>
 </ipe>
