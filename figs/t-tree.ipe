@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.24">
-<info created="D:20220808160131" modified="D:20220809120543"/>
+<info created="D:20220808160131" modified="D:20220809134301"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -337,7 +337,38 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<path layer="alpha" stroke="black" pen="heavier">
+<path layer="alpha" fill="brew8">
+249.878 778.607
+235.335 784.321
+215.856 772.634
+190.664 753.675
+171.446 733.417
+148.851 709.005
+149.111 697.837
+159.759 687.968
+171.186 689.786
+196.638 726.925
+233.517 754.714
+248.06 732.638
+250.658 700.954
+260.786 689.786
+273.058 686.804
+284.42 692.903
+288.056 704.33
+276.629 742.767
+254.553 781.204 u
+</path>
+<path stroke="black" pen="heavier">
+157.161 705.628 m
+162.227 685.258
+174.562 672.126 c
+</path>
+<path stroke="black" pen="heavier">
+172.744 705.368 m
+162.961 683.79
+144.176 672.385 c
+</path>
+<path stroke="black" pen="heavier">
 209.103 698.616 m
 214.003 672.737 l
 </path>
@@ -425,27 +456,6 @@ h
 293.61 683.583
 331.185 671.768 c
 </path>
-<path fill="brew8">
-249.878 778.607
-235.335 784.321
-215.856 772.634
-190.664 753.675
-171.446 733.417
-148.851 709.005
-149.111 697.837
-159.759 687.968
-171.186 689.786
-196.638 726.925
-233.517 754.714
-248.06 732.638
-250.658 700.954
-260.786 689.786
-273.058 686.804
-284.42 692.903
-288.056 704.33
-276.629 742.767
-254.553 781.204 u
-</path>
 <path stroke="black" pen="heavier">
 310.863 697.372 m
 298.258 716.123
@@ -453,7 +463,7 @@ h
 </path>
 <path stroke="black" pen="heavier">
 300.242 697.152 m
-288.186 700.822
+283.482 701.502
 269.876 737.053 c
 </path>
 <path stroke="black" pen="heavier">
@@ -786,10 +796,6 @@ h
 384 768 m
 384 748 l
 </path>
-<path matrix="0 1 -1 0 1168 328" stroke="black" pen="heavier">
-384 768 m
-384 748 l
-</path>
 <path matrix="0 1 -1 0 1168 368" stroke="black" pen="heavier">
 384 768 m
 384 748 l
@@ -966,5 +972,9 @@ h
 h
 </path>
 <use name="mark/myfdisk(sfx)" pos="174.562 672.126" size="larger" stroke="black" fill="red"/>
+<path matrix="0 1 -1 0 1168 328" stroke="black" pen="heavier">
+384 768 m
+384 748 l
+</path>
 </page>
 </ipe>
