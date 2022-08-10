@@ -1,0 +1,47 @@
+#!/usr/bin/python3
+
+import sys
+import os
+import re
+import subprocess
+
+head=r"""\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsopn,amsfonts}
+\DeclareMathOperator{\qn}{qn}
+\setlength{\parskip}{1ex}
+\usepackage{html}
+
+\newcommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\setlength{\parindent}{0mm}
+
+\begin{document}
+"""
+
+# TODO: Use a special marker to read preamble
+
+tail = """
+\end{document}
+"""
+
+
+if __name__ == "__main__":
+    infile = sys.argv[1]
+    outfile = re.sub(r'\.md$', r'.tex', infile)
+
+    mdtext = open(infile).read()
+    cmd = ['/usr/bin/pandoc', '-t', 'latex', infile]
+    print(" ".join(cmd))
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+    outs, errs = proc.communicate()
+    latextext = outs.decode('UTF-8')
+    # print(latextext)
+
+    with open(outfile, 'w') as fp:
+        fp.write(head)
+        fp.write(latextext)
+        fp.write(tail)
+    os.system('pdflatex {}'.format(outfile))
