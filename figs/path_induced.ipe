@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.24">
-<info created="D:20220808035337" modified="D:20220809165320"/>
+<info created="D:20220808035337" modified="D:20220809165420"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -326,7 +326,7 @@ h
 <layer name="gamma"/>
 <layer name="disappearing"/>
 <layer name="alpha"/>
-<view layers="u_0...u_p P gamma disappearing alpha" active="gamma"/>
+<view layers="u_0...u_p P gamma disappearing" active="gamma"/>
 <view layers="u_0...u_p P gamma alpha" active="disappearing"/>
 <group layer="P" matrix="1 0 0 0.6 384 269.867">
 <path matrix="0.7 0 0 1 28.8 0" stroke="black" fill="brew2">
