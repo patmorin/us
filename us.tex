@@ -298,7 +298,7 @@ From this point on, we will use the characterization in \cref{induced-paths-only
 % \end{obs}
 %
 
-Let $T$ be a rooted tree rooted at some node $r\in V(T)$.  For any node $x\in V(T)$, $P_T(x)$ denotes the path, in $T$, from $r$ to $x$.  The \defin{$T$-depth} of $x\in V(T)$, denoted by $d_T(x)$, is the length of $P_T(x)$.  A node $a\in V(T)$ is a \defin{$T$-ancestor} of $x\in V(T)$ if $a\in V(P_T(x))$. If $a$ is a $T$-ancestor of $x$ then $x$ is a \defin{$T$-descendant} of $a$.  Note that every node of $T$ is both a $T$-ancestor and $T$-descendant of itself.  If $a$ is a $T$-ancestor of $x$ and $x\neq a$ then $a$ is a \defin{strict} $T$-ancestor of $x$ and $x$ is a \defin{strict} $T$-descendant of $a$.  The strict ancestor relation induces a partial order $\prec_T$ on $V(T)$ in which $x\prec_T y$ if and only if $x$ is a strict $T$-ancestor of $y$.
+Let $T$ be a rooted tree rooted at some node $r\in V(T)$.  For any node $x\in V(T)$, $P_T(x)$ denotes the path, in $T$, from $r$ to $x$.  The \defin{$T$-depth} of $x\in V(T)$, denoted by $d_T(x)$, is the length of $P_T(x)$.  The \defin{height} of $T$ is $\max\{d_T(x):x\in v(T)\}$.  A node $a\in V(T)$ is a \defin{$T$-ancestor} of $x\in V(T)$ if $a\in V(P_T(x))$. If $a$ is a $T$-ancestor of $x$ then $x$ is a \defin{$T$-descendant} of $a$.  Note that every node of $T$ is both a $T$-ancestor and $T$-descendant of itself.  If $a$ is a $T$-ancestor of $x$ and $x\neq a$ then $a$ is a \defin{strict} $T$-ancestor of $x$ and $x$ is a \defin{strict} $T$-descendant of $a$.  The strict ancestor relation induces a partial order $\prec_T$ on $V(T)$ in which $x\prec_T y$ if and only if $x$ is a strict $T$-ancestor of $y$.
 
 For any graph $G$, and any two vertices $v,w\in V(G)$, $d_G(v,w)$ denotes the length of a shortest path, in $G$, from $v$ to $w$ or $d_G(v,w):=\infty$ if $v$ and $w$ are in different connected components of $G$. The \defin{diameter} of $G$ is $\diam(G):=\max\{d_G(v,w):v,w\in V(G)\}$. For any integer $k\ge 1$, the \defin{$k$-th power} of $G$, denoted by $G^k$, is the graph with vertex set $V(G^k):=V(G)$ and edge set $E(G^{k}):=\{vw:v,w\in V(G),\, 1\le d_G(v,w)\le k\}$.
 % In the special case $k=2$, $G^2$ is called the \defin{square} of $G$.
@@ -345,7 +345,7 @@ In the special case where $X$ is a tree (or a forest), $\mathcal{X}$ is called a
 
 
 
-For a graph $H$, a \defin{rooted tree decomposition} of $H$ is a tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ in which $T$ is a rooted tree.  Throughout the remainder of the paper, all our tree decompositions are rooted, with the root of $T$ typically denoted by $r$, in which case we call it an $r$-rooted tree decomposition.  We use the notation $x_T(v)$ to denote the minimum $T$-depth node $x\in V(T)$ such that $v\in B_x$.  This induces a partial order $\prec_{\mathcal{T}}$ on $V(H)$ in which $v\prec_{\mathcal{T}} w$ if and only if $x_T(v)\prec_T x_T(w)$.  The following observations have straightforward proofs:
+For a graph $H$, a \defin{rooted tree decomposition} of $H$ is a tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$ in which $T$ is a rooted tree.  Throughout the remainder of the paper, all our tree decompositions are rooted, with the root of $T$ typically denoted by $r$, in which case we call it an $r$-rooted tree decomposition.  We use the notation $x_\mathcal{T}(v)$ to denote the minimum $T$-depth node $x\in V(T)$ such that $v\in B_x$.  This induces a partial order $\prec_{\mathcal{T}}$ on $V(H)$ in which $v\prec_{\mathcal{T}} w$ if and only if $x_\mathcal{T}(v)\prec_T x_\mathcal{T}(w)$.  The following observations have straightforward proofs:
 
  \begin{obs}\label{induced-unimodal}
      Let $H$ be a graph that is edge-maximal with respect to some rooted tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of $H$.  Then, for any induced path $u_0,\ldots,u_p$ in $H$ and any $i\in\{1,\ldots,p-1\}$, $u_i\preceq_\mathcal{T} u_0$ or $u_i\preceq_\mathcal{T} u_p$.
@@ -361,7 +361,7 @@ For a graph $H$, a \defin{rooted tree decomposition} of $H$ is a tree decomposit
 \end{obs}
 
 % \begin{proof}
-%     By \cref{order-relation}, $w\preceq_\mathcal{T} v$ for each $w\in N_H(v)\cap L_i$.  Proprety~(i) of tree decompositions therefore implies that $N_H(v)\cap L_{i-1}\subseteq B_{x_T(v)}$.  Therefore $t+1\ge |B_{x_T(v)}| \ge |N_H(v)\cap L_{i-1}|+1$, as required.
+%     By \cref{order-relation}, $w\preceq_\mathcal{T} v$ for each $w\in N_H(v)\cap L_i$.  Proprety~(i) of tree decompositions therefore implies that $N_H(v)\cap L_{i-1}\subseteq B_{x_\mathcal{T}(v)}$.  Therefore $t+1\ge |B_{x_\mathcal{T}(v)}| \ge |N_H(v)\cap L_{i-1}|+1$, as required.
 % \end{proof}
 
 
@@ -684,39 +684,38 @@ We begin with a few helper lemmas whose purpose is to bound the number of colour
     \end{compactenum}
 \end{lem}
 
+
 \begin{proof}
     To eliminate a level of subscripts, let $x_i:=i$ for each $i\in\{1,\ldots,m\}$. The proof is by induction on $t$. In the base case, $t=0$, $G$ has no edges and therefore no non-trivial paths, so Z\ref{induced-u} is vacuous. The lemma is satisfied by taking $U:=B_{1}\cup B_{m}$.  This certainly satisfies Z\ref{values-u} and satisfies Z\ref{size-u} since $|U|\le 2= 2(\ell+1)^0+0$.
 
-    Now assume that $t\ge 1$. If $G$ is not connected, then $B_{1}$ and $B_{m}$ are in different components of $G$.  In this case we choose $U:=B_{1}\cup B_{m}$. This certainly satisfies Z\ref{values-u}.  This satisfies Z\ref{size-u} since $|U|\le|B_1|+|B_m|\le 2t+2 \le 2(\ell+1)^t+t$ because $2(\ell+1)^t \ge 2^{t+1}> t+2$ for all $t\ge 1$.  This also satisfies Z\ref{induced-u} because the only paths $w_0,\ldots,w_q$ that need consideration have $\{w_0,w_q\}\subseteq B_1$ or $\{w_0,w_q\}\subset B_m$.  Since we only consider induced paths in $G$ and $G$ is edge-maximal with respect to $\mathcal{P}$, this implies that $q=1$, so $w_0,\ldots,w_q=w_0w_q$ consists of a single edge and $\{w_0,w_q\}\subseteq U$.
+    Now assume that $t\ge 1$. If $G$ is not connected, then $B_{1}$ and $B_{m}$ are in different components of $G$.  In this case we choose $U:=B_{1}\cup B_{m}$. This certainly satisfies Z\ref{values-u}.  This satisfies Z\ref{size-u} since $|U|\le|B_1|+|B_m|\le 2t+2 \le 2(\ell+1)^t+t$ because $2(\ell+1)^t \ge 2^{t+1}> t+2$ for all $t\ge 1$.  This also satisfies Z\ref{induced-u} because the only paths $w_0,\ldots,w_q$ that need consideration have $\{w_0,w_q\}\subseteq B_1$ or $\{w_0,w_q\}\subseteq B_m$.  Since we only consider induced paths in $G$ and $G$ is edge-maximal with respect to $\mathcal{P}$, this implies that $q=1$, so $w_0,\ldots,w_q=w_0w_q$ consists of a single edge and $\{w_0,w_q\}\subseteq U$.
 
-    We may now assume that $G$ is connected. For each $v\in V(G)$, let $r(v):=\max\{i\in\{1,\ldots,m\}:v\in B_i\}$.  Refer to \cref{induced_path_fig}.  Let $y_0:=1$ and $i:=1$.  As long as $y_i\neq m$, choose a vertex $u_i\in B_{y_i}$ that maximizes $y_{i+1}:=r(u_i)$ and increment $i$. This produces a path $u_0,\ldots,u_p$ in $G$ and a sequence of nodes $y_0,\ldots,y_{p+1}$ in $V(P)$.  It is easy to verify that $u_0,\ldots,u_p$ is a shortest path from $B_{1}$ to $B_{m}$, i.e., $p=\min\{d_H(w_0,w_q): w_0\in B_1,\, w_q\in B_m\}$.  Therefore, if $p>\ell$, the lemma is again trivially satisfied by taking $U:=B_{1}\cup B_{m}$.
+    We may now assume that $G$ is connected. For each $v\in V(G)$, let $r(v):=\max\{i\in\{1,\ldots,m\}:v\in B_i\}$.  Let $y_0:=1$ and $i:=1$.  As long as $y_i\neq m$, choose a vertex $u_i\in B_{y_i}$ that maximizes $y_{i+1}:=r(u_i)$ and increment $i$. This produces a path $u_0,\ldots,u_p$ in $G$ and a sequence of nodes $y_0,\ldots,y_{p+1}$ in $V(P)$.  It is easy to verify that $u_0,\ldots,u_p$ is a shortest path from $B_{1}$ to $B_{m}$, i.e., $p=\min\{d_H(w_0,w_q): w_0\in B_1,\, w_q\in B_m\}$.  Therefore, if $p>\ell$, the lemma is again trivially satisfied by taking $U:=B_{1}\cup B_{m}$.
     %
     %
     %
     % Consider the \defin{greedy path} $u_0,\ldots,u_p$ that begins at $u_0\in B_{1}$, ends at $u_p\in B_{m}$, and is defined as follows: $u_0$ is a vertex in $B_{1}$ that maximizes $r(u_0)$.  For $i\ge 1$, $u_i$ is a vertex in $B_{r(u_{i-1})}$ that maximizes $r(u_i)$.  This continues until reaching a vertex $u_p$ such that $r(u_p)=m$.
     %
-
-
-    \begin{figure}
-      \begin{center}
-        \includegraphics{figs/path_induced-1} \\[0pt]
-        \includegraphics{figs/path_induced-2} \\
-      \end{center}
-      \caption{The proof of \cref{path-induced}.}
-      \label{induced_path_fig}
-    \end{figure}
+    % 
+    % 
+    % \begin{figure}
+    %   \begin{center}
+    %     \includegraphics{figs/path_induced-1} \\[0pt]
+    %     \includegraphics{figs/path_induced-2} \\
+    %   \end{center}
+    %   \caption{The proof of \cref{path-induced}.}
+    %   \label{induced_path_fig}
+    % \end{figure}
 
     % Otherwise, $u_0,\ldots,u_p$ defines a sequence $y_0,\ldots,y_{p+1}$ of nodes in $P$, where $y_0:=1$ and, for each $i\in\{1,\ldots,p+1\}$, $y_{i}:=r(u_{i-1})$.
-    Now assume that $p\le\ell$ and consider a path decomposition $\mathcal{P'}:=(B'_x:x\in V(P))$  obtained by removing $u_{i-1}$ from $B_{j}$ for each $i\in\{1,\ldots,p+1\}$ and each $j\in\{y_{i-1},\ldots,y_{i}\}$. Let $G'\subseteq G$ be the graph with $V(G'):=\bigcup_{x=1}^m B'_x$ that is edge-maximal with respect to $\mathcal{P}'$.  Observe that $\mathcal{P'}$ has width at most $t-1$.
+    Now assume that $p\le\ell$.  For each $i\in\{1,\ldots,p+1\}$, define the path $P_i=y_{i-1},\ldots,y_i$, let $\mathcal{P}_i:=(B_x\setminus\{u_{i-1}\}:x\in V(P_i))$, and let $G_i:=G[B_x:x\in V(P_i)]$.  Then $G_i$ is edge-maximal with respect to $\mathcal{P}_i$ and $\mathcal{P}_i$ has width at most $t-1$. For each $i\in\{1,\ldots,p\}$, we apply the lemma inductively to $G_i$ and $\mathcal{P}_i$ to obtain a set $U_i$.  Let $U:=\{u_0,\ldots,u_p\}\cup\bigcup_{i=1}^{p+1} U_i$.
 
-    For each $i\in\{1,\ldots,p+1\}$, let $P_i':=y_{i-1},\ldots,y_i$, let $G'_i:=G'[\bigcup_{j=y_{i-1}}^{y_i}B'_j]$ and let $\mathcal{P}'_i:=(B'_x:x\in V(P'_i)\}$. Note that $G'_i$ may contain $u_i$ (if $u_i\in B_{y_i-1}$) but $G'_i$ does not contain $u_{i-1}$ because $u_{i-1}$ does not appear in $B_j'$ for any $j\in\{y_{i-1},\ldots,y_i\}$.  For each $i\in\{1,\ldots,p\}$, we apply the lemma inductively to $G'_i$ and $\mathcal{P}'_i$ to obtain a set $U'_i$ of size $O(\ell^{t-1})$ that satisfies the requirements of the lemma for the graph $G'_i$. Let $U:=\{u_0,\ldots,u_p\}\cup\bigcup_{i=1}^p U'_i$.
-
-    For each $i\in\{1,\ldots,p\}$, $U$ contains $u_{i-1}$ and $u_i$. The set $U_i'$ is obtained by induction on $G_i'$ using a path decomposition on a path whose endpoints are $y_{i-1}$ and $y_i$ having bags $B'_{y_{i-1}}=B_{y_{i-1}}\setminus u_{i-1}$ and $B'_{y_{i}}=B_{y_{i}}\setminus u_{i}$.  Therefore $U$ contains $\{u_{i-1},u_i\}\cup B'_{y_{i-1}}\cup B'_{y_i}=B_{y_{i-1}}\cup B_{y_i}$.
+    For each $i\in\{1,\ldots,p\}$, $U$ contains $u_{i-1}$ and $u_i$. The set $U_i$ is obtained by induction on $G_i$ using a path decomposition on a path whose endpoints are $y_{i-1}$ and $y_i$ having bags $B_{y_{i-1}}\setminus u_{i-1}$ and $B_{y_{i}}\setminus u_{i-1}$.  Therefore $B_{y_{i-1}}\cup B_{y_i}\subseteq U_i\subseteq U$.  Therefore $\bigcup_{j=0}^{p+1} B_{y_j}\subseteq U$.
 
     In particular, $U$ contains $B_{y_0}=B_1$ and $B_{y_{p+1}}=B_m$, so $U$ satisfies (Z\ref{values-u}).
-    Now observe that $|U|=|B_1| + |\{u_1,\ldots,u_p\}|+ |\bigcup_{i=1}^{p+1}(U\cap V(G_i'))|$.  Since $p\le \ell$, this implies that $|U\setminus B_1|$ satisfies the recurrence
+    Now observe that $|U|\le |B_1| + |\{u_1,\ldots,u_p\}|+ |\bigcup_{i=1}^{p+1}|U_i\setminus B_{y_{i-1}}|$.  Since $p\le \ell$, this implies that $|U\setminus B_1|$ satisfies the recurrence
     \[
-       f(t) \le \begin{cases}
+       |U\setminus B_1|\le f(t) \le \begin{cases}
                   1 & \text{if $t=0$} \\
                   \ell + (\ell+1)\cdot f(t-1) & \text{otherwise.}
                 \end{cases}
@@ -725,20 +724,23 @@ We begin with a few helper lemmas whose purpose is to bound the number of colour
 
     We say that a vertex $w_i$ is \defin{pinched} if $w_i\in B_{y_j}$ for some $j\in\{0,\ldots,p+1\}$. (Note that each of $u_0,\ldots,u_p$ is pinched.) The edges of $w_0,\ldots,w_q$ can be partitioned into subpaths of the form $w_{a},\ldots,w_{b}$ where
     \begin{inparaenum}[(i)]
-        \item $a=0$ or $w_a$ is pinched;
-        \item $b=q$ or $w_b$ is pinched; and
+        \item $w_a$ is pinched;
+        \item $w_b$ is pinched; and
         \item none of $w_{a+1},\ldots,w_{b-1}$ are pinched.
     \end{inparaenum}
     First note that, for any such subpath $w_a,\ldots,w_b$, $\{w_a,w_b\}\subseteq U$, so we need only show that $\{w_{a+1},\ldots,w_{b-1}\}\subseteq U$.  There are three cases to consider:
 
     \begin{compactenum}
-       \item $\{w_a,w_b\}\subseteq B_{y_j}$ for some $j\in\{0,\ldots,p\}$.  Since $G$ is edge-maximal with respect to $\mathcal{P}$, this implies  $w_aw_b\in E(G)$. Since $w_a,\ldots,w_b$ is an induced path in $G$, $b=a+1$ and there is nothing to prove.
+       \item $\{w_a,w_b\}\subseteq B_{y_j}$ for some $j\in\{0,\ldots,p+1\}$.  Since $G$ is edge-maximal with respect to $\mathcal{P}$, this implies  that $w_aw_b\in E(G)$. Since $w_a,\ldots,w_b$ is an induced path in $G$, $b=a+1$ and there is nothing to prove.
 
-       \item $\{w_a,w_b\}\subseteq V(G_j')$ for some $j\in\{1,\ldots,p\}$ (and not the preceding case).
+       \item $\{w_a,w_b\}\subseteq V(G_j)$ for some $j\in\{1,\ldots,p\}$ (and not the preceding case).
        % In this case, edge-maximality implies that $B_{y_{j-1}}$ and $B_{y_{j}}$ each form cliques that separate $G'_{j}$ from $G-V(G'_j)$.
-       Since $w_a,\ldots,w_b$ is an induced path in $G$ and none of $w_{a+1},\ldots,w_{b-1}$ are pinched, this implies that $\{w_a,\ldots,w_b\}\subseteq V(G_j')$.  Therefore, $w_a,\ldots,w_b$ is an induced path in $G_j'$ so, by the inductive hypothesis, $\{w_{a+1},\ldots,w_{b-1}\}\subseteq U_j'\subseteq U$.  (Note that this includes the special case in which $u_j\in\{w_a,\ldots,w_b\}$.)
+       Since 
+       % $w_a,\ldots,w_b$ is an induced path in $G$ and 
+       none of $w_{a+1},\ldots,w_{b-1}$ are pinched, this implies that $\{w_a,\ldots,w_b\}\subseteq V(G_j)$.  Therefore, $w_a,\ldots,w_b$ is an induced path in $G_j$ so, by the inductive hypothesis, $\{w_{a+1},\ldots,w_{b-1}\}\subseteq U_j\subseteq U$.  
+       % (Note that this includes the special case in which $u_j\in\{w_a,\ldots,w_b\}$.)
 
-       \item $w_a = u_{j-1}$ for some $j\in\{1,\ldots,p+1\}$ and $w_b\in V(G_{j}')$.  In this case, $w_a=u_{j-1}\in B_{k}$ for each $k\in\{y_{j-1},\ldots,y_{j}\}$ and $w_b\in B_{k}$ for at least one $k\in\{y_{j-1},\ldots,y_{j}\}$.  By edge maximality, $w_aw_b\in E(G)$ and $b=a+1$ so there is nothing to prove.  \qedhere
+       \item $w_a = u_{j-1}$ for some $j\in\{1,\ldots,p+1\}$ and $w_b\in V(G_{j})$.  In this case, $w_a=u_{j-1}\in B_{k}$ for each $k\in\{y_{j-1},\ldots,y_{j}\}$ and $w_b\in B_{k}$ for at least one $k\in\{y_{j-1},\ldots,y_{j}\}$.  By edge maximality, $w_aw_b\in E(G)$, so $b=a+1$ and there is nothing to prove.  \qedhere
        %
        %
        % There are three subcases to consider:
@@ -756,7 +758,8 @@ A node $x$ in a rooted tree $T$ is a \defin{branching node} if $x$ has at least 
 \begin{compactenum}
     \item $V(\hat{H})$ contains $\bigcup_{x\in\Lambda(T)} B_x$.
 
-    \item For each pair of branching nodes $x,y\in\Lambda(T)$ such that the path $P_T(x,y)$ from $x$ to $y$ in $T$ has no branching node in its interior, $V(\hat{H})$ contains the set $U_{xy}\subseteq V(H)$ obtained by applying \cref{path-induced} to the graph $G_{xy}:=H[\bigcup_{z\in V(P_T(x,y))} B_z]$ with the path decomposition $\mathcal{P}_{xy}:=(B_z:z\in P_T(x,y))$.  (Note that $G_{xy}$ and $\mathcal{P}_{xy}$ satisfy the edge-maximality required for \cref{path-induced} since $H$ is edge-maximal with respect to $\mathcal{T}$.)\todo{Can we use reachability in the skeleton to do better here? Yes!}
+    \item For each pair of nodes $x,y\in\Lambda(T)$ such that the path $P_T(x,y)$ from $x$ to $y$ in $T$ has no branching node in its interior, $V(\hat{H})$ contains the set $U_{xy}\subseteq V(H)$ obtained by applying \cref{path-induced} to the graph $G_{xy}:=H[\bigcup_{z\in V(P_T(x,y))} B_z]$ with the path decomposition $\mathcal{P}_{xy}:=(B_z:z\in P_T(x,y))$.  (Note that $G_{xy}$ and $\mathcal{P}_{xy}$ satisfy the edge-maximality required for \cref{path-induced} since $H$ is edge-maximal with respect to $\mathcal{T}$.)
+    % \todo{Can we use reachability in the skeleton to do better here? No!}
 \end{compactenum}
 
 
@@ -771,12 +774,12 @@ A node $x$ in a rooted tree $T$ is a \defin{branching node} if $x$ has at least 
         \item $b=q$ or $w_b\in\bigcup_{x\in \Lambda(T)} B_x$; and
         \item none of $w_{a+1},\ldots,w_{b-1}$ are contained $\bigcup_{x\in \Lambda(T)} B_x$.
     \end{inparaenum}
-    This means that $w_a,\ldots,w_b$ is contained in $G_{xy}$ for some $x,y\in \Lambda(H)$.  Therefore, by \cref{path-induced} $\{w_a,\ldots,w_b\}\subseteq U_{xy}\subseteq U$, as required.
+    This means that $w_a,\ldots,w_b$ is an induced path in $G_{xy}$ for some $x,y\in \Lambda(H)$.  Therefore, by \cref{path-induced} $\{w_a,\ldots,w_b\}\subseteq U_{xy}\subseteq U$, as required.
 \end{proof}
 
 
 \begin{lem}\label{skeleton-size}
-    $|V(\hat{H})|\le |\Lambda(T)|\cdot O(\ell^t)$.
+    $|V(\hat{H})|\le (|\Lambda(T)|-1)\cdot(2(\ell+1)^t+t)$.
 \end{lem}
 
 \begin{proof}
@@ -812,7 +815,7 @@ Now we arrive at the combinatorial core of the proof. The main idea is to cover 
 
 \paragraph{The Proof for Trees.}
 
-We will now show that, for any $k\ge 3$, any tree $T$ with $n \le k^k$ vertices has a $\ell$-ranking $\varphi:V(T)\to\{0,\ldots,\floor{ak}\}$, for some value of $a$ that depends only on $\ell$.  Observe that a value of $k\in\Theta(\log n/\log\log n)$ is sufficient to satisfy this requirement, so this already gives an extension of the result by \citet{karpas.neiman.ea:on} that $2$-vertex ranking of any $n$-vertex tree can be done using $O(\log n/\log\log n)$ colours.
+We will now show that, for any $\ell\in\N\setminus\{0\}$, any $k\ge 3$, and any tree $T$ with $n \le k^k$ vertices has a $\ell$-ranking $\varphi:V(T)\to\{0,\ldots,\floor{ak}\}$, for some value of $a$ that depends only on $\ell$.  Observe that a value of $k\in O(\log n/\log\log n)$ is sufficient to satisfy this requirement, so this already proves that $\lrn(T)\in O(\log n/\log\log n)$, which extends the result of \citet{karpas.neiman.ea:on} that $\trn(T)\in O(\log n/\log\log n)$.
 
 Let $r$ be the root of $T$, let $h$ be the height of $T$ and, for each $i\in\{0,\ldots,h\}$, let $L_i$ denote the set of vertices in $T$ that have depth $i$.  For each vertex $v$ in $T$, let $T_v$ be the subtree of $T$ that contains $v$ and all its descendants, let $n_v:=|T_v|$ be the number of vertices in $T_v$, and let $c_v$ be the solution to the equation $k^k/c_v^{c_v} = n_v$.  In other words, $c_v:=\gamma_{0,k}(n_v)$.  Let $c:=c_r$, so $n=k^k/c^c$.  We will prove the following stronger result (see \cref{tree_fig}):
 
@@ -825,7 +828,7 @@ Let $r$ be the root of $T$, let $h$ be the height of $T$ and, for each $i\in\{0,
 \end{figure}
 
 \begin{quote}
-    $T$ has as $\ell$-ranking $\varphi:V(T)\to\{1,\ldots,\floor{ak}\}$ such that $\varphi(r)=\floor{a(k-c)}+1$ and $\varphi(v)\le \floor{a(k-c)}$ for each vertex $v\in\bigcup_{i=1}^\ell L_i$.
+    $T$ has an $\ell$-ranking $\varphi:V(T)\to\{1,\ldots,\floor{ak}\}$ such that $\varphi(r)=\floor{a(k-c)}+1$ and $\varphi(v)\le \floor{a(k-c)}$ for each vertex $v\in\bigcup_{i=1}^\ell L_i$.
 \end{quote}
 
 We proceed by induction on $n$. In the base case, $n=1$, so $c=k$.  We set $\varphi(r):=\floor{a(k-c)}+1=1$ and we are done. Now suppose $n\ge 2$.  For each $v\in L_{\ell+1}$, apply the inductive hypothesis on the subtree $T_v$ to obtain an $\ell$-ranking $\varphi$ of the forest $F:=T[\bigcup_{i=\ell+1}^h L_i]$.
@@ -840,9 +843,9 @@ We modify $\varphi$ by assigning a unique colour $\varphi(v)\in\{\floor{a(k-c)+2
 % ac \ge e(c+1) + 2
 % a \ge (e(c+1) + 2)/c
 % a \ge e + (e+2)/c
-$a \ge 8 > e + (e+2)/c$.  Observe that this modification can only increase the value of $\varphi(v)$, since $c_v \ge c$ and the inductive hypothesis ensures that, prior to this modification $\varphi(v)=\floor{a(k-c_v)}+1 < \floor{a(k-c)}+2$.  This implies that the modified colouring is still a $2$-vertex ranking of $F$ since, by the inductive hypothesis, $\varphi(v)$ is the unique largest colour on any path of length at most $\ell$ that includes $v$.
+$a \ge 8 > e + (e+2)/c$.  Observe that this modification can only increase the value of $\varphi(v)$, since $c_v \ge c$ and the inductive hypothesis ensures that, prior to this modification $\varphi(v)=\floor{a(k-c_v)}+1 < \floor{a(k-c)}+2$.  This implies that the modified colouring is still a $2$-ranking of $F$ since, by the inductive hypothesis, $\varphi(v)$ is the unique largest colour on any path of length at most $\ell$ that includes $v$.
 
-Next observe that each harmless vertex $w\in L_{\ell+1}$ has a colour $\varphi(w) = \floor{a(k-c_w)}+1 \le \floor{a(k-c)}+1 < \floor{a(k-c)}-\ell$ for any $a\ge \ell+2$. Extending $\varphi$ to the vertices in $L_0,\ldots,L_{\ell}$ is now straightforward:  For each $i\in\{0,\ldots,\ell\}$ and each $v\in L_i$, set $\varphi(v):=\floor{a(k-c)}+1-i$.
+Next observe that each harmless vertex $w\in L_{\ell+1}$ has $c_w\ge c+1$, so $\varphi(w) = \floor{a(k-c_w)}+1 \le \floor{a(k-c-1)}+1 < \floor{a(k-c)}-\ell$ for any $a\ge \ell+2$. Extending $\varphi$ to the vertices in $L_0,\ldots,L_{\ell}$ is now straightforward:  For each $i\in\{0,\ldots,\ell\}$ and each $v\in L_i$, set $\varphi(v):=\floor{a(k-c)}+1-i$.
 
 It is straightforward to check that the resulting colouring $\varphi:V(T)\to\{1,\ldots,\lfloor ak\rfloor\}$ satisfies the stronger conditions of the inductive hypothesis.  To see why $\varphi$ is an $\ell$-vertex ranking of $T$, consider any path $P$ of length at most $\ell$.
 \begin{compactitem}
@@ -881,9 +884,9 @@ See \cref{t-tree_fig}
   \label{t-tree_fig}
 \end{figure}
 
-To circumvent this issue, we (mostly) give up on the idea of using distinct colours for each of $L_0,\ldots,L_\ell$.  As above, we are inductively colouring a graph $H$ that $n\le (\log^{(t-2)} k)^k$ vertices and $c:=\gamma_{t-2,k}(n)$, and we want to show that $H$ has an $\ell$-ranking that uses at most $\floor{ak}$ colours in which the vertices in $L_0,\ldots,L_{\ell}$ receive colours less than $a(k-c)$.
+To circumvent this issue, we (mostly) give up on the idea of using distinct colours for each of $L_0,\ldots,L_\ell$.  As above, we are inductively colouring a graph $H$ with $n\le (\log^{(t-2)} k)^k$ vertices and $c:=\gamma_{t-2,k}(n)$, and we want to show that $H$ has an $\ell$-ranking that uses at most $\floor{ak}$ colours in which the vertices in $L_1,\ldots,L_{\ell}$ receive colours less than $a(k-c)$.
 
-To achieve this we use a separator $S\subseteq \bigcup_{i=0}^\ell L_i$ that guarantees that the size of each component of $H-S$ is sufficiently small that it has an $\ell$-ranking in which the vertices in $L_0,\ldots,L_\ell$ have colours smaller than $a(k-c-s)$ for some appropriately chosen $s$. For this to work, we need that each component have size at most $(\log^{(t-2)} k)^k/(\log^{(t-2)}(c+s))$.  The situation is complicated further by the fact that the harmless vertices in $L_{\ell+1}$ create lower bounds on the colours of their neighbours in $L_\ell$.  Without these lower bounds, two vertices in distinct components of $H[L_{\ell+1}]$ might receive the same colour which is smaller than the colour of their common neighbour in $L_\ell$.  This requires us to solve a weighted generalization of the problem on $H[\bigcup_{i=0}^{\ell} L_i]$.  This weighted problem on a graph of diameter $d\in O(\ell)$ is the subject of \cref{t-tree-slack}, below.
+To achieve this we use a separator $S\subseteq \bigcup_{i=0}^\ell L_i$ that guarantees that the size of each component of $H-S$ is sufficiently small that it has an $\ell$-ranking in which the vertices in $L_0,\ldots,L_\ell$ have colours smaller than $a(k-c-s)$ for some appropriately chosen $s$. For this to work, we need that each component have size at most $(\log^{(t-2)} k)^k/(\log^{(t-2)}(c+s))^{c+s}$.  The situation is complicated further by the fact that the harmless vertices in $L_{\ell+1}$ create lower bounds on the colours of their neighbours in $L_\ell$.  Without these lower bounds, two vertices in distinct components of $H[L_{\ell+1}]$ might receive the same colour which is smaller than the colour of their common neighbour in $L_\ell$.  This requires us to solve a weighted generalization of the problem on $H[\bigcup_{i=0}^{\ell} L_i]$.  This weighted problem on a graph of diameter $d\in O(\ell)$ is the subject of \cref{t-tree-slack}, below.
 
 Assuming this weighted generalization can be solved, this still leaves the problem of colouring the vertices in $S$.  It turns out that the separator $S$ is the union of $O(c^4)$ bags in a $t$-simple tree-decomposition of $H$, where $\log c/\log^{(t-1)}(c)=O(s)$.  We can then augment $S$ into a superset $S'\supseteq S$ that has a $t$-simple tree decomposition whose underlying tree has $O(c^4)$ branching nodes.  For each $i\in\{0,\ldots,\ell\}$, the graph $H_i':=H[L_i\cap S']$ has simple treewidth $t-1$ (by \cref{simple-bfs-layers}) and has a tree decomposition of width at most $t-1$ whose underlying tree has $O(c^4)$ branching nodes.  Therefore, by \cref{skeleton-colour} and induction on $t$, $H'_i$ has an $\ell$-ranking using $O(\log c^4/\log^{(t-1)} c^4)=O(s)$ colours. This leaves enough room to colour all of $H'$ using colours in the interval $[\floor{a(k-c-s)}+1,\floor{a(k-c)}]$, using a colouring in which all vertices of $H'_i$ have larger colours than those of $H'_{i+1}$, for each $i\in\{0,\ldots,\ell\}$.
 
@@ -906,7 +909,7 @@ In order for all of this to work, we must strike a balance between the size of t
 \end{lem}
 
 \begin{proof}
-    Without loss of generality, we may assume $H$ is edge-maximal with respect to some $r$-rooted $t$-simple tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$.  Let $L_0,\ldots,L_h$ be a BFS layering of $H$ with $L_0:=B_r$.  Note that $h\le\diam(H)\le d$.
+    Without loss of generality, we may assume that $H$ is edge-maximal with respect to some $r$-rooted $t$-simple tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$.  Let $L_0,\ldots,L_h$ be the BFS layering of $H$ with $L_0:=B_r$.  Note that $h\le\diam(H)\le d$.
 
     The proof is by induction on $|H|$.  In the base case, $|H|=0$ and there is nothing to prove. Now assume $|H|\ge 1$.  For each subgraph $X$ of $H$, define $n_{X}:=\sum_{v\in V(X)} n_v$ so that \cref{total-weight} implies that $n_H\le(\log^{(t-2)} k)^k/(\log^{(t-2)}c)^c$.
     % For $v\in V(H)$ we use the shorthand $\gamma_v:=\gamma_{t-2,k}(n_v)$ and for any subgraph $X$ of $H$ we use the shorthand $\gamma_X := \gamma_{t-2,k}(n_X)$.  Note that \cref{total-weight,max-weight} imply that $\gamma_H \ge c$ and $\gamma_v\ge c+s$ for each $v\in V(H)$.
@@ -917,12 +920,12 @@ In order for all of this to work, we must strike a balance between the size of t
     \end{equation}
     We say that a subgraph $X$ of $H$ is \defin{heavy} if $n_X>n_0$ and $X$ is \defin{light} otherwise.  For a heavy subgraph $X$,
     \begin{equation}
-        \frac{|H|}{n_X} < \frac{|H|}{n_0}
+        \frac{n_H}{n_X} < \frac{n_H}{n_0}
         \le \frac{\left(\log^{(t-2)}\left(c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}\right)\right)^{c+s+\tfrac{\log(c+s)}{\log^{(t-1)}(c+s)}}}{(\log^{(t-2)} c)^c}
          \in O\left(c^4\right)
     \enspace ,
     \end{equation}
-    where the upper bound of $O(c^4)$ is justified by a calculation given in \cref{calculation-i}.
+    where the upper bound of $O(c^4)$ is justified by a calculation in \cref{calculation-i}.
     % since $c+s\in O(c)$.
 
     By \cref{weighted-separator} with the weight function $\xi(v):=n_v$, there exists $S_T\subseteq V(T)$ of size $O(c^4)$ that defines $S:=\bigcup_{x\in S_T} B_x$ such that each component $X$ of $H-S$ is light.  Let $T'$ be the subtree of $T$ induced by $S_T$ and every $T$-ancestor of every node in $S_T$, i.e., $T':=T[\bigcup_{x\in S_T} V(P_T(x))]$. Let $H':=H[\bigcup_{x\in V(T')} B_x]$.
@@ -958,11 +961,11 @@ In order for all of this to work, we must strike a balance between the size of t
    \]
    Let $c':=c+s$ and let $s':=\log (c+s)/\log^{(t-1)}(c+s)$.  Since each component $X$ of $H-S'$ is light, $n_X$ satisfies \cref{total-weight} with the value $c'+s'\ge c'$ and satisfies \cref{max-weight} with the value $s'$.\footnote{Indeed, $\sum_{v\in V(X)} n_x\le n_0$, so $\max\{n_v:v\in V(X)\}\le n_0= (\log^{(t-2)} k)^k/(\log^{(t-2)}(c'+s'))^{c'+s'}$.}  Therefore, we can apply \cref{t-tree-slack} inductively on $X$ to obtain an $\ell$-ranking $\varphi:V(X)\to\{1,\ldots,\floor{a(k-c')}\}$ in which $\varphi(v)> a(k-\gamma_{t-2,k}(n_v))$ for each $v\in V(X)$, as required.   Doing this for each component $X$ of $H-S'$ completes the colouring $\varphi$ to a total colouring of $H$.
 
-   All that remains is to verify that $\varphi$ is an $\ell$-ranking of $H$. To do this, consider any induced path $u_0,\ldots,u_p$ in $H$ with $\varphi(u_0)=\varphi(u_p)$.
+   All that remains is to verify that $\varphi$ is an $\ell$-ranking of $H$. To do this, consider any induced path $u_0,\ldots,u_p$ in $H$ with $p\le\ell$ and $\varphi(u_0)=\varphi(u_p)$.
    % By \cref{induced-paths-only} we may assume that $u_0,\ldots,u_p$ is an induced path in $H$.
    We must show that $\varphi(u_0)<\varphi(u_j)$ for some $j\in\{1,\ldots,p-1\}$. There are a few cases to consider:
    \begin{compactenum}
-        \item If $\varphi(u_0)=\varphi(u_p) > a(k-c')$ then $\{u_0,u_p\}\subseteq V(H')$.  By \cref{induced-unimodal}, $x_T(u_i)$ is a $\mathcal{T}$-ancestor of at least one of $x_T(u_0)$ or $x_T(u_p)$ for each $i\in\{0,\ldots,p\}$.  By construction, $T'$ contains every $T$-ancestor of $x_T(u_0)$ and $T'$ contains every $T$-ancestor of $x_T(u_p)$.  Therefore $\{u_0,\ldots,u_p\}\subseteq \bigcup_{x\in V(T')} B_x=V(H')$.
+        \item If $\varphi(u_0)=\varphi(u_p) > a(k-c')$ then $\{u_0,u_p\}\subseteq V(H')$.  By \cref{induced-unimodal}, $x_\mathcal{T}(u_i)$ is a $\mathcal{T}$-ancestor of at least one of $x_\mathcal{T}(u_0)$ or $x_\mathcal{T}(u_p)$ for each $i\in\{0,\ldots,p\}$.  By construction, $T'$ contains every $T$-ancestor of $x_\mathcal{T}(u_0)$ and $T'$ contains every $T$-ancestor of $x_\mathcal{T}(u_p)$.  Therefore $\{u_0,\ldots,u_p\}\subseteq \bigcup_{x\in V(T')} B_x=V(H')$.
 
         For distinct $i$ and $j$ vertices in $H'_i$ and $H'_j$ receive colours from disjoint sets.  Therefore, since $\varphi(u_0)=\varphi(u_p)$,  $\{u_0,u_p\}\subseteq V(H'_i)$ for some $i\in\{0,\ldots,h\}$.  By \cref{order-relation,induced-unimodal}, $\{u_0,\ldots,u_{p}\}\subseteq \bigcup_{j=0}^{i} V(H'_j)$.  There are two cases to consider:
         \begin{compactenum}
@@ -980,7 +983,7 @@ In order for all of this to work, we must strike a balance between the size of t
 Since our strategy is to use \cref{t-tree-slack} on the first $\ell+1$ BFS layers of $H$ and then recurse on the subgraphs attached to layer $\ell+1$, we need to define vertex weights $n_v$ that allow us to capture the sizes of the subgraphs attached to vertices in layer $\ell+1$.  The following lemma shows that the obvious approach to this does not overcount by more than a factor of $t$.
 
 \begin{lem}\label{size-claim}
-    Let $H$ be a graph that is edge-maximal with respect to an $r$-rooted tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of width at most $t$ and let $\mathcal{L}:=L_0,\ldots,L_m$ be a BFS layering of $H$ with $L_0=B_r$.  For each $i\in\{0,\ldots,m\}$ and each $v\in L_i$, let $H_v$ be the component of $H[\{v\}\bigcup_{j=i+1}^m L_j]$ that contains $v$ and let $\kappa_v:= t-1+|H_v|$.  Then $\sum_{v\in L_i} \kappa_v \le t\cdot|H|$.
+    Let $H$ be a graph that is edge-maximal with respect to an $r$-rooted tree decomposition $\mathcal{T}:=(B_x:x\in V(T))$ of width at most $t$ and let $\mathcal{L}:=L_0,\ldots,L_m$ be the BFS layering of $H$ with $L_0=B_r$.  For each $i\in\{0,\ldots,m\}$ and each $v\in L_i$, let $H_v$ be the component of $H[\{v\}\bigcup_{j=i+1}^m L_j]$ that contains $v$ and let $\kappa_v:= t-1+|H_v|$.  Then $\sum_{v\in L_i} \kappa_v \le t\cdot|H|$.
 \end{lem}
 
 \begin{proof}
@@ -1009,7 +1012,7 @@ Finally, we can prove the technical lemma that implies \weirdref{simple-t-trees}
 
     We now assign weights to the vertices of the graph $H_0:=H[\bigcup_{j=0}^{\ell+1}]$ in such a way that we can apply \cref{t-tree-slack} to $H_0$.  For each $v\in\bigcup_{j=0}^\ell L_j$, we set $n_v:=1$.  For each $v\in L_{\ell+1}$, we set $n_v := \min\{n_0, \kappa_v\}$.  With this assignment of weights, \cref{size-claim} implies that $\sum_{v\in V(H_0)} n_v\le tn \le (\log^{(t-2)} k)^k/(\log^{(t-2)} c)^c$, which satisfies \cref{total-weight} and, by definition, $\max\{n_v:v\in V(H_0)\}\le n_0$ which satisfies \cref{max-weight}.
 
-    In the following, we use the shorthand $\gamma_v := \gamma_{t-2,k}(n_v)$.    Therefore, by \cref{t-tree-slack}, $H_{0}$ has an $\ell$-ranking $\varphi:V(H_0)\to\{1,\ldots,\lfloor a(k-c-1)\rfloor\}$ in which $\varphi(v)> a(k-\gamma_v-1)$ for each $v\in V(H_0)$.
+    In the following, we use the shorthand $\gamma_v := \gamma_{t-2,k}(n_v)$.   By \cref{t-tree-slack}, $H_{0}$ has an $\ell$-ranking $\varphi:V(H_0)\to\{1,\ldots,\lfloor a(k-c)\rfloor\}$ in which $\varphi(v)> a(k-\gamma_v)$ for each $v\in V(H_0)$.
     By \cref{size-claim}, the number of dangerous vertices is at most
     \[
         \frac{tn}{n_0} \in O\left(\frac{(\log^{(t-2)} (c+s))^{c+s}}{(\log^{(t-2)} c)^c}\right) \in O(c) \enspace ,
@@ -1023,19 +1026,19 @@ Finally, we can prove the technical lemma that implies \weirdref{simple-t-trees}
     \end{compactenum}
     These modifications ensure that $\varphi$ satisfies requirements (R1) and (R2) and, since they only introduce new unique colours larger than any existing colour, they preserve the fact that $\varphi$ is an $\ell$-ranking of $H_0$.
 
-    For each component $X$ of $H-H_0$, let $C_X:=L_{\ell+1}\cap N_H(V(X))$ and let $H_X:=H[C_X\cup V(X)]$.  By \cref{up-neighbours}, $|C_X|\le t$. We apply induction on $H_X$ for each component $X$ of $H-H_0$ using colours $\phi_1',\ldots,\phi_{t'}'$ already assigned to the vertices in $C_X$.
+    For each component $X$ of $H-V(H_0)$, let $C_X:=L_{\ell+1}\cap N_H(V(X))$ and let $H_X:=H[C_X\cup V(X)]$.  By \cref{up-neighbours}, $|C_X|\le t$. We apply induction on $H_X$ for each component $X$ of $H-H_0$ using colours $\phi_1',\ldots,\phi_{t'}'$ already assigned to the vertices in $C_X$.
     When we do this, we obtain an $\ell$-ranking of $H_X$ in which each vertex $w$ of $X[\bigcup_{j=\ell+2}^{2\ell+1} L_j]$ receives a colour $\varphi(w) \le a(k-\gamma_{t-2,k}(|H_X|))$.
 
     For each harmless vertex $v\in C_X$, $X$ is a subgraph of $H_v$, so $n_v\ge t+|X|\ge |C_X|+|X|= |H_X|$, so $\gamma_v \le \gamma_{t-2,k}(|H_X|)$. Therefore, for each harmless $v\in C_X$, $\varphi(v)> a(k-\gamma_v)\ge\varphi(w)$ for each $w\in V(X)\cap [\bigcup_{j=\ell+2}^{2\ell+1} L_j]$.  For each dangerous vertex $v\in C_X$, $\varphi(v)>a(k-c)$.  Since $|H_X|\le|H|$, $\gamma_{t-2,k}(|H_X|) \ge c$.  Therefore each dangerous vertex $v\in C_X$ also receives a colour larger than each vertex $w$ in $X[\bigcup_{j=\ell+2}^{2\ell+1} L_j]$.
 
-    All that remains is to verify that the resulting colouring is, indeed, an $\ell$-ranking of $H$.  Consider some induced path $u_0,\ldots,u_p$ in $H$ of length $r\le\ell$ such that $\varphi(u_0)=\varphi(u_p)$.  There are some cases to consider:
+    All that remains is to verify that the resulting colouring is, indeed, an $\ell$-ranking of $H$.  Consider some induced path $u_0,\ldots,u_p$ in $H$ of length $p\le\ell$ such that $\varphi(u_0)=\varphi(u_p)$.  There are some cases to consider:
 
     \begin{compactenum}
         \item $\{u_0,u_p\}\subseteq V(H_0)$. In this case, \cref{order-relation,induced-unimodal} imply that $\{u_0,\ldots,u_p\}\subseteq V(H_0)$.  However, we have already established that $\varphi$ is an $\ell$-ranking of $H_0$ through the application of \cref{t-tree-slack} and the subsequent recolouring of vertices in $L_0$ and $L_{\ell+1}$.  Therefore, $\varphi(u_0)<\max\{\varphi(u_1),\ldots,\varphi(u_{p-1})\}$.
 
-        \item $u_0\in V(X)$ for some component $X$ of $H-H_0$ and $u_i\in C_X$ for some $i\in\{1,\ldots,p-1\}$.  Since $i<p\le\ell$, this implies that $u_0\in\bigcup_{j=\ell+2}^{\ell+p+1} L_j\subseteq \bigcup_{j=\ell+2}^{2\ell+1}L_j$.  We have already argued above that this implies that $\varphi(u_i)>\varphi(u_0)$.
+        \item $u_0\in V(X)$ for some component $X$ of $H-V(H_0)$ and $u_i\in C_X$ for some $i\in\{1,\ldots,p-1\}$.  Since $i<p\le\ell$, this implies that $u_0\in\bigcup_{j=\ell+2}^{\ell+p+1} L_j\subseteq \bigcup_{j=\ell+2}^{2\ell+1}L_j$.  We have already argued above that this implies that $\varphi(u_i)>\varphi(u_0)$.
 
-        \item $\{u_0,\ldots,u_p\}\subseteq V(X)$ for some component $X$ of $H-H_0$.  In this case, the inductive hypothesis ensures that $\varphi$ is an $\ell$-ranking of $X$, so $\varphi(u_0)<\max\{\varphi(u_0),\ldots,\varphi(u_p)\}$. \qedhere
+        \item $\{u_0,\ldots,u_p\}\subseteq V(X)$ for some component $X$ of $H-V(H_0)$.  In this case, the inductive hypothesis ensures that $\varphi$ is an $\ell$-ranking of $X$, so $\varphi(u_0)<\max\{\varphi(u_0),\ldots,\varphi(u_p)\}$. \qedhere
     \end{compactenum}
 \end{proof}
 
@@ -1043,17 +1046,32 @@ Rewriting \cref{t-tree-technical} in terms of $n$ yields \weirdref{simple-t-tree
 
 \begin{proof}[Proof of \cref{simple-t-trees} (upper bound)]
     By \cref{t-tree-technical}, $\lrn(H)\in O(k)$ for any $k$ that satisfies
-    \[  (\log^{(t-2)} k)^{k} \ge n \Leftrightarrow
+    \[  (\log^{(t-2)} k)^{k} \ge n 
+        \Leftrightarrow
         k \ge \frac{\log n}{\log^{(t-1)} k}
+        \Leftrightarrow
+        \frac{k\log^{(t-1)} k}{\log n} \ge 1
     \]
-    Taking $k=2\log n/\log^{(t)} n$, this becomes
-    \[
-        \frac{2\log n}{\log^{(t)} n}
-        \ge \frac{\log n}{\log^{(t-1)}(\log n + 2 -\log^{(t)} n)}
-        = \frac{\log n}{\log^{(t)} n - O(1/\log n)}
-        = \frac{\log n}{\log^{(t)} n}+O(1) \enspace .
-    \]
-    which is clearly true for all sufficiently large $n$.
+    Taking $k=2\log n/\log^{(t)} n$, we get
+    \begin{align*}
+      \frac{k\log^{(t-1)} k}{\log n}
+      & = \frac{2\log^{(t-1)} k}{\log^{(t)} n} \\
+      & = \frac{2\log^{(t-1)}\left(2\log n/\log^{(t)} n\right)}{\log^{(t)} n} \\
+      & \ge \frac{2\log^{(t-1)}\left(\log n/\log^{(t)} n\right)}{\log^{(t)} n} \\
+      & = \frac{2\log^{(t-2)}\left(\log^{(2)} n - \log^{(t+1)} n\right)}{\log^{(t)} n} \\
+      & \approx \frac{2\log^{(t-3)} \left(\log^{(3)} n - \tfrac{\log^{(t+1)} n}{\log^{(2)} n}\right)}{\log^{(t)} n} & \text{because $x-a=x(1-a/x)\approx xe^{-a/x}$} \\
+      & \approx \frac{2\log^{(t)} n - \tfrac{\log^{(t+1)} n}{\prod_{j=2}^{t-1}\log^{(j)} n}}{\log^{(t)} n} & \text{by iteration} \\
+    \end{align*}
+    % \[
+    % 
+    % \]
+    % \[
+    %     \frac{2\log n}{\log^{(t)} n}
+    %     \ge 2\frac{\log n}{\log^{(t-1)}(\log n -\log^{(t)} n)}
+    %     = \frac{\log n}{\log^{(t)} n - O(1/\log n)}
+    %     = \frac{\log n}{\log^{(t)} n}+O(1) \enspace .
+    % \]
+    % which is clearly true for all sufficiently large $n$.\todo{Correct this.}
 \end{proof}
 
 
@@ -1093,9 +1111,9 @@ Throughout this section, we have assumed that $\ell$ and $t$ were fixed constant
 
 Recall that the overall structure of the proof is by induction on $t$ with the base case $t=1$.  The case $t=1$ is described in \cref{logarithmic-base-case}, which explains how a simple $1$-tree (a collection of disjoint paths) has an $\ell$-ranking using $O(\log\ell)$ colours.  This establishes the result for the base case.
 
-The first part of the proof that makes use of the assumption that $\ell$ is fixed is \cref{skeleton-colour} which claims a bound of $\lrn(H)\in O(\lrn(\hat{H}))$ but actually proves the more precise bound $\lrn(H)\in O(\ell t+ \lrn(\hat{H}))=O(\ell+\lrn(\hat{H}))$ for constant $t$.
+% The first part of the proof that makes use of the assumption that $\ell$ is fixed is \cref{skeleton-colour} which claims a bound of $\lrn(H)\in O(\lrn(\hat{H}))$ but actually proves the more precise bound $\lrn(H)\in O(\ell t+ \lrn(\hat{H}))=O(\ell+\lrn(\hat{H}))$ for constant $t$.
 
-The next place in which $\ell$ is treated as a constant is in \cref{t-tree-slack}, in which the constant $a:=a(t,\ell,d,\beta)$ appears.  The only place \cref{t-tree-slack} is used is in the proof of \cref{t-tree-technical}, where it is applied with $d\in O(\ell)$ and $\beta=t=O(1)$.  Under these conditions, taking $a\in O(\ell^{t-1}\log^t \ell)$ is sufficient, as we now show. Within the proof of \cref{t-tree-slack}, \weirdref{simple-t-trees}{a} is used on the graph $\hat{H}'_i$ for each $i\in\{0,\ldots,h\}$ to show that $\lrn(\hat{H}'_i)\in O(s)$.  Here $\hat{H}'_i$ is a treewidth $t-1$ graph with $O(\ell^t c^4)$ vertices and $s=\log c/\log^{(t-1)} c$.  With the more precise inductive hypothesis, this becomes
+The first place in which $\ell$ is treated as a constant is in \cref{t-tree-slack}, in which the constant $a:=a(t,\ell,d)$ appears.  The only place \cref{t-tree-slack} is used is in the proof of \cref{t-tree-technical}, where it is applied with $d\in O(\ell)$.  Under these conditions, taking $a\in O(\ell^{t-1}\log^t \ell)$ is sufficient, as we now show. Within the proof of \cref{t-tree-slack}, \weirdref{simple-t-trees}{a} is used on the graph $\hat{H}'_i$ for each $i\in\{0,\ldots,h\}$ to show that $\lrn(\hat{H}'_i)\in O(s)$.  Here $\hat{H}'_i$ is a treewidth $t-1$ graph with $O(\ell^t c^4)$ vertices and $s=\log c/\log^{(t-1)} c$.  With the more precise inductive hypothesis, this becomes
 \begin{align*}
     \lrn(\hat{H}'_i) & \in O\left(\ell^{t-2}\log^{t-1}\ell
     \cdot \frac{\log (\ell^{t} c^4))}{\log^{(t-1)} (\ell^t c^4)}\right) \\
@@ -1103,7 +1121,7 @@ The next place in which $\ell$ is treated as a constant is in \cref{t-tree-slack
     & \subseteq O\left(\ell^{t-2}\log^{t-1}\ell\cdot \frac{(\log c)(\log\ell)}{\log^{(t-1)} c}\right) \\
     & = O((\ell^{t-2}\log^t\ell)s)
 \end{align*}
-Doing this for each $i\in\{0,\ldots,h\}$ gives a colouring of $H'$ using the colour set $\{\lfloor a(k-c-1)-(h+1)q+1,\ldots,\lfloor a(k-c-1)\rfloor\}$ for some $q\in O((\ell^{t-2}\log^t\ell)s)$.  Here $h\in O(d)=O(\ell)$. By choosing a sufficiently large $a\in O(\ell^{t-1}\log^t\ell)$, so that $as > (h+1)q$, this colouring uses only colours from the set $\{\lfloor a(k-c-s-1)+1,\ldots,\lfloor a(k-c-1)\rfloor$.  The rest of the proof applies \cref{t-tree-slack} inductively on each of the uncoloured components of $H-V(H')$ to complete the colouring using smaller colours in the set $\{1,\ldots,\lfloor a(k-c-s-1)\rfloor\}$ and is unchanged.  The remainder of the proof is unchanged and proves the following refinement of \cref{simple-t-trees}:
+Doing this for each $i\in\{0,\ldots,h\}$ gives a colouring of $H'$ using the colour set $\{\lfloor a(k-c)-(h+1)q+1,\ldots,\lfloor a(k-c)\rfloor\}$ for some $q\in O((\ell^{t-2}\log^t\ell)s)$.  Here $h\in O(d)=O(\ell)$. By choosing a sufficiently large $a\in O(\ell^{t-1}\log^t\ell)$, so that $as > (h+1)q$, this colouring uses only colours from the set $\{\lfloor a(k-c-s)+1,\ldots,\lfloor a(k-c-1)\rfloor$.  The rest of the proof applies \cref{t-tree-slack} inductively on each of the uncoloured components of $H-V(H')$ to complete the colouring using smaller colours in the set $\{1,\ldots,\lfloor a(k-c-s)\rfloor\}$ and is unchanged.  The remainder of the proof is unchanged and proves the following refinement of \cref{simple-t-trees}:
 
 \begin{itemize}
     \item[(\ref{simple-t-trees})] For any fixed integer $t\ge 1$ and every integer $\ell\ge 1$, every $n$-vertex graph $H$ of simple treewidth at most $t$ has $\lrn(H)\in O(\ell^{t-1}\log^t \ell\log n/\log^{(t)} n)$.
@@ -1122,7 +1140,7 @@ Using this refinement of \cref{simple-t-trees} gives the following refined versi
         \item the class of graphs excluding a particular apex graph $A$ as a minor; and
         \item the class of $(g,k)$-planar graphs,
     \end{compactenum}
-    there exists an integers $c=c(\mathcal{G})$ and $b=b(\mathcal{G})$ such that every $n$-vertex graph $G\in\mathcal{G}$ has $\lrn(G)\in O(\ell^{b-1}\log^b\ell\log n/\log^{(c)} n)$.
+    there exists an integers $c=c(\mathcal{G})$ and $b=b(\mathcal{G})$ such that every $n$-vertex graph $G\in\mathcal{G}$ has $\lrn(G)\in O(b\ell^{c-1}\log^c\ell\log n/\log^{(c)} n)$.
 \end{itemize}
 
 %========================================================================
@@ -1141,7 +1159,7 @@ For constant $d$, the lower and upper bounds for 2-ranking $d$-degenerate graphs
 
 \section*{Acknowledgement}
 
-The authors are grateful to David Wood who, after reading an early draft of this paper, pointed us to the notion of simple treewidth, which greatly simplifies and unifies the exposition.
+The authors are grateful to David Wood who, after reading an early draft of this paper, pointed us to the notion of simple treewidth, which greatly simplifies and unifies the exposition of our results.
 
 
 \bibliographystyle{plainnat}
