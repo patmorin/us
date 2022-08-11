@@ -230,16 +230,17 @@ At least three works have considered $\lrn$ for finite $\ell$ with a focus on th
 Every $2$-ranking is a star colouring and every distance-2 colouring is a 2-ranking so, letting $\scn(G)$ and $\dtcn(G)$ denote the star colouring number of $G$ and distance-2 colouring number of $G$, respectively, we have $\scn(G) \le \trn(G)\le \dtcn(G)$.
 
 
-\subsubsection{Centered and Conflict-Free Colouring}
+\subsubsection{Centered Colouring}
 
 % It is not hard to see that any colouring $\varphi$ of $G$ is an $\ell$-ranking if and only if, for every (connected) subgraph $X\subseteq G$ of diameter at most $\ell$, there there is exactly one vertex $v\in V(X)$ such that $\varphi(v)=\max\{\varphi(v):v\in V(X)\}$.
 
-
-A \defin{conflict-free} colouring $\varphi:V(G)\to\N$ has the property that, for each vertex $v$ of $G$, some vertex $w$ in the closed neighbourhood $N_G[v]$ has a colour $\varphi(w)$ distinct from every other vertex in $N_G[v]$ \cite{pach.tardos:conflict-free,glebov.szabo.ea:conflict-free,gargano.rescigno:complexity}. A colouring $\varphi$ is a $2$-ranking if and only if, for each $v\in V(G)$, $N_G[v]$ has a unique maximum colour.  Therefore every $2$-ranking is a conflict-free colouring.
+% A \defin{conflict-free} colouring $\varphi:V(G)\to\N$ has the property that, for each vertex $v$ of $G$, some vertex $w$ in the closed neighbourhood $N_G[v]$ has a colour $\varphi(w)$ distinct from every other vertex in $N_G[v]$ \cite{pach.tardos:conflict-free,glebov.szabo.ea:conflict-free,gargano.rescigno:complexity}. A proper colouring $\varphi$ is a $2$-ranking if and only if, for each $v\in V(G)$, $N_G[v]$ has a unique maximum colour.  Therefore every $2$-ranking is a conflict-free colouring.
 
 A colouring $\varphi:V(G)\to\N$ is \defin{$p$-centered} if each connected subgraph $X\subseteq G$ that is coloured with at most $p$ distinct colours has a colour that occurs exactly once \cite{nesetril.ossona:tree-depth,nesetril.ossona:grad,zhu:colouring}.  This implies that in a $p$-centered colouring, every connected subgraph with at most $2p$ vertices must have a colour that occurs exactly once.  In particular, every path of length at most $2p-1$ must have a colour that occurs exactly once.  On the other hand \cref{equivalence} in \cref{basics} shows that $\varphi$ is a $(2p-1)$-ranking if and only if every path of length at most $(2p-1)$ has a unique maximum colour.
 
-These two examples show how the difference between ``unique'' and ``unique maximum'' can be surprisingly profound.  Every planar graph has a conflict-free 4-colouring \cite{abel.alvarez.ea:conflict-free}. Planar graphs (and, indeed, all graph families having similar product structure theorems) have $(\ell+1)/2$-centered colourings using a number of colours that depends only (polynomially) on $\ell$ \cite{nesetril.ossona:grad,debski.felsner.ea:improved,pilipczuk.siebertz:polynomial}.  This contrasts starkly with the lower bounds in \cref{trees,planar}, which show that $\ell$-rankings of $n$-vertex trees and planar graphs, respectively, require a number of colours that depends nearly-logarithmically on $n$, for any $\ell\ge 2$.
+This example show how the difference between ``unique'' and ``unique maximum'' can be surprisingly profound.
+% Every planar graph has a conflict-free 4-colouring \cite{abel.alvarez.ea:conflict-free} and the Four Colour Theorem implies that every planar graph has a proper conflict-free $16$-colouring.
+Planar graphs (and, indeed, all graph families having similar product structure theorems) have $(\ell+1)/2$-centered colourings using a number of colours that depends only (polynomially) on $\ell$ \cite{nesetril.ossona:grad,debski.felsner.ea:improved,pilipczuk.siebertz:polynomial}.  This contrasts starkly with the lower bounds in \cref{trees,planar}, which show that $\ell$-rankings of $n$-vertex trees and planar graphs, respectively, require a number of colours that depends nearly-logarithmically on $n$, for any $\ell\ge 2$.
 
 \subsection{Outline}
 
@@ -365,11 +366,18 @@ For a graph $H$, a \defin{rooted tree decomposition} of $H$ is a tree decomposit
 % \end{proof}
 
 
-We will make use of the following well-known and easy to prove vertex-weighted separator lemma, whose proof is exactly the same as the unweighted version due to \citet{robertson.seymour:graph}:
+We will make use of the following fairly standard vertex-weighted separator lemma.  Similar lemmas with similar proofs appear in  \citet{robertson.seymour:graph}, but we provide a proof for the sake of completeness.
 
 \begin{lem}\label{weighted-separator}
-    Let $H$ be a graph; let $\mathcal{T}:=(B_x:x\in V(T))$ be a tree decomposition of $H$; and let $\xi:V(H)\to\R$ be a function that is positive on $V(H)$.  Then, for any integer $c>1$, there exists $S_T\subseteq V(T)$ of size $|S_T|\le c$ such that, for each component $X$ of $H-(\bigcup_{x\in S_T} B_x)$, $\sum_{v\in V(X)} \xi(v) \le \tfrac{1}{c}\cdot\sum_{v\in V(H)} \xi(v)$.
+    Let $H$ be a graph; let $\mathcal{T}:=(B_x:x\in V(T))$ be a tree decomposition of $H$; and let $\xi:V(H)\to\R$ be a function that is positive on $V(H)$.  Then, for any integer $c\ge 1$, there exists $S_T\subseteq V(T)$ of size $|S_T|\le c-1$ such that, for each component $X$ of $H-(\bigcup_{x\in S_T} B_x)$, $\sum_{v\in V(X)} \xi(v) \le \tfrac{1}{c}\cdot\sum_{v\in V(H)} \xi(v)$.
 \end{lem}
+
+\begin{proof}
+  Let $\Xi:=\sum_{v\in V(H)} \xi(v)$.
+  The proof is by induction $c$.  The base case $c=1$ is trivial, since $S_T:=\emptyset$ satisfies the requirements of the lemma.  Now assume $c\ge 2$.  Root $T$ arbitrarily and for each $x\in V(T)$, let $T_x$ denote the subtree of $T$ induced by $x$ and all its $T$-descendants.  Let $G_x:=G[\bigcup_{y\in V(T_x)} B_y]$.  Say that a node $x$ of $T$ is \defin{heavy} if $\sum_{v\in V(G_x)} \xi(v) \ge \tfrac{1}{c}\cdot \Xi$. Since $c\ge 1$, $T$ contains at least one heavy vertex. Let $x$ be a heavy vertex of $T$ with the property that no child of $x$ is also heavy.  Then $G':=G-V(G_x)$ has weight $\sum_{v\in V(G')} \xi(v) \le (1-1/c)\cdot\Xi$.  On the other hand, every component $C$ of $G-V(G')-B_x$ has weight $\sum_{v\in V(C)} \xi(v) \le \tfrac{1}{c}\cdot\Xi$.  Apply induction on the graph $G'$ with tree decomposition $\mathcal{T}':=(B_x\cap V(G'):x\in V(T))$ and $c':=c-1$ to obtain a set $S_T'$ of size at most $c-2$ such that each component $X$ of $G'-(\bigcup_{x\in S_T} B_x)$, has weight at most $\sum_{v\in V(X)} \xi(v) \le \tfrac{1}{c-1}\cdot(1-\tfrac{1}{c})\cdot\Xi = \tfrac{1}{c}\cdot \Xi$.  The set $S_T:=S_T'\cup\{x\}$ satisfies the requirements of the lemma.
+\end{proof}
+
+
 
 % \begin{proof}
 %     (This proof is only included for the sake of being self-contained.)
@@ -696,8 +704,8 @@ We begin with a few helper lemmas whose purpose is to bound the number of colour
     %
     % Consider the \defin{greedy path} $u_0,\ldots,u_p$ that begins at $u_0\in B_{1}$, ends at $u_p\in B_{m}$, and is defined as follows: $u_0$ is a vertex in $B_{1}$ that maximizes $r(u_0)$.  For $i\ge 1$, $u_i$ is a vertex in $B_{r(u_{i-1})}$ that maximizes $r(u_i)$.  This continues until reaching a vertex $u_p$ such that $r(u_p)=m$.
     %
-    % 
-    % 
+    %
+    %
     % \begin{figure}
     %   \begin{center}
     %     \includegraphics{figs/path_induced-1} \\[0pt]
@@ -735,9 +743,9 @@ We begin with a few helper lemmas whose purpose is to bound the number of colour
 
        \item $\{w_a,w_b\}\subseteq V(G_j)$ for some $j\in\{1,\ldots,p\}$ (and not the preceding case).
        % In this case, edge-maximality implies that $B_{y_{j-1}}$ and $B_{y_{j}}$ each form cliques that separate $G'_{j}$ from $G-V(G'_j)$.
-       Since 
-       % $w_a,\ldots,w_b$ is an induced path in $G$ and 
-       none of $w_{a+1},\ldots,w_{b-1}$ are pinched, this implies that $\{w_a,\ldots,w_b\}\subseteq V(G_j)$.  Therefore, $w_a,\ldots,w_b$ is an induced path in $G_j$ so, by the inductive hypothesis, $\{w_{a+1},\ldots,w_{b-1}\}\subseteq U_j\subseteq U$.  
+       Since
+       % $w_a,\ldots,w_b$ is an induced path in $G$ and
+       none of $w_{a+1},\ldots,w_{b-1}$ are pinched, this implies that $\{w_a,\ldots,w_b\}\subseteq V(G_j)$.  Therefore, $w_a,\ldots,w_b$ is an induced path in $G_j$ so, by the inductive hypothesis, $\{w_{a+1},\ldots,w_{b-1}\}\subseteq U_j\subseteq U$.
        % (Note that this includes the special case in which $u_j\in\{w_a,\ldots,w_b\}$.)
 
        \item $w_a = u_{j-1}$ for some $j\in\{1,\ldots,p+1\}$ and $w_b\in V(G_{j})$.  In this case, $w_a=u_{j-1}\in B_{k}$ for each $k\in\{y_{j-1},\ldots,y_{j}\}$ and $w_b\in B_{k}$ for at least one $k\in\{y_{j-1},\ldots,y_{j}\}$.  By edge maximality, $w_aw_b\in E(G)$, so $b=a+1$ and there is nothing to prove.  \qedhere
@@ -836,7 +844,7 @@ We proceed by induction on $n$. In the base case, $n=1$, so $c=k$.  We set $\var
 We say that a vertex $v\in L_{\ell+1}$ is \defin{dangerous} if $T_v$ has size $n_v> k^k/(c+1)^{c+1}$ and \defin{harmless} otherwise.  Observe that the number $x$ of dangerous vertices must satisfy $xk^k/(c+1)^{c+1} < n = k^k/c^c$, so
 \[
   x \le \frac{(c+1)^{c+1}}{c^c} = \left(\frac{c+1}{c}\right)^c\cdot(c+1)
-  = (1+1/c)^c\cdot (c+1) < e(c+1) \enspace .
+  = (1+1/c)^c\cdot (c+1) < e\cdot (c+1) \enspace .
 \]
 We modify $\varphi$ by assigning a unique colour $\varphi(v)\in\{\floor{a(k-c)+2,\ldots,\floor{ak}}$ to each dangerous vertex.  The number of colours available for dangerous vertices is at least $ac-2$ and the number of dangerous vertices is at most $e(c+1)$, so this is always possible, provided that
 % ac-2 \ge e(c+1)
@@ -888,7 +896,7 @@ To circumvent this issue, we (mostly) give up on the idea of using distinct colo
 
 To achieve this we use a separator $S\subseteq \bigcup_{i=0}^\ell L_i$ that guarantees that the size of each component of $H-S$ is sufficiently small that it has an $\ell$-ranking in which the vertices in $L_0,\ldots,L_\ell$ have colours smaller than $a(k-c-s)$ for some appropriately chosen $s$. For this to work, we need that each component have size at most $(\log^{(t-2)} k)^k/(\log^{(t-2)}(c+s))^{c+s}$.  The situation is complicated further by the fact that the harmless vertices in $L_{\ell+1}$ create lower bounds on the colours of their neighbours in $L_\ell$.  Without these lower bounds, two vertices in distinct components of $H[L_{\ell+1}]$ might receive the same colour which is smaller than the colour of their common neighbour in $L_\ell$.  This requires us to solve a weighted generalization of the problem on $H[\bigcup_{i=0}^{\ell} L_i]$.  This weighted problem on a graph of diameter $d\in O(\ell)$ is the subject of \cref{t-tree-slack}, below.
 
-Assuming this weighted generalization can be solved, this still leaves the problem of colouring the vertices in $S$.  It turns out that the separator $S$ is the union of $O(c^4)$ bags in a $t$-simple tree-decomposition of $H$, where $\log c/\log^{(t-1)}(c)=O(s)$.  We can then augment $S$ into a superset $S'\supseteq S$ that has a $t$-simple tree decomposition whose underlying tree has $O(c^4)$ branching nodes.  For each $i\in\{0,\ldots,\ell\}$, the graph $H_i':=H[L_i\cap S']$ has simple treewidth $t-1$ (by \cref{simple-bfs-layers}) and has a tree decomposition of width at most $t-1$ whose underlying tree has $O(c^4)$ branching nodes.  Therefore, by \cref{skeleton-colour} and induction on $t$, $H'_i$ has an $\ell$-ranking using $O(\log c^4/\log^{(t-1)} c^4)=O(s)$ colours. This leaves enough room to colour all of $H'$ using colours in the interval $[\floor{a(k-c-s)}+1,\floor{a(k-c)}]$, using a colouring in which all vertices of $H'_i$ have larger colours than those of $H'_{i+1}$, for each $i\in\{0,\ldots,\ell\}$.
+Assuming this weighted generalization can be solved, this still leaves the problem of colouring the vertices in $S$.  It turns out that the separator $S$ is the union of $O(c^4)$ bags in a $t$-simple tree-decomposition of $H$, where $\log c/\log^{(t-1)}(c)=O(s)$.  We can then augment $S$ into a superset $S'\supseteq S\cup L_0$ in such a way that $H[S']$ has a width-$t$ tree decomposition whose underlying tree has $O(c^4)$ branching nodes.  For each $i\in\{0,\ldots,\ell\}$, the graph $H_i':=H[L_i\cap S']$ has simple treewidth $t-1$ (by \cref{simple-bfs-layers}) and has a tree decomposition of width at most $t-1$ whose underlying tree has $O(c^4)$ branching nodes.  Therefore, by \cref{skeleton-colour} and induction on $t$, $H'_i$ has an $\ell$-ranking using $O(\log c^4/\log^{(t-1)} c^4)=O(s)$ colours. This leaves enough room to colour all of $H'$ using colours in the interval $[\floor{a(k-c-s)}+1,\floor{a(k-c)}]$, using a colouring in which all vertices of $H'_i$ have larger colours than those of $H'_{i+1}$, for each $i\in\{0,\ldots,\ell\}$.
 
 In order for all of this to work, we must strike a balance between the size of the separator $S$ and the sizes of the components that remain after removing $S$.  As it turns out, setting $s:=\log c/\log^{(t-1)} c$ achieves what we need.  This choice of $s$ appears in the following lemma, which is what we eventually use to colour the vertices in $L_0,\ldots,L_\ell$.  The purpose of the weighting $(n_v:v\in V(H))$ that appears in this lemma is to deal with the fact, discussed above, that harmless vertices in $L_{\ell+1}$ that are coloured inductively will place lower bounds on the colours of vertices in $L_{\ell}$.
 
@@ -1045,25 +1053,32 @@ Finally, we can prove the technical lemma that implies \weirdref{simple-t-trees}
 Rewriting \cref{t-tree-technical} in terms of $n$ yields \weirdref{simple-t-trees}{a}:
 
 \begin{proof}[Proof of \cref{simple-t-trees} (upper bound)]
-    By \cref{t-tree-technical}, $\lrn(H)\in O(k)$ for any $k$ that satisfies
-    \[  (\log^{(t-2)} k)^{k} \ge n 
+    When $t=1$, $H$ is a collection of vertex-disjoint paths and $\lrn(H)\in O(\log\ell)=O(1)=O(\log n/\log^{(1)} n)$ (see \cref{logarithmic-base-case}).  Assume now that $t\ge 2$.
+    Fix some $\epsilon > 0$, let $k=(1+\epsilon)\log (tn)/\log^{(t)} n$, and let $c:=\tau(t-2)$.
+    By \cref{t-tree-technical}, $\lrn(H)\in O(k)$ provided that $k$ satisfies
+    \[  \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} c)^c} \ge tn
+        % \Leftrightarrow
+        % k \ge \frac{\log n}{\log^{(t-1)} k}
         \Leftrightarrow
-        k \ge \frac{\log n}{\log^{(t-1)} k}
-        \Leftrightarrow
-        \frac{k\log^{(t-1)} k}{\log n} \ge 1
+        \frac{k\log^{(t-1)} k}{\log (tn)} \ge 1 \enspace ,
     \]
-    Taking $k=2\log n/\log^{(t)} n$, we get
+    for all sufficiently large $n$.
+    With our choice of $k$ we have
     \begin{align*}
-      \frac{k\log^{(t-1)} k}{\log n}
-      & = \frac{2\log^{(t-1)} k}{\log^{(t)} n} \\
-      & = \frac{2\log^{(t-1)}\left(2\log n/\log^{(t)} n\right)}{\log^{(t)} n} \\
-      & \ge \frac{2\log^{(t-1)}\left(\log n/\log^{(t)} n\right)}{\log^{(t)} n} \\
-      & = \frac{2\log^{(t-2)}\left(\log^{(2)} n - \log^{(t+1)} n\right)}{\log^{(t)} n} \\
-      & \approx \frac{2\log^{(t-3)} \left(\log^{(3)} n - \tfrac{\log^{(t+1)} n}{\log^{(2)} n}\right)}{\log^{(t)} n} & \text{because $x-a=x(1-a/x)\approx xe^{-a/x}$} \\
-      & \approx \frac{2\log^{(t)} n - \tfrac{\log^{(t+1)} n}{\prod_{j=2}^{t-1}\log^{(j)} n}}{\log^{(t)} n} & \text{by iteration} \\
+      \frac{k\log^{(t-1)} k}{\log (tn)}
+      % & = \frac{(1+\epsilon)\log^{(t-1)} k}{\log^{(t)} n} \\
+      & = (1+\epsilon)\cdot\frac{\log^{(t-1)}\left((1+\epsilon)\log n/\log^{(t)} n\right)}{\log^{(t)} n} \\
+      & = (1+\epsilon)\cdot\frac{\log^{(t-2)}\left(\log^{(2)} n + \log(1+\epsilon) - \log^{(t+1)} n\right)}{\log^{(t-2)}\left(\log^{(2)} n\right)} \\
+      & = (1+\epsilon)\cdot\frac{\log^{(t-2)}\left(\log^{(2)} n-o(\log^{(2)} n)\right)}{\log^{(t-2)}\left(\log^{(2)} n\right)} \\
+      & \qquad \text{(since $t\ge 2$, so $\log^{(t+1)} n\in o(\log^{(2)} n)$ )}\\
+      % & = (1+\epsilon)\cdot\frac{\log^{(t-3)}\left((\log^{(3)} n)+\log(1-o_n(1))\right)}{\log^{(t-3)}\left(\log^{(3)} n\right)} \\
+      % & = (1+\epsilon)\cdot\frac{\log^{(t-3)}\left(\log^{(3)} n+o_n(1)\right)}{\log^{(t-3)}\left(\log^{(3)} n\right)} \\
+      & \rightarrow 1+\epsilon
     \end{align*}
+    as $n\rightarrow\infty$.\footnote{If there exists some $\epsilon >0$ and $x_0$ such that $f(x)-\delta x\le f(x-\delta x)\le f(x)$ for all $x\ge x_0$ and all $\delta\in[0,\epsilon]$ then $\lim_{x\to\infty} [f(x-o(x))/f(x)] = 1$.  Here we are using this with $f(x):=\log^{(t-2)} x$ and $x:=\log^{(2)} n$.}
+    Therefore, $\lrn(H)\in O(k)=O(\log n/\log^{(t)} n)$, as required.
     % \[
-    % 
+    %
     % \]
     % \[
     %     \frac{2\log n}{\log^{(t)} n}
@@ -1149,7 +1164,7 @@ Using this refinement of \cref{simple-t-trees} gives the following refined versi
 
 We have given asymptotically optimal bounds on the number of colours required by $\ell$-rankings of $n$-vertex graphs of treewidth $t$, graphs of simple treewidth $t$, planar 3-trees, outerplanar graphs, and planar graphs.  Prior to this work, the best known bounds for planar graphs were $\Omega(\log n/\log\log n)$ (trees) and $O(\log n)$.
 
-Our upper bounds are constructive and lead to straightforward linear time algorithms for finding $\ell$-rankings of (simple) treewidth $t$ graphs, including planar 3-trees, and outerplanar graphs.  For a planar graph, $G$ we can use the recent linear time algorithm of \citet{bose.morin.ea:optimal} for finding the simple $3$-tree $H$ and the path $P$ such that $G\subseteq H\boxtimes P$ (\cref{product-structure}) to find an $\ell$-ranking of $G$ in $O(n)$ time.
+Our upper bounds are constructive and lead to straightforward linear time algorithms for finding $\ell$-rankings of (simple) treewidth $t$ graphs, including planar 3-trees, and outerplanar graphs.  For a planar graph $G$ we can use the recent linear time algorithm of \citet{bose.morin.ea:optimal} for finding the simple $3$-tree $H$ and the path $P$ such that $G\subseteq H\boxtimes K_3\boxtimes P$ (\cref{product-structure}) to find an $\ell$-ranking of $G$ in $O(n)$ time.
 
 % Two directions for future work stand out:
 % \begin{inparaenum}[(i)]
@@ -1240,7 +1255,7 @@ Therefore
 
 Therefore
 \[
-    \frac{(\log^{t-2} (c+s))^{c+s}}{(\log^{(t-2)}c)^c} \in O(c) \enspace .
+    \frac{(\log^{(t-2)} (c+s))^{c+s}}{(\log^{(t-2)}c)^c} \in O(c) \enspace .
 \]
 
 
