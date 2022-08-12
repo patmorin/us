@@ -585,33 +585,27 @@ For a graph $U$ and integers $h,m\ge 0$, we define the \defin{$(h,m)$-boost} $U^
 
 
 \begin{lem}\label{treewidth-lower-bound}
-    For each integer $t\ge 1$ and any integer $r\ge \tau(t)$, there exists a graph $G$, with $|G|\le (\log^{(t-1)}r)^{tr + o(r)}$, $\tw(G)\le t$, and $\trn(G)\ge r$.
+    For each integer $t\ge 1$ and any integer $r\ge \tau(t)$, there exists a graph $G$, with $|G|\le (\log^{(t-1)}r)^{r + o(r)}\cdot e^{(t-1)r+o(r)}$, $\tw(G)\le t$, and $\trn(G)\ge r$.
 \end{lem}
 
 \begin{proof}
-    The proof is by induction on $t$.  \citet{karpas.neiman.ea:on} have shown that the complete $(r+1)$-ary tree $T$ of height $r-1$ has $\trn(T)\ge r$. As the tree $T$ has size $\sum_{i=0}^{r-1} (r+1)^i \le r^r=(\log^{(0)}r)^{r}$,  this establishes the base case $t=1$.
+    The proof is by induction on $t$.  \citet{karpas.neiman.ea:on} have shown that the complete $(r+1)$-ary tree $T$ of height $r-1$ has $\trn(T)\ge r$. As the tree $T$ has size $\sum_{i=0}^{r-1} (r+1)^i \le r^r=(\log^{(0)}r)^{r}\cdot e^{0}$,  this establishes the base case $t=1$.
 
     Let $h:=\lceil\log r\rceil$ and $m:=\lceil r/\log r\rceil$ so that $hm\ge r$.  For $t>1$ we can apply the inductive hypothesis to obtain a graph $U$, with $\tw(U)\le t-1$, $|U|\le (\log^{(t-2)} h)^{(t-1)h+o(h)}$ and $\trn(U)\ge h$. Let $G:=U^{(h,m)}$.  By \cref{boost-treewidth}, $\tw(G)\le \tw(U)+1\le t$.  By \cref{boost}, $\trn(G)\ge hm+1 > hm \ge r$. By \cref{boost-size},
     \begin{align*}
         |G| & \le (|U|\cdot m\cdot h)^{m}\cdot e^{O(1/h)} \\
-        & \le \left((\log^{(t-2)} h)^{(t-1)h + o(h)}\cdot m\cdot h\right)^{m}\cdot e^{O(1/h)} \\
-        & = (\log^{(t-2)} h)^{(t-1)r + o(r)}\cdot r^{m+o(m)}
+        & \le \left((\log^{(t-2)} h)^{h + o(h)}\cdot e^{(t-2)h+o(h)} \cdot mh\right)^{m}\cdot e^{O(1/h)} \\
+        & = (\log^{(t-2)} h)^{r + o(r)}\cdot e^{(t-2)r+o(r)}\cdot e^{r+o(r)}\cdot e^{O(1/h)}
         & \text{(since $h=\lceil\log r\rceil$ and $m=\lceil r/\log r\rceil$)}\\
-        & = (\log^{(t-1)} r)^{(t-1)r + o(r)}\cdot r^{m+o(m)}
-         & \text{(since $h=\lceil\log r\rceil$)} \\
-        % & = (\log^{(t-1)} r)^{(t-1)r + o(r)}\cdot r^{r/\log r}
-        % & \text{(since $m:=\ceil r/\log r\rceil$)}\\
-        & = (\log^{(t-1)} r)^{(t-1)r + o(r)}\cdot e^{r+o(r)}
-        & \text{(since $m:=\lceil r/\log r\rceil$)}\\
-        & \le (\log^{(t-1)} r)^{tr + o(r)} & \text{(since $r\ge \tau(t)$, so $\log^{(t-1)} r\ge e$).} & \qedhere
+        & = (\log^{(t-1)} r)^{r + o(r)}\cdot e^{(t-1)r+o(r)}\enspace . & & \qedhere
     \end{align*}
 \end{proof}
 
 \begin{proof}[Proof of \cref{t-trees} (lower bound)]
-    \Cref{treewidth-lower-bound} produces a graph $G$ with $n:=|G|\le (\log^{(t-1)} r)^{tr+o(r)}$, $\tw(G)\le t$, and $\trn(G)\ge r$.  So,
+    By \cref{treewidth-lower-bound} there exists an $n$-vertex graph $G$ with $n\le (\log^{(t-1)} r)^{r+o(r)}\cdot e^{(t-1)r+o(r)}$, $\tw(G)\le t$, and $\trn(G)\ge r$.  So, for any fixed $t\in\N$,
     \[
-        \log n \le (tr+o(r))\log^{(t)} r
-        \le t\cdot(1+o(1))\trn(G)\log^{(t)} \trn(G)
+        \log n \le (r+o(r))\log^{(t)} r
+        \le (1+o(1))\cdot \trn(G)\cdot \log^{(t)} \trn(G) \enspace .
     \]
     and attempting to solve for $\trn(G)$ shows that $\trn(G)\in \Omega(\log n/\log^{(t+1)} n)$.
 \end{proof}
