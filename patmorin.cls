@@ -4,7 +4,7 @@
 % version of this file is at http://jocg.org/jocg.cls
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{patmorin} 
+\ProvidesClass{patmorin}
 		[2009/05/11 v0.1a
  Pat Morin's article class]
 
@@ -96,7 +96,7 @@
     \vskip 1.5em%
     {
       \lineskip .5em%
-      {\normalsize\itshape\@author} \\[1em] 
+      {\normalsize\itshape\@author} \\[1em]
       {\normalsize \@date}
     }%
   \end{flushleft}%
@@ -110,12 +110,12 @@
 
 
 %------------- Use this so pdflatex outputs US letter pages -------------
-\usepackage[letterpaper]{hyperref}
+\usepackage{hyperref}
 \usepackage[dvipsnames]{color}
 \definecolor{linkblue}{named}{MidnightBlue}
 \hypersetup{colorlinks=true, linkcolor=linkblue,  anchorcolor=linkblue,
 	citecolor=linkblue, filecolor=linkblue, menucolor=linkblue,
-	urlcolor=linkblue} 
+	urlcolor=linkblue}
 
 
 %--------------------------- Headers and Footers ------------------------
@@ -144,4 +144,3 @@
    \or \text{\Pluto}
   \else\@ctrerr\fi}}
 \makeatother
-
