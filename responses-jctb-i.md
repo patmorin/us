@@ -2,19 +2,11 @@
 
 The authors would like to thank both referees for the effort they put into carefully reading the paper and providing detailed feedback that has improved the paper significantly. This revision includes a few significant changes:
 
-The section on bounded genus graphs has been simplified using the recently improved product structure theorem for bounded genus graphs (in which $H$ is now a simple $3$-tree).  There is no longer any need to deal with an apex vertex in $H$.
+1. The section on bounded genus graphs has been simplified using the recently improved product structure theorem for bounded genus graphs (in which $H$ is now a simple $3$-tree).  There is no longer any need to deal with an apex vertex in $H$.
+2. The discussion in the final section was updated to include the fact that there now exists a linear time algorithm for finding product structure in planar graphs.
+3. In response to Referee 1's suggestion, we have added a section just before the hardest part of the proof (The Meat).  In this section, we present the proof for trees and its extension to simple $2$-trees, and then explain the additional difficulties that show up for simple $t$-trees, when $t\ge 3$.  We believe that this section, which adds three pages to the length of the paper (including two half-page figures), greatly improves the readability of the paper.  The new Figures 2 and 3, we believe, are especially helpful.
 
-The discussion in the final section was updated to include the fact that there now exists a linear time algorithm for finding product structure in planar graphs.
-
-In response to Referee 1's suggestion, we have added a section just before the hardest part of the proof (The Meat).  In this section, we present the proof for trees and its extension to simple $2$-trees.  
-
-We then explain that, when extending the proof to simple $t$-trees for $t\ge 3$, the additional difficulty comes from the fact that the graph induced by each BFS layer no longer has an $\ell$-ranking that uses $f(\ell)$ colours.  
-
-We conclude by sketching how resolving this requires solving a weighted problem on a bounded diameter graph that can be solved using a separator that induces a graph that can be coloured using the method described in the previous section (The Bread).  
-
-We believe that this section, which adds three pages to the length of the paper (including two half-page figures), greatly improves the readability of the paper.  The new Figures 2 and 3, we believe, are especially helpful.
-
-The remainder of this response is a listing of the referee's suggestions and the description of the action we have taken to address each one.
+The remainder of this response is a listing of each referee's suggestions and the description of the action we have taken to address each one.
 
 # Referee 1
 
@@ -71,7 +63,7 @@ This isn't actually true. Since $P$ can be arbitrarily long, the product can hav
 
 **Authors' Response**
 
-We have have changed removed the "vertex" qualifier here.  We have also changed the first paragraph of the paper to use this more natural definition of $\ell$-ranking.  The alternative definition (which is more useful in proofs) is now included as an observation.
+We have have removed the "vertex" qualifier here.  We have also changed the first paragraph of the paper to use this more natural definition of $\ell$-ranking.  The alternative definition (which is more useful in proofs) is now included as an observation.
 
 **Referee 1 Comment**
 
@@ -85,7 +77,7 @@ We have have changed removed the "vertex" qualifier here.  We have also changed 
 
 **Authors' Response**
 
-We have rewritten this section a bit to make the comparison clearer.  In particular, we explain that, in a $p$-centered colouring, every path of length at most $2p$ contains a vertex whose colour is unique.  Thus, every $p$-centered colouring satisfies a condition comparable to that satisfied by a $2p$-ranking.  The only difference is that, in the former case, the condition is "unique" and in the latter case the condition is "unique maximum".  
+We have rewritten this section a bit to make the comparison clearer.  In particular, we explain that, in a $p$-centered colouring, every path of length at most $2p-1$ contains a vertex whose colour is unique.  Thus, every $p$-centered colouring satisfies a condition comparable to that satisfied by a $(2p-1)$-ranking, except that "unique maximum" is replaced by "unique".  The only difference is that, in the former case, the condition is "unique" and in the latter case the condition is "unique maximum".  
 
 **Referee 1 Comment**
 
@@ -177,9 +169,8 @@ We have corrected this.
 
 **Referee 1 Comment**
 
-    L471: what do you mean by "edges of w_0,…w_q"? Edges whose both endpoint
-    belong to these vertices?
-
+    L471: what do you mean by "edges of w_0,…w_q"? Edges whose both
+    endpoint belong to these vertices?
 
 **Authors' Response**
 
@@ -301,8 +292,7 @@ We have rephrased this as the referee suggests.
 
 **Author's Response**
 
-We do not see the contradiction here.  The first sentence states that $\chi_2(G)\in O(\log n)$ for planar $G$ and the second states that $\chi_\ell(G)\in O(\ell\log n)$ for any graph $G$ from a (fixed) proper minor-closed family.  We write it this way because the authors of [19] did: The first sentence is Theorem 4.1 in their paper; the second sentence is Theorem 5.4 in their paper.
-
+We have changed this and now write $O(\ell\log n)$ for both bounds (and in Table 1).
 
 **Referee 2 Comment**
 
@@ -312,7 +302,7 @@ We do not see the contradiction here.  The first sentence states that $\chi_2(G)
 
 **Author's Response**
 
-This seems to be the definition of $\ell$-centered colouring, at least the way it's used in [6,32].  The definition we use here matches the one used in (for example) the abstract of
+To help avoid any confusion, we now just define $p$-centered colouring using the definition in, for example,
 
 [https://arxiv.org/abs/1907.04586](https://arxiv.org/abs/1907.04586)
 
@@ -330,7 +320,7 @@ This seems to be the definition of $\ell$-centered colouring, at least the way i
 
 **Author's Response**
 
-The purpose of the discuss here is to highlight the fact that, although centered chromatic number and vertex-ranking number are the same, the situation changes immediately when we switch to "local" versions of these problems.  We have added some text here to point out that a $p$-centered colouring assigns a unique colour to every path of length at most $2p$.
+The purpose of the discuss here is to highlight the fact that, although centered chromatic number and vertex-ranking number are the same, the situation changes immediately when we switch to "local" versions of these problems.  We have added some text here to point out that a $p$-centered colouring assigns at least one unique colour to every path of length at most $2p-1$.  This condition is comparable that satisfied by $(2p-1)$-ranking, which requires that every path of length $2p-1$ assigns a unique maximum colour to every such path.
 
 **Referee 2 Comment**
 
@@ -350,7 +340,8 @@ Done.
 
 **Author's Response**
 
-Done.
+We now reference Robertson and Seymour *and* provide a short proof.
+
 
 **Referee 2 Comment**
 
@@ -580,7 +571,7 @@ The referee is right.  We made an off-by-one error here, and $y_{p+1}=r(u_p)=m$ 
 
 When $\hat{H}$ is empty, this is because $\Lambda(T)$ is empty, which means that $T$ is a path, so $H$ has pathwidth $t$.  This is not a problem, although the statement of the lemma was imprecise in this case, because of the use of big-Oh notation [We should have written $\chi_{\operatorname{\ell-vr}}(H) \in O(1+\chi_{\operatorname{\ell-vr}}(\hat{H}))$].  Instead, we have changed the statement of the lemma to the more precise $\chi_{\operatorname{\ell-vr}}(H) \le \chi_{\operatorname{\ell-vr}}(\hat{H})+(\ell+1)t+1$, which is what the proof actually shows.  
 
-Note that this is substantially stronger than a definition that includes all the leaves of $T$.  The difference is apparent in the case where $T$ has only a few very high degree nodes (which means that $T$ has many leaves).
+<!-- Note that this is substantially stronger than a definition that includes all the leaves of $T$.  The difference is apparent in the case where $T$ has only a few very high degree nodes (which means that $T$ has many leaves). -->
 
 **Referee 2 Comment**
 
@@ -623,7 +614,7 @@ Some larger-scale changes in response to Referee 1's request for a demonstration
 
 **Author's Response**
 
-We checked all occurrences of $\mathbb{N}$ and replaced some of these with $\mathbb{N}\setminus\{0\}$ in the few places where it was appropriate, including this location.  The parameter $\beta$ is not longer present.
+We checked all occurrences of $\mathbb{N}$ and replaced some of these with $\mathbb{N}\setminus\{0\}$ in the places where it was appropriate, including this location.  The parameter $\beta$ is not longer present.
 
 **Referee 2 Comment**
 
