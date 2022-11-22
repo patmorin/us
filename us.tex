@@ -372,7 +372,7 @@ We will make use of the following fairly standard vertex-weighted separator lemm
 
 \begin{proof}
   Let $\Xi:=\sum_{v\in V(H)} \xi(v)$.
-  The proof is by induction $c$.  The base case $c=1$ is trivial, since $S_T:=\emptyset$ satisfies the requirements of the lemma.  Now assume $c\ge 2$.  Root $T$ at some arbitrary vertex $r$ and for each $x\in V(T)$, let $T_x$ denote the subtree of $T$ induced by $x$ and all its $T$-descendants.  Let $G_x:=G[\bigcup_{y\in V(T_x)} B_y]$.  Say that a node $x$ of $T$ is \defin{heavy} if $\sum_{v\in V(G_x)} \xi(v) \ge \tfrac{1}{c}\cdot \Xi$. Since $c\ge 1$, $r$ is heavy, so $T$ contains at least one heavy vertex. Let $x$ be a heavy vertex of $T$ with the property that no child of $x$ is also heavy.  Then $G':=G-V(G_x)$ has weight $\sum_{v\in V(G')} \xi(v) \le (1-1/c)\cdot\Xi$.  On the other hand, every component $C$ of $G-V(G')-B_x$ has weight $\sum_{v\in V(C)} \xi(v) \le \tfrac{1}{c}\cdot\Xi$.  Apply induction on the graph $G'$ with tree decomposition $\mathcal{T}':=(B_x\cap V(G'):x\in V(T))$ and $c':=c-1$ to obtain a set $S_T'$ of size at most $c-2$ such that each component $X$ of $G'-(\bigcup_{x\in S_T} B_x)$, has weight at most $\sum_{v\in V(X)} \xi(v) \le \tfrac{1}{c-1}\cdot(1-\tfrac{1}{c})\cdot\Xi = \tfrac{1}{c}\cdot \Xi$.  The set $S_T:=S_T'\cup\{x\}$ satisfies the requirements of the lemma.
+  The proof is by induction $c$.  The base case $c=1$ is trivial, since $S_T:=\emptyset$ satisfies the requirements of the lemma.  Now assume $c\ge 2$.  Root $T$ at some arbitrary vertex $r$ and for each $x\in V(T)$, let $T_x$ denote the subtree of $T$ induced by $x$ and all its $T$-descendants.  Let $H_x:=H[\bigcup_{y\in V(T_x)} B_y]$.  Say that a node $x$ of $T$ is \defin{heavy} if $\sum_{v\in V(H_x)} \xi(v) \ge \tfrac{1}{c}\cdot \Xi$. Since $c\ge 1$, $r$ is heavy, so $T$ contains at least one heavy vertex. Let $x$ be a heavy vertex of $T$ with the property that no child of $x$ is also heavy.  Then $H':=H-V(H_x)$ has weight $\sum_{v\in V(H')} \xi(v) \le (1-1/c)\cdot\Xi$.  On the other hand, every component $C$ of $H-V(H')-B_x$ has weight $\sum_{v\in V(C)} \xi(v) \le \tfrac{1}{c}\cdot\Xi$.  Apply induction on the graph $H'$ with tree decomposition $\mathcal{T}':=(B_x\cap V(H'):x\in V(T))$ and $c':=c-1$ to obtain a set $S_T'$ of size at most $c-2$ such that each component $X$ of $H'-(\bigcup_{x\in S_T} B_x)$, has weight at most $\sum_{v\in V(X)} \xi(v) \le \tfrac{1}{c-1}\cdot(1-\tfrac{1}{c})\cdot\Xi = \tfrac{1}{c}\cdot \Xi$.  The set $S_T:=S_T'\cup\{x\}$ satisfies the requirements of the lemma.
 \end{proof}
 
 
@@ -557,7 +557,7 @@ For a graph $U$ and integers $h,m\ge 0$, we define the \defin{$(h,m)$-boost} $U^
 \begin{proof}
     It is easy to see that, for each $i\in \{0,\ldots,m\}$, $|L_i|=(|U|(hm+1))^i$.  Therefore,
     \begin{align*}
-      |U^{h,m}|
+      |U^{(h,m)}|
         & = \sum_{i=0}^m |L_i| \\
         & = \sum_{i=0}^m (|U|(hm+1))^i \\
         % & = \sum_{i=0}^m (|U|hme^{1/hm})^i \\
@@ -589,7 +589,7 @@ For a graph $U$ and integers $h,m\ge 0$, we define the \defin{$(h,m)$-boost} $U^
 \begin{proof}
     The proof is by induction on $t$.  \citet{karpas.neiman.ea:on} have shown that the complete $(r+1)$-ary tree $T$ of height $r-1$ has $\trn(T)\ge r$. As the tree $T$ has size $\sum_{i=0}^{r-1} (r+1)^i \le r^r=(\log^{(0)}r)^{r}\cdot e^{0}$,  this establishes the base case $t=1$.
 
-    Let $h:=\lceil\log r\rceil$ and $m:=\lceil r/\log r\rceil$ so that $hm\ge r$.  For $t>1$ we can apply the inductive hypothesis to obtain a graph $U$, with $\tw(U)\le t-1$, $|U|\le (\log^{(t-2)} h)^{(t-1)h+o(h)}$ and $\trn(U)\ge h$. Let $G:=U^{(h,m)}$.  By \cref{boost-treewidth}, $\tw(G)\le \tw(U)+1\le t$.  By \cref{boost}, $\trn(G)\ge hm+1 > hm \ge r$. By \cref{boost-size},
+    Let $h:=\lceil\log r\rceil$ and $m:=\lceil r/\log r\rceil$ so that $hm\ge r$.  For $t>1$ we can apply the inductive hypothesis to obtain a graph $U$, with $\tw(U)\le t-1$, $|U|\le (\log^{(t-2)} h)^{h+o(h)}\cdot e^{(t-2)h+o(h)}$ and $\trn(U)\ge h$. Let $G:=U^{(h,m)}$.  By \cref{boost-treewidth}, $\tw(G)\le \tw(U)+1\le t$.  By \cref{boost}, $\trn(G)\ge hm+1 > hm \ge r$. By \cref{boost-size},
     \begin{align*}
         |G| & \le (|U|\cdot m\cdot h)^{m}\cdot e^{O(1/h)} \\
         & \le \left((\log^{(t-2)} h)^{h + o(h)}\cdot e^{(t-2)h+o(h)} \cdot mh\right)^{m}\cdot e^{O(1/h)} \\
