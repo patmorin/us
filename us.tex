@@ -1045,40 +1045,29 @@ Finally, we can prove the technical lemma that implies \weirdref{simple-t-trees}
 Rewriting \cref{t-tree-technical} in terms of $n$ yields \weirdref{simple-t-trees}{a}:
 
 \begin{proof}[Proof of \cref{simple-t-trees} (upper bound)]
-    When $t=1$, $H$ is a collection of vertex-disjoint paths and $\lrn(H)\in O(\log\ell)=O(1)=O(\log n/\log^{(1)} n)$ (see \cref{logarithmic-base-case}).  Assume now that $t\ge 2$.
-    Fix some $\epsilon > 0$, let $k:=(1+\epsilon)\log (tn)/\log^{(t)} n$, and let $c:=\tau(t-2)$.
-    By \cref{t-tree-technical}, $\lrn(H)\in O(k)$ provided that $k$ satisfies
-    \[  \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} c)^c} \ge tn
-        % \Leftrightarrow
-        % k \ge \frac{\log n}{\log^{(t-1)} k}
-        \Leftrightarrow
-        \frac{k\log^{(t-1)} k}{\log (tn)} \ge 1 \enspace ,
-    \]
-    for all sufficiently large $n$.
-    With our choice of $k$ we have
-    \begin{align*}
-      \frac{k\log^{(t-1)} k}{\log (tn)}
-      % & = \frac{(1+\epsilon)\log^{(t-1)} k}{\log^{(t)} n} \\
-      & = (1+\epsilon)\cdot\frac{\log^{(t-1)}\left((1+\epsilon)\log n/\log^{(t)} n\right)}{\log^{(t)} n} \\
-      & = (1+\epsilon)\cdot\frac{\log^{(t-2)}\left(\log^{(2)} n + \log(1+\epsilon) - \log^{(t+1)} n\right)}{\log^{(t-2)}\left(\log^{(2)} n\right)} \\
-      & = (1+\epsilon)\cdot\frac{\log^{(t-2)}\left(\log^{(2)} n-o(\log^{(2)} n)\right)}{\log^{(t-2)}\left(\log^{(2)} n\right)} \\
-      & \qquad \text{(since $t\ge 2$, so $\log^{(t+1)} n\in o(\log^{(2)} n)$ )}\\
-      % & = (1+\epsilon)\cdot\frac{\log^{(t-3)}\left((\log^{(3)} n)+\log(1-o_n(1))\right)}{\log^{(t-3)}\left(\log^{(3)} n\right)} \\
-      % & = (1+\epsilon)\cdot\frac{\log^{(t-3)}\left(\log^{(3)} n+o_n(1)\right)}{\log^{(t-3)}\left(\log^{(3)} n\right)} \\
-      & \rightarrow 1+\epsilon
-    \end{align*}
-    as $n\rightarrow\infty$.\footnote{If there exists some $\epsilon >0$ and $x_0$ such that $f(x)-\delta x\le f(x-\delta x)\le f(x)$ for all $x\ge x_0$ and all $\delta\in[0,\epsilon]$ then $\lim_{x\to\infty} [f(x-o(x))/f(x)] = 1$.  Here we are using this with $f(x):=\log^{(t-2)} x$ and $x:=\log^{(2)} n$.}
-    Therefore, $\lrn(H)\in O(k)=O(\log n/\log^{(t)} n)$, as required.
-    % \[
-    %
-    % \]
-    % \[
-    %     \frac{2\log n}{\log^{(t)} n}
-    %     \ge 2\frac{\log n}{\log^{(t-1)}(\log n -\log^{(t)} n)}
-    %     = \frac{\log n}{\log^{(t)} n - O(1/\log n)}
-    %     = \frac{\log n}{\log^{(t)} n}+O(1) \enspace .
-    % \]
-    % which is clearly true for all sufficiently large $n$.\todo{Correct this.}
+  When $t=1$, $H$ is a collection of vertex-disjoint paths and $\lrn(H)\in O(\log\ell)=O(1)=O(\log n/\log^{(1)} n)$ (see \cref{logarithmic-base-case}).  Assume now that $t\ge 2$.
+  Fix some $\epsilon > 0$, let $k:=(1+\epsilon)\log (tn)/\log^{(t)} n$, and let $c:=\tau(t-2)$, so $\log^{(t-2)} c=0$.
+  By \cref{t-tree-technical}, $\lrn(H)\in O(k)$ provided that $k$ satisfies
+  \[  \frac{(\log^{(t-2)} k)^{k}}{(\log^{(t-2)} c)^c} \ge tn
+      % \Leftrightarrow
+      % k \ge \frac{\log n}{\log^{(t-1)} k}
+      \Leftrightarrow
+      \frac{k\log^{(t-1)} k}{\log (tn)} \ge 1 \enspace ,
+  \]
+  for all sufficiently large $n$.
+  With our choice of $k$ we have
+  \begin{align*}
+    \frac{k\log^{(t-1)} k}{\log (tn)}
+    % & = \frac{(1+\epsilon)\log^{(t-1)} k}{\log^{(t)} n} \\
+    & = (1+\epsilon)\cdot\frac{\log^{(t-1)}\left((1+\epsilon)\log n/\log^{(t)} n\right)}{\log^{(t)} n} \\
+    & = (1+\epsilon)\cdot\frac{\log^{(t-2)}\left(\log^{(2)} (tn) + \log(1+\epsilon) - \log^{(t+1)} n\right)}{\log^{(t-2)}\left(\log^{(2)} n\right)} \\
+    & \ge (1+\epsilon)\cdot\frac{\log^{(t-2)}\left(\log^{(2)} n + \log(1+\epsilon) - \log^{(t+1)} n\right)}{\log^{(t-2)}\left(\log^{(2)} n\right)} & \text{(since $t\ge 2$)}\\
+    & \ge (1+\epsilon)\cdot\frac{\log^{(t-2)}\left(\log^{(2)} n-\log^{(t+1)} n\right)}{\log^{(t-2)}\left(\log^{(2)} n\right)} & \text{(since $\epsilon\ge 0$)} \\
+    & \ge (1+\epsilon)\cdot\frac{\log^{(t-2)}\left(\log^{(2)} n-\log^{(3)} n\right)}{\log^{(t-2)}\left(\log^{(2)} n\right)} & \text{(since $t\ge 2$)} \\
+    & \rightarrow 1+\epsilon
+  \end{align*}
+  as $n\rightarrow\infty$.\footnote{If there exists some $\epsilon >0$ and $x_0$ such that $f(x)-\delta x\le f(x-\delta x)\le f(x)$ for all $x\ge x_0$ and all $\delta\in[0,\epsilon]$ then $\lim_{x\to\infty} [f(x-o(x))/f(x)] = 1$.  Here we are using this with $f(x):=\log^{(t-2)} x$ and $x:=\log^{(2)} n$.}
+  Therefore, $\lrn(H)\in O(k)=O(\log n/\log^{(t)} n)$, as required.
 \end{proof}
 
 
